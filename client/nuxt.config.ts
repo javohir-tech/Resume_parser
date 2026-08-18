@@ -3,7 +3,9 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   modules: ["@nuxt/ui", "@nuxtjs/i18n"],
   i18n: {
+    defaultLocale: "uz",
     langDir: "locales/",
+    strategy: "prefix_except_default",
     locales: [
       {
         code: "uz",

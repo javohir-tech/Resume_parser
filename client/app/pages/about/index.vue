@@ -4,7 +4,6 @@
 
 <template>
     <UContainer>
-        home page
+        about page
     </UContainer>
-
 </template>

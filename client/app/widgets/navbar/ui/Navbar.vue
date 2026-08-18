@@ -1,40 +1,47 @@
 <script setup lang="ts">
-const colorMode = useColorMode()
-const { t, locale, setLocale } = useI18n()
+import type { NavigationMenuItem } from '@nuxt/ui/runtime/components/NavigationMenu.vue.js'
 
-const isDark = computed({
-    get() {
-        return colorMode.value === "dark"
+const { t, setLocale } = useI18n()
+
+const items = computed<NavigationMenuItem[]>(() => [
+    {
+        label: t('navbar.home'),
+        to: "/",
     },
-    set(_isDark) {
-        colorMode.preference = _isDark ? 'dark' : "light"
-    }
-})
-
-function onLocaleChange(event: Event) {
-    const target = event.target as HTMLSelectElement
-    setLocale(target.value as "uz" | "en" | "en")
-}
+    {
+        label: t('navbar.about'),
+        to: "/about",
+    },
+])
 </script>
 
 <template>
-    <nav>
-        <span>{{ t('navbar.home') }}</span>
-        <span>{{ t('navbar.resume') }}</span>
-        <span>{{ t('navbar.about') }}</span>
-        <span>{{ t('navbar.contact') }}</span>
-    </nav>
-    <select :value="locale" @change="onLocaleChange">
-         <option value="uz" :selected="locale === 'uz'">O'zbek</option>
-        <option value="ru" :selected="locale === 'ru'">Русский</option>
-        <option value="en" :selected="locale === 'en'">English</option>
-    </select>
-    <ClientOnly>
-        <UButton :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'" color="neutral" variant="ghost"
-            :aria-label="`Switch to ${isDark ? 'light' : 'dark'} mode`" @click="isDark = !isDark" />
+    <UHeader title="Resume Parser">
+        <UNavigationMenu :items="items" variant="link" />
+        <template #right>
+            <UPopover>
+                <UButton icon="i-lucide-languages" color="neutral" variant="ghost" />
 
-        <template #fallback>
-            <span class="size-8" />
+                <template #content>
+                    <div class="flex flex-col gap-1 p-1 min-w-32">
+                        <UButton icon="circle-flags:uz" label="Uzbek" color="neutral" @click="setLocale('uz')"
+                            variant="ghost" />
+                        <UButton icon="circle-flags:gb" label="English" color="neutral" @click="setLocale('en')"
+                            variant="ghost" />
+                        <UButton icon="circle-flags:ru" label="Russian" color="neutral" @click="setLocale('ru')"
+                            variant="ghost" />
+                    </div>
+                </template>
+            </UPopover>
+            <UColorModeButton />
         </template>
-    </ClientOnly>
+
+        <template #body>
+            <UNavigationMenu :items="items" />
+        </template>
+    </UHeader>
 </template>
+
+<style scoped>
+
+</style>
