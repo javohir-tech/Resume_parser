@@ -1,0 +1,13 @@
+{
+  "navbar": {
+    "home": "Bosh sahifa",
+    "resume": "Rezyume",
+    "about": "Biz haqimizda",
+    "contact": "Bog'lanish"
+  },
+  "hero": {
+    "title": "Professional rezyume yarating",
+    "description": "Bir necha daqiqada zamonaviy va professional rezyume yarating.",
+    "button": "Rezyume yaratish"
+  }
+}

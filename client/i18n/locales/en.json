@@ -1,0 +1,13 @@
+{
+  "navbar": {
+    "home": "Home",
+    "resume": "Resume",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Create a professional resume",
+    "description": "Create a modern and professional resume in just a few minutes.",
+    "button": "Create Resume"
+  }
+}
