@@ -14,6 +14,7 @@ onMounted(() => {
     <section id="hero_section" class="bg-default relative py-24">
         <div class="absolute inset-0 opacity-[0.06] pointer-events-none"
             style="background-image: repeating-linear-gradient(0deg, currentColor 0 1px, transparent 1px 90px), repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 140px); color: var(--ui-text-muted)" />
+       
         <UContainer>
             <!-- Markaziy matn bloki -->
             <div class="max-w-3xl mx-auto text-center transition-all duration-700 ease-out"
