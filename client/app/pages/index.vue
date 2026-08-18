@@ -1,10 +1,8 @@
 <script setup lang="ts">
-
+import { HomeHero } from '~/widgets/home-hero';
 </script>
 
 <template>
-    <UContainer>
-        home page
-    </UContainer>
-
+    <!-- Home Hero Section -->
+    <HomeHero />
 </template>

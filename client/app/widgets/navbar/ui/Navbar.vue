@@ -16,7 +16,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 </script>
 
 <template>
-    <UHeader title="Resume Parser">
+    <UHeader title="Resume Parser" :ui="{title : 'text-primary'}" >
         <UNavigationMenu :items="items" variant="link" />
         <template #right>
             <UPopover>
@@ -37,7 +37,7 @@ const items = computed<NavigationMenuItem[]>(() => [
         </template>
 
         <template #body>
-            <UNavigationMenu :items="items" />
+            <UNavigationMenu :items="items" orientation="vertical" />
         </template>
     </UHeader>
 </template>

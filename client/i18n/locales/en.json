@@ -6,8 +6,20 @@
     "contact": "Contact"
   },
   "hero": {
-    "title": "Create a professional resume",
-    "description": "Create a modern and professional resume in just a few minutes.",
-    "button": "Create Resume"
+    "subtitle": "AI RESUME BUILDER",
+    "title_line1": "Tell us, we write.",
+    "title_line2": "You approve.",
+    "description": "Write your experience in simple words or upload an existing resume. AI restructures it and adapts it to your chosen template.",
+    "btn_start": "Start Free",
+    "btn_templates": "View Templates",
+    "no_card": "No card required.",
+    "step1_label": "01 · YOU WRITE",
+    "step1_example": "\"I wrote backend for 2 years in fintech, accelerated payment system\"",
+    "step2_label": "02 · READY RESULT",
+    "step2_title": "Backend Engineer, Fintech",
+    "step2_badge": "AI",
+    "stat_templates": "6 TEMPLATES",
+    "stat_languages": "2 LANGUAGES",
+    "stat_ats": "ATS COMPATIBLE"
   }
 }

@@ -6,8 +6,20 @@
     "contact": "Bog'lanish"
   },
   "hero": {
-    "title": "Professional rezyume yarating",
-    "description": "Bir necha daqiqada zamonaviy va professional rezyume yarating.",
-    "button": "Rezyume yaratish"
+    "subtitle": "AI REZYUME KONSTRUKTORI",
+    "title_line1": "Gapiring, biz yozamiz.",
+    "title_line2": "Siz tasdiqlaysiz.",
+    "description": "O'z tajribangizni oddiy so'zlar bilan yozing yoki mavjud rezyumeni yuklang. Sun'iy intellekt uni tuzilmaga va tanlagan shablonga moslab qayta ishlaydi.",
+    "btn_start": "Bepul boshlash",
+    "btn_templates": "Shablonlarni ko'rish",
+    "no_card": "Karta talab qilinmaydi.",
+    "step1_label": "01 · SIZ YOZASIZ",
+    "step1_example": "\"2 yil fintechda backend yozdim, to'lov tizimini tezlashtirdim\"",
+    "step2_label": "02 · TAYYOR NATIJA",
+    "step2_title": "Backend muhandis, Fintech",
+    "step2_badge": "AI",
+    "stat_templates": "6 TA SHABLON",
+    "stat_languages": "2 TIL",
+    "stat_ats": "ATS'GA MOS"
   }
 }
