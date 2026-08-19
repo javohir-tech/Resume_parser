@@ -18,7 +18,7 @@ onMounted(() => {
         <UContainer>
             <!-- Markaziy matn bloki -->
             <div class="max-w-3xl mx-auto text-center transition-all duration-700 ease-out"
-                :class="revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'">
+                :class="revealed ? 'opacity-100 translate-y-0' : 'opacity-100 translate-y-3'">
                 <div class="font-mono text-xs font-medium tracking-[0.15em] text-muted mb-5">
                     {{ t('hero.subtitle') }}
                 </div>
