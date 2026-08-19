@@ -21,5 +21,24 @@
     "stat_templates": "6 TA SHABLON",
     "stat_languages": "2 TIL",
     "stat_ats": "ATS'GA MOS"
+  },
+  "howItWorks": {
+    "eyebrow": "Qanday ishlaydi",
+    "title": "Uch bosqichda tayyor rezyume",
+    "subtitle": "Import qilishdan yuklab olishgacha — uch qadam.",
+    "steps": [
+      {
+        "title": "O'zingizni tasvirlang",
+        "subtitle": "Bir necha jumla yozing yoki eski rezyumengizni joylashtiring. Format va tuzilma haqida o'ylamang."
+      },
+      {
+        "title": "AI tuzilma beradi",
+        "subtitle": "Sarlavha, qisqacha ma'lumot, tajriba, ko'nikmalar: hammasi bo'limlarga ajraladi. Har bir bandni o'zingiz tahrirlaysiz."
+      },
+      {
+        "title": "Tanlang va yuklab oling",
+        "subtitle": "Shablon, shrift, o'lcham va rangni sozlang. Natijani darhol ko'ring va PDF qilib yuklab oling."
+      }
+    ]
   }
 }

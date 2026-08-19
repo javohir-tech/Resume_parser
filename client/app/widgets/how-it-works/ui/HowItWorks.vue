@@ -4,6 +4,21 @@
 import { CardList, SectionHeader } from '~/shared/components';
 import type { ICard } from '~/shared/components';
 
+const { t, tm } = useI18n()
+
+const cards_inof = computed<ICard[]>(() => {
+    const icons = ['i-lucide-file-user', 'i-lucide-sparkles', 'i-lucide-download']
+    const delays = [0, 200, 400]
+
+    return icons.map((icon, i) => ({
+        icon :icons[i],
+        title: t(`howItWorks.steps.${i}.title`),
+        subtitle: t(`howItWorks.steps.${i}.subtitle`),
+        delay: delays[i]
+    }))
+})
+
+
 const cards_info = ref<ICard[]>([
     {
         icon: "i-lucide-file-user",

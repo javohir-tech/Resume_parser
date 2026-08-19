@@ -15,13 +15,14 @@ const { stop } = useIntersectionObserver(
     },
     {
         threshold: 0,
-        rootMargin : "0px 0px -200px 0px"
+        rootMargin: "0px 0px -200px 0px"
     }
 )
 </script>
 
 <template>
-    <div ref="el" class="rounded-xl border border-gray-200 cursor-pointer p-6 opacity-0 dark:border-white/10 transition-shadow ease-in-out duration-300 hover:shadow-md dark:hover:ring ring-primary-500"
+    <div ref="el"
+        class="rounded-xl border border-gray-200 cursor-pointer p-6 opacity-0 dark:border-white/10 transition-shadow ease-in-out duration-300 hover:shadow-md dark:hover:ring ring-primary-500"
         :class="{ 'animate-fade-up': isVisible }" :style="{ animationDelay: `${delay ?? 0}ms` }">
         <div class="mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-white/10">
             <Icon :name="icon" class="h-5 w-5 text-gray-600 dark:text-white/70" />

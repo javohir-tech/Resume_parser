@@ -21,5 +21,24 @@
     "stat_templates": "6 TEMPLATES",
     "stat_languages": "2 LANGUAGES",
     "stat_ats": "ATS COMPATIBLE"
+  },
+  "howItWorks": {
+    "eyebrow": "How it works",
+    "title": "A ready resume in three steps",
+    "subtitle": "From import to download — three steps.",
+    "steps": [
+      {
+        "title": "Describe yourself",
+        "subtitle": "Write a few sentences or upload your old resume. Don't worry about format or structure."
+      },
+      {
+        "title": "AI builds the structure",
+        "subtitle": "Title, summary, experience, skills — everything is sorted into sections. You can edit every item yourself."
+      },
+      {
+        "title": "Choose and download",
+        "subtitle": "Adjust the template, font, size, and color. See the result instantly and download it as a PDF."
+      }
+    ]
   }
 }
