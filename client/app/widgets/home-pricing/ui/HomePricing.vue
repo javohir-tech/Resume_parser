@@ -34,9 +34,9 @@ const proPlan = computed<IPricingCard>(() => {
 
     <section id="pricing" class="py-20">
         <UContainer>
-            <SectionHeader eyebrow="Narxlar" title="Oddiy narx, yashirin shartlarsiz"
-                subtitle="Boshlash uchun to'lov kerak emas. Yuklab olish kerak bo'lganda Pro'ga o'tasiz va istalgan vaqtda bekor qilasiz." />
-            <div class="grid w-[90%] mx-auto grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+            <SectionHeader :eyebrow="t('pricing.eyebrow')" :title="t('pricing.title')"
+                :subtitle="t('pricing.subtitle')" />
+            <div class="grid md:w-[90%] mx-auto grid-cols-1 md:grid-cols-2 gap-4 mt-10">
                 <PricingCard :pricing-card="freePlan">
                     <UButton block variant="outline">{{ t('pricing.free.button') }}</UButton>
                 </PricingCard>

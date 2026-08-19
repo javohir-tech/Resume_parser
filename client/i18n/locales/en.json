@@ -73,6 +73,9 @@
     ]
   },
   "pricing": {
+    "eyebrow": "Pricing",
+    "title": "Simple pricing, no hidden terms",
+    "subtitle": "No payment is required to get started. Upgrade to Pro when you need to download, and cancel anytime.", 
     "free": {
       "label": "Free",
       "plan": "Free",

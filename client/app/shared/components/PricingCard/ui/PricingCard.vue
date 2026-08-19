@@ -3,11 +3,29 @@ import type { IPricingCard } from '../models/types';
 const props = defineProps<{
     pricingCard: IPricingCard
 }>()
+
+const el = ref<HTMLElement | null>(null)
+const isVisible = ref(false)
+
+const { stop } = useIntersectionObserver(
+    el,
+    ([entry]) => {
+        if (entry?.isIntersecting) {
+            isVisible.value = true
+            stop()
+        }
+    },
+    {
+        threshold: 0,
+        rootMargin: "0px 0px -200px 0px"
+    }
+)
 </script>
 
 <template>
-    <div
-        class="py-5  px-6 border border-gray-500 rounded-xl transition-all duration-200 ease-in-out hover:border-primary">
+    <div ref="el"
+        class="py-5 flex flex-col opacity-0 justify-between px-6 border border-gray-200 dark:border-white/10 rounded-xl transition-all duration-200 ease-in-out hover:shadow-md dark:hover:border-primary"
+        :class="{ 'animate-fade-up': isVisible }">
         <div class="flex items-baseline justify-between">
             <h3
                 class="font-mono text-[0.8rem] tracking-[0.18em] text-muted-foreground text-gray-500 font-medium uppercase">
@@ -38,3 +56,21 @@ const props = defineProps<{
         </div>
     </div>
 </template>
+
+<style scoped>
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fade-up 0.2s ease-in forwards;
+}
+</style>

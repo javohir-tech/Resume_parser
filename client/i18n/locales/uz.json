@@ -71,8 +71,11 @@
         "subtitle": "Shablonlar dasturlar o'qiy oladigan tuzilmada teriladi, shuning uchun tajribangiz yo'qolib qolmaydi."
       }
     ]
-  }, 
-   "pricing": {
+  },
+  "pricing": {
+    "eyebrow": "Narxlar",
+    "title": "Oddiy narx, yashirin shartlarsiz",
+    "subtitle": "Boshlash uchun to'lov kerak emas. Yuklab olish kerak bo'lganda Pro'ga o'tasiz va istalgan vaqtda bekor qilasiz.",
     "free": {
       "label": "Bepul",
       "plan": "Bepul",
