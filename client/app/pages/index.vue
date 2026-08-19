@@ -3,6 +3,7 @@
 import { HomeFeatures } from '~/widgets/home-features';
 import { HomeHero } from '~/widgets/home-hero';
 import { HomePricing } from '~/widgets/home-pricing';
+import { HomeRequests } from '~/widgets/home-requests';
 import { HowItWorks } from '~/widgets/how-it-works';
 </script>
 
@@ -15,4 +16,6 @@ import { HowItWorks } from '~/widgets/how-it-works';
     <HomeFeatures />
     <!-- Home Pricing -->
     <HomePricing />
+    <!-- Home Requests -->
+    <HomeRequests />
 </template>

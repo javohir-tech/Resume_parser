@@ -6,17 +6,17 @@
     "contact": "Bog'lanish"
   },
   "hero": {
-    "subtitle": "AI REZYUME KONSTRUKTORI",
-    "title_line1": "Gapiring, biz yozamiz.",
-    "title_line2": "Siz tasdiqlaysiz.",
-    "description": "O'z tajribangizni oddiy so'zlar bilan yozing yoki mavjud rezyumeni yuklang. Sun'iy intellekt uni tuzilmaga va tanlagan shablonga moslab qayta ishlaydi.",
+    "subtitle": "VAKANSIYAGA MOS AI REZYUME",
+    "title_line1": "Vakansiyani ko'rsating.",
+    "title_line2": "AI mosini tayyorlaydi.",
+    "description": "hh.uz yoki LinkedIn'dan rezyumeni import qiling, so'ng qiziqqan vakansiyani qo'shing — sun'iy intellekt tajribangizni o'sha lavozim talablariga moslab qayta tuzadi.",
     "btn_start": "Bepul boshlash",
-    "btn_templates": "Shablonlarni ko'rish",
+    "btn_templates": "Qanday ishlashini ko'rish",
     "no_card": "Karta talab qilinmaydi.",
-    "step1_label": "01 · SIZ YOZASIZ",
-    "step1_example": "\"2 yil fintechda backend yozdim, to'lov tizimini tezlashtirdim\"",
-    "step2_label": "02 · TAYYOR NATIJA",
-    "step2_title": "Backend muhandis, Fintech",
+    "step1_label": "01 · VAKANSIYA",
+    "step1_example": "\"Vue.js, 2+ yil tajriba, real vaqtli ilovalar ustida ishlash\"",
+    "step2_label": "02 · MOSLASHTIRILGAN NATIJA",
+    "step2_title": "Frontend muhandis, Vue.js",
     "step2_badge": "AI",
     "stat_templates": "6 TA SHABLON",
     "stat_languages": "2 TIL",
@@ -24,20 +24,20 @@
   },
   "howItWorks": {
     "eyebrow": "Qanday ishlaydi",
-    "title": "Uch bosqichda tayyor rezyume",
+    "title": "Uch bosqichda vakansiyaga mos rezyume",
     "subtitle": "Import qilishdan yuklab olishgacha — uch qadam.",
     "steps": [
       {
-        "title": "O'zingizni tasvirlang",
-        "subtitle": "Bir necha jumla yozing yoki eski rezyumengizni joylashtiring. Format va tuzilma haqida o'ylamang."
+        "title": "Rezyumeni import qiling",
+        "subtitle": "hh.uz yoki LinkedIn havolasini joylashtiring, yoki tajribangizni erkin matnda yozing."
       },
       {
-        "title": "AI tuzilma beradi",
-        "subtitle": "Sarlavha, qisqacha ma'lumot, tajriba, ko'nikmalar: hammasi bo'limlarga ajraladi. Har bir bandni o'zingiz tahrirlaysiz."
+        "title": "Vakansiyani qo'shing",
+        "subtitle": "Qiziqqan e'lon matnini kiriting — AI talablarni tajribangiz bilan solishtirib, mos keladigan qismlarni ustunlik bilan joylashtiradi."
       },
       {
-        "title": "Tanlang va yuklab oling",
-        "subtitle": "Shablon, shrift, o'lcham va rangni sozlang. Natijani darhol ko'ring va PDF qilib yuklab oling."
+        "title": "Shablonni tanlang, yuklab oling",
+        "subtitle": "Natijani ko'rib chiqing, kerak bo'lsa tahrirlang, so'ng PDF holida yuklab oling."
       }
     ]
   },
@@ -47,8 +47,8 @@
     "subtitle": "Har bir imkoniyat bitta maqsadga xizmat qiladi: matn ustida o'tirgan vaqtingizni qisqartirish.",
     "items": [
       {
-        "title": "AI generatsiya",
-        "subtitle": "Erkin matndan to'liq rezyume tuzadi, alohida bandlarni esa bir bosishda sayqallaydi."
+        "title": "Vakansiyaga moslashtirish",
+        "subtitle": "E'lon matnini qo'shing — AI talablarni tajribangiz bilan solishtirib, mos keladigan bandlarni ustunlik bilan joylashtiradi."
       },
       {
         "title": "O'zbek va ingliz tili",

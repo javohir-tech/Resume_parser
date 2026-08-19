@@ -6,69 +6,69 @@
     "contact": "Contact"
   },
   "hero": {
-    "subtitle": "AI RESUME BUILDER",
-    "title_line1": "Tell us, we write.",
-    "title_line2": "You approve.",
-    "description": "Write your experience in simple words or upload an existing resume. AI restructures it and adapts it to your chosen template.",
-    "btn_start": "Start Free",
-    "btn_templates": "View Templates",
-    "no_card": "No card required.",
-    "step1_label": "01 · YOU WRITE",
-    "step1_example": "\"I wrote backend for 2 years in fintech, accelerated payment system\"",
-    "step2_label": "02 · READY RESULT",
-    "step2_title": "Backend Engineer, Fintech",
+    "subtitle": "AI RESUME TAILORED FOR THE JOB",
+    "title_line1": "Provide the vacancy.",
+    "title_line2": "AI will tailor the match.",
+    "description": "Import your resume from hh.uz or LinkedIn, then add the vacancy you are interested in — AI will restructure your experience to match the requirements of that role.",
+    "btn_start": "Start for free",
+    "btn_templates": "See how it works",
+    "no_card": "No credit card required.",
+    "step1_label": "01 · VACANCY",
+    "step1_example": "\"Vue.js, 2+ years of experience, working on real-time applications\"",
+    "step2_label": "02 · TAILORED RESULT",
+    "step2_title": "Frontend Engineer, Vue.js",
     "step2_badge": "AI",
     "stat_templates": "6 TEMPLATES",
     "stat_languages": "2 LANGUAGES",
-    "stat_ats": "ATS COMPATIBLE"
+    "stat_ats": "ATS-FRIENDLY"
   },
   "howItWorks": {
     "eyebrow": "How it works",
-    "title": "A ready resume in three steps",
-    "subtitle": "From import to download — three steps.",
+    "title": "A tailored resume in three steps",
+    "subtitle": "From import to download — just three steps.",
     "steps": [
       {
-        "title": "Describe yourself",
-        "subtitle": "Write a few sentences or upload your old resume. Don't worry about format or structure."
+        "title": "Import your resume",
+        "subtitle": "Paste your hh.uz or LinkedIn link, or write your experience in free text."
       },
       {
-        "title": "AI builds the structure",
-        "subtitle": "Title, summary, experience, skills — everything is sorted into sections. You can edit every item yourself."
+        "title": "Add the vacancy",
+        "subtitle": "Enter the text of the job posting you are interested in — AI will cross-reference the requirements with your experience and prioritize the matching parts."
       },
       {
-        "title": "Choose and download",
-        "subtitle": "Adjust the template, font, size, and color. See the result instantly and download it as a PDF."
+        "title": "Choose a template and download",
+        "subtitle": "Review the result, edit if necessary, and then download it as a PDF."
       }
     ]
   },
   "features": {
     "eyebrow": "Features",
     "title": "Everything you need to work on your resume",
-    "subtitle": "Each feature serves one purpose: cutting down the time you spend on the text.",
+    "subtitle": "Every feature serves a single purpose: to reduce the time you spend working on text.",
     "items": [
       {
-        "title": "AI generation",
-        "subtitle": "Builds a complete resume from free-form text, and polishes individual entries in one click."
+        "title": "Tailoring to the vacancy",
+        "subtitle": "Add the job description — AI will compare the requirements with your experience and prioritize the matching points."
       },
       {
-        "title": "Uzbek and English",
-        "subtitle": "Keep two versions in one account: for local and international job listings."
+        "title": "Uzbek and English languages",
+        "subtitle": "Keep separate versions in two languages in one account: for local and international vacancies."
       },
       {
         "title": "6 templates",
-        "subtitle": "From minimal to bold headlines. Your content stays in place when you switch templates."
+        "subtitle": "From minimal to large headers. Your content stays exactly in place when switching templates."
       },
       {
         "title": "Font and color",
-        "subtitle": "Google Fonts catalog, font size, and accent color. Everything updates live."
+        "subtitle": "Google Fonts catalog, font sizes, and primary colors. Everything changes in live preview."
       },
       {
-        "title": "Real PDF export",
-        "subtitle": "A PDF with a preserved text layer, generated right in your browser. Downloading is available on the Pro plan."
+        "title": "True PDF export",
+        "subtitle": "PDF with preserved text layers, generated directly in your browser. Downloading is available on the Pro plan."
       },
       {
         "title": "ATS-friendly",
-        "subtitle": "Templates are structured so applicant-tracking software can read them, so your experience never gets lost."
+        "subtitle": "Templates are built in a machine-readable structure, ensuring your experience doesn't get lost in screening software."
       }
     ]
   },
