@@ -13,7 +13,7 @@ const STEP_META = [
 ] as const
 
 const cards_info = computed<ICard[]>(() =>
-    STEP_META.map((meta, i) => ({
+    STEP_META.map((meta, i) => ({   
         icon: meta.icon,
         delay: meta.delay,
         title: t(`howItWorks.steps.${i}.title`),
@@ -25,7 +25,7 @@ const cards_info = computed<ICard[]>(() =>
 <template>
     <section id="how_it_works" class="bg-default py-20">
         <UContainer>
-            <SectionHeader :eyebrow="t('howItWorks. eyebrow')" :title="t('howItWorks.title')"
+            <SectionHeader :eyebrow="t('howItWorks.eyebrow')" :title="t('howItWorks.title')"
                 :subtitle="t('howItWorks.subtitle')" />
             <CardList :cards_info="cards_info" />
         </UContainer>

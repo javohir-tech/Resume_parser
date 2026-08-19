@@ -40,5 +40,36 @@
         "subtitle": "Shablon, shrift, o'lcham va rangni sozlang. Natijani darhol ko'ring va PDF qilib yuklab oling."
       }
     ]
+  },
+  "features": {
+    "eyebrow": "Imkoniyatlar",
+    "title": "Rezyume ustida ishlash uchun kerak bo'lgan hamma narsa",
+    "subtitle": "Har bir imkoniyat bitta maqsadga xizmat qiladi: matn ustida o'tirgan vaqtingizni qisqartirish.",
+    "items": [
+      {
+        "title": "AI generatsiya",
+        "subtitle": "Erkin matndan to'liq rezyume tuzadi, alohida bandlarni esa bir bosishda sayqallaydi."
+      },
+      {
+        "title": "O'zbek va ingliz tili",
+        "subtitle": "Bitta hisobda ikki tilda alohida versiya saqlang: mahalliy va xalqaro vakansiyalar uchun."
+      },
+      {
+        "title": "6 ta shablon",
+        "subtitle": "Minimaldan katta sarlavhaligacha. Shablonni almashtirganda kontentingiz joyida qoladi."
+      },
+      {
+        "title": "Shrift va rang",
+        "subtitle": "Google Fonts katalogi, shrift o'lchami va asosiy rang. Hammasi jonli ko'rinishda o'zgaradi."
+      },
+      {
+        "title": "Haqiqiy PDF eksport",
+        "subtitle": "Matn qatlami saqlangan PDF, brauzeringizda tayyorlanadi. Yuklab olish Pro tarifda."
+      },
+      {
+        "title": "ATS-ga mos",
+        "subtitle": "Shablonlar dasturlar o'qiy oladigan tuzilmada teriladi, shuning uchun tajribangiz yo'qolib qolmaydi."
+      }
+    ]
   }
 }

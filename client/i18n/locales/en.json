@@ -40,5 +40,36 @@
         "subtitle": "Adjust the template, font, size, and color. See the result instantly and download it as a PDF."
       }
     ]
+  },
+  "features": {
+    "eyebrow": "Features",
+    "title": "Everything you need to work on your resume",
+    "subtitle": "Each feature serves one purpose: cutting down the time you spend on the text.",
+    "items": [
+      {
+        "title": "AI generation",
+        "subtitle": "Builds a complete resume from free-form text, and polishes individual entries in one click."
+      },
+      {
+        "title": "Uzbek and English",
+        "subtitle": "Keep two versions in one account: for local and international job listings."
+      },
+      {
+        "title": "6 templates",
+        "subtitle": "From minimal to bold headlines. Your content stays in place when you switch templates."
+      },
+      {
+        "title": "Font and color",
+        "subtitle": "Google Fonts catalog, font size, and accent color. Everything updates live."
+      },
+      {
+        "title": "Real PDF export",
+        "subtitle": "A PDF with a preserved text layer, generated right in your browser. Downloading is available on the Pro plan."
+      },
+      {
+        "title": "ATS-friendly",
+        "subtitle": "Templates are structured so applicant-tracking software can read them, so your experience never gets lost."
+      }
+    ]
   }
 }
