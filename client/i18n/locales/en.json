@@ -71,5 +71,42 @@
         "subtitle": "Templates are structured so applicant-tracking software can read them, so your experience never gets lost."
       }
     ]
+  },
+  "pricing": {
+    "free": {
+      "label": "Free",
+      "plan": "Free",
+      "plan_price": 0,
+      "plan_term": "forever",
+      "subtitle": "Everything you need to build, edit, and preview your resume online. Share it via a link — direct download is available on the Pro plan.",
+      "features": [
+        "Unlimited resume creation, editing, and preview",
+        "5 AI generations and 20 AI edits per month",
+        "Free templates, Google Fonts catalog, size and color",
+        "View-only link to share with recruiters",
+        "Work in Uzbek and English",
+        "Sign in from one device at a time"
+      ],
+      "button": "Start for free"
+    },
+    "pro": {
+      "label": "Pro",
+      "badge": "Recommended",
+      "plan": "Pro",
+      "plan_price": "4.50",
+      "old_price": "$9",
+      "plan_term": "/ month",
+      "discount_note": "50% off for early users — 100 spots left, and the price stays the same for as long as you stay subscribed.",
+      "subtitle": "To download your resume and make it stand out to recruiters.",
+      "features": [
+        "Direct PDF download, no watermark",
+        "Access to premium templates",
+        "AI suggestions that make your resume more appealing to recruiters",
+        "Sign in from multiple devices at once",
+        "Everything in the Free plan"
+      ],
+      "button": "Get Pro"
+    },
+    "footnote": "Pay monthly in UZS via Click, or with an international card via Polar — either way, your card details are never stored on our servers."
   }
 }

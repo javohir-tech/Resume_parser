@@ -4,3 +4,7 @@ export { default as SectionHeader } from "./Section-Header/ui/SectionHeader.vue"
 export type { ICard } from "./Card/models/types.ts";
 export { default as Card } from "./Card/ui/Card.vue";
 export { default as CardList } from "./Card/ui/CardList.vue";
+
+// Pricing Card
+export { default as PricingCard } from "./PricingCard/ui/PricingCard.vue";
+export type { IPricingCard } from "./PricingCard/models/types.ts";
