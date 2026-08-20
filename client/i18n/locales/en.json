@@ -40,6 +40,10 @@
       "title": "Download",
       "subtitle": "Choose a template and download",
       "description": "Review the result, edit it if necessary, and then download it as a PDF."
+    },
+    "buttons": {
+      "next": "next",
+      "prev": "prev"
     }
   },
   "features": {

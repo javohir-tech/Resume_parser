@@ -60,10 +60,10 @@ const stepper = useTemplateRef("stepper")
             </div>
             <div class="flex justify-between md:justify-center gap-2 mt-4">
                 <UButton leading-icon="i-lucide-arrow-left" :disabled="!stepper?.hasPrev" @click="stepper?.prev()">
-                    Prev
+                    {{ t('howItWorks.buttons.prev') }}
                 </UButton>
                 <UButton leading-icon="i-lucide-arrow-right" :disabled="!stepper?.hasNext" @click="stepper?.next()">
-                    Next
+                    {{ t('howItWorks.buttons.next') }}
                 </UButton>
             </div>
         </UContainer>

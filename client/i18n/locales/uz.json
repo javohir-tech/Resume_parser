@@ -40,6 +40,10 @@
       "title": "Yuklab olish",
       "subtitle": "Shablonni tanlang, yuklab oling",
       "description": "Natijani ko'rib chiqing, kerak bo'lsa tahrirlang, so'ng PDF holida yuklab oling."
+    }, 
+    "buttons" : {
+      "next" : "keyingisi" , 
+      "prev" : "oldingi"
     }
   },
   "features": {
