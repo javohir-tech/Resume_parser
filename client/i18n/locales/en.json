@@ -26,20 +26,18 @@
     "eyebrow": "How it works",
     "title": "A tailored resume in three steps",
     "subtitle": "From import to download — just three steps.",
-    "steps": [
-      {
-        "title": "Import your resume",
-        "subtitle": "Paste your hh.uz or LinkedIn link, or write your experience in free text."
-      },
-      {
-        "title": "Add the vacancy",
-        "subtitle": "Enter the text of the job posting you are interested in — AI will cross-reference the requirements with your experience and prioritize the matching parts."
-      },
-      {
-        "title": "Choose a template and download",
-        "subtitle": "Review the result, edit if necessary, and then download it as a PDF."
-      }
-    ]
+    "resume": {
+      "title": "Import your resume",
+      "description": "Paste your hh.uz or LinkedIn link, or write your experience in free text."
+    },
+    "vacancy": {
+      "title": "Add the vacancy",
+      "description": "Enter the text of the job posting you're interested in — AI will compare the requirements with your experience and prioritize the matching parts."
+    },
+    "download": {
+      "title": "Choose a template and download",
+      "description": "Review the result, edit it if necessary, and then download it as a PDF."
+    }
   },
   "features": {
     "eyebrow": "Features",
@@ -75,7 +73,7 @@
   "pricing": {
     "eyebrow": "Pricing",
     "title": "Simple pricing, no hidden terms",
-    "subtitle": "No payment is required to get started. Upgrade to Pro when you need to download, and cancel anytime.", 
+    "subtitle": "No payment is required to get started. Upgrade to Pro when you need to download, and cancel anytime.",
     "free": {
       "label": "Free",
       "plan": "Free",

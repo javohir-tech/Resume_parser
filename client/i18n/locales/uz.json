@@ -26,20 +26,18 @@
     "eyebrow": "Qanday ishlaydi",
     "title": "Uch bosqichda vakansiyaga mos rezyume",
     "subtitle": "Import qilishdan yuklab olishgacha — uch qadam.",
-    "steps": [
-      {
-        "title": "Rezyumeni import qiling",
-        "subtitle": "hh.uz yoki LinkedIn havolasini joylashtiring, yoki tajribangizni erkin matnda yozing."
-      },
-      {
-        "title": "Vakansiyani qo'shing",
-        "subtitle": "Qiziqqan e'lon matnini kiriting — AI talablarni tajribangiz bilan solishtirib, mos keladigan qismlarni ustunlik bilan joylashtiradi."
-      },
-      {
-        "title": "Shablonni tanlang, yuklab oling",
-        "subtitle": "Natijani ko'rib chiqing, kerak bo'lsa tahrirlang, so'ng PDF holida yuklab oling."
-      }
-    ]
+    "resume": {
+      "title": "Rezyumeni import qiling",
+      "description": "hh.uz yoki LinkedIn havolasini joylashtiring, yoki tajribangizni erkin matnda yozing."
+    },
+    "vacancy": {
+      "title": "Vakansiyani qo'shing",
+      "description": "Qiziqqan e'lon matnini kiriting — AI talablarni tajribangiz bilan solishtirib, mos keladigan qismlarni ustunlik bilan joylashtiradi."
+    },
+    "download": {
+      "title": "Shablonni tanlang, yuklab oling",
+      "description": "Natijani ko'rib chiqing, kerak bo'lsa tahrirlang, so'ng PDF holida yuklab oling."
+    }
   },
   "features": {
     "eyebrow": "Imkoniyatlar",
