@@ -35,6 +35,7 @@ const { stop } = useIntersectionObserver(
         </div>
         <p class="flex flex-wrap items-baseline gap-2 mt-5">
             <span class="text-4xl font-display font-semibold tracking-tigth">{{ pricingCard.plan }}</span>
+            <span class="text-4xl font-display font-semibold tracking-tigth">{{ pricingCard.plan_price ?? "" }}</span>
             <span class="text-sm text-gray-500">{{ pricingCard.plan_term }}</span>
         </p>
         <p v-if="pricingCard.discount_note" class="mt-3 text-sm text-primary leading-relaxed">

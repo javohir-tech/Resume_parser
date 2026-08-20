@@ -43,8 +43,8 @@ const items = ref<AccordionItem[]>([
                 subtitle="chunmadingmi contactga ot aloqaga chiq" />
             <div class="grid grid-cols-1 items-start md:grid-cols-2  mt-6  ">
                 <div>
-                    <h3 class="py-4 text-4xl font-medium">Ko'p beriladigan savollar</h3>
-                    <p class="text-gray-500 text-sm">Javobini topa olmadingizmi? Aloqa sahifasidan yozing, javob beramiz.</p>
+                    <h3 class="py-4 text-2xl md:text-3xl font-medium">Ko'p beriladigan savollar</h3>
+                    <p class="text-gray-500 text-sm mb-5">Javobini topa olmadingizmi? Aloqa sahifasidan yozing, javob beramiz.</p>
                 </div>
                 <div class="block">
                     <UAccordion :items="items" />

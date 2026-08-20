@@ -49,7 +49,7 @@
   "features": {
     "eyebrow": "Imkoniyatlar",
     "title": "Rezyume ustida ishlash uchun kerak bo'lgan hamma narsa",
-    "subtitle": "Har bir imkoniyat bitta maqsadga xizmat qiladi: matn ustida o'tirgan vaqtingizni qisqartirish.",
+  "subtitle": "Har bir imkoniyat bitta maqsadg  a xizmat qiladi: matn ustida o'tirgan vaqtingizni qisqartirish.",
     "items": [
       {
         "title": "Vakansiyaga moslashtirish",
@@ -78,43 +78,44 @@
     ]
   },
   "pricing": {
-    "eyebrow": "Narxlar",
-    "title": "Oddiy narx, yashirin shartlarsiz",
-    "subtitle": "Boshlash uchun to'lov kerak emas. Yuklab olish kerak bo'lganda Pro'ga o'tasiz va istalgan vaqtda bekor qilasiz.",
-    "free": {
-      "label": "Bepul",
-      "plan": "Bepul",
-      "plan_price": 0,
-      "plan_term": "har doim",
-      "subtitle": "Rezyume yaratish, tahrirlash va onlayn ko'rish uchun hamma narsa. Havola orqali ulashish - to'g'ridan-to'g'ri yuklab olish Pro tarifda.",
-      "features": [
-        "Cheksiz rezyume yaratish, tahrirlash va ko'rish",
-        "Har oyda 5 ta AI generatsiya va 20 ta AI tahrir",
-        "Bepul shablonlar, Google Fonts katalogi, o'lcham va rang",
-        "Rekruterlar bilan faqat ko'rish uchun havola ulashish",
-        "O'zbek va ingliz tilida ishlash",
-        "Bir vaqtning o'zida faqat bitta qurilmadan kirish"
-      ],
-      "button": "Bepul boshlash"
-    },
-    "pro": {
-      "label": "Pro",
-      "badge": "Tavsiya etiladi",
-      "plan": "Pro",
-      "plan_price": "4,50",
-      "old_price": "9 $",
-      "plan_term": "oyiga",
-      "discount_note": "Birinchi foydalanuvchilarga 50% chegirma - 100 ta o'rin qoldi, va obuna davom etguncha narx shunday qoladi.",
-      "subtitle": "Rezyumeni yuklab olish va uni rekruterlarning e'tiborini tortadigan ko'rinishga keltirish uchun.",
-      "features": [
-        "To'g'ridan-to'g'ri PDF yuklab olish, pastdagi yozuvsiz",
-        "Premium shablonlardan foydalanish",
-        "Rezyumeni rekruterlarga qiziq ko'rinishga keltiruvchi AI tavsiyalari",
-        "Bir vaqtning o'zida bir nechta qurilmadan kirgan holda qolish",
-        "Bepul tarifdagi barcha imkoniyatlar"
-      ],
-      "button": "Pro'ni olish"
-    },
-    "footnote": "Click orqali 30 kunlik obuna so'mda, yoki Polar orqali xalqaro karta bilan oylik obuna - ikkala holatda ham karta ma'lumotlaringiz serverlarimizda saqlanmaydi."
-  }
+  "eyebrow": "Narxlar",
+  "title": "Oddiy narx, yashirin shartlarsiz",
+  "subtitle": "Boshlash uchun to'lov kerak emas. Yuklab olish kerak bo'lganda Pro'ga o'tasiz va istalgan vaqtda bekor qilasiz.",
+  "free": {
+    "label": "Bepul",
+    "plan": "Bepul",
+    "plan_price": "",
+    "plan_term": "har doim",
+    "subtitle": "Rezyume yaratish, tahrirlash va onlayn ko'rish uchun hamma narsa. Havola orqali ulashish - to'g'ridan-to'g'ri yuklab olish Pro tarifda.",
+    "features": [
+      "Cheksiz rezyume yaratish, tahrirlash va ko'rish",
+      "Oyiga 1 marta vakansiyaga moslashtirish",
+      "Har oyda 5 ta AI generatsiya",
+      "Bepul shablonlar, Google Fonts katalogi, o'lcham va rang",
+      "Rekruterlar bilan faqat ko'rish uchun havola ulashish",
+      "O'zbek va ingliz tilida ishlash"
+    ],
+    "button": "Bepul boshlash"
+  },
+  "pro": {
+    "label": "Pro",
+    "badge": "Tavsiya etiladi",
+    "plan": "Pro",
+    "plan_price": "4,50",
+    "old_price": "9 $",
+    "plan_term": "oyiga",
+    "discount_note": "Birinchi foydalanuvchilarga 50% chegirma - 100 ta o'rin qoldi, va obuna davom etguncha narx shunday qoladi.",
+    "subtitle": "Har bir vakansiyaga alohida moslashtirilgan rezyumeni yuklab olish va rekruterlar e'tiborini tortadigan ko'rinishga keltirish uchun.",
+    "features": [
+      "To'g'ridan-to'g'ri PDF yuklab olish, pastdagi yozuvsiz",
+      "Cheksiz vakansiyaga moslashtirish",
+      "Har bir vakansiya uchun alohida rezyume versiyasini saqlash",
+      "Premium shablonlardan foydalanish",
+      "Bir vaqtning o'zida bir nechta qurilmadan kirgan holda qolish",
+      "Bepul tarifdagi barcha imkoniyatlar"
+    ],
+    "button": "Pro'ni olish"
+  },
+  "footnote": "Click orqali 30 kunlik obuna so'mda, yoki Polar orqali xalqaro karta bilan oylik obuna - ikkala holatda ham karta ma'lumotlaringiz serverlarimizda saqlanmaydi."
+}
 }
