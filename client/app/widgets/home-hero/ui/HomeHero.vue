@@ -49,7 +49,7 @@ onMounted(() => {
             </div>
 
             <!-- Gorizontal jarayon lentasi -->
-            <div class="mt-20 transition-all duration-700 ease-out delay-200"
+            <div class="mt-20 transition-all duration-300 ease-out"
                 :class="revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'">
                 <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-6 md:gap-4 items-center max-w-5xl mx-auto">
 
