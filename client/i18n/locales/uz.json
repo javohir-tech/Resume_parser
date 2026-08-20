@@ -27,15 +27,18 @@
     "title": "Uch bosqichda vakansiyaga mos rezyume",
     "subtitle": "Import qilishdan yuklab olishgacha — uch qadam.",
     "resume": {
-      "title": "Rezyumeni import qiling",
+      "title": "Rezyume",
+      "subtitle": "Rezyumeni import qiling",
       "description": "hh.uz yoki LinkedIn havolasini joylashtiring, yoki tajribangizni erkin matnda yozing."
     },
     "vacancy": {
-      "title": "Vakansiyani qo'shing",
+      "title": "Vakansiya",
+      "subtitle": "Vakansiyani qo'shing",
       "description": "Qiziqqan e'lon matnini kiriting — AI talablarni tajribangiz bilan solishtirib, mos keladigan qismlarni ustunlik bilan joylashtiradi."
     },
     "download": {
-      "title": "Shablonni tanlang, yuklab oling",
+      "title": "Yuklab olish",
+      "subtitle": "Shablonni tanlang, yuklab oling",
       "description": "Natijani ko'rib chiqing, kerak bo'lsa tahrirlang, so'ng PDF holida yuklab oling."
     }
   },

@@ -27,15 +27,18 @@
     "title": "A tailored resume in three steps",
     "subtitle": "From import to download — just three steps.",
     "resume": {
-      "title": "Import your resume",
+      "title": "Resume",
+      "subtitle": "Import your resume",
       "description": "Paste your hh.uz or LinkedIn link, or write your experience in free text."
     },
     "vacancy": {
-      "title": "Add the vacancy",
+      "title": "Job Vacancy",
+      "subtitle": "Add the vacancy",
       "description": "Enter the text of the job posting you're interested in — AI will compare the requirements with your experience and prioritize the matching parts."
     },
     "download": {
-      "title": "Choose a template and download",
+      "title": "Download",
+      "subtitle": "Choose a template and download",
       "description": "Review the result, edit it if necessary, and then download it as a PDF."
     }
   },

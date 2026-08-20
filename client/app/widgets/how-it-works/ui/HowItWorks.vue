@@ -2,7 +2,6 @@
 
 // components
 import { SectionHeader } from '~/shared/components';
-import type { ICard } from '~/shared/components';
 import { StepperStepContent } from '~/shared/components/StepperStepContent';
 
 // nuxt ui 
@@ -14,16 +13,19 @@ const items: StepperItem[] = [
     {
         slot: "resume" as const,
         title: t('howItWorks.resume.title'),
+        description: t('howItWorks.resume.subtitle'),
         icon: "i-lucide-file-user",
     },
     {
         slot: "vakansiya" as const,
         title: t('howItWorks.vacancy.title'),
+        description: t('howItWorks.vacancy.subtitle'),
         icon: 'i-lucide-sparkles',
     },
     {
         slot: "download" as const,
         title: t('howItWorks.download.title'),
+        description: t('howItWorks.download.subtitle'),
         icon: 'i-lucide-download',
     }
 ]
@@ -46,7 +48,8 @@ const stepper = useTemplateRef("stepper")
                     </template>
 
                     <template #vakansiya>
-                        <StepperStepContent icon="i-lucide-sparkles" :description="t('howItWorks.vacancy.description')" />
+                        <StepperStepContent icon="i-lucide-sparkles"
+                            :description="t('howItWorks.vacancy.description')" />
                     </template>
 
                     <template #download>
