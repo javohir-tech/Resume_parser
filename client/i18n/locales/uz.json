@@ -40,16 +40,16 @@
       "title": "Yuklab olish",
       "subtitle": "Shablonni tanlang, yuklab oling",
       "description": "Natijani ko'rib chiqing, kerak bo'lsa tahrirlang, so'ng PDF holida yuklab oling."
-    }, 
-    "buttons" : {
-      "next" : "keyingisi" , 
-      "prev" : "oldingi"
+    },
+    "buttons": {
+      "next": "keyingisi",
+      "prev": "oldingi"
     }
   },
   "features": {
     "eyebrow": "Imkoniyatlar",
     "title": "Rezyume ustida ishlash uchun kerak bo'lgan hamma narsa",
-  "subtitle": "Har bir imkoniyat bitta maqsadg  a xizmat qiladi: matn ustida o'tirgan vaqtingizni qisqartirish.",
+    "subtitle": "Har bir imkoniyat bitta maqsadg  a xizmat qiladi: matn ustida o'tirgan vaqtingizni qisqartirish.",
     "items": [
       {
         "title": "Vakansiyaga moslashtirish",
@@ -78,44 +78,79 @@
     ]
   },
   "pricing": {
-  "eyebrow": "Narxlar",
-  "title": "Oddiy narx, yashirin shartlarsiz",
-  "subtitle": "Boshlash uchun to'lov kerak emas. Yuklab olish kerak bo'lganda Pro'ga o'tasiz va istalgan vaqtda bekor qilasiz.",
-  "free": {
-    "label": "Bepul",
-    "plan": "Bepul",
-    "plan_price": "",
-    "plan_term": "har doim",
-    "subtitle": "Rezyume yaratish, tahrirlash va onlayn ko'rish uchun hamma narsa. Havola orqali ulashish - to'g'ridan-to'g'ri yuklab olish Pro tarifda.",
-    "features": [
-      "Cheksiz rezyume yaratish, tahrirlash va ko'rish",
-      "Oyiga 1 marta vakansiyaga moslashtirish",
-      "Har oyda 5 ta AI generatsiya",
-      "Bepul shablonlar, Google Fonts katalogi, o'lcham va rang",
-      "Rekruterlar bilan faqat ko'rish uchun havola ulashish",
-      "O'zbek va ingliz tilida ishlash"
-    ],
-    "button": "Bepul boshlash"
+    "eyebrow": "Narxlar",
+    "title": "Oddiy narx, yashirin shartlarsiz",
+    "subtitle": "Boshlash uchun to'lov kerak emas. Yuklab olish kerak bo'lganda Pro'ga o'tasiz va istalgan vaqtda bekor qilasiz.",
+    "free": {
+      "label": "Bepul",
+      "plan": "Bepul",
+      "plan_price": "",
+      "plan_term": "har doim",
+      "subtitle": "Rezyume yaratish, tahrirlash va onlayn ko'rish uchun hamma narsa. Havola orqali ulashish - to'g'ridan-to'g'ri yuklab olish Pro tarifda.",
+      "features": [
+        "Cheksiz rezyume yaratish, tahrirlash va ko'rish",
+        "Oyiga 1 marta vakansiyaga moslashtirish",
+        "Har oyda 5 ta AI generatsiya",
+        "Bepul shablonlar, Google Fonts katalogi, o'lcham va rang",
+        "Rekruterlar bilan faqat ko'rish uchun havola ulashish",
+        "O'zbek va ingliz tilida ishlash"
+      ],
+      "button": "Bepul boshlash"
+    },
+    "pro": {
+      "label": "Pro",
+      "badge": "Tavsiya etiladi",
+      "plan": "Pro",
+      "plan_price": "4,50",
+      "old_price": "9 $",
+      "plan_term": "oyiga",
+      "discount_note": "Birinchi foydalanuvchilarga 50% chegirma - 100 ta o'rin qoldi, va obuna davom etguncha narx shunday qoladi.",
+      "subtitle": "Har bir vakansiyaga alohida moslashtirilgan rezyumeni yuklab olish va rekruterlar e'tiborini tortadigan ko'rinishga keltirish uchun.",
+      "features": [
+        "To'g'ridan-to'g'ri PDF yuklab olish, pastdagi yozuvsiz",
+        "Cheksiz vakansiyaga moslashtirish",
+        "Har bir vakansiya uchun alohida rezyume versiyasini saqlash",
+        "Premium shablonlardan foydalanish",
+        "Bir vaqtning o'zida bir nechta qurilmadan kirgan holda qolish",
+        "Bepul tarifdagi barcha imkoniyatlar"
+      ],
+      "button": "Pro'ni olish"
+    },
+    "footnote": "Click orqali 30 kunlik obuna so'mda, yoki Polar orqali xalqaro karta bilan oylik obuna - ikkala holatda ham karta ma'lumotlaringiz serverlarimizda saqlanmaydi."
   },
-  "pro": {
-    "label": "Pro",
-    "badge": "Tavsiya etiladi",
-    "plan": "Pro",
-    "plan_price": "4,50",
-    "old_price": "9 $",
-    "plan_term": "oyiga",
-    "discount_note": "Birinchi foydalanuvchilarga 50% chegirma - 100 ta o'rin qoldi, va obuna davom etguncha narx shunday qoladi.",
-    "subtitle": "Har bir vakansiyaga alohida moslashtirilgan rezyumeni yuklab olish va rekruterlar e'tiborini tortadigan ko'rinishga keltirish uchun.",
-    "features": [
-      "To'g'ridan-to'g'ri PDF yuklab olish, pastdagi yozuvsiz",
-      "Cheksiz vakansiyaga moslashtirish",
-      "Har bir vakansiya uchun alohida rezyume versiyasini saqlash",
-      "Premium shablonlardan foydalanish",
-      "Bir vaqtning o'zida bir nechta qurilmadan kirgan holda qolish",
-      "Bepul tarifdagi barcha imkoniyatlar"
-    ],
-    "button": "Pro'ni olish"
-  },
-  "footnote": "Click orqali 30 kunlik obuna so'mda, yoki Polar orqali xalqaro karta bilan oylik obuna - ikkala holatda ham karta ma'lumotlaringiz serverlarimizda saqlanmaydi."
-}
+  "requests": {
+    "eyebrow": "Savollar",
+    "title": "Ko'p beriladigan savollar",
+    "subtitle": "Javobini topa olmadingizmi? Aloqa sahifasidan yozing, javob beramiz.",
+    "items": [
+      {
+        "label": "ATS dasturlari rezyumemni o'qiy oladimi?",
+        "content": "Ha, muammosiz. Har bir shablon matn qatlami bor PDF sifatida yaratiladi va bo'limlar odatiy nomlar bilan belgilanadi — natijada kuzatish tizimlari kontentni to'g'ri tanib oladi."
+      },
+      {
+        "label": "Rezyumeni vakansiyaga qanday moslashtirish mumkin?",
+        "content": "O‘z rezyumeingizni yarating yoki mavjud rezyumeni platformaga yuklab, saqlab qo‘ying. Platforma ma’lumotlaringiz asosida vakansiyaga mos rezyume yaratadi."
+      },
+      {
+        "label": "Pullik obunasiz ham ishlatsam bo'ladimi?",
+        "content": "Albatta. Yaratish, tahrirlash va ko'rish har doim bepul — oyiga 5 marta AI generatsiya va 1 marta vakansiyaga moslashingiz mumkin . Faqat PDF yuklab olish, premium shablonlar va cheksiz AI uchun Pro kerak bo'ladi, uni istalgan payt bekor qilishingiz mumkin."
+      },
+      {
+        "label": "Platforma qaysi tillarni qo'llab-quvvatlaydi?",
+        "content": "Hozircha o'zbek , rus , va ingliz — shu ikkalasida ham interfeys, ham rezyume matni to'liq ishlaydi. Bitta profilda ikki tilli versiyani parallel saqlab, kerakli tilini vakansiyaga qarab tanlab yuborasiz."
+      },
+      {
+        "label": "AI tuzgan matnga o'zgartirish kiritsam bo'ladimi?",
+        "content": "Ha, to'liq erkinsiz. AI shunchaki boshlang'ich qoralamani tayyorlaydi — qolgani sizga bog'liq: istalgan bo'lim yoki bandni oddiy matn maydonida to'g'ridan-to'g'ri tahrirlaysiz."
+      },
+      {
+        "label": "Kiritgan ma'lumotlarim xavfsizmi va qayerda turadi?",
+        "content": "Kontent hisobingizga bog'lab bizning bazamizda saqlanadi. Har qanday rezyumeni xohlagan vaqtda o'chirib tashlashingiz mumkin, hisob butunlay o'chirilganda esa unga tegishli barcha ma'lumot izsiz yo'qoladi."
+      },
+      {
+        "label": "Bir nechta rezyume saqlash mumkinmi?",
+        "content": "Ha, cheklovsiz. Har bir vakansiya uchun alohida nusxa oching, sarlavha va tajriba bandlarini o'sha ish o'rniga moslashtirib qo'ying."
+      }
+    ]
+  }
 }
