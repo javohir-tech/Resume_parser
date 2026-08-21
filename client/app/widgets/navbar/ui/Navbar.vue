@@ -12,6 +12,10 @@ const items = computed<NavigationMenuItem[]>(() => [
         label: t('navbar.about'),
         to: "/about",
     },
+    {
+        label : "Aloqa" , 
+        to : "/contact"
+    }
 ])
 </script>
 
