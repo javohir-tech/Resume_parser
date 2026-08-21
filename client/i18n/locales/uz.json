@@ -1,4 +1,10 @@
 {
+  "seo": {
+    "home": {
+      "title": "Professional rezyume yarating",
+      "description": "Vakansiyaga mos professional rezyume yarating va PDF formatida yuklab oling."
+    }
+  },
   "navbar": {
     "home": "Bosh sahifa",
     "resume": "Rezyume",

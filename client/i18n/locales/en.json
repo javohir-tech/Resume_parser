@@ -1,4 +1,10 @@
 {
+  "seo": {
+    "home": {
+      "title": "Create a Professional Resume",
+      "description": "Create a professional resume tailored to the job and download it as a PDF."
+    }
+  },
   "navbar": {
     "home": "Home",
     "resume": "Resume",
