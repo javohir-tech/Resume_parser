@@ -2,11 +2,6 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   modules: ["@nuxt/ui", "@nuxtjs/i18n", "@vueuse/nuxt", "@nuxt/icon"],
-  routeRules: {
-    "/": { prerender: true },
-    "/en": { prerender: true },
-    "/ru": { prerender: true },
-  },
   icon: {
     serverBundle: {
       collections: ["lucide"],
