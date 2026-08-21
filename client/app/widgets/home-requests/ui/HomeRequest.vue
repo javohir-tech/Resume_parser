@@ -4,8 +4,6 @@ import type { AccordionItem } from '@nuxt/ui/runtime/components/Accordion.vue.js
 
 const { t, tm, rt } = useI18n()
 
-console.log(tm("requests.requests"))
-
 const items = computed<AccordionItem[]>(() => {
     return (tm('requests.items') as any[]).map((item) => {
         return {

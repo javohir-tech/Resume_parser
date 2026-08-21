@@ -1,7 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-  modules: ["@nuxt/ui", "@nuxtjs/i18n", "@vueuse/nuxt"],
+  modules: ["@nuxt/ui", "@nuxtjs/i18n", "@vueuse/nuxt", "@nuxt/icon"],
+  icon: {
+    serverBundle: {
+      collections: ["lucide"],
+    },
+  },
   i18n: {
     defaultLocale: "uz",
     langDir: "locales/",
@@ -26,4 +31,14 @@ export default defineNuxtConfig({
   },
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true },
+  components: {
+    dirs: [
+      "~/widgets/home-hero",
+      "~/widgets/how-it-works",
+      "~/widgets/home-features",
+      "~/widgets/home-pricing",
+      "~/widgets/home-requests",
+      "~/widgets/home-start",
+    ],
+  },
 });

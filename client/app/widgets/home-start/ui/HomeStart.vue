@@ -2,6 +2,7 @@
 import { SectionHeader } from '~/shared/components';
 
 const {t} = useI18n()
+
 </script>
 
 <template>

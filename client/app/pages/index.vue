@@ -14,25 +14,22 @@ useSeoMeta({
 })
 
 // Sections 
-import { HomeFeatures } from '~/widgets/home-features';
 import { HomeHero } from '~/widgets/home-hero';
-import { HomePricing } from '~/widgets/home-pricing';
-import { HomeRequests } from '~/widgets/home-requests';
-import { HomeStart } from '~/widgets/home-start';
-import { HowItWorks } from '~/widgets/how-it-works';
+
 </script>
 
 <template>
     <!-- Home Hero Section -->
     <HomeHero />
+
     <!-- How It Works Section -->
-    <HowItWorks />
+    <LazyUiHowItWorks hydrate-on-visible/>
     <!-- Home Features -->
-    <HomeFeatures />
+    <LazyUiHomeFeatures hydrate-on-visible/>
     <!-- Home Pricing -->
-    <HomePricing />
+    <LazyUiHomePricing hydrate-on-visible/>
     <!-- Home Requests -->
-    <HomeRequests />
+    <LazyUiHomeRequest hydrate-on-visible/>
     <!-- Home Start Section -->
-    <HomeStart />
+    <LazyUiHomeStart hydrate-on-visible />
 </template>
