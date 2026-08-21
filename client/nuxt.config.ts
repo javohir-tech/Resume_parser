@@ -4,6 +4,8 @@ export default defineNuxtConfig({
   modules: ["@nuxt/ui", "@nuxtjs/i18n", "@vueuse/nuxt", "@nuxt/icon"],
   routeRules: {
     "/": { prerender: true },
+    "/en": { prerender: true },
+    "/ru": { prerender: true },
   },
   icon: {
     serverBundle: {
