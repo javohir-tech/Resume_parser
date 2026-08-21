@@ -22,13 +22,13 @@ import { HomeHero } from '~/widgets/home-hero';
     <!-- Home Hero Section -->
     <HomeHero />
     <!-- How It Works Section -->
-    <LazyHowItWorks hydrate-on-visible />
+    <LazyUiHowItWorks hydrate-on-visible />
     <!-- Home Features -->
-    <LazyHomeFeatures hydrate-on-visible />
+    <LazyUiHomeFeatures hydrate-on-visible />
     <!-- Home Pricing -->
-    <LazyHomePricing hydrate-on-visible />
+    <LazyUiHomePricing hydrate-on-visible />
     <!-- Home Requests -->
-    <LazyHomeRequest hydrate-on-visible />
+    <LazyUiHomeRequest hydrate-on-visible />
     <!-- Home Start Section -->
-    <LazyHomeStart hydrate-on-visible />
+    <LazyUiHomeStart hydrate-on-visible />
 </template>

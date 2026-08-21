@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   modules: ["@nuxt/ui", "@nuxtjs/i18n", "@vueuse/nuxt", "@nuxt/icon"],
+  routeRules: {
+    "/": { prerender: true }
+  },
   icon: {
     serverBundle: {
       collections: ["lucide"],
@@ -33,12 +36,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   components: {
     dirs: [
-      { path: "~/widgets/home-hero", pathPrefix: true },
-      { path: "~/widgets/how-it-works", pathPrefix: false },
-      { path: "~/widgets/home-features", pathPrefix: false },
-      { path: "~/widgets/home-pricing", pathPrefix: false },
-      { path: "~/widgets/home-requests", pathPrefix: false },
-      { path: "~/widgets/home-start", pathPrefix: false },
+      "~/widgets/home-hero",
+      "~/widgets/how-it-works",
+      "~/widgets/home-features",
+      "~/widgets/home-pricing",
+      "~/widgets/home-requests",
+      "~/widgets/home-start",
     ],
   },
 });
