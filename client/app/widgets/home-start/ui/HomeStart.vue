@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { SectionHeader } from '~/shared/components';
 
-
+const {t} = useI18n()
 </script>
 
 <template>
@@ -9,10 +9,10 @@ import { SectionHeader } from '~/shared/components';
         <div class="absolute inset-0 opacity-[0.06] pointer-events-none"
             style="background-image: repeating-linear-gradient(0deg, currentColor 0 1px, transparent 1px 90px), repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 140px); color: var(--ui-text-muted)" />
         <UContainer>
-            <SectionHeader title="Rezyumengiz bugun tayyor bo'lsin"
-                subtitle="Bo'sh varaqqa qarab o'tirmang. Bir necha jumla yozing, qolganini biz qilamiz." />
+            <SectionHeader :title="t('homeStart.title')"
+                :subtitle="t('homeStart.subtitle')" />
             <div class="text-center mt-10">
-                <UButton trailing-icon="i-lucide-arrow-right">Bepul boshlash</UButton>
+                <UButton trailing-icon="i-lucide-arrow-right">{{ t('homeStart.button') }}</UButton>
             </div>
         </UContainer>
     </section>

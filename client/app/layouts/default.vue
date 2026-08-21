@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Footer } from '~/widgets/footer';
 import { Navbar } from '~/widgets/navbar';
 
 
@@ -9,7 +10,5 @@ import { Navbar } from '~/widgets/navbar';
     <main>
         <slot />
     </main>
-    <footer>
-        footer
-    </footer>
+    <Footer />
 </template>

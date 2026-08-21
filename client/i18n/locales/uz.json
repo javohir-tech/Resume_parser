@@ -152,5 +152,20 @@
         "content": "Ha, cheklovsiz. Har bir vakansiya uchun alohida nusxa oching, sarlavha va tajriba bandlarini o'sha ish o'rniga moslashtirib qo'ying."
       }
     ]
+  },
+  "homeStart": {
+    "title": "Rezyumengizdagi eng kuchli taraflarni vakansiyaga moslang",
+    "subtitle": "Ish e'lonini kiriting — biz tajribangizni tahlil qilib, aynan ushbu vakansiya uchun eng munosib rezyumeni shakllantiramiz.",
+    "button": "Rezyumeni kuchaytirish"
+  },
+  "footer": {
+    "description": "AI yordamida vakansiyaga mos rezyume yarating",
+    "product": "Mahsulot",
+    "features": "Imkoniyatlar",
+    "pricing": "Narxlar",
+    "resources": "Materiallar",
+    "contact": "Aloqa",
+    "copyright": "© 2026 Resume Parser. Barcha huquqlar himoyalangan",
+    "createdBy": "Muallif:"
   }
 }

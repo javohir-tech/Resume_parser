@@ -152,5 +152,20 @@
         "content": "Yes, without any limits. You can create a separate version for each job position and adapt the title and work experience to match that specific role."
       }
     ]
+  },
+  "homeStart": {
+    "title": "Highlight your key strengths for any job offer",
+    "subtitle": "Paste the job description — we'll tailor your experience and highlight what recruiters are actually looking for.",
+    "button": "Boost your resume"
+  },
+  "footer": {
+    "description": "Craft job-targeted resumes powered by AI",
+    "product": "Product",
+    "features": "Features",
+    "pricing": "Pricing",
+    "resources": "Resources",
+    "contact": "Contact",
+    "copyright": "© 2026 Resume Parser. All rights reserved",
+    "createdBy": "created by"
   }
 }
