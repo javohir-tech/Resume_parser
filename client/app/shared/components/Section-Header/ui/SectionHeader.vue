@@ -10,7 +10,7 @@ const props = defineProps<{
 <template>
     <div>
         <div class="mb-5 flex items-center gap-2 justify-center">
-            <span class="h-1.5 w-1.5 rounded-full bg-primary-500 dark:bg-primary-400" />
+            <span v-if="eyebrow" class="h-1.5 w-1.5 rounded-full bg-primary-500 dark:bg-primary-400" />
             <span class="text-[13px] text-gray-500 dark:text-white/50">
                 {{ eyebrow }}
             </span>

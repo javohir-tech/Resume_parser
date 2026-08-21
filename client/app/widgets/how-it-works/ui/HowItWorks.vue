@@ -62,7 +62,7 @@ const stepper = useTemplateRef("stepper")
                 <UButton leading-icon="i-lucide-arrow-left" :disabled="!stepper?.hasPrev" @click="stepper?.prev()">
                     {{ t('howItWorks.buttons.prev') }}
                 </UButton>
-                <UButton leading-icon="i-lucide-arrow-right" :disabled="!stepper?.hasNext" @click="stepper?.next()">
+                <UButton trailing-icon="i-lucide-arrow-right" :disabled="!stepper?.hasNext" @click="stepper?.next()">
                     {{ t('howItWorks.buttons.next') }}
                 </UButton>
             </div>
