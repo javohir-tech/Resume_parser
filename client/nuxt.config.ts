@@ -33,12 +33,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   components: {
     dirs: [
-      "~/widgets/home-hero",
-      "~/widgets/how-it-works",
-      "~/widgets/home-features",
-      "~/widgets/home-pricing",
-      "~/widgets/home-requests",
-      "~/widgets/home-start",
+      { path: "~/widgets/home-hero", pathPrefix : true },
+      { path: "~/widgets/how-it-works", pathPrefix: false },
+      { path: "~/widgets/home-features", pathPrefix: false },
+      { path: "~/widgets/home-pricing", pathPrefix: false },
+      { path: "~/widgets/home-requests", pathPrefix: false },
+      { path: "~/widgets/home-start", pathPrefix: false },
     ],
   },
 });
