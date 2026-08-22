@@ -48,7 +48,7 @@ async function submitForm(event: FormSubmitEvent<Schema>) {
 
 <template>
     <UForm :schema="schema" :state="state" @submit="submitForm">
-        <div class="flex justify-between gap-3">
+        <div class="flex flex-col md:flex-row md:justify-between gap-3">
             <UFormField label="Ismingiz" class="flex-1 font-mono" name="name">
                 <UInput v-model="state.name" class="w-full" placeholder="Suvonov Javohir" size="xl" />
             </UFormField>

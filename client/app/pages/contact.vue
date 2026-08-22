@@ -37,7 +37,7 @@ const contact_links: IContactLink[] = [
                         <p class="text-gray-500 text-sm font-medium">Odatda 1-2 ish kuni ichida javob beramiz.</p>
                     </div>
                 </div>
-                <div class="rounded-xl border p-5">
+                <div class="rounded-xl border border-gray-500 p-5">
                     <SendMessageForm />
                 </div>
             </div>
