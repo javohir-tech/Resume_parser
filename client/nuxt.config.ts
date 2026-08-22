@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   modules: ["@nuxt/ui", "@nuxtjs/i18n", "@vueuse/nuxt", "@nuxt/icon"],
+  runtimeConfig: {
+    botToken: "",
+    chatId: "",
+  },
   routeRules: {
     "/": { prerender: true },
   },

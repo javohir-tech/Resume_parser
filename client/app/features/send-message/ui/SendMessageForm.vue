@@ -1,34 +1,10 @@
 <script setup lang="ts">
-import * as v from "valibot"
 import type { FormSubmitEvent } from "@nuxt/ui";
+import useSendMessage from "../models/sendMessage";
+import type { Schema } from "../models/types";
+import { schema } from "../models/types";
 
-const schema = v.object({
-    name: v.pipe(
-        v.string(),
-        v.minLength(1, "Ism kiritilishi shart"),
-        v.minLength(2, "Ism juda qisqa"),
-        v.maxLength(50, "Ism juda uzun")
-    ),
-    email: v.pipe(
-        v.string(),
-        v.minLength(1, "Email kiritilishi shart"),
-        v.email("Email formati noto'g'ri"),
-        v.maxLength(75, "email juda uzun")
-    ),
-    subject: v.pipe(
-        v.string(),
-        v.minLength(1, "Mavzu kiritilishi shart"),
-        v.maxLength(100, "mavzu juda uzun")
-    ),
-    message: v.pipe(
-        v.string(),
-        v.minLength(1, "Xabar kiritilishi shart"),
-        v.minLength(10, "Xabar juda qisqa, kamida 10 belgi"),
-        v.maxLength(300, "xabar juda uzun , 300 tadan oshmasin")
-    )
-})
-
-type Schema = v.InferOutput<typeof schema>
+const { sendMessageTelegram } = useSendMessage()
 
 const state = reactive<Schema>({
     name: "",
@@ -40,6 +16,7 @@ const state = reactive<Schema>({
 const toast = useToast()
 
 async function submitForm(event: FormSubmitEvent<Schema>) {
+    sendMessageTelegram(event.data)
     toast.add({ title: "Success", description: "oxshadi", color: "success" })
     console.log(event.data)
 }
