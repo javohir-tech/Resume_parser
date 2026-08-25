@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const toaster = { position: 'bottom-right', duration: 4000, max: 3 } as const
+const toaster = { position: 'top-right', duration: 4000, max: 3 } as const
 </script>
 
 <template>

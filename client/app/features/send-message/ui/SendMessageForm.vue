@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui";
 import useSendMessage from "../models/sendMessage";
-import type { Schema } from "../models/types";
-import { schema } from "../models/types";
+import { type Schema, schema } from "../models/types";
 
-const { sendMessageTelegram } = useSendMessage()
+const { loading, sendMessageTelegram } = useSendMessage()
 
 const state = reactive<Schema>({
     name: "",
@@ -13,12 +12,13 @@ const state = reactive<Schema>({
     message: "",
 })
 
-const toast = useToast()
 
 async function submitForm(event: FormSubmitEvent<Schema>) {
-    sendMessageTelegram(event.data)
-    toast.add({ title: "Success", description: "oxshadi", color: "success" })
-    console.log(event.data)
+    await sendMessageTelegram(event.data)
+    state.email = ""
+    state.name = ""
+    state.subject = ""
+    state.message = ""
 }
 
 </script>
@@ -41,7 +41,7 @@ async function submitForm(event: FormSubmitEvent<Schema>) {
                 class="w-full" />
         </UFormField>
         <div class="text-end mt-5">
-            <UButton icon="lucide:send" type="submit">Yuborish</UButton>
+            <UButton :loading="loading" :disabled="loading" icon="lucide:send" type="submit">Yuborish</UButton>
         </div>
     </UForm>
 </template>

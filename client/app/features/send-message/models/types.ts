@@ -27,3 +27,9 @@ export const schema = v.object({
 });
 
 export type Schema = v.InferOutput<typeof schema>;
+
+
+export interface TelegramResponse {
+  ok : boolean , 
+  result :  unknown , 
+}

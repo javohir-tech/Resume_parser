@@ -173,5 +173,13 @@
     "contact": "Контакты",
     "copyright": "© 2026 Resume Parser. Все права защищены",
     "createdBy": "создано"
+  },
+  "contact": {
+    "sendMessage": {
+      "successTitle": "Ваше сообщение отправлено",
+      "successDescription": "Мы свяжемся с вами в ближайшее время",
+      "errorTitle": "Не удалось отправить сообщение",
+      "errorDescription": "Произошла ошибка, пожалуйста, попробуйте снова"
+    }
   }
 }

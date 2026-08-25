@@ -1,2 +1,7 @@
+import { type TelegramResponse } from "../models/types";
+
 export const telegramSendMessage = (message: string) =>
-  $fetch("api/telegram/send", { method: "POST", body: { message } });
+  $fetch<TelegramResponse>("/api/telegram/send", {
+    method: "POST",
+    body: { message },
+  });

@@ -173,5 +173,13 @@
     "contact": "Contact",
     "copyright": "© 2026 Resume Parser. All rights reserved",
     "createdBy": "created by"
+  },
+  "contact": {
+    "sendMessage": {
+      "successTitle": "Your message has been sent",
+      "successDescription": "We will contact you shortly",
+      "errorTitle": "Message could not be sent",
+      "errorDescription": "Something went wrong, please try again"
+    }
   }
 }

@@ -173,5 +173,13 @@
     "contact": "Aloqa",
     "copyright": "© 2026 Resume Parser. Barcha huquqlar himoyalangan",
     "createdBy": "Muallif:"
+  },
+  "contact": {
+    "sendMessage": {
+      "successTitle": "Xabaringiz yuborildi",
+      "successDescription": "Tez orada siz bilan aloqaga chiqamiz",
+      "errorTitle": "Xabar yuborilmadi",
+      "errorDescription": "Xatolik yuz berdi, iltimos qaytadan urinib ko'ring"  
+    }
   }
 }
