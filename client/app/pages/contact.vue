@@ -2,11 +2,14 @@
 import { SendMessageForm } from '~/features/send-message';
 import { SectionHeader } from '~/shared/components';
 import { ContactLink, type IContactLink } from '~/shared/components/Contact-Link';
+
+const { t } = useI18n()
+
 const contact_links: IContactLink[] = [
     {
-        title: "+998 77 123 29 04",
-        link: "lucide:phone-call",
-        icon: "lucide:phone"
+        title: "suvonovjavohir625@gmail.com",
+        link: "mailto:suvonovjavohir625@gmail.com",
+        icon: "lucide:mail"
     },
     {
         title: "Linkdin",
@@ -27,9 +30,8 @@ const contact_links: IContactLink[] = [
         <UContainer>
             <div class="grid grid-cols-1 md:grid-cols-2 py-10 md:py-25 gap-3 items-stretch">
                 <div>
-                    <SectionHeader eyebrow="Aloqa" title="Savolingiz bormi? Yozing."
-                        subtitle="Taklif, xatolik yoki hamkorlik: hammasi bo'yicha yozishingiz mumkin. Har bir xabarni o'qiymiz."
-                        justify="start" />
+                    <SectionHeader :eyebrow="t('contact.eyebrow')" :title="t('contact.title')"
+                        :subtitle="t('contact.subtitle')" justify="start" />
                     <div class="flex flex-col gap-4 mt-5 md:mt-10">
                         <ContactLink v-for="contact in contact_links" :key="contact.link" :contact="contact" />
                     </div>

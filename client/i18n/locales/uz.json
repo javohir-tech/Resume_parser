@@ -175,11 +175,24 @@
     "createdBy": "Muallif:"
   },
   "contact": {
+    "eyebrow": "Aloqa",
+    "title": "Savolingiz bormi? Yozing.",
+    "subtitle": "Taklif, xatolik yoki hamkorlik: hammasi bo'yicha yozishingiz mumkin. Har bir xabarni o'qiymiz.",
+    "responseTime": "Odatda 1-2 ish kuni ichida javob beramiz.",
+    "form": {
+      "nameLabel": "Ismingiz",
+      "emailLabel": "Email",
+      "subjectLabel": "Mavzu",
+      "subjectPlaceholder": "Nima haqida yozmoqchisiz",
+      "messageLabel": "Xabar",
+      "messagePlaceholder": "Savolingiz yoki taklifingizni batafsil yozing...",
+      "submitButton": "Yuborish"
+    },
     "sendMessage": {
       "successTitle": "Xabaringiz yuborildi",
       "successDescription": "Tez orada siz bilan aloqaga chiqamiz",
       "errorTitle": "Xabar yuborilmadi",
-      "errorDescription": "Xatolik yuz berdi, iltimos qaytadan urinib ko'ring"  
+      "errorDescription": "Xatolik yuz berdi, iltimos qaytadan urinib ko'ring"
     }
   }
 }

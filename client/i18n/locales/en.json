@@ -175,6 +175,19 @@
     "createdBy": "created by"
   },
   "contact": {
+    "eyebrow": "Contact",
+    "title": "Have a question? Get in touch.",
+    "subtitle": "Suggestions, bugs, or collaboration — feel free to write about anything. We read every message.",
+    "responseTime": "We usually reply within 1-2 business days.",
+    "form": {
+      "nameLabel": "Your name",
+      "emailLabel": "Email",
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "What is this about",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Describe your question or suggestion in detail...",
+      "submitButton": "Send"
+    },
     "sendMessage": {
       "successTitle": "Your message has been sent",
       "successDescription": "We will contact you shortly",

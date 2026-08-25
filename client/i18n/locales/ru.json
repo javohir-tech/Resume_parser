@@ -175,6 +175,19 @@
     "createdBy": "создано"
   },
   "contact": {
+    "eyebrow": "Контакты",
+    "title": "Остались вопросы? Напишите нам.",
+    "subtitle": "Предложения, ошибки или сотрудничество — пишите по любому поводу. Мы читаем каждое сообщение.",
+    "responseTime": "Обычно отвечаем в течение 1-2 рабочих дней.",
+    "form": {
+      "nameLabel": "Ваше имя",
+      "emailLabel": "Email",
+      "subjectLabel": "Тема",
+      "subjectPlaceholder": "О чём хотите написать",
+      "messageLabel": "Сообщение",
+      "messagePlaceholder": "Подробно опишите ваш вопрос или предложение...",
+      "submitButton": "Отправить"
+    },
     "sendMessage": {
       "successTitle": "Ваше сообщение отправлено",
       "successDescription": "Мы свяжемся с вами в ближайшее время",

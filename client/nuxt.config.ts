@@ -8,6 +8,12 @@ export default defineNuxtConfig({
   },
   routeRules: {
     "/": { prerender: true },
+    "/en": { prerender: true },
+    "/ru": { prerender: true },
+
+    "/about": { redirect: {to : "/contact" , statusCode : 307}  },
+    "/en/about": { redirect: {to : "/en/contact" , statusCode : 307} },
+    "/ru/about": { redirect: {to : "/ru/contact" , statusCode : 307} },
   },
   icon: {
     serverBundle: {
