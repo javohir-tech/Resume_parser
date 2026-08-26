@@ -1,5 +1,5 @@
 import secrets
-import random
+from random import randint
 from datetime import datetime, timedelta
 from aiogram import Router, F
 from aiogram.filters import Command
@@ -82,12 +82,12 @@ async def handle_login(messaage: Message):
             return
 
         await session.execute(
-            select(LoginCode)
+            update(LoginCode)
             .where(LoginCode.user_id == user.id, LoginCode.is_used == False)
             .values(is_used=True)
         )
 
-        code = "".join([str(random(0, 9)) for _ in range(6)])
+        code = "".join([str(randint(0, 9)) for _ in range(6)])
         new_login_code = LoginCode(
             user_id=user.id, code=code, expires_at=datetime.now() + timedelta(minutes=1)
         )
