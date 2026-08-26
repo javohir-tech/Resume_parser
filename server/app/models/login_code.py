@@ -1,9 +1,13 @@
 import uuid
+from typing import TYPE_CHECKING
 from sqlalchemy import String, DateTime, ForeignKey, Boolean
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base
 from datetime import datetime, timezone
+
+if TYPE_CHECKING:
+    from app.models.user import User
 
 
 class LoginCode(Base):
@@ -15,6 +19,7 @@ class LoginCode(Base):
     )
     code: Mapped[str] = mapped_column(String(6), index=True)
     user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"), index=True)
+    user: Mapped["User"] = relationship(back_populates="login_codes")
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
