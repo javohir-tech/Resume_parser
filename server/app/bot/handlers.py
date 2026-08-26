@@ -1,6 +1,6 @@
 import secrets
 from random import randint
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta , timezone
 from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import (
@@ -89,7 +89,7 @@ async def handle_login(messaage: Message):
 
         code = "".join([str(randint(0, 9)) for _ in range(6)])
         new_login_code = LoginCode(
-            user_id=user.id, code=code, expires_at=datetime.now() + timedelta(minutes=1)
+            user_id=user.id, code=code, expires_at=datetime.now(timezone.utc) + timedelta(minutes=1)
         )
         session.add(new_login_code)
         await session.commit()

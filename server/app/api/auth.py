@@ -1,6 +1,6 @@
 from app.models.user import User
 from app.models.login_code import LoginCode
-from datetime import datetime, timedelta
+from datetime import datetime, timezone
 from sqlalchemy import select, update
 from fastapi import APIRouter, HTTPException, Depends, status
 from app.db.session import get_db
@@ -23,7 +23,7 @@ async def vefiy_code(code: str, db: AsyncSession = Depends(get_db)):
             status_code=status.HTTP_400_BAD_REQUEST, detail="Natogri kode"
         )
 
-    if login_code.expires_at < datetime.now():
+    if login_code.expires_at < datetime.now(timezone.utc):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="kod muddati o'tgan"
         )
