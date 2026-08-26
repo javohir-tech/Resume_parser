@@ -1,11 +1,16 @@
-from app.models.user import User
-from app.models.login_code import LoginCode
+# Standard Library
 from datetime import datetime, timezone
+
+# Third-party
+from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload
-from fastapi import APIRouter, HTTPException, Depends, status
-from app.db.session import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
+
+# LOCAL
+from app.models.user import User
+from app.models.login_code import LoginCode
+from app.db.session import get_db
 from app.core.security import create_access_token, create_refresh_token, verify
 
 auth_router = APIRouter()
@@ -23,12 +28,12 @@ async def vefiy_code(code: str, db: AsyncSession = Depends(get_db)):
 
     if not login_code:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Natogri kod"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid verification code"
         )
 
     if login_code.expires_at < datetime.now(timezone.utc):
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="kod muddati o'tgan"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Verification code has expired"
         )
 
     login_code.is_used = True
@@ -41,7 +46,7 @@ async def vefiy_code(code: str, db: AsyncSession = Depends(get_db)):
 
     return {
         "success": True,
-        "message": "successfuly logged",
+        "message": "Login successfuld",
         "data": {
             "tokens": {
                 "access_token": access_token,
