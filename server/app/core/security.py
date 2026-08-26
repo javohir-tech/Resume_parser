@@ -7,6 +7,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 security = HTTPBearer()
 
+
 def create_access_token(user_id: uuid.UUID) -> str:
     payload = {
         "sub": str(user_id),
@@ -29,35 +30,37 @@ def create_refresh_token(user_id: uuid.UUID) -> str:
     return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
 
 
-def verify(token_type: str = "access",):
-    def _verify(credentials : HTTPAuthorizationCredentials = Depends(security))->str :
-        token = credentials.credentials
-        try:
-            payload = jwt.decode(
-                token, settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM]
-            )
-
-            user_id = payload.get("sub")
-            token_type_check = payload.get("type")
-            token_jti = payload.get("jti")
-
-            if not token_jti or not user_id:
-                raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
-                )
-
-            if token_type != token_type_check:
-                raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
-                )
-
-            return user_id
-        except ExpiredSignatureError:
+def verify(credentials: HTTPAuthorizationCredentials = Depends(security)) -> str:
+    token = credentials.credentials
+    try:
+        payload = jwt.decode(
+            token, settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM]
+        )
+        user_id = payload.get("sub")
+        token_jti = payload.get("jti")
+        if not token_jti or not user_id:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail="Token expired"
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
             )
-        except JWTError:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid token"
-            )
-    return _verify
+        return user_id
+    except ExpiredSignatureError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Token expired"
+        )
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid token"
+        )
+
+
+def decode_token(token: str):
+    try:
+        payload = jwt.decode(
+            token, settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM]
+        )
+
+        return payload
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+        )
