@@ -30,13 +30,13 @@ const items = computed<NavigationMenuItem[]>(() => [
             <UPopover>
                 <UButton icon="i-lucide-languages" color="neutral" variant="ghost" />
 
-                <template #content>
+                <template #content="{ close }">
                     <div class="flex flex-col gap-1 p-1 min-w-32">
-                        <UButton icon="circle-flags:uz" label="Uzbek" color="neutral" @click="setLocale('uz')"
+                        <UButton icon="circle-flags:uz" label="Uzbek" color="neutral" @click="setLocale('uz') , close()"
                             variant="ghost" />
-                        <UButton icon="circle-flags:gb" label="English" color="neutral" @click="setLocale('en')"
+                        <UButton icon="circle-flags:gb" label="English" color="neutral" @click="setLocale('en') , close()"
                             variant="ghost" />
-                        <UButton icon="circle-flags:ru" label="Russian" color="neutral" @click="setLocale('ru')"
+                        <UButton icon="circle-flags:ru" label="Russian" color="neutral" @click="setLocale('ru') , close()"
                             variant="ghost" />
                     </div>
                 </template>
@@ -44,13 +44,13 @@ const items = computed<NavigationMenuItem[]>(() => [
             <UColorModeButton />
             <UPopover v-if="access_token">
                 <UserAvatar />
-                <template #content>
+                <template #content="{close}">
                     <div class="flex flex-col gap-1 p-1 min-w-32">
-                        <UButton to="/settings" color="neutral" variant="ghost">
+                        <UButton to="/settings" @click="close" color="neutral" variant="ghost">
                             dashboard
                         </UButton>
-                        <UButton @click="handle_logout" trailing-icon="i-lucide-log-out" :disabled="loading" :loading="loading" color="error"
-                            variant="ghost">Logout</UButton>
+                        <UButton @click="handle_logout" trailing-icon="i-lucide-log-out" :disabled="loading"
+                            :loading="loading" color="error" variant="ghost">Logout</UButton>
                     </div>
                 </template>
             </UPopover>
@@ -63,6 +63,4 @@ const items = computed<NavigationMenuItem[]>(() => [
     </UHeader>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

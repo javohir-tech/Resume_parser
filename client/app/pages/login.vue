@@ -43,7 +43,7 @@ const initialCode = computed<string | null>(() => {
                             @resume_parserbot
                         </a>
                         {{ t("auth.login.description") }}
-                        <span class="font-medium text-white">
+                        <span class="font-medium text-dark dark:text-white">
                             {{ t("auth.login.codeLabel") }}
                         </span>
                         {{ t("auth.login.descriptionEnd") }}
