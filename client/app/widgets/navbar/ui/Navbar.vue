@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui/runtime/components/NavigationMenu.vue.js'
+import { UserAvatar } from '~/entities/user';
+import { useLogout } from '~/features/auth/logout';
 
 const { t, setLocale } = useI18n()
+const { loading, handle_logout } = useLogout()
+const access_token = useCookie("access_token")
 
 const items = computed<NavigationMenuItem[]>(() => [
     {
@@ -13,8 +17,8 @@ const items = computed<NavigationMenuItem[]>(() => [
         to: "/about",
     },
     {
-        label : "Aloqa" , 
-        to : "/contact"
+        label: "Aloqa",
+        to: "/contact"
     }
 ])
 </script>
@@ -38,6 +42,19 @@ const items = computed<NavigationMenuItem[]>(() => [
                 </template>
             </UPopover>
             <UColorModeButton />
+            <UPopover v-if="access_token">
+                <UserAvatar />
+                <template #content>
+                    <div class="flex flex-col gap-1 p-1 min-w-32">
+                        <UButton to="/settings" color="neutral" variant="ghost">
+                            dashboard
+                        </UButton>
+                        <UButton @click="handle_logout" trailing-icon="i-lucide-log-out" :disabled="loading" :loading="loading" color="error"
+                            variant="ghost">Logout</UButton>
+                    </div>
+                </template>
+            </UPopover>
+            <UButton to="/login" v-else>Kirish</UButton>
         </template>
 
         <template #body>
