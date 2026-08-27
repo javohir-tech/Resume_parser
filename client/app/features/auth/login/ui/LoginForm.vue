@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { lo } from '@nuxt/ui/runtime/locale/index.js';
 import useLogin from '../models/useLogin';
+
+const props = defineProps<{
+    query_code?: string | null
+}>()
 
 const code = ref<number[]>([])
 const pinKey = ref(0)
 
-const {loading ,  login } = useLogin()
+const { loading, login } = useLogin()
 
 watch(code, async (newCode) => {
     if (newCode.length === 6) {
@@ -13,6 +16,14 @@ watch(code, async (newCode) => {
         await login(code_str)
         code.value = []
         pinKey.value++
+    }
+})
+
+onMounted(() => {
+    if (props.query_code && props.query_code.length === 6) {
+        code.value = props.query_code.split("").map((item)=> {
+            return Number(item)
+        })
     }
 })
 </script>

@@ -2,8 +2,21 @@
 definePageMeta({
     middleware: "guest"
 })
-
 import { LoginForm } from '~/features/auth/login';
+
+const { t } = useI18n()
+const route = useRoute()
+
+const initialCode = computed<string | null>(() => {
+    const code = route.query.code
+
+    if (typeof code !== "string") {
+        return null
+    }
+
+    return code.slice(0, 6)
+})
+
 
 </script>
 
@@ -20,7 +33,7 @@ import { LoginForm } from '~/features/auth/login';
 
                     <!-- Title -->
                     <h1 class="text-2xl font-semibold tracking-tight">
-                        Telegram orqali kirish
+                        {{ t('auth.login.title') }}
                     </h1>
 
                     <!-- Description -->
@@ -29,27 +42,27 @@ import { LoginForm } from '~/features/auth/login';
                             class="font-medium text-primary transition-colors hover:text-primary/80">
                             @resume_parserbot
                         </a>
-                        botiga kiring va sizga yuborilgan
+                        {{ t("auth.login.description") }}
                         <span class="font-medium text-white">
-                            6 xonali kodni
+                            {{ t("auth.login.codeLabel") }}
                         </span>
-                        kiriting.
+                        {{ t("auth.login.descriptionEnd") }}
                     </p>
 
                     <!-- Code -->
                     <div class="mt-8 flex flex-col items-center justify-center">
-                        <LoginForm />
+                        <LoginForm :query_code="initialCode" />
                     </div>
 
                     <!-- Helper -->
                     <p class="mt-5 text-xs text-muted">
-                        Kod 1 daqiqa davomida amal qiladi
+                        {{ t("auth.login.helper") }}
                     </p>
                 </div>
 
                 <!-- Footer text -->
                 <p class="mt-6 text-center text-xs text-muted">
-                    Telegram orqali xavfsiz autentifikatsiya
+                    {{ t("auth.login.footer") }}
                 </p>
             </div>
         </UContainer>

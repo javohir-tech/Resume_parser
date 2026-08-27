@@ -194,5 +194,15 @@
       "errorTitle": "Xabar yuborilmadi",
       "errorDescription": "Xatolik yuz berdi, iltimos qaytadan urinib ko'ring"
     }
+  },
+  "auth": {
+    "login": {
+      "title": "Telegram orqali kirish",
+      "description": "botiga kiring va sizga yuborilgan",
+      "codeLabel": "6 xonali kodni",
+      "descriptionEnd": "kiriting.",
+      "helper": "Kod 1 daqiqa davomida amal qiladi",
+      "footer": "Telegram orqali xavfsiz autentifikatsiya"
+    }
   }
 }

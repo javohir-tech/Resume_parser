@@ -17,7 +17,7 @@ const items = computed<NavigationMenuItem[]>(() => [
         to: "/about",
     },
     {
-        label: "Aloqa",
+        label: t('navbar.contact'),
         to: "/contact"
     }
 ])
@@ -63,4 +63,6 @@ const items = computed<NavigationMenuItem[]>(() => [
     </UHeader>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

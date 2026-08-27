@@ -194,5 +194,15 @@
       "errorTitle": "Message could not be sent",
       "errorDescription": "Something went wrong, please try again"
     }
+  } , 
+  "auth": {
+    "login": {
+      "title": "Sign in with Telegram",
+      "description": "Go to the",
+      "codeLabel": "6-digit code",
+      "descriptionEnd": "sent to you.",
+      "helper": "The code is valid for 1 minute",
+      "footer": "Secure authentication via Telegram"
+    }
   }
 }
