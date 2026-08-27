@@ -1,23 +1,22 @@
 <script setup lang="ts">
+import { lo } from '@nuxt/ui/runtime/locale/index.js';
 import useLogin from '../models/useLogin';
 
 const code = ref<number[]>([])
+const pinKey = ref(0)
 
-const {loading , err , login} = useLogin()
+const {loading ,  login } = useLogin()
 
-
-function handleLogin(){
-    const code_str = String(code.value.join(""))
-    login(code_str)
-}
-// watch(code, () => {
-//     if (code.value.length === 6) {
-//         console.log(code.value)
-//     }
-// })
+watch(code, async (newCode) => {
+    if (newCode.length === 6) {
+        const code_str = String(code.value.join(""))
+        await login(code_str)
+        code.value = []
+        pinKey.value++
+    }
+})
 </script>
 
 <template>
-    <UPinInput v-model="code" type="number" :length="6" size="xl" />
-        <UButton class="block" @click="handleLogin">Login</UButton>
+    <UPinInput :disabled="loading" :key="pinKey" otp v-model="code" type="number" :length="6" size="xl" />
 </template>

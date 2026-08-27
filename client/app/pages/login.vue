@@ -33,7 +33,7 @@ import { LoginForm } from '~/features/auth/login';
                     </p>
 
                     <!-- Code -->
-                    <div class="mt-8 flex justify-center">
+                    <div class="mt-8 flex flex-col items-center justify-center">
                         <LoginForm />
                     </div>
 
