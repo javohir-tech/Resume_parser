@@ -1,1 +1,1 @@
-export type {ApiErrorBody} from "./error"
+export type { ApiErrorBody, ToManyRequests } from "./error";

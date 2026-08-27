@@ -8,7 +8,7 @@ const props = defineProps<{
 const code = ref<number[]>([])
 const pinKey = ref(0)
 
-const { loading, login } = useLogin()
+const { loading, countdownInterval, to_many_request, login } = useLogin()
 
 watch(code, async (newCode) => {
     if (newCode.length === 6) {
@@ -21,13 +21,17 @@ watch(code, async (newCode) => {
 
 onMounted(() => {
     if (props.query_code && props.query_code.length === 6) {
-        code.value = props.query_code.split("").map((item)=> {
+        code.value = props.query_code.split("").map((item) => {
             return Number(item)
         })
     }
 })
+
+
+
 </script>
 
 <template>
-    <UPinInput :disabled="loading" :key="pinKey" otp v-model="code" type="number" :length="6" size="xl" />
+    <UPinInput :disabled="loading || to_many_request" :key="pinKey" otp v-model="code" type="number" :length="6"
+        size="xl" />
 </template>
