@@ -3,10 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.auth import auth_router
 from app.bot.bot_instance import dp
 from app.bot.handlers import router as bot_router
+from app.core.exceptions import register_exception_handlers
 
 dp.include_router(bot_router)
 
 app = FastAPI()
+
+register_exception_handlers(app)
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth_router, prefix="/api")
+app.include_router(auth_router, prefix="/api/auth")
 
 
 @app.get("/")

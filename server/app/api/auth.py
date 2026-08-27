@@ -3,10 +3,12 @@ from datetime import datetime, timezone
 from uuid import UUID
 
 # Third-party
-from fastapi import APIRouter, HTTPException, Depends, status
+from fastapi import APIRouter, HTTPException, Depends, status, Request
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 # LOCAL
 from app.models.user import User
@@ -23,10 +25,12 @@ from app.schemas.auth_schemas import RefreshTokenScheme
 from app.models.refresh_token import RefreshToken
 
 auth_router = APIRouter()
+limiter = Limiter(key_func=get_remote_address)
 
 
-@auth_router.post("/auth/telegram/verify")
-async def vefiy_code(code: str, db: AsyncSession = Depends(get_db)):
+@auth_router.post("/telegram/verify")
+@limiter.limit("5/minute")
+async def vefiy_code(request: Request, code: str, db: AsyncSession = Depends(get_db)):
     result = await db.execute(
         select(LoginCode)
         .options(selectinload(LoginCode.user))
@@ -96,7 +100,7 @@ async def get_me(db: AsyncSession = Depends(get_db), user_id: str = Depends(veri
     }
 
 
-@auth_router.post("/auth/refresh")
+@auth_router.post("/refresh")
 async def refresh_token(
     refresh_token: RefreshTokenScheme,
     db: AsyncSession = Depends(get_db),
