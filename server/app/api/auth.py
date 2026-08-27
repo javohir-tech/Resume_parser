@@ -17,8 +17,10 @@ from app.core.security import (
     create_refresh_token,
     verify,
     decode_token,
+    token_is_valid,
 )
-from app.schemas.auth_schemas import RefreshToken
+from app.schemas.auth_schemas import RefreshTokenScheme
+from app.models.refresh_token import RefreshToken
 
 auth_router = APIRouter()
 
@@ -50,7 +52,7 @@ async def vefiy_code(code: str, db: AsyncSession = Depends(get_db)):
     user = login_code.user
 
     access_token = create_access_token(user.id)
-    refresh_token = create_refresh_token(user.id)
+    refresh_token = await create_refresh_token(user.id, db)
 
     return {
         "success": True,
@@ -96,23 +98,63 @@ async def get_me(db: AsyncSession = Depends(get_db), user_id: str = Depends(veri
 
 @auth_router.post("/auth/refresh")
 async def refresh_token(
-    refresh_token: RefreshToken,
+    refresh_token: RefreshTokenScheme,
     db: AsyncSession = Depends(get_db),
-    user_id: str = Depends(verify),
 ):
+    payload = decode_token(refresh_token.refresh_token)
+
+    user_id = payload.get("sub")
+
     user_uuid = UUID(user_id)
     result = await db.execute(select(User).where(User.id == user_uuid))
 
     user = result.scalar_one_or_none()
 
-    payload = decode_token(refresh_token.refresh_token)
+    is_valid = await token_is_valid(db, payload["jti"])
 
-
-    if str(user.id) != payload['sub']:
+    if not is_valid:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="invalid token"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Token not valid"
+        )
+
+    if str(user.id) != payload["sub"]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid token"
         )
 
     access_token = create_access_token(user.id)
 
     return {"access_token": access_token}
+
+
+@auth_router.post("/logout")
+async def handle_logout(
+    refresh_token: RefreshTokenScheme,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    payload = decode_token(refresh_token.refresh_token)
+
+    token_user_id = payload.get("sub")
+
+    if user_id != token_user_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="token sizga tegishli emas "
+        )
+
+    if payload["type"] != "refresh":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid token type"
+        )
+
+    result = await db.execute(
+        select(RefreshToken).where(RefreshToken.jti == payload["jti"])
+    )
+
+    db_token = result.scalar_one_or_none()
+
+    if db_token:
+        db_token.revoked = True
+        await db.commit()
+
+    return {"message": "Logged out"}

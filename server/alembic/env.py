@@ -13,6 +13,7 @@ from app.core.config import settings
 from app.db.base import Base
 from app.models.user import User
 from app.models.login_code import LoginCode
+from app.models.refresh_token import RefreshToken
 # --- ---
 
 config = context.config

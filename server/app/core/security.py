@@ -2,8 +2,11 @@ import uuid
 from jose import jwt, JWTError, ExpiredSignatureError
 from datetime import datetime, timedelta, timezone
 from app.core.config import settings
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends, status, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from app.models.refresh_token import RefreshToken
 
 security = HTTPBearer()
 
@@ -19,15 +22,28 @@ def create_access_token(user_id: uuid.UUID) -> str:
     return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
 
 
-def create_refresh_token(user_id: uuid.UUID) -> str:
+async def create_refresh_token(user_id: uuid.UUID, db: AsyncSession) -> str:
+    jti = str(uuid.uuid4())
+    expires_at = datetime.now(timezone.utc) + timedelta(days=7)
+
     payload = {
         "sub": str(user_id),
-        "exp": datetime.now(timezone.utc) + timedelta(days=7),
-        "jti": str(uuid.uuid4()),
+        "exp": expires_at,
+        "jti": jti,
         "type": "refresh",
     }
 
-    return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
+    token = jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
+
+    db_token = RefreshToken(
+        jti=jti,
+        user_id=user_id,
+        expires_at=expires_at,
+    )
+    db.add(db_token)
+    await db.commit()
+
+    return token
 
 
 def verify(credentials: HTTPAuthorizationCredentials = Depends(security)) -> str:
@@ -64,3 +80,17 @@ def decode_token(token: str):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
         )
+
+
+async def token_is_valid(db: AsyncSession, jti: str) -> bool:
+    result = await db.execute(
+        select(RefreshToken).where(
+            RefreshToken.jti == jti,
+            RefreshToken.revoked == False,
+            RefreshToken.expires_at > datetime.now(timezone.utc),
+        )
+    )
+
+    token = result.scalar_one_or_none()
+
+    return token is not None
