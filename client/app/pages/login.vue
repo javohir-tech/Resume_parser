@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: "auth"
+})
+
 import { LoginForm } from '~/features/auth/login';
 
 </script>
