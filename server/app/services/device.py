@@ -27,7 +27,7 @@ def get_or_create_device(request: Request, response: Response) -> str:
 
 
 async def create_user_session(
-    request: Request, response: Response, user_id: UUID, session: AsyncSession , device_id : str , 
+    request: Request, user_id: UUID, session: AsyncSession , device_id : str , 
 ):
     ua_string = request.headers.get("user-agent", "")
     ip = request.client.host

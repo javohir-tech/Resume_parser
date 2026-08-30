@@ -64,7 +64,7 @@ async def vefiy_code(
 
     user = login_code.user
     device_id = get_or_create_device(request, response)
-    await create_user_session(request, response, user.id, db, device_id)
+    await create_user_session(request, user.id, db, device_id)
 
     access_token = create_access_token(user.id)
     refresh_token = await create_refresh_token(user.id, device_id, db)
@@ -129,11 +129,6 @@ async def handle_logout(
 ):
     payload = decode_token(refresh_token.refresh_token)
     device_id = request.cookies.get(DEVICE_COOKIE_NAME)
-    print("="*50)
-    print("="*50)
-    print(device_id)
-    print("="*50)
-    print("="*50)
     token_user_id = payload.get("sub", "")
     token_jti = payload.get("jti", "")
     user_uuid = UUID(user_id)
@@ -154,12 +149,15 @@ async def handle_logout(
         .values(revoked=True)
     )
 
-    await db.execute(
-        update(UserSessions)
+    result = await db.execute(
+        select(UserSessions)
         .where(UserSessions.device_id == device_id, UserSessions.user_id == user_uuid)
-        .values(is_active=False)
     )
 
+    session = result.scalar_one_or_none()
+
+    if session :
+        await db.delete(session)
     await db.commit()
 
     return {"message": "Logged out"}

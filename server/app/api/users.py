@@ -1,11 +1,12 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, status, Request
 from fastapi.exceptions import HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.security import verify
 from app.db.session import get_db
 from app.models.user import User
+from app.models.refresh_token import RefreshToken
 from app.models.user_sessions import UserSessions
 from app.schemas.users_schema import UserSessionResponse
 from app.services.device import DEVICE_COOKIE_NAME
@@ -68,8 +69,35 @@ async def get_sessions(
     return {"sessions": sessions}
 
 
-@user_router.delete("/sessions/{session_id}")
+@user_router.delete("/sessions/{device_id}")
 async def revoke_session(
-    session_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+    device_id: str,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
 ):
-    pass
+    user_uuid = UUID(user_id)
+    result = await db.execute(
+        select(UserSessions).where(
+            UserSessions.device_id == device_id, UserSessions.user_id == user_uuid
+        )
+    )
+
+    session = result.scalar_one_or_none()
+
+    if not session:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="session topilmadi"
+        )
+
+    await db.execute(
+        update(RefreshToken)
+        .where(RefreshToken.device_id == device_id, RefreshToken.user_id == user_uuid)
+        .values(revoked = True)
+    )
+
+    await db.delete(session)
+    await db.commit()
+    return {
+        "success" : True , 
+        "message" : "session bekor qilindi"
+    }
