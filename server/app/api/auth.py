@@ -13,7 +13,6 @@ from user_agents import parse
 
 # LOCAL
 from app.models.user import User
-from app.models.user_sessions import UserSessions
 from app.models.login_code import LoginCode
 from app.db.session import get_db
 from app.core.security import (
@@ -27,7 +26,7 @@ from app.schemas.auth_schemas import RefreshTokenScheme
 from app.models.refresh_token import RefreshToken
 from app.services.device import get_or_create_device, create_user_session
 
-auth_router = APIRouter()
+auth_router = APIRouter(prefix="/auth" , tags=['auth'])
 limiter = Limiter(key_func=get_remote_address)
 
 
@@ -83,30 +82,6 @@ async def vefiy_code(
             },
         },
     }
-
-
-@auth_router.get("/me")
-async def get_me(db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)):
-
-    user_uuid = UUID(user_id)
-
-    result = await db.execute(select(User).where(User.id == user_uuid))
-
-    user = result.scalar_one_or_none()
-
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-        )
-
-    return {
-        "username": user.username,
-        "id": user_id,
-        "full_name": user.full_name,
-        "telegram_id": user.telegram_id,
-        "registered_at": user.registered_at,
-    }
-
 
 @auth_router.post("/refresh")
 async def refresh_token(
