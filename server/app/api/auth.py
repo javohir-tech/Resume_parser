@@ -4,7 +4,7 @@ from uuid import UUID
 
 # Third-party
 from fastapi import APIRouter, HTTPException, Depends, status, Request, Response
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 from slowapi import Limiter
@@ -22,11 +22,16 @@ from app.core.security import (
     decode_token,
     token_is_valid,
 )
+from app.models.user_sessions import UserSessions
 from app.schemas.auth_schemas import RefreshTokenScheme
 from app.models.refresh_token import RefreshToken
-from app.services.device import get_or_create_device, create_user_session
+from app.services.device import (
+    get_or_create_device,
+    create_user_session,
+    DEVICE_COOKIE_NAME,
+)
 
-auth_router = APIRouter(prefix="/auth" , tags=['auth'])
+auth_router = APIRouter(prefix="/auth", tags=["auth"])
 limiter = Limiter(key_func=get_remote_address)
 
 
@@ -59,10 +64,10 @@ async def vefiy_code(
 
     user = login_code.user
     device_id = get_or_create_device(request, response)
-    await create_user_session(request, response, user.id, db , device_id)
+    await create_user_session(request, response, user.id, db, device_id)
 
     access_token = create_access_token(user.id)
-    refresh_token = await create_refresh_token(user.id, db)
+    refresh_token = await create_refresh_token(user.id, device_id, db)
 
     return {
         "success": True,
@@ -82,6 +87,7 @@ async def vefiy_code(
             },
         },
     }
+
 
 @auth_router.post("/refresh")
 async def refresh_token(
@@ -116,17 +122,25 @@ async def refresh_token(
 
 @auth_router.post("/logout")
 async def handle_logout(
+    request: Request,
     refresh_token: RefreshTokenScheme,
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
     payload = decode_token(refresh_token.refresh_token)
-
-    token_user_id = payload.get("sub")
+    device_id = request.cookies.get(DEVICE_COOKIE_NAME)
+    print("="*50)
+    print("="*50)
+    print(device_id)
+    print("="*50)
+    print("="*50)
+    token_user_id = payload.get("sub", "")
+    token_jti = payload.get("jti", "")
+    user_uuid = UUID(user_id)
 
     if user_id != token_user_id:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="token sizga tegishli emas "
+            status_code=status.HTTP_400_BAD_REQUEST, detail="token sizga tegishli emas"
         )
 
     if payload["type"] != "refresh":
@@ -134,14 +148,18 @@ async def handle_logout(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid token type"
         )
 
-    result = await db.execute(
-        select(RefreshToken).where(RefreshToken.jti == payload["jti"])
+    await db.execute(
+        update(RefreshToken)
+        .where(RefreshToken.user_id == user_uuid, RefreshToken.jti == token_jti)
+        .values(revoked=True)
     )
 
-    db_token = result.scalar_one_or_none()
+    await db.execute(
+        update(UserSessions)
+        .where(UserSessions.device_id == device_id, UserSessions.user_id == user_uuid)
+        .values(is_active=False)
+    )
 
-    if db_token:
-        db_token.revoked = True
-        await db.commit()
+    await db.commit()
 
     return {"message": "Logged out"}

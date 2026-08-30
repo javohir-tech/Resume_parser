@@ -22,7 +22,9 @@ def create_access_token(user_id: uuid.UUID) -> str:
     return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
 
 
-async def create_refresh_token(user_id: uuid.UUID, db: AsyncSession) -> str:
+async def create_refresh_token(
+    user_id: uuid.UUID, device_id: str, db: AsyncSession
+) -> str:
     jti = str(uuid.uuid4())
     expires_at = datetime.now(timezone.utc) + timedelta(days=7)
 
@@ -39,6 +41,7 @@ async def create_refresh_token(user_id: uuid.UUID, db: AsyncSession) -> str:
         jti=jti,
         user_id=user_id,
         expires_at=expires_at,
+        device_id = device_id
     )
     db.add(db_token)
     await db.commit()

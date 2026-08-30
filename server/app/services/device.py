@@ -13,11 +13,6 @@ DEVICE_COOKIE_NAME = "device_id"
 def get_or_create_device(request: Request, response: Response) -> str:
     device_id = request.cookies.get(DEVICE_COOKIE_NAME)
 
-    print("="*50)
-    print("="*50)
-    print(device_id)
-    print("="*50)
-    print("="*50)
     if not device_id:
         device_id = str(uuid4())
         response.set_cookie(
@@ -49,6 +44,7 @@ async def create_user_session(
         existing_session.ip_address = ip 
         existing_session.last_seen_at = datetime.now(timezone.utc)
         existing_session.user_agent = ua_string
+        existing_session.is_active = True
         await session.commit()
         return existing_session
 

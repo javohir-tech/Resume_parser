@@ -65,6 +65,11 @@ async def get_sessions(
         for session in user_sessions
     ]
 
-    return {
-        "sessions" : sessions
-    }
+    return {"sessions": sessions}
+
+
+@user_router.delete("/sessions/{session_id}")
+async def revoke_session(
+    session_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+):
+    pass
