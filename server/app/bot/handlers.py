@@ -1,4 +1,4 @@
-import secrets
+import asyncio
 from random import randint
 from datetime import datetime, timedelta, timezone
 from aiogram import Router, F
@@ -13,11 +13,14 @@ from aiogram.types import (
     InlineKeyboardButton,
     CallbackQuery,
 )
+from aiogram.exceptions import TelegramBadRequest
 from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload
 from app.db.session import async_session_maker
 from app.models.user import User
 from app.models.login_code import LoginCode
+from app.bot.bot_instance import bot
+
 
 router = Router()
 
@@ -133,11 +136,24 @@ async def handle_login(messaage: Message):
         session.add(new_login_code)
         await session.commit()
 
-    await messaage.answer(
+    sent = await messaage.answer(
         f"🔒 Code:\n<code>{code}</code>\n\n1 daqiqa amal qiladi.",
         parse_mode="HTML",
         reply_markup=build_code_keyboard(code),
     )
+
+    asyncio.create_task(expire_code_message(sent.chat.id , sent.message_id))
+
+async def expire_code_message(chat_id : int , message_id : int):
+    await asyncio.sleep(60)
+    try:
+        await bot.edit_message_text(
+            chat_id=chat_id , 
+            message_id=message_id , 
+            text="⌛ Kod muddati o'tdi. Yangi kod olish uchun /login ni qayta yuboring."
+        )
+    except TelegramBadRequest :
+        pass
 
 
 @router.callback_query(F.data == "renew_code")
