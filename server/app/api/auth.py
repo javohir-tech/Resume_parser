@@ -3,15 +3,17 @@ from datetime import datetime, timezone
 from uuid import UUID
 
 # Third-party
-from fastapi import APIRouter, HTTPException, Depends, status, Request
+from fastapi import APIRouter, HTTPException, Depends, status, Request, Response
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 from slowapi import Limiter
 from slowapi.util import get_remote_address
+from user_agents import parse
 
 # LOCAL
 from app.models.user import User
+from app.models.user_sessions import UserSessions
 from app.models.login_code import LoginCode
 from app.db.session import get_db
 from app.core.security import (
@@ -23,6 +25,7 @@ from app.core.security import (
 )
 from app.schemas.auth_schemas import RefreshTokenScheme
 from app.models.refresh_token import RefreshToken
+from app.services.device import get_or_create_device, create_user_session
 
 auth_router = APIRouter()
 limiter = Limiter(key_func=get_remote_address)
@@ -30,7 +33,9 @@ limiter = Limiter(key_func=get_remote_address)
 
 @auth_router.post("/telegram/verify")
 @limiter.limit("5/minute")
-async def vefiy_code(request: Request, code: str, db: AsyncSession = Depends(get_db)):
+async def vefiy_code(
+    request: Request, response: Response, code: str, db: AsyncSession = Depends(get_db)
+):
     result = await db.execute(
         select(LoginCode)
         .options(selectinload(LoginCode.user))
@@ -54,6 +59,8 @@ async def vefiy_code(request: Request, code: str, db: AsyncSession = Depends(get
     await db.commit()
 
     user = login_code.user
+    device_id = get_or_create_device(request, response)
+    await create_user_session(request, response, user.id, db , device_id)
 
     access_token = create_access_token(user.id)
     refresh_token = await create_refresh_token(user.id, db)
@@ -62,6 +69,7 @@ async def vefiy_code(request: Request, code: str, db: AsyncSession = Depends(get
         "success": True,
         "message": "Login successfuld",
         "data": {
+            "device_id": device_id,
             "tokens": {
                 "access_token": access_token,
                 "refresh_token": refresh_token,

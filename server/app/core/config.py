@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     BOT_TOKEN: str
     JWT_SECRET: str
     JWT_ALGORITHM: str
+    DEBUG : bool
 
     class Config:
         env_file = ".env"

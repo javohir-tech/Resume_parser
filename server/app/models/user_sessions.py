@@ -28,6 +28,7 @@ class UserSessions(Base):
     os_version: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     browser_name: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     browser_version: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    device_id: Mapped[str] = mapped_column(String, nullable=False, index=True)
 
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
