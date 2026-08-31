@@ -49,6 +49,9 @@ const items = computed<NavigationMenuItem[]>(() => [
                         <UButton to="/settings" @click="close" color="neutral" variant="ghost">
                             dashboard
                         </UButton>
+                        <UButton to="/profile" @click="close" color="neutral" variant="ghost">
+                            profile
+                        </UButton>
                         <UButton @click="handle_logout" trailing-icon="i-lucide-log-out" :disabled="loading"
                             :loading="loading" color="error" variant="ghost">Logout</UButton>
                     </div>
