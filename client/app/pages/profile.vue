@@ -1,15 +1,11 @@
 <script setup lang="ts">
+import { UserProfile } from '~/entities/user';
+
 
 </script>
 
 <template>
-    <UContainer>
-        profile :
-          profile
-
-        qurilmlar :
-
-        tarif :
-         tariflar
-    </UContainer>
+  <UContainer>
+    <UserProfile />
+  </UContainer>
 </template>
