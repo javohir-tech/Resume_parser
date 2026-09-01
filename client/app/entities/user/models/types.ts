@@ -8,7 +8,7 @@ export interface IUser {
 
 export interface ISessions {
   id: string;
-  device_type: string | null;
+  device_id: string;
   os_name: string | null;
   os_version: string | null;
   browser_name: string | null;
@@ -21,4 +21,9 @@ export interface ISessions {
 
 export interface ResponseSessions {
   sessions: ISessions[];
+}
+
+export interface ResponseRemoveSession{
+  success: boolean , 
+  message : string
 }

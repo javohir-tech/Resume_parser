@@ -7,10 +7,22 @@ const { data, pending, error, refresh } = useLazyAsyncData(
     () => fetchGetSessions(),
     { server: false }
 )
+
+const deleteSession = (device_id: string) => {
+    if (!data.value) return
+
+    data.value = {
+        ...data.value,
+        sessions: data.value.sessions.filter(session => session.device_id !== device_id)
+    }
+
+    console.log(data.value.sessions)
+}
+
 </script>
 
 <template>
-    <section class="py-10">
+    <section class="pb-10">
         <UCard>
             <template #header>
                 <div>
@@ -33,7 +45,7 @@ const { data, pending, error, refresh } = useLazyAsyncData(
 
                 <div v-else class="divide-y divide-default">
                     <div v-for="session in data?.sessions ?? []" :key="session.id" class="py-4 first:pt-0 last:pb-0">
-                        <User_session_card :session="session" />
+                        <User_session_card :session="session" @delete="deleteSession" />
                     </div>
                 </div>
 

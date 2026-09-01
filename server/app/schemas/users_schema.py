@@ -5,7 +5,7 @@ from uuid import UUID
 
 class UserSessionResponse(BaseModel):
     id: UUID
-    device_type: str | None
+    device_id : str | None
     os_name: str | None
     os_version: str | None
     browser_name: str | None

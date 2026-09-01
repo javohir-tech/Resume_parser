@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { ISessions } from '../models/types';
+import { useSessionRevoke } from "../models/useSessionRevoke"
+const { loading, revokeSession } = useSessionRevoke()
 
 const formatDate = (date: string) => {
     return new Intl.DateTimeFormat('uz-UZ', {
@@ -12,6 +14,15 @@ const formatDate = (date: string) => {
     }).format(new Date(date))
 }
 
+const emit = defineEmits<{
+    delete : [device_id : string]
+}>()
+
+const deleteSession = async (device_id : string) => {
+    await revokeSession(device_id)
+    emit("delete" , device_id)
+}
+
 defineProps<{
     session: ISessions
 }>()
@@ -22,10 +33,11 @@ defineProps<{
         <!-- Device -->
         <div class="flex items-start gap-3 min-w-0">
             <div class="size-10 shrink-0 rounded-lg bg-elevated flex items-center justify-center">
-                <UIcon :name="session.device_type === 'mobile'
+                <!-- <UIcon :name="session.device_type === 'mobile'
                     ? 'i-lucide-smartphone'
                     : 'i-lucide-monitor'
-                    " class="size-5 text-muted" />
+                    " class="size-5 text-muted" /> -->
+                <UIcon name="i-lucide-monitor" class="size-5 text-muted" />
             </div>
 
             <div class="min-w-0">
@@ -57,7 +69,9 @@ defineProps<{
                 {{ session.ip_address || 'IP mavjud emas' }}
             </p>
 
-            <UButton v-if="!session.is_current" color="error" variant="soft" size="xs" icon="i-lucide-log-out">
+            <UButton :loading="loading" :disabled="loading" v-if="!session.is_current"
+                @click="deleteSession(session.device_id)" color="error" variant="soft"
+                size="xs" icon="i-lucide-log-out">
                 Chiqarib yuborish
             </UButton>
         </div>
