@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UserProfile } from '~/entities/user';
+import { UserProfile, UserSessions } from '~/entities/user';
 
 
 </script>
@@ -7,5 +7,6 @@ import { UserProfile } from '~/entities/user';
 <template>
   <UContainer>
     <UserProfile />
+    <UserSessions />
   </UContainer>
 </template>
