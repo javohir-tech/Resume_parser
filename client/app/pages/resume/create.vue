@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import Classic from '~/components/resume/Classic.vue';
-import Modern from '~/components/resume/Modern.vue';
-
+import { ClassicResume, ModernResume, useResumeStore } from '~/entities/resume'
 
 const templates = {
-    classic: Classic,
-    modern: Modern
+    classic: ClassicResume,
+    modern: ModernResume
 }
 const selectedTemplate = ref<keyof typeof templates>("classic")
-
 const resumeStore = useResumeStore()
 
 definePageMeta({
@@ -17,7 +14,7 @@ definePageMeta({
 </script>
 
 <template>
-    <div class="p-10">
-        <component :is="templates[selectedTemplate]" :fullname="resumeStore.personalInfo.fullName" />
+    <div ref="containerRef" class="p-10 flex justify-center overflow-hidden">
+            <component :is="templates[selectedTemplate]" :fullname="resumeStore.personalInfo.fullName" />
     </div>
 </template>

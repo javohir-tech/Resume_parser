@@ -1,1 +1,0 @@
-export {default as HomeStart} from "./ui/HomeStart.vue"

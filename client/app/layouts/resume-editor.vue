@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { LeftSidebar } from '~/widgets/resume/leftSidebar'
-import { RigthSidebar } from '~/widgets/resume/rigthSidebar'
+import { LeftSidebar, RightSidebar } from '~/widgets/resume';
 const open = ref(true)
 const rigthOpen = ref(true)
 </script>
@@ -21,6 +20,7 @@ const rigthOpen = ref(true)
 
         <div
             class="flex-1 flex flex-col overflow-hidden lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-default">
+
             <div class="h-(--ui-header-height) shrink-0 flex items-center justify-between px-4 border-b border-default">
                 <UButton icon="i-lucide-panel-left" color="neutral" variant="ghost" aria-label="Toggle sidebar"
                     @click="open = !open" />
@@ -41,7 +41,7 @@ const rigthOpen = ref(true)
 
             </template>
             <div class="flex flex-col gap-4">
-                <RigthSidebar />
+                <RightSidebar />
             </div>
         </USidebar>
     </div>

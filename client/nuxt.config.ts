@@ -49,12 +49,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   components: {
     dirs: [
-      "~/widgets/home-hero",
-      "~/widgets/how-it-works",
-      "~/widgets/home-features",
-      "~/widgets/home-pricing",
-      "~/widgets/home-requests",
-      "~/widgets/home-start",
+      "~/widgets/home",  
     ],
   },
 });

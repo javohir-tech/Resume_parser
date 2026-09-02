@@ -1,1 +1,0 @@
-export { default as LeftSidebar } from "./ui/LeftSidebar.vue";

@@ -14,8 +14,7 @@ useSeoMeta({
 })
 
 // Sections 
-import { HomeHero } from '~/widgets/home-hero';
-
+import { HomeHero } from '~/widgets/home';
 </script>
 
 <template>

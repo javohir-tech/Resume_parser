@@ -8,5 +8,7 @@ defineProps<{
     <p>
         {{ fullname }}
     </p>
-    modern resume
+    <p class="text-black-500">
+        modern resume
+    </p>
 </template>
