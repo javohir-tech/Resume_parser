@@ -48,7 +48,7 @@ const { stop } = useIntersectionObserver(
     to {
         opacity: 1;
         transform: translateY(0);
-    }
+    }   
 }
 
 .animate-fade-up {

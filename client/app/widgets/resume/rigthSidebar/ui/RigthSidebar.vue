@@ -3,7 +3,5 @@
 </script>
 
 <template>
-    <UContainer>
-        my resumeis
-    </UContainer>
+    dizayn patternlar
 </template>
