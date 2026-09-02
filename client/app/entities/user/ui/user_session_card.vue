@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ISessions } from '../models/types';
-import { useSessionRevoke } from "../models/useSessionRevoke"
+import { useSessionRevoke } from '~/features/user';
 const { loading, revokeSession } = useSessionRevoke()
 
 const formatDate = (date: string) => {
@@ -15,12 +15,12 @@ const formatDate = (date: string) => {
 }
 
 const emit = defineEmits<{
-    delete : [device_id : string]
+    delete: [device_id: string]
 }>()
 
-const deleteSession = async (device_id : string) => {
+const deleteSession = async (device_id: string) => {
     await revokeSession(device_id)
-    emit("delete" , device_id)
+    emit("delete", device_id)
 }
 
 defineProps<{
@@ -70,8 +70,8 @@ defineProps<{
             </p>
 
             <UButton :loading="loading" :disabled="loading" v-if="!session.is_current"
-                @click="deleteSession(session.device_id)" color="error" variant="soft"
-                size="xs" icon="i-lucide-log-out">
+                @click="deleteSession(session.device_id)" color="error" variant="soft" size="xs"
+                icon="i-lucide-log-out">
                 Chiqarib yuborish
             </UButton>
         </div>

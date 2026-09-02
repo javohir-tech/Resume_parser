@@ -23,7 +23,3 @@ export interface ResponseSessions {
   sessions: ISessions[];
 }
 
-export interface ResponseRemoveSession{
-  success: boolean , 
-  message : string
-}

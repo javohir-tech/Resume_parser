@@ -15,8 +15,6 @@ const deleteSession = (device_id: string) => {
         ...data.value,
         sessions: data.value.sessions.filter(session => session.device_id !== device_id)
     }
-
-    console.log(data.value.sessions)
 }
 
 </script>

@@ -1,6 +1,6 @@
-import { fetchRemoveSession } from "../api/index";
 import { FetchError } from "ofetch";
 import type { ApiErrorBody } from "~/shared/types";
+import { fetchRemoveSession } from "../api";
 
 export const useSessionRevoke = () => {
   const loading = ref(false);
@@ -8,8 +8,7 @@ export const useSessionRevoke = () => {
   const toast = useToast();
 
   const revokeSession = async (device_id: string) => {
-
-    if(!device_id) return
+    if (!device_id) return;
 
     loading.value = true;
     try {
@@ -22,7 +21,7 @@ export const useSessionRevoke = () => {
       const err = error as FetchError<ApiErrorBody>;
       const message = err.data?.detail ?? "Internal Server Error";
       toast.add({ title: message, color: "error" });
-      throw new Error(message)
+      throw new Error(message);
     } finally {
       loading.value = false;
     }
