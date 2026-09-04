@@ -43,10 +43,11 @@ definePageMeta({
             transform: `scale(${scale})`,
             transformOrigin: 'top center',
             marginBottom: `calc((1 - ${scale}) * -297mm)`
-        }"></div>
-        <component :is="templates[selectedTemplate]" :fullname="resumeStore.personalInfo.fullname"
-            :email="resumeStore.personalInfo.email" :phone="resumeStore.personalInfo.phone"
-            :title="resumeStore.personalInfo.title" :summary="resumeStore.personalInfo.summary"
-            :website="resumeStore.personalInfo.website" />
+        }">
+            <component :is="templates[selectedTemplate]" :fullname="resumeStore.personalInfo.fullname"
+                :email="resumeStore.personalInfo.email" :phone="resumeStore.personalInfo.phone"
+                :title="resumeStore.personalInfo.title" :summary="resumeStore.personalInfo.summary"
+                :website="resumeStore.personalInfo.website" />
+        </div>
     </div>
 </template>
