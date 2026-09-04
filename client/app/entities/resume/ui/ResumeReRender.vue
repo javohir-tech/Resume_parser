@@ -4,7 +4,7 @@ import type { ResumeTemplateBlokcs } from '../models/template-contract';
 import { buildBlock } from '../models/build-blocks';
 import { useResumePagination } from '../lib/useResumePagination';
 import { useResumePageScale } from '../lib/useResumePageScale';
-import { PAGE_WIDTH_PX, PAGE_HEIGHT_PX, PAGE_CONTENT_WIDTH_PX } from '../models/pagination';
+import { PAGE_WIDTH_PX, PAGE_HEIGHT_PX, PAGE_CONTENT_WIDTH_PX , PAGE_GAP_PX } from '../models/pagination';
 
 const props = defineProps<{
     resume: Resume,
@@ -16,6 +16,7 @@ const { setMeasureRef, pageContents } = useResumePagination(blocks)
 
 const containerRef = ref<HTMLElement | null>(null)
 const { scale } = useResumePageScale(containerRef)
+const gapPx = computed(()=>PAGE_GAP_PX*scale.value)
 </script>
 
 <template>
@@ -32,12 +33,12 @@ const { scale } = useResumePageScale(containerRef)
   </div>
 
   <!-- Ko'rinadigan, sahifalangan render -->
-  <div ref="containerRef" class="p-10 flex flex-col items-center gap-8 overflow-x-auto">
+  <div ref="containerRef" class="p-10 flex flex-col items-center gap-8 overflow-x-auto w-full ">
     <div
       v-for="(page, i) in pageContents"
       :key="i"
       class="relative"
-      :style="{ width: `${PAGE_WIDTH_PX * scale}px`, height: `${PAGE_HEIGHT_PX * scale}px` }"
+      :style="{ width: `${PAGE_WIDTH_PX * scale}px`, height: `${PAGE_HEIGHT_PX * scale}px`, gap : `${gapPx}px` }"
     >
       <div class="absolute top-0 left-0" :style="{ width: `${PAGE_WIDTH_PX}px`, transform: `scale(${scale})`, transformOrigin: 'top left' }">
         <component :is="template.page">
@@ -62,4 +63,4 @@ const { scale } = useResumePageScale(containerRef)
       </div>
     </div>
   </div>
-</template>y
+</template>

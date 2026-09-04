@@ -4,8 +4,12 @@ import { ResumeRenderer, useResumeStore, ClassicTemplate } from '~/entities/resu
 const templates = { classic: ClassicTemplate }
 const selectedTemplate = ref<keyof typeof templates>("classic")
 const resumeStore = useResumeStore()
+
+definePageMeta({
+    layout : "resume-editor"
+})
 </script>
 
 <template>
     <ResumeRenderer :template="templates[selectedTemplate]" :resume="resumeStore.personalInfo"/>
-</template>
+</template> 
