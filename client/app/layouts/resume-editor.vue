@@ -17,19 +17,21 @@ const rigthOpen = ref(true)
                 <LeftSidebar />
             </div>
         </USidebar>
+        <div class="flex flex-1 h-screen overflow-hidden">
+            <div
+                class="flex-1 flex flex-col overflow-hidden lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-default">
 
-        <div
-            class="flex-1 flex flex-col overflow-hidden lg:peer-data-[variant=floating]:my-4 peer-data-[variant=inset]:m-4 lg:peer-data-[variant=inset]:not-peer-data-[collapsible=offcanvas]:ms-0 peer-data-[variant=inset]:rounded-xl peer-data-[variant=inset]:shadow-sm peer-data-[variant=inset]:ring peer-data-[variant=inset]:ring-default bg-default">
-
-            <div class="h-(--ui-header-height) shrink-0 flex items-center justify-between px-4 border-b border-default">
-                <UButton icon="i-lucide-panel-left" color="neutral" variant="ghost" aria-label="Toggle sidebar"
-                    @click="open = !open" />
-                <UColorModeButton />
-                <UButton icon="i-lucide-panel-right" color="neutral" variant="ghost" aria-label="Toggle sidebar"
-                    @click="rigthOpen = !rigthOpen" />
-            </div>
-            <div>
-                <slot />
+                <div
+                    class="h-(--ui-header-height) shrink-0 flex items-center justify-between px-4 border-b border-default">
+                    <UButton icon="i-lucide-panel-left" color="neutral" variant="ghost" aria-label="Toggle sidebar"
+                        @click="open = !open" />
+                    <UColorModeButton />
+                    <UButton icon="i-lucide-panel-right" color="neutral" variant="ghost" aria-label="Toggle sidebar"
+                        @click="rigthOpen = !rigthOpen" />
+                </div>
+                <div class="flex-1 overflow-y-auto">
+                    <slot />
+                </div>
             </div>
         </div>
 
