@@ -3,7 +3,7 @@ import { useResumeStore, useResumeSection } from '~/entities/resume';
 import ExperienceForm from './components/ExperienceForm.vue';
 
 const resumeStore = useResumeStore()
-const { addExperience } = useResumeSection()
+const { addExperience, removeExperince } = useResumeSection()
 
 
 </script>
@@ -32,11 +32,17 @@ const { addExperience } = useResumeSection()
         <UFormField label="Summary">
             <UTextarea :rows="4" class="w-full" v-model="resumeStore.personalInfo.summary" />
         </UFormField>
-        <!-- Expreries Form-->
-        <div class="" v-for="(experience, index) in resumeStore.personalInfo.experience" :key="experience.id">
-            <ExperienceForm :experience="experience" />
-        </div>
 
+        <!-- Expreries Form-->
+        <div v-for="experience in resumeStore.personalInfo.experience" :key="experience.id">
+            <ExperienceForm :experience="experience" />
+            <div class="text-end">
+                <UButton @click="removeExperince(experience.id)" icon="i-lucide-trash" class="mt-3" color="error"
+                    variant="outline" />
+            </div>
+        </div>
         <UButton @click="addExperience">Experience qoshish</UButton>
+        <!-- Education Form -->
+
     </div>
 </template>

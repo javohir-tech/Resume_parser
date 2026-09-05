@@ -15,5 +15,11 @@ export const useResumeSection = () => {
     });
   }
 
-  return { addExperience };
+  function removeExperince(id: string) {
+    resume.personalInfo.experience = resume.personalInfo.experience?.filter(
+      (exp) => exp.id !== id,
+    );
+  }
+
+  return { addExperience , removeExperince };
 };
