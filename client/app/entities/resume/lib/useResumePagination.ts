@@ -14,6 +14,7 @@ export function useResumePagination(blocks: ComputedRef<ResumeBlock[]>) {
   function setMeasureRef(id: string) {
     return (el: unknown) => {
       const node = (el as { $el?: HTMLElement })?.$el ?? (el as HTMLElement);
+      // console.log(measureEls)
       if (node instanceof HTMLElement) measureEls.set(id, node);
       else measureEls.delete(id);
     };
@@ -26,6 +27,7 @@ export function useResumePagination(blocks: ComputedRef<ResumeBlock[]>) {
     for (const block of blocks.value) {
       heights.set(block.id, measureEls.get(block.id)?.offsetHeight ?? 0);
     }
+    // console.log(heights)
     pageContents.value = toPageContent(
       packBlocksIntoPages(blocks.value, heights),
     );
