@@ -10,7 +10,8 @@ defineProps<{ item: Experience }>()
                 'Hozirgacha' }}</span>
         </div>
         <p class="text-sm text-gray-600 italic">{{ item.company }}<span v-if="item.location"> · {{ item.location
-                }}</span></p>
-        <p v-if="item.description" class="text-sm text-gray-800 mt-1 leading-relaxed">{{ item.description }}</p>
+        }}</span></p>
+        <p v-if="item.description" class="text-sm text-gray-800 whitespace-pre-line mt-1 leading-relaxed">{{
+            item.description }}</p>
     </div>
 </template>

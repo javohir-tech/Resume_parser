@@ -4,52 +4,78 @@ import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalize
 
 
 const df = new DateFormatter('en-US', {
-    dateStyle: 'medium'
+    month: "long",
+    year: "numeric"
 })
 
-const modelValue = shallowRef(new CalendarDate(2022, 1, 10))
+const monthFormatter = new DateFormatter('en-US', {
+    month: 'long'
+})
 
-const experience = defineModel<Experience>({ required: true })
+const startDate = ref<CalendarDate>()
+const endDate = ref<CalendarDate>()
+
+const props = defineProps<{
+    experience: Experience
+}>()
+watch(startDate, (newDate) => {
+    if (!newDate) return
+    const month = monthFormatter.format(
+        newDate?.toDate(getLocalTimeZone())
+    )
+    const newStartDate = `${month} ${newDate.year}`
+    console.log(newStartDate)
+    props.experience.startDate = newStartDate
+})
+
+watch(endDate , (newDate)=>{
+    if (!newDate) return
+    const month = monthFormatter.format(
+        newDate?.toDate(getLocalTimeZone())
+    )
+    const newEndDate = `${month} ${newDate.year}`
+    props.experience.endDate = newEndDate
+})
 
 </script>
 
 <template>
-    <div class="flex gap-2 justify-between items-center mb-3">
+    <div class="flex gap-2 just ify-between items-center mb-3">
         <UFormField label="Postion">
-            <UInput v-model="experience.position" />
+            <UInput v-model="props.experience.position" />
         </UFormField>
         <UFormField label="Compony">
-            <UInput v-model="experience.company" />
+            <UInput v-model="props.experience.company" />
         </UFormField>
     </div>
     <UFormField label="location" class="mb-3">
-        <UInput class="w-full" placeholder="Location" v-model="experience.location" />
+        <UInput class="w-full" placeholder="Location" v-model="props.experience.location" />
     </UFormField>
     <div class="flex gap-2 justify-beetween items-center mb-3">
         <UFormField label="Start Date" class="w-full">
             <UPopover class="w-full">
                 <UButton color="neutral" variant="subtle" icon="i-lucide-calendar">
-                    {{ modelValue ? df.format(modelValue.toDate(getLocalTimeZone())) : 'Select a date' }}
+                    {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : 'Select a date' }}
                 </UButton>
 
                 <template #content>
-                    <UCalendar v-model="modelValue" />
+                    <UCalendar type="month" v-model="startDate" />
                 </template>
             </UPopover>
         </UFormField>
         <UFormField label="End Date" class="w-full">
             <UPopover class="w-full">
                 <UButton color="neutral" variant="subtle" icon="i-lucide-calendar">
-                    {{ modelValue ? df.format(modelValue.toDate(getLocalTimeZone())) : 'Select a date' }}
+                    {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : 'Select a date' }}
                 </UButton>
 
                 <template #content>
-                    <UCalendar v-model="modelValue" />
+                    <UCalendar type="month" v-model="endDate" />
                 </template>
             </UPopover>
         </UFormField>
     </div>
     <UFormField label="Education">
-        <UTextarea :rows="5" class="w-full" v-model="experience.description" />
+        <UTextarea :rows="5" class="w-full" v-model="props.experience.description" />
     </UFormField>
 </template>

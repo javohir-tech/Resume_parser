@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import { useResumeStore, useCreateSection } from '~/entities/resume';
 import ExperienceForm from './components/ExperienceForm.vue';
+
 const resumeStore = useResumeStore()
 const { addExperience } = useCreateSection()
 
-import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
-
-
-const df = new DateFormatter('en-US', {
-    dateStyle: 'medium'
-})
-
-const modelValue = shallowRef(new CalendarDate(2022, 1, 10))
 
 </script>
 
@@ -39,46 +32,9 @@ const modelValue = shallowRef(new CalendarDate(2022, 1, 10))
         <UFormField label="Summary">
             <UTextarea :rows="4" class="w-full" v-model="resumeStore.personalInfo.summary" />
         </UFormField>
-
-        <div class="" v-for="experience in resumeStore.personalInfo.experience" :key="experience.id">
-            <div class="flex gap-2 justify-between items-center mb-3">
-                <UFormField label="Postion">
-                    <UInput v-model="experience.position" />
-                </UFormField>
-                <UFormField label="Compony">
-                    <UInput v-model="experience.company" />
-                </UFormField>
-            </div>
-            <UFormField label="location" class="mb-3">
-                <UInput class="w-full" placeholder="Location" v-model="experience.location" />
-            </UFormField>
-            <div class="flex gap-2 justify-beetween items-center mb-3">
-                <UFormField label="Start Date" class="w-full">
-                    <UPopover class="w-full">
-                        <UButton color="neutral" variant="subtle" icon="i-lucide-calendar">
-                            {{ modelValue ? df.format(modelValue.toDate(getLocalTimeZone())) : 'Select a date' }}
-                        </UButton>
-
-                        <template #content>
-                            <UCalendar v-model="modelValue" />
-                        </template>
-                    </UPopover>
-                </UFormField>
-                <UFormField label="End Date" class="w-full">
-                    <UPopover class="w-full">
-                        <UButton color="neutral" variant="subtle" icon="i-lucide-calendar">
-                            {{ modelValue ? df.format(modelValue.toDate(getLocalTimeZone())) : 'Select a date' }}
-                        </UButton>
-
-                        <template #content>
-                            <UCalendar v-model="modelValue" />
-                        </template>
-                    </UPopover>
-                </UFormField>
-            </div>
-            <UFormField label="Education">
-                <UTextarea :rows="5" class="w-full" v-model="experience.description" />
-            </UFormField>
+        <!-- Expreries Form-->
+        <div class="" v-for="(experience, index) in resumeStore.personalInfo.experience" :key="experience.id">
+            <ExperienceForm :experience="experience" />
         </div>
 
         <UButton @click="addExperience">Experience qoshish</UButton>

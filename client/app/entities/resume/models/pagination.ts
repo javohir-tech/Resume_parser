@@ -19,7 +19,7 @@ export function packBlocksIntoPages(
   blocks: ResumeBlock[],
   heigths: Map<string, number>,
 ): ResumeBlock[][] {  
-  console.log(heigths);
+  // console.log(heigths);
   const pages: ResumeBlock[][] = [[]];
   let pageIndex = 0;
   let used = 0;
