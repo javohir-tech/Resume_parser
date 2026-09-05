@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useResumeStore, useCreateSection } from '~/entities/resume';
+import { useResumeStore, useResumeSection } from '~/entities/resume';
 import ExperienceForm from './components/ExperienceForm.vue';
 
 const resumeStore = useResumeStore()
-const { addExperience } = useCreateSection()
+const { addExperience } = useResumeSection()
 
 
 </script>

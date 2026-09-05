@@ -1,6 +1,6 @@
 import { useResumeStore } from "./store";
 
-export const useCreateSection = () => {
+export const useResumeSection = () => {
   const resume = useResumeStore();
 
   function addExperience() {
