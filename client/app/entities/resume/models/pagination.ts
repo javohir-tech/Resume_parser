@@ -11,14 +11,15 @@ const MM_TO_PX = 3.7795275591;
 export const PAGE_WIDTH_PX = 210 * MM_TO_PX;
 export const PAGE_HEIGHT_PX = 297 * MM_TO_PX;
 export const PAGE_PADDING_PX = 15 * MM_TO_PX;
-export const PAGE_GAP_PX = 10 *MM_TO_PX;
+export const PAGE_GAP_PX = 10 * MM_TO_PX;
 export const PAGE_CONTENT_WIDTH_PX = PAGE_WIDTH_PX - PAGE_PADDING_PX * 2;
-export const PAGE_CONTENT_HEIGHT_PX = PAGE_WIDTH_PX - PAGE_PADDING_PX * 2;
+export const PAGE_CONTENT_HEIGHT_PX = PAGE_HEIGHT_PX - PAGE_PADDING_PX * 2;
 
 export function packBlocksIntoPages(
   blocks: ResumeBlock[],
   heigths: Map<string, number>,
-): ResumeBlock[][] {
+): ResumeBlock[][] {  
+  console.log(heigths);
   const pages: ResumeBlock[][] = [[]];
   let pageIndex = 0;
   let used = 0;
@@ -47,6 +48,7 @@ export function packBlocksIntoPages(
     pages[pageIndex]?.push(block);
     used += h;
   }
+  // console.log(pages);
 
   return pages;
 }

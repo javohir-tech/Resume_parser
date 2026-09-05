@@ -11,7 +11,17 @@ export const useResumeStore = defineStore("resume", () => {
     summary: "",
     skills: [],
     education: [],
-    experience: [],
+    experience: [
+      // {
+      //   id: "kadkakw",
+      //   company: "limsa",
+      //   position: "front end",
+      //   endDate: "nima",
+      //   startDate: "saom",
+      //   location: "tashkenn",
+      //   description: "",
+      // },
+    ],
   });
 
   return { personalInfo };

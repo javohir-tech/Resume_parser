@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { useResumeStore } from '~/entities/resume';
-import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
-
+import { useResumeStore, useCreateSection } from '~/entities/resume';
+import ExperienceForm from './components/ExperienceForm.vue';
 const resumeStore = useResumeStore()
+const { addExperience } = useCreateSection()
+
+import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 
 const df = new DateFormatter('en-US', {
@@ -10,10 +12,12 @@ const df = new DateFormatter('en-US', {
 })
 
 const modelValue = shallowRef(new CalendarDate(2022, 1, 10))
+
 </script>
 
 <template>
     <div class="flex flex-col gap-4">
+
         <UFormField label="Ismingiz">
             <UInput v-model="resumeStore.personalInfo.fullname" class="w-full" placeholder="full name" />
         </UFormField>
@@ -35,18 +39,18 @@ const modelValue = shallowRef(new CalendarDate(2022, 1, 10))
         <UFormField label="Summary">
             <UTextarea :rows="4" class="w-full" v-model="resumeStore.personalInfo.summary" />
         </UFormField>
-        <div class="">
-            <h1 class="font-medium mb-5">Experience</h1>
+
+        <div class="" v-for="experience in resumeStore.personalInfo.experience" :key="experience.id">
             <div class="flex gap-2 justify-between items-center mb-3">
                 <UFormField label="Postion">
-                    <UInput />
+                    <UInput v-model="experience.position" />
                 </UFormField>
                 <UFormField label="Compony">
-                    <UInput />
+                    <UInput v-model="experience.company" />
                 </UFormField>
             </div>
             <UFormField label="location" class="mb-3">
-                <UInput class="w-full" placeholder="Location" />
+                <UInput class="w-full" placeholder="Location" v-model="experience.location" />
             </UFormField>
             <div class="flex gap-2 justify-beetween items-center mb-3">
                 <UFormField label="Start Date" class="w-full">
@@ -73,8 +77,10 @@ const modelValue = shallowRef(new CalendarDate(2022, 1, 10))
                 </UFormField>
             </div>
             <UFormField label="Education">
-                <UTextarea :rows="5" class="w-full" />
+                <UTextarea :rows="5" class="w-full" v-model="experience.description" />
             </UFormField>
         </div>
+
+        <UButton @click="addExperience">Experience qoshish</UButton>
     </div>
 </template>

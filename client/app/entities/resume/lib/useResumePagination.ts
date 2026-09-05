@@ -7,7 +7,10 @@ import {
   type ResumePageContent,
 } from "../models/pagination";
 
-export function useResumePagination(blocks: ComputedRef<ResumeBlock[]>) {
+export function useResumePagination(
+  blocks: ComputedRef<ResumeBlock[]>,
+  resume: Ref<Resume> | ComputedRef<Resume>,
+) {
   const measureEls = new Map<string, HTMLElement>();
   const pageContents = ref<ResumePageContent[]>([]);
 
@@ -27,13 +30,13 @@ export function useResumePagination(blocks: ComputedRef<ResumeBlock[]>) {
     for (const block of blocks.value) {
       heights.set(block.id, measureEls.get(block.id)?.offsetHeight ?? 0);
     }
-    // console.log(heights)
+    // console.log(heights);
     pageContents.value = toPageContent(
       packBlocksIntoPages(blocks.value, heights),
     );
   }, 150);
 
-  watch(blocks, recalc, { immediate: true, deep: true });
+  watch([blocks, resume], recalc, { deep: true, immediate: true });
 
   return { setMeasureRef, pageContents };
 }
