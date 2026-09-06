@@ -40,13 +40,14 @@ watch(endDate, (newDate) => {
 <template>
     <div class="flex flex-col gap-4">
         <UFormField label="Degree">
-            <UInput v-model="props.education.degree"  class="w-full"/>
-        </UFormField>
-        <UFormField label="Field of study">
-            <UInput class="w-full" v-model="props.education.fieldOfStudy" />
+            <UInput v-model="props.education.degree" class="w-full" placeholder="Bachelor's degree..." />
         </UFormField>
         <UFormField label="Institution">
-            <UInput class="w-full" v-model="props.education.institution" />
+            <UInput class="w-full" v-model="props.education.institution"
+                placeholder="Tashkent University of Information Technologies ..." />
+        </UFormField>
+        <UFormField label="Field of study">
+            <UInput class="w-full" v-model="props.education.fieldOfStudy" placeholder=" Electrical power engineer..." />
         </UFormField>
         <div class="flex justify-between items-center gap-4">
             <UFormField label="Start Date" class="w-full">
@@ -73,7 +74,7 @@ watch(endDate, (newDate) => {
             </UFormField>
         </div>
         <UFormField label="Location">
-            <UInput class="w-full" v-model="props.education.location" />
+            <UInput class="w-full" v-model="props.education.location" placeholder="Tashkent..."/>
         </UFormField>
     </div>
 </template>

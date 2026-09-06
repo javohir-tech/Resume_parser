@@ -40,16 +40,17 @@ watch(endDate , (newDate)=>{
 </script>
 
 <template>
+    <h2>{{ props.experience.position }} {{ props.experience.company }}</h2>
     <div class="flex gap-2 just ify-between items-center mb-3">
         <UFormField label="Postion">
-            <UInput v-model="props.experience.position" />
+            <UInput v-model="props.experience.position" placeholder="Front End Developer..."/>
         </UFormField>
         <UFormField label="Compony">
-            <UInput v-model="props.experience.company" />
+            <UInput v-model="props.experience.company" placeholder="google, meta, amazon ..."/>
         </UFormField>
     </div>
     <UFormField label="location" class="mb-3">
-        <UInput class="w-full" placeholder="Location" v-model="props.experience.location" />
+        <UInput class="w-full" placeholder="Tashkent..." v-model="props.experience.location" />
     </UFormField>
     <div class="flex gap-2 justify-beetween items-center mb-3">
         <UFormField label="Start Date" class="w-full">
@@ -76,6 +77,6 @@ watch(endDate , (newDate)=>{
         </UFormField>
     </div>
     <UFormField label="Education">
-        <UTextarea :rows="5" class="w-full" v-model="props.experience.description" />
+        <UTextarea :rows="5" class="w-full" v-model="props.experience.description" placeholder="Describe your role, responsibilities, and key achievements..."/>
     </UFormField>
 </template>
