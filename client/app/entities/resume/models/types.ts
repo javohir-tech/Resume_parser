@@ -10,7 +10,7 @@ export interface Experience {
 
 export interface Education {
   id: string;
-  degree : string;
+  degree: string;
   fieldOfStudy: string;
   institution: string;
   location?: string;
@@ -34,18 +34,34 @@ export interface Personal {
   summary?: string;
 }
 
+export type LanguageDegree =
+  | "Elementary proficiency"
+  | "Limited working proficiency"
+  | "Professional working proficiency"
+  | "Full professional proficiency"
+  | "Native or bilingual proficiency"
+  | ""
+
+export interface Languages {
+  id : string;
+  language: string;
+  degree: LanguageDegree;
+}
+
 export interface Resume extends Personal {
   skills?: SkillGroup[];
   education?: Education[];
   experience?: Experience[];
+  languages ?: Languages[];
 }
 
-export type  ResumeSection = "experience" | "education" | "skills"
+export type ResumeSection = "experience" | "education" | "skills" | "languages";
 
-export type ResumeBlock  = 
-  | {id : string ; type : "header"} 
-  | {id : string ; type : "summary"}
-  | {id : string ; type : "section-title" ; section : ResumeSection}
-  | {id : string ; type : "experience-item" ; item : Experience}
-  | {id : string ; type : "education-item";  item : Education}
-  | {id : string ; type : "skills-group" ; item : SkillGroup}
+export type ResumeBlock =
+  | { id: string; type: "header" }
+  | { id: string; type: "summary" }
+  | { id: string; type: "section-title"; section: ResumeSection }
+  | { id: string; type: "experience-item"; item: Experience }
+  | { id: string; type: "education-item"; item: Education }
+  | { id: string; type: "skills-group"; item: SkillGroup }
+  | { id: string; type: "languages-item"; item: Languages };

@@ -3,6 +3,7 @@ import type {
   Education,
   SkillGroup,
   ResumeBlock,
+  Languages,
   Resume,
 } from "./types";
 
@@ -15,12 +16,12 @@ export const PAGE_GAP_PX = 10 * MM_TO_PX;
 export const PAGE_CONTENT_WIDTH_PX = PAGE_WIDTH_PX - PAGE_PADDING_PX * 2;
 export const PAGE_CONTENT_HEIGHT_PX = PAGE_HEIGHT_PX - PAGE_PADDING_PX * 2;
 
-export const BLOCK_GAP_PX = 10
+export const BLOCK_GAP_PX = 10;
 
 export function packBlocksIntoPages(
   blocks: ResumeBlock[],
   heigths: Map<string, number>,
-): ResumeBlock[][] {  
+): ResumeBlock[][] {
   // console.log(heigths);
   const pages: ResumeBlock[][] = [[]];
   let pageIndex = 0;
@@ -32,9 +33,9 @@ export function packBlocksIntoPages(
     const h = heigths.get(block.id) ?? 0;
     const currentPage = pages[pageIndex];
     const gapNeeded = currentPage && currentPage.length > 0 ? BLOCK_GAP_PX : 0;
-    
+
     let needed = h + gapNeeded;
-    
+
     if (block.type === "section-title") {
       const next = blocks[i + 1];
       if (next) needed += heigths.get(next.id) ?? 0;
@@ -50,9 +51,9 @@ export function packBlocksIntoPages(
     }
 
     pages[pageIndex]?.push(block);
-    used += h+gapNeeded;
+    used += h + gapNeeded;
   }
-  // console.log(pages);
+  console.log(pages);
 
   return pages;
 }
@@ -63,6 +64,7 @@ export interface ResumePageContent {
   experience: { showTitle: boolean; items: Experience[] };
   education: { showTitle: boolean; items: Education[] };
   skills: { showTitle: boolean; items: SkillGroup[] };
+  languages : {showTitle : boolean ; items : Languages[]}
 }
 
 export function toPageContent(pages: ResumeBlock[][]): ResumePageContent[] {
@@ -73,6 +75,7 @@ export function toPageContent(pages: ResumeBlock[][]): ResumePageContent[] {
       experience: { showTitle: false, items: [] },
       education: { showTitle: false, items: [] },
       skills: { showTitle: false, items: [] },
+      languages: { showTitle: false, items: [] },
     };
 
     for (const block of blocks) {
@@ -86,8 +89,9 @@ export function toPageContent(pages: ResumeBlock[][]): ResumePageContent[] {
         content.experience.items.push(block.item);
       else if (block.type === "skills-group")
         content.skills.items.push(block.item);
+      else if(block.type === "languages-item")  content.languages.items.push(block.item)
     }
-    // console.log(content)
+    console.log(content)
     return content;
   });
 }

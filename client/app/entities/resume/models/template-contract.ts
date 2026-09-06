@@ -8,4 +8,5 @@ export interface ResumeTemplateBlokcs {
   experienceItem: Component;
   educationItem: Component;
   skillsGroup: Component;
+  languages : Component;
 }

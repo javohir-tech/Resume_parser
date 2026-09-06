@@ -38,13 +38,16 @@ const gapPx = computed(() => PAGE_GAP_PX * scale.value)
         :item="block.item" />
       <component :is="template.skillsGroup" v-else-if="block.type === 'skills-group'" :ref="setMeasureRef(block.id)"
         :item="block.item" />
+      <component :is="template.languages" v-else-if="block.type === 'languages-item'" :ref="setMeasureRef(block.id)"
+        :item="block.item" />
     </template>
   </div>
 
   <!-- Ko'rinadigan, sahifalangan render -->
   <div ref="containerRef" class="p-10 flex flex-col items-center gap-8">
     <div v-for="(page, i) in pageContents" :key="i" class="relative"
-      :style="{ width: `${PAGE_WIDTH_PX * scale}px`, height: `${PAGE_HEIGHT_PX * scale}px`}" style="margin-bottom: 20px;">
+      :style="{ width: `${PAGE_WIDTH_PX * scale}px`, height: `${PAGE_HEIGHT_PX * scale}px` }"
+      style="margin-bottom: 20px;">
       <div class="absolute top-0 left-0 shadow-xl"
         :style="{ width: `${PAGE_WIDTH_PX}px`, transform: `scale(${scale})`, transformOrigin: 'top left' }">
         <component :is="template.page">
@@ -65,6 +68,11 @@ const gapPx = computed(() => PAGE_GAP_PX * scale.value)
           <template v-if="page.skills.items.length">
             <component :is="template.sectionTitle" v-if="page.skills.showTitle" section="skills" />
             <component :is="template.skillsGroup" v-for="item in page.skills.items" :key="item.id" :item="item" />
+          </template>
+          
+          <template v-if="page.languages.items.length">
+            <component :is="template.sectionTitle" v-if="page.languages.showTitle" section="languages" />
+            <component :is="template.languages" v-for="item in page.languages.items" :key="item.id" :item="item" />
           </template>
         </component>
       </div>

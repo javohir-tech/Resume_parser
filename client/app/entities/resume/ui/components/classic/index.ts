@@ -6,6 +6,7 @@ import ClassicSectionTitle from "./ClassicSectionTitle.vue";
 import ClassicExperienceItem from "./ClassicExperienceItem.vue";
 import ClassicEducationItem from "./ClassicEducationItem.vue";
 import ClassicSkillsGroup from "./ClassicSkillsGroup.vue";
+import ClassicLanguages from "./ClassicLanguages.vue";
 
 export const ClassicTemplate: ResumeTemplateBlokcs = {
   page: ClassicPage,
@@ -15,4 +16,5 @@ export const ClassicTemplate: ResumeTemplateBlokcs = {
   experienceItem: ClassicExperienceItem,
   educationItem: ClassicEducationItem,
   skillsGroup: ClassicSkillsGroup,
+  languages: ClassicLanguages,
 };

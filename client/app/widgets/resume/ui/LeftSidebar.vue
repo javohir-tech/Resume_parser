@@ -3,9 +3,17 @@ import { useResumeStore, useResumeSection } from '~/entities/resume';
 import ExperienceForm from './components/ExperienceForm.vue';
 import EducationForm from './components/EducationForm.vue';
 import SkillsGroupForm from './components/SkillsGroupForm.vue';
+import LanguagesForm from './components/LanguagesForm.vue';
 
 const resumeStore = useResumeStore()
-const { addExperience, removeExperince, addEducation, removeEducation, addSkillsGroup, removeSkillsGroup,
+const {
+    addExperience,
+    removeExperince,
+    addEducation,
+    removeEducation,
+    addSkillsGroup,
+    removeSkillsGroup,
+    addLanguage
 } = useResumeSection()
 
 
@@ -69,9 +77,21 @@ const { addExperience, removeExperince, addEducation, removeEducation, addSkills
         <SkillsGroupForm :skills-group="skillsGroup" />
         <div class="text-end">
             <UButton @click="removeSkillsGroup(skillsGroup.id)" icon="i-lucide-trash" class="mt-3" color="error"
-                variant="outline" />
+            variant="outline" />
         </div>
     </div>
     <UButton trailing-icon="i-lucide-plus" @click="addSkillsGroup">Skill qoshish</UButton>
-
+    <!-- ////////////////////////////////////////////////// -->
+    <!-- Skills Group Form -->
+    <!-- ////////////////////////////////////////////////// -->
+    <h1 class="font-medium">Languages</h1>
+    <div  v-for="language in resumeStore.personalInfo.languages" :key="language.id">
+        <LanguagesForm :language="language"/>
+        
+        <div class="text-end">
+            <UButton @click="removeSkillsGroup(language.id)" icon="i-lucide-trash" class="mt-3" color="error"
+            variant="outline" />
+        </div>
+    </div>
+    <UButton trailing-icon="i-lucide-plus" @click="addLanguage">Language qoshish</UButton>
 </template>

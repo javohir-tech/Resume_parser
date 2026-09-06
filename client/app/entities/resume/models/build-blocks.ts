@@ -48,5 +48,19 @@ export function buildBlock(resume: Resume): ResumeBlock[] {
     );
   }
 
+  if (resume.languages?.length) {
+    blocks.push({
+      id: "languages-title-languages",
+      type: "section-title",
+      section: "languages",
+    });
+    resume.languages.forEach((item) =>
+      blocks.push({
+        id: `languages-item-${item.id}`,
+        type: "languages-item",
+        item,
+      }),
+    );
+  }
   return blocks;
 }

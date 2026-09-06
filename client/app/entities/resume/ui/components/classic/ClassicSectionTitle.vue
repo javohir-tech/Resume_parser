@@ -2,7 +2,7 @@
 import type { ResumeSection } from '~/entities/resume/models/types';
 defineProps<{ section: ResumeSection }>()
 const labels: Record<ResumeSection, string> = {
-  experience: 'Ish tajribasi', education: "Ta'lim", skills: "Ko'nikmalar",
+  experience: 'Ish tajribasi', education: "Ta'lim", skills: "Ko'nikmalar", languages: "Tillar"
 }
 </script>
 <template>

@@ -25,7 +25,7 @@ export const useResumeSection = () => {
       id: crypto.randomUUID(),
       fieldOfStudy: "",
       institution: "",
-      degree : "",
+      degree: "",
       location: "",
       startDate: "",
       endDate: "",
@@ -70,6 +70,14 @@ export const useResumeSection = () => {
     }
   }
 
+  function addLanguage() {
+    resumeStore.personalInfo.languages?.push({
+      id: crypto.randomUUID(),
+      language: "",
+      degree: "",
+    });
+  }
+
   return {
     addExperience,
     removeExperince,
@@ -79,5 +87,6 @@ export const useResumeSection = () => {
     removeSkillsGroup,
     addSkill,
     removeSkill,
+    addLanguage,
   };
 };
