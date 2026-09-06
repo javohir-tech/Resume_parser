@@ -5,7 +5,7 @@ defineProps<{ item: Education }>()
 <template>
     <div class="mb-3 last:mb-0 break-inside-avoid">
         <div class="flex justify-between items-baseline">
-            <h3 class="font-bold text-sm">{{ item.degree }}</h3>
+            <h3 class="font-bold text-sm">{{ item.fieldOfStudy }}</h3>
             <span class="text-xs text-gray-500 whitespace-nowrap ml-2">{{ item.startDate }} — {{ item.endDate ||
                 'Hozirgacha' }}</span>
         </div>
