@@ -1,5 +1,3 @@
-import { string } from "valibot";
-
 export interface Experience {
   id: string;
   position: string;
@@ -12,6 +10,7 @@ export interface Experience {
 
 export interface Education {
   id: string;
+  degree : string;
   fieldOfStudy: string;
   institution: string;
   location?: string;

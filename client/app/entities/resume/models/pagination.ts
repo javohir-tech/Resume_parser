@@ -15,6 +15,8 @@ export const PAGE_GAP_PX = 10 * MM_TO_PX;
 export const PAGE_CONTENT_WIDTH_PX = PAGE_WIDTH_PX - PAGE_PADDING_PX * 2;
 export const PAGE_CONTENT_HEIGHT_PX = PAGE_HEIGHT_PX - PAGE_PADDING_PX * 2;
 
+export const BLOCK_GAP_PX = 10
+
 export function packBlocksIntoPages(
   blocks: ResumeBlock[],
   heigths: Map<string, number>,
@@ -28,13 +30,15 @@ export function packBlocksIntoPages(
     const block = blocks[i];
     if (!block) continue;
     const h = heigths.get(block.id) ?? 0;
-    let needed = h;
-
+    const currentPage = pages[pageIndex];
+    const gapNeeded = currentPage && currentPage.length > 0 ? BLOCK_GAP_PX : 0;
+    
+    let needed = h + gapNeeded;
+    
     if (block.type === "section-title") {
       const next = blocks[i + 1];
       if (next) needed += heigths.get(next.id) ?? 0;
     }
-    const currentPage = pages[pageIndex];
     if (
       used + needed > PAGE_CONTENT_HEIGHT_PX &&
       currentPage &&
@@ -46,7 +50,7 @@ export function packBlocksIntoPages(
     }
 
     pages[pageIndex]?.push(block);
-    used += h;
+    used += h+gapNeeded;
   }
   // console.log(pages);
 
@@ -83,7 +87,7 @@ export function toPageContent(pages: ResumeBlock[][]): ResumePageContent[] {
       else if (block.type === "skills-group")
         content.skills.items.push(block.item);
     }
-
+    // console.log(content)
     return content;
   });
 }

@@ -25,6 +25,7 @@ export const useResumeSection = () => {
       id: crypto.randomUUID(),
       fieldOfStudy: "",
       institution: "",
+      degree : "",
       location: "",
       startDate: "",
       endDate: "",
@@ -36,5 +37,47 @@ export const useResumeSection = () => {
       resumeStore.personalInfo.education?.filter((edc) => edc.id !== id);
   }
 
-  return { addExperience, removeExperince , addEducation , removeEducation };
+  function addSkillsGroup() {
+    resumeStore.personalInfo.skills?.push({
+      id: crypto.randomUUID(),
+      title: "",
+      skills: [],
+    });
+  }
+
+  function removeSkillsGroup(id: string) {
+    resumeStore.personalInfo.skills = resumeStore.personalInfo.skills?.filter(
+      (sk) => sk.id !== id,
+    );
+  }
+
+  function addSkill(id: string, skill: string) {
+    const skillGroup = resumeStore.personalInfo.skills?.find(
+      (sk) => sk.id === id,
+    );
+    if (skillGroup) {
+      skillGroup.skills.push(skill);
+    }
+  }
+
+  function removeSkill(id: string, index: number) {
+    const skillGroup = resumeStore.personalInfo.skills?.find(
+      (sk) => sk.id === id,
+    );
+
+    if (skillGroup && index !== -1) {
+      skillGroup.skills.splice(index, 1);
+    }
+  }
+
+  return {
+    addExperience,
+    removeExperince,
+    addEducation,
+    removeEducation,
+    addSkillsGroup,
+    removeSkillsGroup,
+    addSkill,
+    removeSkill,
+  };
 };

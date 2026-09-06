@@ -2,9 +2,11 @@
 import { useResumeStore, useResumeSection } from '~/entities/resume';
 import ExperienceForm from './components/ExperienceForm.vue';
 import EducationForm from './components/EducationForm.vue';
+import SkillsGroupForm from './components/SkillsGroupForm.vue';
 
 const resumeStore = useResumeStore()
-const { addExperience, removeExperince, addEducation ,  removeEducation } = useResumeSection()
+const { addExperience, removeExperince, addEducation, removeEducation, addSkillsGroup, removeSkillsGroup,
+} = useResumeSection()
 
 
 </script>
@@ -58,4 +60,17 @@ const { addExperience, removeExperince, addEducation ,  removeEducation } = useR
         </div>
         <UButton trailing-icon="i-lucide-plus" @click="addEducation">Education qoshish</UButton>
     </div>
+    <!-- ////////////////////////////////////////////////// -->
+    <!-- Skills Group Form -->
+    <!-- ////////////////////////////////////////////////// -->
+    <h1 class="font-medium">Skills Group</h1>
+    <div v-for="skillsGroup in resumeStore.personalInfo.skills" :key="skillsGroup.id">
+        <SkillsGroupForm :skills-group="skillsGroup" />
+        <div class="text-end">
+            <UButton @click="removeSkillsGroup(skillsGroup.id)" icon="i-lucide-trash" class="mt-3" color="error"
+                variant="outline" />
+        </div>
+    </div>
+    <UButton trailing-icon="i-lucide-plus" @click="addSkillsGroup">Skill qoshish</UButton>
+
 </template>

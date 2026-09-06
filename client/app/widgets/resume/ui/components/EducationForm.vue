@@ -39,6 +39,9 @@ watch(endDate, (newDate) => {
 
 <template>
     <div class="flex flex-col gap-4">
+        <UFormField label="Degree">
+            <UInput v-model="props.education.degree"  class="w-full"/>
+        </UFormField>
         <UFormField label="Field of study">
             <UInput class="w-full" v-model="props.education.fieldOfStudy" />
         </UFormField>
