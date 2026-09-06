@@ -45,7 +45,7 @@ const gapPx = computed(() => PAGE_GAP_PX * scale.value)
   <div ref="containerRef" class="p-10 flex flex-col items-center gap-8">
     <div v-for="(page, i) in pageContents" :key="i" class="relative"
       :style="{ width: `${PAGE_WIDTH_PX * scale}px`, height: `${PAGE_HEIGHT_PX * scale}px`}" style="margin-bottom: 20px;">
-      <div class="absolute top-0 left-0 border border-red-500"
+      <div class="absolute top-0 left-0 shadow-xl"
         :style="{ width: `${PAGE_WIDTH_PX}px`, transform: `scale(${scale})`, transformOrigin: 'top left' }">
         <component :is="template.page">
           <component :is="template.header" v-if="page.showHeader" :resume="resume" />
