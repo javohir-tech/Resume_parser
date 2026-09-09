@@ -53,7 +53,7 @@ export function packBlocksIntoPages(
     pages[pageIndex]?.push(block);
     used += h + gapNeeded;
   }
-  console.log(pages);
+  // console.log(pages);
 
   return pages;
 }
@@ -91,7 +91,7 @@ export function toPageContent(pages: ResumeBlock[][]): ResumePageContent[] {
         content.skills.items.push(block.item);
       else if(block.type === "languages-item")  content.languages.items.push(block.item)
     }
-    console.log(content)
+    // console.log(content)
     return content;
   });
 }

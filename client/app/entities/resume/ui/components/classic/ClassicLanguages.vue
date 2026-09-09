@@ -7,9 +7,8 @@ defineProps<{
 </script>
 
 <template>
-    <div class="flex gap-1">
-        salom 
-        <p class="text-gray-500">{{ item.language }}</p>
-        <p>{{ item.degree }}</p>
+    <div class="mb-2 last:mb-0">
+        <span class="text-sm font-bold">{{ item.language }}</span> : 
+        <span class="text-sm text-gray-800">{{ item.degree }}</span>
     </div>
 </template>
