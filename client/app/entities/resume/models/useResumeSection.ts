@@ -78,6 +78,11 @@ export const useResumeSection = () => {
     });
   }
 
+  function removeLanguage(id: string) {
+    resumeStore.personalInfo.languages =
+      resumeStore.personalInfo.languages?.filter((l) => l.id !== id);
+  }
+
   return {
     addExperience,
     removeExperince,
@@ -88,5 +93,6 @@ export const useResumeSection = () => {
     addSkill,
     removeSkill,
     addLanguage,
+    removeLanguage
   };
 };

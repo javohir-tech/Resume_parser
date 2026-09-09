@@ -13,7 +13,8 @@ const {
     removeEducation,
     addSkillsGroup,
     removeSkillsGroup,
-    addLanguage
+    addLanguage,
+    removeLanguage
 } = useResumeSection()
 
 
@@ -47,6 +48,7 @@ const {
         <!-- ////////////////////////////////////////////////// -->
         <!-- Expreries Form-->
         <!-- ////////////////////////////////////////////////// -->
+         
         <h1 class="font-medium">Experience</h1>
         <div v-for="experience in resumeStore.personalInfo.experience" :key="experience.id">
             <ExperienceForm :experience="experience" />
@@ -56,9 +58,11 @@ const {
             </div>
         </div>
         <UButton trailing-icon="i-lucide-plus" @click="addExperience">Experience qoshish</UButton>
+
         <!-- ////////////////////////////////////////////////// -->
         <!-- Education Form -->
         <!-- ////////////////////////////////////////////////// -->
+
         <h1 class="font-medium">Educations</h1>
         <div v-for="education in resumeStore.personalInfo.education" :key="education.id">
             <EducationForm :education="education" />
@@ -69,28 +73,32 @@ const {
         </div>
         <UButton trailing-icon="i-lucide-plus" @click="addEducation">Education qoshish</UButton>
     </div>
+
     <!-- ////////////////////////////////////////////////// -->
     <!-- Skills Group Form -->
     <!-- ////////////////////////////////////////////////// -->
+
     <h1 class="font-medium">Skills Group</h1>
     <div v-for="skillsGroup in resumeStore.personalInfo.skills" :key="skillsGroup.id">
         <SkillsGroupForm :skills-group="skillsGroup" />
         <div class="text-end">
             <UButton @click="removeSkillsGroup(skillsGroup.id)" icon="i-lucide-trash" class="mt-3" color="error"
-            variant="outline" />
+                variant="outline" />
         </div>
     </div>
     <UButton trailing-icon="i-lucide-plus" @click="addSkillsGroup">Skill qoshish</UButton>
+
     <!-- ////////////////////////////////////////////////// -->
-    <!-- Skills Group Form -->
+    <!-- Languages Group Form -->
     <!-- ////////////////////////////////////////////////// -->
+
     <h1 class="font-medium">Languages</h1>
-    <div  v-for="language in resumeStore.personalInfo.languages" :key="language.id">
-        <LanguagesForm :language="language"/>
-        
+    <div v-for="language in resumeStore.personalInfo.languages" :key="language.id">
+        <LanguagesForm :language="language" />
+
         <div class="text-end">
-            <UButton @click="removeSkillsGroup(language.id)" icon="i-lucide-trash" class="mt-3" color="error"
-            variant="outline" />
+            <UButton @click="removeLanguage(language.id)" icon="i-lucide-trash" class="mt-3" color="error"
+                variant="outline" />
         </div>
     </div>
     <UButton trailing-icon="i-lucide-plus" @click="addLanguage">Language qoshish</UButton>
