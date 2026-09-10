@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Languages, LanguageDegree } from '~/entities/resume';
+import { languages } from '~/entities/resume';
 
 const props = defineProps<{
     language: Languages
@@ -13,36 +14,12 @@ const degrees = ref<LanguageDegree[]>([
     'Professional working proficiency',
 ])
 
-const languages = ref(["Uzbek",
-    "English",
-    "Russian",
-    "Chinese",
-    "Spanish",
-    "French",
-    "German",
-    "Italian",
-    "Portuguese",
-    "Arabic",
-    "Japanese",
-    "Korean",
-    "Turkish",
-    "Hindi",
-    "Persian",
-    "Kazakh",
-    "Kyrgyz",
-    "Tajik",
-    "Turkmen",
-    "Ukrainian",
-    "Polish",
-    "Dutch",
-    "Swedish",
-    "Norwegian",
-    "Danish",
-    "Finnish",
-    "Czech",
-    "Greek",
-    "Hebrew",
-])
+const languageItems = ref<string[]>([...languages])
+
+function createLanguage(language: string) {
+    languageItems.value.push(language)
+    props.language.language = language
+}
 
 
 </script>
@@ -50,8 +27,8 @@ const languages = ref(["Uzbek",
     <div class="flex flex-col gap-4">
         <h1 class="font-medium">{{ language.language }}</h1>
         <UFormField>
-            <USelectMenu v-model="language.language" :items="languages" class="w-full"
-                placeholder="English, Chinese ..." />
+            <USelectMenu create-item v-model="language.language" :items="languageItems" class="w-full"
+                placeholder="English, Chinese ..." @create="createLanguage" />
         </UFormField>
         <UFormField>
             <USelect v-model="language.degree" class="w-full" placeholder="Elementary proficiency..."
