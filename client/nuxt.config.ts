@@ -1,19 +1,37 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-  modules: ["@nuxt/ui", "@nuxtjs/i18n", "@vueuse/nuxt", "@nuxt/icon", "@pinia/nuxt"],
+  modules: [
+    "@nuxt/ui",
+    "@nuxtjs/i18n",
+    "@vueuse/nuxt",
+    "@nuxt/icon",
+    "@pinia/nuxt",
+    "@nuxt/fonts",
+  ],
   runtimeConfig: {
     botToken: "",
     chatId: "",
+  },
+  fonts: {
+    families: [
+      { name: "Inter", provider: "google"   , global : true},
+      { name: "Roboto", provider: "google"   , global : true},
+      { name: "Merriweather", provider: "google"   , global : true},
+      { name: "Playfair Display", provider: "google"   , global : true},
+      { name: "Lato", provider: "google"  , global : true },
+      { name: "Poppins", provider: "google"   , global : true},
+      { name: "Nunito", provider: "google"   , global : true},
+    ],
   },
   routeRules: {
     "/": { prerender: true },
     "/en": { prerender: true },
     "/ru": { prerender: true },
 
-    "/about": { redirect: {to : "/contact" , statusCode : 307}  },
-    "/en/about": { redirect: {to : "/en/contact" , statusCode : 307} },
-    "/ru/about": { redirect: {to : "/ru/contact" , statusCode : 307} },
+    "/about": { redirect: { to: "/contact", statusCode: 307 } },
+    "/en/about": { redirect: { to: "/en/contact", statusCode: 307 } },
+    "/ru/about": { redirect: { to: "/ru/contact", statusCode: 307 } },
   },
   icon: {
     serverBundle: {
@@ -48,8 +66,6 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true },
   components: {
-    dirs: [
-      "~/widgets/home",  
-    ],
+    dirs: ["~/widgets/home"],
   },
 });

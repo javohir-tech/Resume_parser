@@ -1,5 +1,5 @@
 <template>
-  <div class="resume-page font-serif text-gray-900">
+  <div class="resume-page text-gray-900">
     <slot />
   </div>
 </template>

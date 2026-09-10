@@ -8,6 +8,7 @@ const resumeStore = useResumeStore()
 definePageMeta({
     layout : "resume-editor"
 })
+
 </script>
 
 <template>
