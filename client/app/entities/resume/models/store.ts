@@ -15,5 +15,10 @@ export const useResumeStore = defineStore("resume", () => {
     languages: [],
   });
 
+  const designInfo = reactive({
+    title_color : "" , 
+    name_font : "" , 
+  })
+
   return { personalInfo };
 });

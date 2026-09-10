@@ -3,5 +3,5 @@
 </script>
 
 <template>
-    dizayn patternlar
+    salom bolajonlar 
 </template>
