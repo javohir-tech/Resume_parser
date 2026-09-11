@@ -1,6 +1,12 @@
+<script setup lang="ts">
+import { useResumeStore } from '~/entities/resume/models/store';
+
+const resumeStore = useResumeStore()
+</script>
+
 <template>
-  <div class="resume-page text-gray-900">
-    <slot />
+  <div class="resume-page text-gray-900" :style="{fontFamily : resumeStore.designInfo.font}">
+    <slot /> 
   </div>
 </template>
 

@@ -1,28 +1,23 @@
 <script setup lang="ts">
 import { useResumeStore } from '~/entities/resume';
+import HeadingColor from './components/HeadingColor.vue';
+import EntryTitleColor from './components/EntryTitleColor.vue';
+import FontChoose from './components/FontChoose.vue';
 
 const resumeStore = useResumeStore()
 
 </script>
 
 <template>
-    <UPopover mode="hover" enable-touch :content="{ align: 'start', side: 'left' }">
-        <UButton label="color" />
+    <div class="flex flex-col gap-4">
 
-        <template #content>
-            <div v-for="color in resumeStore.colorOptions" :key="color.name"  @click="resumeStore.handleChangeColor(color.hex)">
-                {{ color.name }}
-            </div>
-        </template>
-    </UPopover>
-    <UPopover mode="hover" enable-touch :content="{ align: 'start', side: 'left' }">
-        <UButton label="font" />
-        <template #content>
-            <div>
-                <div v-for="font in resumeStore.fontOptions">
-                    <UButton @click="resumeStore.handleChangeFont(font)" :label="font" />
-                </div>
-            </div>
-        </template>
-    </UPopover>
+        <!-- Section Header -->
+        <HeadingColor />
+
+        <!-- Entry Title-->
+        <EntryTitleColor />
+
+        <!-- Font choose -->
+        <FontChoose />
+    </div>
 </template>
