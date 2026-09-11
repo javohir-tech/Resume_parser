@@ -53,7 +53,7 @@ watch(endDate, (newDate) => {
             <UFormField label="Start Date" class="w-full">
                 <UPopover class="w-full">
                     <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
-                        {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : 'Select a date' }}
+                        {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : props.education.startDate || 'Select a date' }}
                     </UButton>
 
                     <template #content>
@@ -64,7 +64,7 @@ watch(endDate, (newDate) => {
             <UFormField label="End Date" class="w-full">
                 <UPopover class="w-full">
                     <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
-                        {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : 'Select a date' }}
+                        {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : props.education.endDate || 'Select a date' }}
                     </UButton>
 
                     <template #content>
@@ -78,3 +78,4 @@ watch(endDate, (newDate) => {
         </UFormField>
     </div>
 </template>
+

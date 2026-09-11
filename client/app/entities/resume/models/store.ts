@@ -1,9 +1,12 @@
 import type { Resume } from "./types";
+import { useStorage } from "@vueuse/core";
+import { skipHydrate } from "pinia";
 
 export type ResumeColor = { name: string; hex: string };
 
 export const useResumeStore = defineStore("resume", () => {
-  const personalInfo = reactive<Resume>({
+  const storageOptions = { mergeDefaults: true, initOnMounted: true };
+  const personalInfo = useStorage<Resume>("resume-parser:personal-info:v1", {
     fullname: "",
     title: "",
     email: "",
@@ -17,14 +20,14 @@ export const useResumeStore = defineStore("resume", () => {
     education: [],
     experience: [],
     languages: [],
-  });
+  }, undefined, storageOptions);
 
-  const designInfo = reactive({
+  const designInfo = useStorage("resume-parser:design-info:v1", {
     heading_title_color: null as ResumeColor | null,
     entry_title_color: null as ResumeColor | null,
     text_color: null as ResumeColor | null,
     font: "Inter",
-  });
+  }, undefined, storageOptions);
 
   const fontOptions = [
     "Inter",
@@ -57,20 +60,20 @@ export const useResumeStore = defineStore("resume", () => {
   ];
 
   function handleChangeFont(font: string) {
-    designInfo.font = font;
+    designInfo.value.font = font;
   }
 
   function handleChangeColor(color: ResumeColor | null) {
-    designInfo.heading_title_color = color;
+    designInfo.value.heading_title_color = color;
   }
 
   function handleChangeEntryTitleColor(color: ResumeColor | null) {
-    designInfo.entry_title_color = color;
+    designInfo.value.entry_title_color = color;
   }
 
   return {
-    personalInfo,
-    designInfo,
+    personalInfo: skipHydrate(personalInfo),
+    designInfo: skipHydrate(designInfo),
     fontOptions,
     colorOptions,
     handleChangeFont,
