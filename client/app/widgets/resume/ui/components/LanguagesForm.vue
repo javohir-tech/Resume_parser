@@ -24,13 +24,12 @@ function createLanguage(language: string) {
 
 </script>
 <template>
-    <div class="flex flex-col gap-4">
-        <h1 class="font-medium">{{ language.language }}</h1>
-        <UFormField>
+    <div class="flex flex-col gap-3">
+        <UFormField label="Language">
             <USelectMenu create-item v-model="language.language" :items="languageItems" class="w-full"
                 placeholder="English, Chinese ..." @create="createLanguage" />
         </UFormField>
-        <UFormField>
+        <UFormField label="Proficiency">
             <USelect v-model="language.degree" class="w-full" placeholder="Elementary proficiency..."
                 :items="degrees" />
         </UFormField>

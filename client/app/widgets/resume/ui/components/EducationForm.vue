@@ -38,7 +38,7 @@ watch(endDate, (newDate) => {
 </script>
 
 <template>
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-3">
         <UFormField label="Degree">
             <UInput v-model="props.education.degree" class="w-full" placeholder="Bachelor's degree..." />
         </UFormField>
@@ -49,10 +49,10 @@ watch(endDate, (newDate) => {
         <UFormField label="Field of study">
             <UInput class="w-full" v-model="props.education.fieldOfStudy" placeholder=" Electrical power engineer..." />
         </UFormField>
-        <div class="flex justify-between items-center gap-4">
+        <div class="grid gap-3">
             <UFormField label="Start Date" class="w-full">
                 <UPopover class="w-full">
-                    <UButton color="neutral" variant="subtle" icon="i-lucide-calendar">
+                    <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
                         {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : 'Select a date' }}
                     </UButton>
 
@@ -63,7 +63,7 @@ watch(endDate, (newDate) => {
             </UFormField>
             <UFormField label="End Date" class="w-full">
                 <UPopover class="w-full">
-                    <UButton color="neutral" variant="subtle" icon="i-lucide-calendar">
+                    <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
                         {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : 'Select a date' }}
                     </UButton>
 

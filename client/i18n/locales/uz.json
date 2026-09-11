@@ -1,4 +1,23 @@
 {
+  "resumeDocument": {
+    "language": "Rezyume tili",
+    "sections": {
+      "summary": "Ma’lumot",
+      "experience": "Ish tajribasi",
+      "education": "Ta’lim",
+      "skills": "Ko‘nikmalar",
+      "languages": "Tillar"
+    },
+    "present": "Hozirgacha",
+    "website": "Veb-sayt",
+    "proficiency": {
+      "elementary": "Boshlang‘ich daraja",
+      "limited": "Cheklangan ish darajasi",
+      "professional": "Professional ish darajasi",
+      "full": "To‘liq professional daraja",
+      "native": "Ona tili yoki ikki tilli"
+    }
+  },
   "seo": {
     "home": {
       "title": "Professional rezyume yarating",

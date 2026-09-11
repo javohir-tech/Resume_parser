@@ -14,8 +14,9 @@ const props = defineProps<{
 
 const blocks = computed(() => buildBlock(props.resume))
 const resumeStore = useResumeStore()
+const { locale } = useI18n()
 const { setMeasureRef, pageContents, recalc } = useResumePagination(blocks, computed(() => props.resume))
-watch(() => resumeStore.designInfo.font, async () => {
+watch([() => resumeStore.designInfo.font, locale], async () => {
   await nextTick()
   await document.fonts.ready
   recalc()
@@ -79,7 +80,7 @@ const gapPx = computed(() => PAGE_GAP_PX * scale.value)
             <component :is="template.sectionTitle" v-if="page.skills.showTitle" section="skills" />
             <component :is="template.skillsGroup" v-for="item in page.skills.items" :key="item.id" :item="item" />
           </template>
-          
+
           <template v-if="page.languages.items.length">
             <component :is="template.sectionTitle" v-if="page.languages.showTitle" section="languages" />
             <component :is="template.languages" v-for="item in page.languages.items" :key="item.id" :item="item" />

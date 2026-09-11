@@ -40,22 +40,21 @@ watch(endDate , (newDate)=>{
 </script>
 
 <template>
-    <h2>{{ props.experience.position }} {{ props.experience.company }}</h2>
-    <div class="flex gap-2 just ify-between items-center mb-3">
-        <UFormField label="Postion">
-            <UInput v-model="props.experience.position" placeholder="Front End Developer..."/>
+    <div class="space-y-3 mb-3">
+        <UFormField label="Position">
+            <UInput v-model="props.experience.position" class="w-full" placeholder="Frontend Developer"/>
         </UFormField>
-        <UFormField label="Compony">
-            <UInput v-model="props.experience.company" placeholder="google, meta, amazon ..."/>
+        <UFormField label="Company">
+            <UInput v-model="props.experience.company" class="w-full" placeholder="Google, Meta, Amazon..."/>
         </UFormField>
     </div>
-    <UFormField label="location" class="mb-3">
+    <UFormField label="Location" class="mb-3">
         <UInput class="w-full" placeholder="Tashkent..." v-model="props.experience.location" />
     </UFormField>
-    <div class="flex gap-2 justify-beetween items-center mb-3">
+    <div class="grid gap-3 mb-3">
         <UFormField label="Start Date" class="w-full">
             <UPopover class="w-full">
-                <UButton color="neutral" variant="subtle" icon="i-lucide-calendar">
+                <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
                     {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : 'Select a date' }}
                 </UButton>
 
@@ -66,7 +65,7 @@ watch(endDate , (newDate)=>{
         </UFormField>
         <UFormField label="End Date" class="w-full">
             <UPopover class="w-full">
-                <UButton color="neutral" variant="subtle" icon="i-lucide-calendar">
+                <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
                     {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : 'Select a date' }}
                 </UButton>
 
@@ -76,7 +75,7 @@ watch(endDate , (newDate)=>{
             </UPopover>
         </UFormField>
     </div>
-    <UFormField label="Education">
+    <UFormField label="Description">
         <UTextarea :rows="5" class="w-full" v-model="props.experience.description" placeholder="Describe your role, responsibilities, and key achievements..."/>
     </UFormField>
 </template>

@@ -29,14 +29,18 @@ function createSkillCategory(skillCategory: string) {
             <USelectMenu v-model="skillsGroup.title" :items="skillCategoriesItems" create-item class="w-full"
                 placeholder="Front End , Backend ..." @create="createSkillCategory" />
         </UFormField>
-        <div class="flex flex-wrap gap-1">
-            <UBadge v-for="(skill, index) in skillsGroup.skills" :key="index"
-                @click="removeSkill(skillsGroup.id, index)" icon="i-lucide-x" color="error" variant="outline"
-                class="cursor-pointer">{{ skill }}</UBadge>
+        <div v-if="skillsGroup.skills.length" class="flex flex-wrap gap-1.5">
+            <UButton v-for="(skill, index) in skillsGroup.skills" :key="index" type="button"
+                @click="removeSkill(skillsGroup.id, index)" trailing-icon="i-lucide-x" color="neutral" variant="subtle"
+                size="xs" :aria-label="`Remove ${skill}`" class="rounded-md">{{ skill }}</UButton>
         </div>
         <UForm @submit="handleAddSkill">
             <UFormField label="Skill">
-                <UInput v-model="skill" class="w-full" placeholder="JavaSacript , Python , Nuxt ..." />
+                <div class="flex gap-2">
+                    <UInput v-model="skill" class="min-w-0 flex-1" placeholder="JavaScript, Python..." />
+                    <UButton type="submit" color="neutral" variant="outline" icon="i-lucide-plus"
+                        :disabled="!skill?.trim()" aria-label="Add skill" title="Add skill" />
+                </div>
             </UFormField>
         </UForm>
     </div>

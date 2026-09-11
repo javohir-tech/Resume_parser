@@ -1,4 +1,23 @@
 {
+  "resumeDocument": {
+    "language": "Resume language",
+    "sections": {
+      "summary": "Summary",
+      "experience": "Work experience",
+      "education": "Education",
+      "skills": "Skills",
+      "languages": "Languages"
+    },
+    "present": "Present",
+    "website": "Website",
+    "proficiency": {
+      "elementary": "Elementary proficiency",
+      "limited": "Limited working proficiency",
+      "professional": "Professional working proficiency",
+      "full": "Full professional proficiency",
+      "native": "Native or bilingual proficiency"
+    }
+  },
   "seo": {
     "home": {
       "title": "Create a Professional Resume",

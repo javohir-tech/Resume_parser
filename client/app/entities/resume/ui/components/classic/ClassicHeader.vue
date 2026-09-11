@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type Resume } from '~/entities/resume/models/types';
 const props = defineProps<{ resume: Resume }>()
+const { t } = useI18n()
 const contacts = computed(() => [props.resume.email, props.resume.phone, props.resume.location].filter(Boolean))
 const websiteUrl = computed(() => {
     const website = props.resume.website?.trim()
@@ -25,7 +26,7 @@ const websiteUrl = computed(() => {
                 <span v-if="contacts.length" aria-hidden="true" class="mr-3 text-gray-400">·</span>
                 <a :href="websiteUrl" target="_blank" rel="noopener noreferrer"
                     class="font-medium text-gray-700 underline decoration-gray-400 underline-offset-2">
-                    Website
+                    {{ t('resumeDocument.website') }}
                 </a>
             </span>
             <span class="max-w-full" v-if="props.resume.linkedin_link">
