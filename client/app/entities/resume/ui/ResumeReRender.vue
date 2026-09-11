@@ -16,7 +16,7 @@ const blocks = computed(() => buildBlock(props.resume))
 const resumeStore = useResumeStore()
 const { locale } = useI18n()
 const { setMeasureRef, pageContents, recalc } = useResumePagination(blocks, computed(() => props.resume))
-watch([() => resumeStore.designInfo.font, locale], async () => {
+watch([() => resumeStore.designInfo.font, locale, () => props.template], async () => {
   await nextTick()
   await document.fonts.ready
   recalc()
