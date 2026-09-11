@@ -38,7 +38,15 @@ const {
             <UInput v-model="resumeStore.personalInfo.location" placeholder="Tashkent" class="w-full" />
         </UFormField>
         <UFormField label="Your website">
-            <UInput v-model="resumeStore.personalInfo.website" placeholder="https//:..." class="w-full" />
+            <UInput v-model="resumeStore.personalInfo.website" placeholder="myportfolio.com" class="w-full" />
+        </UFormField>
+        <UFormField label="Linkedin link">
+            <UInput v-model="resumeStore.personalInfo.linkedin_link"
+                placeholder="https://www.linkedin.com/..." class="w-full" />
+        </UFormField>
+        <UFormField label="GitHub link">
+            <UInput v-model="resumeStore.personalInfo.github_link"
+                placeholder="https://github.com/..." class="w-full" />
         </UFormField>
         <UFormField label="Summary">
             <UTextarea :rows="4" class="w-full" v-model="resumeStore.personalInfo.summary"
@@ -48,7 +56,7 @@ const {
         <!-- ////////////////////////////////////////////////// -->
         <!-- Expreries Form-->
         <!-- ////////////////////////////////////////////////// -->
-         
+
         <h1 class="font-medium">Experience</h1>
         <div v-for="experience in resumeStore.personalInfo.experience" :key="experience.id">
             <ExperienceForm :experience="experience" />

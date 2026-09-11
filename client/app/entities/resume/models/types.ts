@@ -31,6 +31,8 @@ export interface Personal {
   phone?: string;
   location?: string;
   website?: string;
+  github_link?: string;
+  linkedin_link?: string;
   summary?: string;
 }
 
@@ -40,10 +42,10 @@ export type LanguageDegree =
   | "Professional working proficiency"
   | "Full professional proficiency"
   | "Native or bilingual proficiency"
-  | ""
+  | "";
 
 export interface Languages {
-  id : string;
+  id: string;
   language: string;
   degree: LanguageDegree;
 }
@@ -52,7 +54,7 @@ export interface Resume extends Personal {
   skills?: SkillGroup[];
   education?: Education[];
   experience?: Experience[];
-  languages ?: Languages[];
+  languages?: Languages[];
 }
 
 export type ResumeSection = "experience" | "education" | "skills" | "languages";

@@ -10,6 +10,8 @@ export const useResumeStore = defineStore("resume", () => {
     phone: "",
     location: "",
     website: "",
+    github_link: "",
+    linkedin_link: "",
     summary: "",
     skills: [],
     education: [],
@@ -21,7 +23,7 @@ export const useResumeStore = defineStore("resume", () => {
     heading_title_color: null as ResumeColor | null,
     entry_title_color: null as ResumeColor | null,
     text_color: null as ResumeColor | null,
-    font : "Inter"
+    font: "Inter",
   });
 
   const fontOptions = [
