@@ -83,6 +83,8 @@ export interface Templates {
   classic: ResumeTemplateBlokcs;
   modern: ResumeTemplateBlokcs;
   minimal: ResumeTemplateBlokcs;
+  professional: ResumeTemplateBlokcs;
+  sidebar: ResumeTemplateBlokcs;
 }
 
 export type TemplateName = keyof Templates;

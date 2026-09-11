@@ -2,6 +2,7 @@
   "resumeDocument": {
     "language": "Язык резюме",
     "sections": {
+      "contacts": "Контакты",
       "summary": "О себе",
       "experience": "Опыт работы",
       "education": "Образование",

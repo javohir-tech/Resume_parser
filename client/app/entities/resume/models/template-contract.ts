@@ -1,6 +1,7 @@
 import type { Component } from "vue";
 
 export interface ResumeTemplateBlokcs {
+  renderer?: Component;
   page: Component;
   header: Component;
   summary: Component;

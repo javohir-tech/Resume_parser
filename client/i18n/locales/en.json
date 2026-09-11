@@ -2,6 +2,7 @@
   "resumeDocument": {
     "language": "Resume language",
     "sections": {
+      "contacts": "Contact",
       "summary": "Summary",
       "experience": "Work experience",
       "education": "Education",

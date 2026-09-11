@@ -264,5 +264,5 @@ export const colorOptions: ResumeColor[] = [
   { name: "rose", hex: "#f43f5e" },
 ];
 
-export const templates: TemplateName[] = ["classic", "modern", "minimal"];
+export const templates: TemplateName[] = ["classic", "modern", "minimal", "professional", "sidebar"];
 

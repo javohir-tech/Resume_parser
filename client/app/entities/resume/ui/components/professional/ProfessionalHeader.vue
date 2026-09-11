@@ -27,19 +27,20 @@ const links = computed(() => [
 </script>
 
 <template>
-  <header class="pb-5 text-left text-neutral-900 break-inside-avoid">
-    <h1 class="text-[26px] leading-tight font-semibold">{{ resume.fullname }}</h1>
-    <p v-if="resume.title" class="pt-1 text-[14px] leading-relaxed"
-      :style="{ color: resumeStore.designInfo.entry_title_color?.hex }">{{ resume.title }}</p>
-    <div v-if="contacts.length || links.length" class="flex flex-wrap gap-x-3 gap-y-1 pt-2 text-[12px] leading-[1.65] text-neutral-700">
+  <header class="pb-5 text-left text-slate-900 break-inside-avoid">
+    <h1 class="text-[30px] leading-tight font-bold" :style="{ color: resumeStore.designInfo.heading_title_color?.hex || '#1e3a5f' }">{{ resume.fullname }}</h1>
+    <p v-if="resume.title" class="pt-1.5 text-[15px] leading-relaxed font-medium"
+      :style="{ color: resumeStore.designInfo.entry_title_color?.hex || '#334155' }">{{ resume.title }}</p>
+    <div v-if="contacts.length || links.length" class="flex flex-wrap gap-x-3 gap-y-1 pt-2 text-[12px] leading-[1.65] text-slate-700">
       <span v-for="(contact, index) in contacts" :key="index" class="max-w-full">
-        <span v-if="index" aria-hidden="true" class="mr-3 text-neutral-400">·</span>{{ contact }}
+        <span v-if="index" aria-hidden="true" class="mr-3 text-slate-400">·</span>{{ contact }}
       </span>
       <span v-for="(link, index) in links" :key="link.label" class="max-w-full">
-        <span v-if="contacts.length || index" aria-hidden="true" class="mr-3 text-neutral-400">·</span>
+        <span v-if="contacts.length || index" aria-hidden="true" class="mr-3 text-slate-400">·</span>
         <a :href="link.href" target="_blank" rel="noopener noreferrer"
-          class="font-medium underline decoration-neutral-300 underline-offset-2">{{ link.label }}</a>
+          class="font-medium underline decoration-slate-300 underline-offset-2">{{ link.label }}</a>
       </span>
     </div>
+    <div class="mt-4 border-b-2" :style="{ borderColor: resumeStore.designInfo.heading_title_color?.hex || '#1e3a5f' }" aria-hidden="true" />
   </header>
 </template>
