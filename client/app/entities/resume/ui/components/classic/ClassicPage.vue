@@ -17,6 +17,11 @@ const resumeStore = useResumeStore()
   min-height: 297mm;
   padding: 15mm;
   background: white;
+  color: #111827;
+  font-size: 12px;
+  line-height: 1.7;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
   overflow-wrap: break-word;
   word-break: break-word;
 }

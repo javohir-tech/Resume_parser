@@ -5,11 +5,11 @@ defineProps<{ text?: string }>()
 const resumeStore = useResumeStore()
 </script>
 <template>
-  <section v-if="text" class="mb-6">
-    <h2 class="text-sm font-bold uppercase tracking-wider border-b mb-2 pb-1"
+  <section v-if="text" class="pb-4">
+    <h2 class="border-b border-gray-300 pb-1.5 text-[11px] leading-5 font-bold uppercase tracking-[0.16em] text-gray-900"
       :style="{ color: resumeStore.designInfo.heading_title_color?.hex, borderColor: resumeStore.designInfo.heading_title_color?.hex }">
-      Malumot
+      Ma’lumot
     </h2>
-    <p class="text-sm leading-relaxed text-gray-800">{{ text }}</p>
+    <p class="pt-2.5 text-[12px] leading-[1.7] whitespace-pre-line text-gray-700">{{ text }}</p>
   </section>
 </template>

@@ -2,6 +2,7 @@
 import type { Resume } from '../models/types';
 import type { ResumeTemplateBlokcs } from '../models/template-contract';
 import { buildBlock } from '../models/build-blocks';
+import { useResumeStore } from '../models/store';
 import { useResumePagination } from '../lib/useResumePagination';
 import { useResumePageScale } from '../lib/useResumePageScale';
 import { PAGE_WIDTH_PX, PAGE_HEIGHT_PX, PAGE_CONTENT_WIDTH_PX, PAGE_GAP_PX } from '../models/pagination';
@@ -12,7 +13,13 @@ const props = defineProps<{
 }>()
 
 const blocks = computed(() => buildBlock(props.resume))
-const { setMeasureRef, pageContents } = useResumePagination(blocks, computed(() => props.resume))
+const resumeStore = useResumeStore()
+const { setMeasureRef, pageContents, recalc } = useResumePagination(blocks, computed(() => props.resume))
+watch(() => resumeStore.designInfo.font, async () => {
+  await nextTick()
+  await document.fonts.ready
+  recalc()
+})
 
 const containerRef = ref<HTMLElement | null>(null)
 const { scale } = useResumePageScale(containerRef)
@@ -23,6 +30,9 @@ const gapPx = computed(() => PAGE_GAP_PX * scale.value)
   <!-- Ko'rinmas o'lchov qatlami: har bir blok haqiqiy kontent kengligida render qilinadi -->
   <div class="fixed opacity-0 pointer-events-none -z-10 top-0 left-0" :style="{
     width: `${PAGE_CONTENT_WIDTH_PX}px`,
+    fontFamily: resumeStore.designInfo.font,
+    fontSize: '12px',
+    lineHeight: '1.7',
     overflowWrap: 'break-word',
     wordBreak: 'break-word'
   }">

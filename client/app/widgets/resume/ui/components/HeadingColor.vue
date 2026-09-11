@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useResumeStore } from '~/entities/resume';
 import type { ResumeColor } from "~/entities/resume/models/store"
+import { useMediaQuery } from '@vueuse/core';
 
 const resumeStore = useResumeStore()
 const isColorPickerOpen = ref(false)
+const isDesktop = useMediaQuery('(min-width: 1024px)')
 
 function selectColor(color: ResumeColor | null) {
     resumeStore.handleChangeColor(color)
@@ -17,7 +19,9 @@ function selectColor(color: ResumeColor | null) {
         <h1 id="title-color-label" class="text-sm font-medium mb-3">
             Section Heading Color
         </h1>
-        <UPopover v-model:open="isColorPickerOpen" :content="{ align: 'start', side: 'left', sideOffset: 12 }">
+        <UPopover v-model:open="isColorPickerOpen"
+            :content="{ align: 'start', side: isDesktop ? 'left' : 'bottom', sideOffset: 8, collisionPadding: 12 }"
+            :ui="{ content: 'w-80 max-w-[calc(100vw-1.5rem)] max-h-(--reka-popover-content-available-height) overflow-y-auto' }">
             <UButton color="neutral" variant="outline" class="w-full">
                 <span class="size-5 shrink-0 rounded-full bg-default ring-1 ring-inset ring-black/10 dark:ring-white/20"
                     :style="{ backgroundColor: resumeStore.designInfo.heading_title_color?.hex }">
@@ -47,7 +51,7 @@ function selectColor(color: ResumeColor | null) {
                         <button v-for="color in resumeStore.colorOptions" :key="color.hex" type="button"
                             :aria-label="`${color.name} (${color.hex})`" :title="color.name"
                             :aria-pressed="resumeStore.designInfo.heading_title_color?.hex === color.hex"
-                            class="flex min-w-16 cursor-pointer flex-col items-center gap-1.5 rounded-lg px-2 py-2 transition-colors hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                            class="flex min-w-0 cursor-pointer flex-col items-center gap-1.5 rounded-lg px-1 py-2 transition-colors hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                             @click="selectColor(color)">
                             <span class="flex size-8 items-center justify-center rounded-full border border-black/10"
                                 :class="{ 'ring-2 ring-primary ring-offset-2 ring-offset-default': resumeStore.designInfo.heading_title_color?.hex === color.hex }"

@@ -38,5 +38,5 @@ export function useResumePagination(
 
   watch([blocks, resume], recalc, { deep: true, immediate: true });
 
-  return { setMeasureRef, pageContents };
+  return { setMeasureRef, pageContents, recalc };
 }
