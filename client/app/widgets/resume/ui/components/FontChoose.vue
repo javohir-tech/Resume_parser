@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useResumeStore } from '~/entities/resume';
+import { useResumeStore ,FONT_OPTIONS } from '~/entities/resume';
 
 const resumeStore = useResumeStore()
 
-const items = ref(resumeStore.fontOptions.map(item => {
+const items = ref(FONT_OPTIONS.map(item => {
     return {
         label: item,
         value: item,

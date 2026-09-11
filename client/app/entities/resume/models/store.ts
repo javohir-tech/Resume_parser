@@ -1,51 +1,15 @@
-import type { Resume, Templates, TemplateName } from "./types";
+import type {
+  Resume,
+  Templates,
+  TemplateName,
+  ResumeColor,
+  DesignInfo,
+} from "./types";
 import { useStorage } from "@vueuse/core";
 import { skipHydrate } from "pinia";
 
-export type ResumeColor = { name: string; hex: string };
-
 export const useResumeStore = defineStore("resume", () => {
   const storageOptions = { mergeDefaults: true, initOnMounted: true };
-
-    const template = useStorage<TemplateName>(
-      "resume-parser:template:v1",
-      "classic",
-      undefined,
-      storageOptions,
-    );
-
-  const personalInfo = useStorage<Resume>(
-    "resume-parser:personal-info:v1",
-    {
-      fullname: "",
-      title: "",
-      email: "",
-      phone: "",
-      location: "",
-      website: "",
-      github_link: "",
-      linkedin_link: "",
-      summary: "",
-      skills: [],
-      education: [],
-      experience: [],
-      languages: [],
-    },
-    undefined,
-    storageOptions,
-  );
-
-  const designInfo = useStorage(
-    "resume-parser:design-info:v1",
-    {
-      heading_title_color: null as ResumeColor | null,
-      entry_title_color: null as ResumeColor | null,
-      text_color: null as ResumeColor | null,
-      font: "Inter",
-    },
-    undefined,
-    storageOptions,
-  );
 
   const fontOptions = [
     "Inter",
@@ -56,6 +20,8 @@ export const useResumeStore = defineStore("resume", () => {
     "Poppins",
     "Nunito",
   ];
+
+  type FontOption = (typeof fontOptions)[number];
 
   const colorOptions: ResumeColor[] = [
     { name: "red", hex: "#ef4444" },
@@ -79,6 +45,46 @@ export const useResumeStore = defineStore("resume", () => {
 
   const templates: TemplateName[] = ["classic", "modern"];
 
+  const template = useStorage<TemplateName>(
+    "resume-parser:template:v1",
+    "classic",
+    undefined,
+    storageOptions,
+  );
+
+  const personalInfo = useStorage<Resume>(
+    "resume-parser:personal-info:v1",
+    {
+      fullname: "",
+      title: "",
+      email: "",
+      phone: "",
+      location: "",
+      website: "",
+      github_link: "",
+      linkedin_link: "",
+      summary: "",
+      skills: [],
+      education: [],
+      experience: [],
+      languages: [],
+    },
+    undefined,
+    storageOptions,
+  );
+
+  const designInfo = useStorage<DesignInfo>(
+    "resume-parser:design-info:v1",
+    {
+      heading_title_color: null,
+      entry_title_color: null,
+      text_color: null,
+      font: "Inter",
+    },
+    undefined,
+    storageOptions,
+  );
+
   function handleChangeFont(font: string) {
     designInfo.value.font = font;
   }
@@ -91,13 +97,18 @@ export const useResumeStore = defineStore("resume", () => {
     designInfo.value.entry_title_color = color;
   }
 
+  function restartDesign() {
+    designInfo.value.entry_title_color = null;
+    designInfo.value.heading_title_color = null;
+    designInfo.value.text_color = null;
+    designInfo.value.font = "Inter";
+  }
+
   return {
     template: skipHydrate(template),
     personalInfo: skipHydrate(personalInfo),
     designInfo: skipHydrate(designInfo),
-    templates,
-    fontOptions,
-    colorOptions,
+    restartDesign,
     handleChangeFont,
     handleChangeColor,
     handleChangeEntryTitleColor,

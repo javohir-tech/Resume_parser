@@ -1,4 +1,5 @@
 import type { ResumeTemplateBlokcs } from "./template-contract";
+import type { FontOption } from "./constants";
 
 export interface Experience {
   id: string;
@@ -57,6 +58,14 @@ export interface Resume extends Personal {
   education?: Education[];
   experience?: Experience[];
   languages?: Languages[];
+}
+export type ResumeColor = { name: string; hex: string };
+
+export interface DesignInfo {
+  heading_title_color: null | ResumeColor;
+  entry_title_color: null | ResumeColor;
+  text_color: null | ResumeBlock;
+  font: FontOption;
 }
 
 export type ResumeSection = "experience" | "education" | "skills" | "languages";

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { useResumeStore } from '~/entities/resume';
-import type { ResumeColor } from "~/entities/resume/models/store"
+import { useResumeStore , type ResumeColor , colorOptions } from '~/entities/resume';
 import { useMediaQuery } from '@vueuse/core';
 
 const resumeStore = useResumeStore()
@@ -48,7 +47,7 @@ function selectColor(color: ResumeColor | null) {
                         <UIcon v-if="resumeStore.designInfo.entry_title_color === null" name="i-lucide-check" class="size-4" />
                     </UButton>
                     <div class="grid grid-cols-4 gap-2" role="group" aria-label="Entry title colors">
-                        <button v-for="color in resumeStore.colorOptions" :key="color.hex" type="button"
+                        <button v-for="color in colorOptions" :key="color.hex" type="button"
                             :aria-label="`${color.name} (${color.hex})`" :title="color.name"
                             :aria-pressed="resumeStore.designInfo.entry_title_color?.hex === color.hex"
                             class="flex min-w-0 cursor-pointer flex-col items-center gap-1.5 rounded-lg px-1 py-2 transition-colors hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
