@@ -1,3 +1,5 @@
+import type { ResumeTemplateBlokcs } from "./template-contract";
+
 export interface Experience {
   id: string;
   position: string;
@@ -67,3 +69,10 @@ export type ResumeBlock =
   | { id: string; type: "education-item"; item: Education }
   | { id: string; type: "skills-group"; item: SkillGroup }
   | { id: string; type: "languages-item"; item: Languages };
+
+export interface Templates {
+  classic: ResumeTemplateBlokcs;
+  modern: ResumeTemplateBlokcs;
+}
+
+export type TemplateName = keyof Templates;
