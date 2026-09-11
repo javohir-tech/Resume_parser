@@ -43,8 +43,6 @@ export const useResumeStore = defineStore("resume", () => {
     { name: "rose", hex: "#f43f5e" },
   ];
 
-  const templates: TemplateName[] = ["classic", "modern"];
-
   const template = useStorage<TemplateName>(
     "resume-parser:template:v1",
     "classic",
