@@ -9,6 +9,7 @@ from sqlalchemy import String, BigInteger, DateTime
 if TYPE_CHECKING:
     from app.models.user_sessions import UserSessions
     from app.models.login_code import LoginCode
+    from app.models.resume import Resume
 
 
 class User(Base):
@@ -29,4 +30,7 @@ class User(Base):
     phone_number: Mapped[str | None] = mapped_column(String(20), nullable=True)
     registered_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+    )
+    resumes: Mapped["Resume"] = relationship(
+        back_populates="user", cascade="all, delete-orphan", lazy="raise"
     )

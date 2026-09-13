@@ -15,6 +15,12 @@ from app.models.user import User
 from app.models.login_code import LoginCode
 from app.models.refresh_token import RefreshToken
 from app.models.user_sessions import UserSessions
+from app.models.skills import Skills
+from app.models.skill_item import SkillItem
+from app.models.experience import Experience
+from app.models.educations import Education
+from app.models.languages import Language
+from app.models.resume import Resume
 # --- ---
 
 config = context.config
