@@ -14,7 +14,7 @@ class Education(Base):
 
     id : Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True) , primary_key=True , default=uuid.uuid4)
     resume_id : Mapped[uuid.uuid4] = mapped_column(UUID(as_uuid=True) , ForeignKey("resume.id") , index=True)
-    resume : Mapped["Resume"] = relationship(back_populates="educations" , lazy="raise")
+    resume : Mapped["Resume"] = relationship(back_populates="education" , lazy="raise")
     degree : Mapped[Optional[str]] = mapped_column(String , nullable=True)
     fieldOfStudy : Mapped[Optional[str]] = mapped_column(String ,  nullable=True)
     institution :  Mapped[Optional[str]] = mapped_column(String , nullable=True)
