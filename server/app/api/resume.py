@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
 from app.core.security import verify
 
-from app.schemas.resume_schemas import PersonalInfo
+from app.schemas.resume_schemas import PersonalInfo, ExperienceInfo
 
 from app.models.user import User
 from app.models.resume import Resume
@@ -73,8 +73,8 @@ async def resume_edit(
 
     changes = personalInfo.model_dump(exclude_unset=True)
 
-    for field , value  in changes.items():
-        setattr(resume , field , value)
+    for field, value in changes.items():
+        setattr(resume, field, value)
 
     await db.commit()
 
@@ -105,3 +105,16 @@ async def create_experience(
     await db.refresh(experience)
 
     return {"experience_id": experience.id}
+
+
+@resume_router.post("/edit_experince/{experience_id}")
+async def edit_experince(
+    experience_id: str,
+    ExperienceInfo: ExperienceInfo,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    experience_uuid =  UUID(experience_id)
+    user_uuid = UUID(user_id)
+
+    result =  await db.execute(select(Experience).where(Experience.id == experience_uuid))

@@ -25,14 +25,38 @@ class PersonalInfo(BaseModel):
         default=None, description="Shaxsiy sayt", examples=["https://example.com"]
     )
     github_link: Optional[str] = Field(
-        default=None, description="GitHub profil havolasi",
+        default=None,
+        description="GitHub profil havolasi",
         examples=["https://github.com/username"],
     )
     linkedin_link: Optional[str] = Field(
-        default=None, description="LinkedIn profil havolasi",
+        default=None,
+        description="LinkedIn profil havolasi",
         examples=["https://www.linkedin.com/in/username"],
     )
     summary: Optional[str] = Field(
-        default=None, description="O'zingiz haqingizda qisqacha ma'lumot",
+        default=None,
+        description="O'zingiz haqingizda qisqacha ma'lumot",
         examples=["Python va FastAPI bilan ishlaydigan backend dasturchi."],
+    )
+
+
+class ExperienceInfo(BaseModel):
+    postion: Optional[str] = Field(
+        default=None, description="ishda lavozim", examples=["Front end developer"]
+    )
+    compony: Optional[str] = Field(
+        default=None, description="ish joyi", examples=["Limsa"]
+    )
+    location: Optional[str] = Field(
+        default=None, description="ish manzili", examples=["Tashkent"]
+    )
+    start_date: Optional[str] = Field(
+        default=None, description="boshlangan vaqti", examples=["july-2026"]
+    )
+    end_date: Optional[str] = Field(
+        default=None, description="tugagan vaqt", examples=["sep-2026"]
+    )
+    description: Optional[str] = Field(
+        default=None, description="is tasnnifi", examples=["..."]
     )
