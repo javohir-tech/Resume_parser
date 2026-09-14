@@ -57,6 +57,9 @@ async def resume_edit(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
+    """
+    Resumeni edit qilish
+    """
     user_uuid = UUID(user_id)
     resume_uuid = UUID(resume_id)
 
@@ -84,6 +87,9 @@ async def resume_edit(
 async def delete_resume(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
+    """
+    Resumeni o'chirish
+    """
     resume_uuid = UUID(resume_id)
     user_uuid = UUID(user_id)
 
@@ -104,6 +110,10 @@ async def delete_resume(
 
     return {"message": "Rezyume o'chirildi"}
 
+
+# /////////////////////////////////////////////////////////////
+# Experience
+# /////////////////////////////////////////////////////////////
 
 @resume_router.post("/create_experience/{resume_id}")
 async def create_experience(
@@ -143,12 +153,15 @@ async def edit_experince(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
+    """
+    Experince edit qilish
+    """
     experience_uuid = UUID(experience_id)
     user_uuid = UUID(user_id)
 
     result = await db.execute(
         select(Experience)
-        .options(selectinload(Resume))
+        .options(selectinload(Experience.resume))
         .where(Experience.id == experience_uuid)
     )
 
@@ -172,3 +185,42 @@ async def edit_experince(
         setattr(experience, field, value)
 
     await db.commit()
+
+
+@resume_router.delete("/delete_experience/{experience_id}")
+async def delete_experience(
+    experience_id: str,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    """
+    Experince o'chirish
+    """
+    experience_uuid = UUID(experience_id)
+    user_uuid = UUID(user_id)
+
+    result = await db.execute(
+        select(Experience)
+        .options(selectinload(Experience.resume))
+        .where(Experience.id == experience_uuid)
+    )
+
+    experience = result.scalar_one_or_none()
+
+    if experience is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="tajriba topilmadi"
+        )
+
+    resume = experience.resume
+
+    if resume.user_id != user_uuid:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="sizga o'zgartirish mumkin emas",
+        )
+
+# /////////////////////////////////////////////////////////////
+# Educations
+# /////////////////////////////////////////////////////////////
+
