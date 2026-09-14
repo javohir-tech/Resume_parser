@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
 
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -40,11 +41,11 @@ async def create_resume(
             status_code=status.HTTP_404_NOT_FOUND, detail="User Not Found"
         )
 
-    resume = Resume(user.id)
+    resume = Resume(user_id=user.id)
 
     db.add(resume)
     await db.commit()
-    await db.refresh()
+    await db.refresh(resume)
 
     return {"resume_id": resume.id}
 
@@ -79,6 +80,31 @@ async def resume_edit(
     await db.commit()
 
 
+@resume_router.delete("/delete/{resume_id}")
+async def delete_resume(
+    resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+):
+    resume_uuid = UUID(resume_id)
+    user_uuid = UUID(user_id)
+
+    result = await db.execute(
+        select(Resume).where(Resume.id == resume_uuid, Resume.user_id == user_uuid)
+    )
+
+    resume = result.scalar_one_or_none()
+
+    if resume is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Resumelaringiz orasidan topilmadi",
+        )
+
+    db.delete(resume)
+    await db.commit()
+
+    return {"message": "Rezyume o'chirildi"}
+
+
 @resume_router.post("/create_experience/{resume_id}")
 async def create_experience(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
@@ -110,7 +136,7 @@ async def create_experience(
     return {"experience_id": experience.id}
 
 
-@resume_router.post("/edit_experince/{experience_id}")
+@resume_router.patch("/edit_experince/{experience_id}")
 async def edit_experince(
     experience_id: str,
     ExperienceInfo: ExperienceInfo,
@@ -121,5 +147,28 @@ async def edit_experince(
     user_uuid = UUID(user_id)
 
     result = await db.execute(
-        select(Experience).where(Experience.id == experience_uuid)
+        select(Experience)
+        .options(selectinload(Resume))
+        .where(Experience.id == experience_uuid)
     )
+
+    experience = result.scalar_one_or_none()
+
+    if experience is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Tajriba topilmadi"
+        )
+
+    resume = experience.resume
+
+    if resume.user_id != user_uuid:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Sizni tajribangiz emas"
+        )
+
+    changes = ExperienceInfo.model_dump(exclude_unset=True)
+
+    for field, value in changes.items():
+        setattr(experience, field, value)
+
+    await db.commit()
