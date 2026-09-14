@@ -323,3 +323,42 @@ async def delete_education(
     await db.commit()
 
     return {"message": "Ta'lim ma'lumoti o'chirildi"}
+
+
+# /////////////////////////////////////////////////////////////
+# Languages
+# /////////////////////////////////////////////////////////////
+
+
+@resume_router.post("/create_language/{resume_id}")
+async def crete_language(
+    resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+):
+    """
+    Language yaratish
+    """
+    resume_uuid = UUID(resume_id)
+    user_uuid = UUID(user_id)
+
+    result = await db.execute(
+        select(Resume).where(Resume.id == resume_uuid, Resume.user_id == user_uuid)
+    )
+
+    resume = result.scalar_one_or_none()
+
+    if resume is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Resumelaringiz orasidan topilmadi",
+        )
+
+    language =  Language(resume_id = resume.id)
+
+    db.add(language)
+    await db.commit()
+    await db.refresh(language)
+
+    return {
+        "language_id" : language.id
+    }
+

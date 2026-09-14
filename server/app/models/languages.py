@@ -20,3 +20,5 @@ class Language(Base):
         UUID(as_uuid=True), ForeignKey("resume.id"), index=True
     )
     resume: Mapped["Resume"] = relationship(back_populates="languages", lazy="raise")
+    language : Mapped[Optional[str]] = mapped_column(String , nullable=True)
+    degree : Mapped[Optional[str]] = mapped_column(String , nullable=True)
