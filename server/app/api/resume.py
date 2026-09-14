@@ -83,6 +83,9 @@ async def resume_edit(
 async def create_experience(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
+    """
+    experince yaratish
+    """
     user_uuid = UUID(user_id)
     resume_uuid = UUID(resume_id)
 
@@ -114,7 +117,9 @@ async def edit_experince(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    experience_uuid =  UUID(experience_id)
+    experience_uuid = UUID(experience_id)
     user_uuid = UUID(user_id)
 
-    result =  await db.execute(select(Experience).where(Experience.id == experience_uuid))
+    result = await db.execute(
+        select(Experience).where(Experience.id == experience_uuid)
+    )
