@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
 from app.core.security import verify
 
-from app.schemas.resume_schemas import PersonalInfo, ExperienceInfo
+from app.schemas.resume_schemas import PersonalInfo, ExperienceInfo, EducationInfo
 
 from app.models.user import User
 from app.models.resume import Resume
@@ -115,6 +115,7 @@ async def delete_resume(
 # Experience
 # /////////////////////////////////////////////////////////////
 
+
 @resume_router.post("/create_experience/{resume_id}")
 async def create_experience(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
@@ -187,7 +188,9 @@ async def edit_experince(
     await db.commit()
 
 
-@resume_router.delete("/delete_experience/{experience_id}")
+@resume_router.delete(
+    "/delete_experience/{experience_id}", status_code=status.HTTP_204_NO_CONTENT
+)
 async def delete_experience(
     experience_id: str,
     db: AsyncSession = Depends(get_db),
@@ -220,7 +223,103 @@ async def delete_experience(
             detail="sizga o'zgartirish mumkin emas",
         )
 
+
 # /////////////////////////////////////////////////////////////
 # Educations
 # /////////////////////////////////////////////////////////////
 
+
+@resume_router.post("/create_education/{resume_id}")
+async def create_education(
+    resume_id: UUID,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    """Rezyumega ta'lim ma'lumotini qo'shish."""
+    user_uuid = UUID(user_id)
+
+    result = await db.execute(
+        select(Resume).where(Resume.id == resume_id, Resume.user_id == user_uuid)
+    )
+    resume = result.scalar_one_or_none()
+
+    if resume is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Resumelaringiz orasidan topilmadi",
+        )
+
+    education = Education(resume_id=resume.id)
+    db.add(education)
+    await db.commit()
+    await db.refresh(education)
+
+    return {"education_id": education.id}
+
+
+@resume_router.patch("/edit_education/{education_id}")
+async def edit_education(
+    education_id: UUID,
+    education_info: EducationInfo,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    """Ta'lim ma'lumotini qisman yangilash."""
+    user_uuid = UUID(user_id)
+
+    result = await db.execute(
+        select(Education)
+        .options(selectinload(Education.resume))
+        .where(Education.id == education_id)
+    )
+    education = result.scalar_one_or_none()
+
+    if education is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Ta'lim ma'lumoti topilmadi"
+        )
+
+    if education.resume.user_id != user_uuid:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Sizga o'zgartirish mumkin emas",
+        )
+
+    changes = education_info.model_dump(exclude_unset=True)
+    for field, value in changes.items():
+        setattr(education, field, value)
+
+    await db.commit()
+
+
+@resume_router.delete("/delete_education/{education_id}")
+async def delete_education(
+    education_id: UUID,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    """Ta'lim ma'lumotini o'chirish."""
+    user_uuid = UUID(user_id)
+
+    result = await db.execute(
+        select(Education)
+        .options(selectinload(Education.resume))
+        .where(Education.id == education_id)
+    )
+    education = result.scalar_one_or_none()
+
+    if education is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Ta'lim ma'lumoti topilmadi"
+        )
+
+    if education.resume.user_id != user_uuid:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Sizga o'chirish mumkin emas",
+        )
+
+    await db.delete(education)
+    await db.commit()
+
+    return {"message": "Ta'lim ma'lumoti o'chirildi"}

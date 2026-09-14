@@ -41,6 +41,29 @@ class PersonalInfo(BaseModel):
     )
 
 
+class EducationInfo(BaseModel):
+    """Ta'lim ma'lumotlarini qisman yangilash uchun schema."""
+
+    degree: Optional[str] = Field(
+        default=None, description="Ta'lim darajasi", examples=["Bakalavr"]
+    )
+    fieldOfStudy: Optional[str] = Field(
+        default=None, description="Ta'lim yo'nalishi", examples=["Dasturiy injiniring"]
+    )
+    institution: Optional[str] = Field(
+        default=None, description="Ta'lim muassasasi", examples=["TATU"]
+    )
+    location: Optional[str] = Field(
+        default=None, description="Ta'lim muassasasi manzili", examples=["Toshkent"]
+    )
+    start_date: Optional[str] = Field(
+        default=None, description="Boshlangan vaqti", examples=["sep-2022"]
+    )
+    end_date: Optional[str] = Field(
+        default=None, description="Tugagan vaqti", examples=["june-2026"]
+    )
+
+
 class ExperienceInfo(BaseModel):
     postion: Optional[str] = Field(
         default=None, description="ishda lavozim", examples=["Front end developer"]
