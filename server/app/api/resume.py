@@ -383,7 +383,9 @@ async def edit_language(
     language_uuid = UUID(language_id)
 
     result = await db.execute(
-        select(Language).options(selectinload(Language.resume)).where(Language.id == language_uuid)
+        select(Language)
+        .options(selectinload(Language.resume))
+        .where(Language.id == language_uuid)
     )
 
     language = result.scalar_one_or_none()
@@ -411,7 +413,6 @@ async def edit_language(
 async def delete_language(
     language_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
-
     """
     Langauge delete
     """
@@ -426,19 +427,55 @@ async def delete_language(
 
     language = result.scalar_one_or_none()
 
-    if language is None :
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Language toplimadi")
+    if language is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Language toplimadi"
+        )
 
     resume = language.resume
 
-    if resume.user_id != user_uuid :
+    if resume.user_id != user_uuid:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Languageni o'chirishga sizga ruhsat yo'q",
         )
 
     await db.delete(language)
-    await  db.commit()
+    await db.commit(language)
 
-    
-        
+
+# /////////////////////////////////////////////////////////////
+# Skills
+# /////////////////////////////////////////////////////////////
+
+
+@resume_router.post("/skills_group/create/{resume_id}")
+async def create_skill_group(
+    resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+):
+    """Create skill group"""
+    user_uuid = UUID(user_id)
+    resume_uuid = UUID(resume_id)
+
+    result = await db.execute(
+        select(Resume).where(Resume.id == resume_uuid, Resume.user_id == user_uuid)
+    )
+
+    resume = result.scalar_one_or_none()
+
+    if resume is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="reumlaringiz orasidan topilmadi",
+        )
+
+    skills_group = Skills(resume_id=resume.id)
+
+    db.add(skills_group)
+    await db.commit()
+    await db.refresh(skills_group)
+
+    return {"skills_group_id": skills_group.id}
+
+# @resume_router.post("/skills_group/add_skill/{skills_groups_id}")
+# async def skills_group_add_skill(skills_groups_id : str , )
