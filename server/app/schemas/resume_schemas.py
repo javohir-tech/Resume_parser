@@ -83,3 +83,10 @@ class ExperienceInfo(BaseModel):
     description: Optional[str] = Field(
         default=None, description="is tasnnifi", examples=["..."]
     )
+
+
+class LanguageInfo(BaseModel):
+    language: Optional[str] = Field(
+        default=None, description="Language", examples=["English , Russian"]
+    )
+    degree: Optional[str] = Field(default=None, description="daraja", examples=["b2"])

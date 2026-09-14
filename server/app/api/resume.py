@@ -11,7 +11,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
 from app.core.security import verify
 
-from app.schemas.resume_schemas import PersonalInfo, ExperienceInfo, EducationInfo
+from app.schemas.resume_schemas import (
+    PersonalInfo,
+    ExperienceInfo,
+    EducationInfo,
+    LanguageInfo,
+)
 
 from app.models.user import User
 from app.models.resume import Resume
@@ -105,7 +110,7 @@ async def delete_resume(
             detail="Resumelaringiz orasidan topilmadi",
         )
 
-    db.delete(resume)
+    await db.delete(resume)
     await db.commit()
 
     return {"message": "Rezyume o'chirildi"}
@@ -222,6 +227,9 @@ async def delete_experience(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="sizga o'zgartirish mumkin emas",
         )
+
+    await db.delete(experience)
+    await db.commit()
 
 
 # /////////////////////////////////////////////////////////////
@@ -352,13 +360,85 @@ async def crete_language(
             detail="Resumelaringiz orasidan topilmadi",
         )
 
-    language =  Language(resume_id = resume.id)
+    language = Language(resume_id=resume.id)
 
     db.add(language)
     await db.commit()
     await db.refresh(language)
 
-    return {
-        "language_id" : language.id
-    }
+    return {"language_id": language.id}
 
+
+@resume_router.patch("/edit_language/{language_id}")
+async def edit_language(
+    language_id: str,
+    languageInfo: LanguageInfo,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    """
+    Langauge  edit
+    """
+    user_uuid = UUID(user_id)
+    language_uuid = UUID(language_id)
+
+    result = await db.execute(
+        select(Language).options(selectinload(Language.resume)).where(Language.id == language_uuid)
+    )
+
+    language = result.scalar_one_or_none()
+
+    if language is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND("Langauge topilmadi"))
+
+    resume = language.resume
+
+    if resume.user_id != user_uuid:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Languageni sizga o'zgartirishingizga ruhsat yo'q",
+        )
+
+    changes = languageInfo.model_dump(exclude_unset=True)
+
+    for field, value in changes.items():
+        setattr(language, field, value)
+
+    await db.commit()
+
+
+@resume_router.delete("/delete_language/{language_id}")
+async def delete_language(
+    language_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+):
+
+    """
+    Langauge delete
+    """
+    user_uuid = UUID(user_id)
+    language_uuid = UUID(language_id)
+
+    result = await db.execute(
+        select(Language)
+        .options(selectinload(Language.resume))
+        .where(Language.id == language_uuid)
+    )
+
+    language = result.scalar_one_or_none()
+
+    if language is None :
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Language toplimadi")
+
+    resume = language.resume
+
+    if resume.user_id != user_uuid :
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Languageni o'chirishga sizga ruhsat yo'q",
+        )
+
+    await db.delete(language)
+    await  db.commit()
+
+    
+        
