@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
 
 from sqlalchemy import select
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -39,7 +39,75 @@ async def get_resume(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id=Depends(verify)
 ):
     """Placeholder for retrieving a resume by ID; not implemented yet."""
-    
+    user_uuid = UUID(user_id)
+    resume_uuid = UUID(resume_id)
+
+    result = await db.execute(
+        select(Resume)
+        .options(
+            selectinload(Resume.experiences),
+            selectinload(Resume.education),
+            selectinload(Resume.languages),
+            selectinload(Resume.skills),
+            selectinload(Resume.skills).selectinload(Skills.skill_item),
+        )
+        .where(Resume.id == resume_uuid)
+    )
+
+    resume = result.scalar_one_or_none()
+
+    if resume is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Resume Not Found"
+        )
+
+    return {
+        "fullName": resume.fullName,
+        "title": resume.title,
+        "email": resume.email,
+        "phone": resume.phone,
+        "location": resume.location,
+        "website": resume.website,
+        "github_link": resume.github_link,
+        "linkedin_link": resume.linkedin_link,
+        "summary": resume.summary,
+        "experiences": [
+            {
+                "postion": experience.postion,
+                "compony": experience.compony,
+                "location": experience.location,
+                "start_date": experience.start_date,
+                "end_date": experience.end_date,
+                "description": experience.description,
+            }
+            for experience in resume.experiences
+        ],
+        "educations": [
+            {
+                "degree": education.degree,
+                "fieldOfStudy": education.fieldOfStudy,
+                "institution": education.institution,
+                "location": education.location,
+                "start_date": education.start_date,
+                "end_date": education.end_date,
+            }
+            for education in resume.education
+        ],
+        "languages": [
+            {
+                "language": language.language,
+                "degree": language.degree,
+            }
+            for language in resume.languages
+        ],
+        "skills_groups": [
+            {
+                "title": skills_group.title,
+                "skills": [item.skill for item in skills_group.skill_item],
+            }
+            for skills_group in resume.skills
+        ],
+    }
 
 
 @resume_router.post("/personalInfo/create")
