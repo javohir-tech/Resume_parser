@@ -90,3 +90,9 @@ class LanguageInfo(BaseModel):
         default=None, description="Language", examples=["English , Russian"]
     )
     degree: Optional[str] = Field(default=None, description="daraja", examples=["b2"])
+
+
+class SkillItemInfo(BaseModel):
+    skill: Optional[str] = Field(
+        default=None, description="skill item", examples=["JavaScript"]
+    )

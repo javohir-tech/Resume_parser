@@ -16,6 +16,7 @@ from app.schemas.resume_schemas import (
     ExperienceInfo,
     EducationInfo,
     LanguageInfo,
+    SkillItemInfo,
 )
 
 from app.models.user import User
@@ -477,5 +478,45 @@ async def create_skill_group(
 
     return {"skills_group_id": skills_group.id}
 
-# @resume_router.post("/skills_group/add_skill/{skills_groups_id}")
-# async def skills_group_add_skill(skills_groups_id : str , )
+
+@resume_router.post("/skillItem/add/{skills_groups_id}")
+async def skills_group_add_skill(
+    skills_groups_id: str,
+    skillItemInfo: SkillItemInfo,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    """
+    create
+    """
+    user_uuid = UUID(user_id)
+    skills_groups_uuid = UUID(skills_groups_id)
+
+    result = await db.execute(
+        select(Skills)
+        .options(selectinload(Skills.resume))
+        .where(Skills.id == skills_groups_uuid)
+    )
+
+    skills_group = result.scalar_one_or_none()
+
+    if skills_group is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="skill Group topilmadi"
+        )
+
+    resume = skills_group.resume
+
+    if user_uuid != resume.user_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="skill groupga skillItem qoshishga sizga ruhsat yo'q",
+        )
+
+    skillItem = SkillItem(skills_id=skills_group.id, skill=skillItemInfo.skill)
+
+    db.add(skillItem)
+    await db.commit()
+    await db.refresh(skillItem)
+
+    return {"skill_item_id": skillItem.id}
