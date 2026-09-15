@@ -122,7 +122,7 @@ async def delete_resume(
 # /////////////////////////////////////////////////////////////
 
 
-@resume_router.post("/create_experience/{resume_id}")
+@resume_router.post("/experience/create/{resume_id}")
 async def create_experience(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
@@ -153,7 +153,7 @@ async def create_experience(
     return {"experience_id": experience.id}
 
 
-@resume_router.patch("/edit_experince/{experience_id}")
+@resume_router.patch("/experience/edit/{experience_id}")
 async def edit_experince(
     experience_id: str,
     ExperienceInfo: ExperienceInfo,
@@ -195,7 +195,7 @@ async def edit_experince(
 
 
 @resume_router.delete(
-    "/delete_experience/{experience_id}", status_code=status.HTTP_204_NO_CONTENT
+    "/experience/delete/{experience_id}", status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_experience(
     experience_id: str,
@@ -238,7 +238,7 @@ async def delete_experience(
 # /////////////////////////////////////////////////////////////
 
 
-@resume_router.post("/create_education/{resume_id}")
+@resume_router.post("/education/create/{resume_id}")
 async def create_education(
     resume_id: UUID,
     db: AsyncSession = Depends(get_db),
@@ -266,7 +266,7 @@ async def create_education(
     return {"education_id": education.id}
 
 
-@resume_router.patch("/edit_education/{education_id}")
+@resume_router.patch("/education/edit/{education_id}")
 async def edit_education(
     education_id: UUID,
     education_info: EducationInfo,
@@ -301,7 +301,7 @@ async def edit_education(
     await db.commit()
 
 
-@resume_router.delete("/delete_education/{education_id}")
+@resume_router.delete("/education/edit/{education_id}")
 async def delete_education(
     education_id: UUID,
     db: AsyncSession = Depends(get_db),
@@ -339,7 +339,7 @@ async def delete_education(
 # /////////////////////////////////////////////////////////////
 
 
-@resume_router.post("/create_language/{resume_id}")
+@resume_router.post("/language/create/{resume_id}")
 async def crete_language(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
@@ -370,7 +370,7 @@ async def crete_language(
     return {"language_id": language.id}
 
 
-@resume_router.patch("/edit_language/{language_id}")
+@resume_router.patch("/language/edit/{language_id}")
 async def edit_language(
     language_id: str,
     languageInfo: LanguageInfo,
@@ -410,7 +410,7 @@ async def edit_language(
     await db.commit()
 
 
-@resume_router.delete("/delete_language/{language_id}")
+@resume_router.delete("/language/delete/{language_id}")
 async def delete_language(
     language_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
@@ -450,7 +450,7 @@ async def delete_language(
 # /////////////////////////////////////////////////////////////
 
 
-@resume_router.post("/skills_group/create/{resume_id}")
+@resume_router.post("/skills/create/{resume_id}")
 async def create_skill_group(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
@@ -476,10 +476,10 @@ async def create_skill_group(
     await db.commit()
     await db.refresh(skills_group)
 
-    return {"skills_group_id": skills_group.id}
+    return {"skills_id": skills_group.id}
 
 
-@resume_router.post("/skillItem/add/{skills_groups_id}")
+@resume_router.post("/skillItem/create/{skills_groups_id}")
 async def skills_group_add_skill(
     skills_groups_id: str,
     skillItemInfo: SkillItemInfo,
