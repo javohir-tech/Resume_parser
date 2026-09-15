@@ -30,14 +30,20 @@ from app.models.skill_item import SkillItem
 
 resume_router = APIRouter(prefix="/resume", tags=["resume"])
 
+# /////////////////////////////////////////////////////////////
+# Personal Info
+# /////////////////////////////////////////////////////////////
+@resume_router.get("/{resume_id}")
+async def get_resume(resume_id : str  , db : AsyncSession = Depends(get_db) , user_id = Depends(verify)):
+    """Placeholder for retrieving a resume by ID; not implemented yet."""
+    
+
 
 @resume_router.post("/personalInfo/create")
 async def create_resume(
     db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
-    """
-    resume yaratish
-    """
+    """Create an empty resume for the authenticated user and return its ID."""
 
     result = await db.execute(select(User).where(User.id == user_id))
 
@@ -64,9 +70,7 @@ async def resume_edit(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    """
-    Resumeni edit qilish
-    """
+    """Update only the supplied personal information fields in a resume owned by the user."""
     user_uuid = UUID(user_id)
     resume_uuid = UUID(resume_id)
 
@@ -94,9 +98,7 @@ async def resume_edit(
 async def delete_resume(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
-    """
-    Resumeni o'chirish
-    """
+    """Delete a resume owned by the authenticated user."""
     resume_uuid = UUID(resume_id)
     user_uuid = UUID(user_id)
 
@@ -118,6 +120,8 @@ async def delete_resume(
     return {"message": "Resume deleted successfully"}
 
 
+
+
 # /////////////////////////////////////////////////////////////
 # Experience
 # /////////////////////////////////////////////////////////////
@@ -127,9 +131,7 @@ async def delete_resume(
 async def create_experience(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
-    """
-    experince yaratish
-    """
+    """Create an empty experience entry in a resume owned by the user and return its ID."""
     user_uuid = UUID(user_id)
     resume_uuid = UUID(resume_id)
 
@@ -161,9 +163,7 @@ async def edit_experince(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    """
-    Experince edit qilish
-    """
+    """Update only the supplied experience fields after verifying resume ownership."""
     experience_uuid = UUID(experience_id)
     user_uuid = UUID(user_id)
 
@@ -204,9 +204,7 @@ async def delete_experience(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    """
-    Experince o'chirish
-    """
+    """Delete an experience entry after verifying resume ownership."""
     experience_uuid = UUID(experience_id)
     user_uuid = UUID(user_id)
 
@@ -248,7 +246,7 @@ async def create_education(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    """Rezyumega ta'lim ma'lumotini qo'shish."""
+    """Create an empty education entry in a resume owned by the user and return its ID."""
     user_uuid = UUID(user_id)
 
     result = await db.execute(
@@ -277,7 +275,7 @@ async def edit_education(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    """Ta'lim ma'lumotini qisman yangilash."""
+    """Update only the supplied education fields after verifying resume ownership."""
     user_uuid = UUID(user_id)
 
     result = await db.execute(
@@ -311,7 +309,7 @@ async def delete_education(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    """Ta'lim ma'lumotini o'chirish."""
+    """Delete an education entry after verifying resume ownership."""
     user_uuid = UUID(user_id)
 
     result = await db.execute(
@@ -347,9 +345,7 @@ async def delete_education(
 async def crete_language(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
-    """
-    Language yaratish
-    """
+    """Create an empty language entry in a resume owned by the user and return its ID."""
     resume_uuid = UUID(resume_id)
     user_uuid = UUID(user_id)
 
@@ -381,9 +377,7 @@ async def edit_language(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    """
-    Langauge  edit
-    """
+    """Update only the supplied language fields after verifying resume ownership."""
     user_uuid = UUID(user_id)
     language_uuid = UUID(language_id)
 
@@ -420,9 +414,7 @@ async def edit_language(
 async def delete_language(
     language_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
-    """
-    Langauge delete
-    """
+    """Delete a language entry after verifying resume ownership."""
     user_uuid = UUID(user_id)
     language_uuid = UUID(language_id)
 
@@ -462,7 +454,7 @@ async def delete_language(
 async def create_skill_group(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
-    """Create skill group"""
+    """Create an empty skill group in a resume owned by the user and return its ID."""
     user_uuid = UUID(user_id)
     resume_uuid = UUID(resume_id)
 
@@ -494,9 +486,7 @@ async def edit_skills(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    """
-    edit skills
-    """
+    """Update the title of a skill group after verifying resume ownership."""
     user_uuid = UUID(user_id)
     skills_uuid = UUID(skills_id)
 
@@ -530,9 +520,7 @@ async def edit_skills(
 async def delete_skills(
     skills_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
-    """
-    Delete skills
-    """
+    """Delete a skill group and its skill items after verifying resume ownership."""
     user_uuid = UUID(user_id)
     skills_uuid = UUID(skills_id)
 
@@ -570,9 +558,7 @@ async def skills_group_add_skill(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    """
-    Create Skill Item
-    """
+    """Add a skill item after verifying resume ownership and return the new item ID."""
     user_uuid = UUID(user_id)
     skills_groups_uuid = UUID(skills_groups_id)
 
@@ -612,9 +598,7 @@ async def delete_skill_item(
     db: AsyncSession = Depends(get_db),
     user_id: str = Depends(verify),
 ):
-    """
-    delete skill item
-    """
+    """Delete a skill item after verifying ownership of its parent resume."""
     user_uuid = UUID(user_id)
     skillItem_uuid = UUID(skillItem_id)
 
