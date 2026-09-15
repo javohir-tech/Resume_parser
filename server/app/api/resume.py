@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
 
 from sqlalchemy import select
-from sqlalchemy.orm import selectinload, joinedload
+from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -45,7 +45,7 @@ async def create_resume(
 
     if user is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User Not Found"
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
         )
 
     resume = Resume(user_id=user.id)
@@ -79,7 +79,7 @@ async def resume_edit(
     if resume is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Resumenigizlar orasidan topilmadi",
+            detail="Resume not found among your resumes",
         )
 
     changes = personalInfo.model_dump(exclude_unset=True)
@@ -109,13 +109,13 @@ async def delete_resume(
     if resume is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Resumelaringiz orasidan topilmadi",
+            detail="Resume not found among your resumes",
         )
 
     await db.delete(resume)
     await db.commit()
 
-    return {"message": "Rezyume o'chirildi"}
+    return {"message": "Resume deleted successfully"}
 
 
 # /////////////////////////////////////////////////////////////
@@ -142,7 +142,7 @@ async def create_experience(
     if resume is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Resumelaringiz orasidan topilmadi",
+            detail="Resume not found among your resumes",
         )
 
     experience = Experience(resume_id=resume.id)
@@ -169,7 +169,7 @@ async def edit_experince(
 
     result = await db.execute(
         select(Experience)
-        .options(selectinload(Experience.resume))
+        .options(joinedload(Experience.resume))
         .where(Experience.id == experience_uuid)
     )
 
@@ -177,14 +177,15 @@ async def edit_experince(
 
     if experience is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Tajriba topilmadi"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Experience not found"
         )
 
     resume = experience.resume
 
     if resume.user_id != user_uuid:
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="Sizni tajribangiz emas"
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have permission to perform this action",
         )
 
     changes = ExperienceInfo.model_dump(exclude_unset=True)
@@ -211,7 +212,7 @@ async def delete_experience(
 
     result = await db.execute(
         select(Experience)
-        .options(selectinload(Experience.resume))
+        .options(joinedload(Experience.resume))
         .where(Experience.id == experience_uuid)
     )
 
@@ -219,7 +220,7 @@ async def delete_experience(
 
     if experience is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="tajriba topilmadi"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Experience not found"
         )
 
     resume = experience.resume
@@ -227,13 +228,13 @@ async def delete_experience(
     if resume.user_id != user_uuid:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="sizga o'zgartirish mumkin emas",
+            detail="You do not have permission to perform this action",
         )
 
     await db.delete(experience)
     await db.commit()
 
-    return {"detail": "experience o'chirildi"}
+    return {"detail": "Experience deleted successfully"}
 
 
 # /////////////////////////////////////////////////////////////
@@ -258,7 +259,7 @@ async def create_education(
     if resume is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Resumelaringiz orasidan topilmadi",
+            detail="Resume not found among your resumes",
         )
 
     education = Education(resume_id=resume.id)
@@ -281,20 +282,20 @@ async def edit_education(
 
     result = await db.execute(
         select(Education)
-        .options(selectinload(Education.resume))
+        .options(joinedload(Education.resume))
         .where(Education.id == education_id)
     )
     education = result.scalar_one_or_none()
 
     if education is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Ta'lim ma'lumoti topilmadi"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Education not found"
         )
 
     if education.resume.user_id != user_uuid:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Sizga o'zgartirish mumkin emas",
+            detail="You do not have permission to perform this action",
         )
 
     changes = education_info.model_dump(exclude_unset=True)
@@ -315,26 +316,26 @@ async def delete_education(
 
     result = await db.execute(
         select(Education)
-        .options(selectinload(Education.resume))
+        .options(joinedload(Education.resume))
         .where(Education.id == education_id)
     )
     education = result.scalar_one_or_none()
 
     if education is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Ta'lim ma'lumoti topilmadi"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Education not found"
         )
 
     if education.resume.user_id != user_uuid:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Sizga o'chirish mumkin emas",
+            detail="You do not have permission to perform this action",
         )
 
     await db.delete(education)
     await db.commit()
 
-    return {"message": "Ta'lim ma'lumoti o'chirildi"}
+    return {"message": "Education deleted successfully"}
 
 
 # /////////////////////////////////////////////////////////////
@@ -361,7 +362,7 @@ async def crete_language(
     if resume is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Resumelaringiz orasidan topilmadi",
+            detail="Resume not found among your resumes",
         )
 
     language = Language(resume_id=resume.id)
@@ -388,21 +389,23 @@ async def edit_language(
 
     result = await db.execute(
         select(Language)
-        .options(selectinload(Language.resume))
+        .options(joinedload(Language.resume))
         .where(Language.id == language_uuid)
     )
 
     language = result.scalar_one_or_none()
 
     if language is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND("Langauge topilmadi"))
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Language not found"
+        )
 
     resume = language.resume
 
     if resume.user_id != user_uuid:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Languageni sizga o'zgartirishingizga ruhsat yo'q",
+            detail="You do not have permission to perform this action",
         )
 
     changes = languageInfo.model_dump(exclude_unset=True)
@@ -425,7 +428,7 @@ async def delete_language(
 
     result = await db.execute(
         select(Language)
-        .options(selectinload(Language.resume))
+        .options(joinedload(Language.resume))
         .where(Language.id == language_uuid)
     )
 
@@ -433,7 +436,7 @@ async def delete_language(
 
     if language is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Language toplimadi"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Language not found"
         )
 
     resume = language.resume
@@ -441,13 +444,13 @@ async def delete_language(
     if resume.user_id != user_uuid:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Languageni o'chirishga sizga ruhsat yo'q",
+            detail="You do not have permission to perform this action",
         )
 
     await db.delete(language)
     await db.commit()
 
-    return {"detail": "language o'chirildi"}
+    return {"detail": "Language deleted successfully"}
 
 
 # /////////////////////////////////////////////////////////////
@@ -472,7 +475,7 @@ async def create_skill_group(
     if resume is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="reumlaringiz orasidan topilmadi",
+            detail="Resume not found among your resumes",
         )
 
     skills_group = Skills(resume_id=resume.id)
@@ -499,7 +502,7 @@ async def edit_skills(
 
     result = await db.execute(
         select(Skills)
-        .options(selectinload(Skills.resume))
+        .options(joinedload(Skills.resume))
         .where(Skills.id == skills_uuid)
     )
 
@@ -507,14 +510,15 @@ async def edit_skills(
 
     if skills_group is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Skills topilmadi"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Skill group not found"
         )
 
     resume = skills_group.resume
 
     if user_uuid != resume.user_id:
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="Sizga ruhsat yo'q"
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have permission to perform this action",
         )
 
     skills_group.title = skillsInfo.title
@@ -534,7 +538,7 @@ async def delete_skills(
 
     result = await db.execute(
         select(Skills)
-        .options(selectinload(Skills.resume))
+        .options(joinedload(Skills.resume))
         .where(Skills.id == skills_uuid)
     )
 
@@ -542,7 +546,7 @@ async def delete_skills(
 
     if skills_group is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="skills group topilmadi"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Skill group not found"
         )
 
     resume = skills_group.resume
@@ -550,13 +554,13 @@ async def delete_skills(
     if resume.user_id != user_uuid:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="amaliyotni bajarishga ruhsatiz yo'q",
+            detail="You do not have permission to perform this action",
         )
 
     await db.delete(skills_group)
     await db.commit()
 
-    return {"detail": "Skills Group o'chirildi"}
+    return {"detail": "Skill group deleted successfully"}
 
 
 @resume_router.post("/skill_item/create/{skills_groups_id}")
@@ -574,7 +578,7 @@ async def skills_group_add_skill(
 
     result = await db.execute(
         select(Skills)
-        .options(selectinload(Skills.resume))
+        .options(joinedload(Skills.resume))
         .where(Skills.id == skills_groups_uuid)
     )
 
@@ -582,7 +586,7 @@ async def skills_group_add_skill(
 
     if skills_group is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="skill Group topilmadi"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Skill group not found"
         )
 
     resume = skills_group.resume
@@ -590,7 +594,7 @@ async def skills_group_add_skill(
     if user_uuid != resume.user_id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="skill groupga skillItem qoshishga sizga ruhsat yo'q",
+            detail="You do not have permission to perform this action",
         )
 
     skillItem = SkillItem(skills_id=skills_group.id, skill=skillItemInfo.skill)
@@ -624,17 +628,18 @@ async def delete_skill_item(
 
     if skill_item is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Skill item topilmadi"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Skill item not found"
         )
 
     resume = skill_item.skills.resume
 
     if resume.user_id != user_uuid:
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="sizga ruxsat yo'q"
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have permission to perform this action",
         )
 
     await db.delete(skill_item)
     await db.commit()
 
-    return {"detail": "skill item o'chirildi"}
+    return {"detail": "Skill item deleted successfully"}
