@@ -30,11 +30,14 @@ from app.models.skill_item import SkillItem
 
 resume_router = APIRouter(prefix="/resume", tags=["resume"])
 
+
 # /////////////////////////////////////////////////////////////
 # Personal Info
 # /////////////////////////////////////////////////////////////
 @resume_router.get("/{resume_id}")
-async def get_resume(resume_id : str  , db : AsyncSession = Depends(get_db) , user_id = Depends(verify)):
+async def get_resume(
+    resume_id: str, db: AsyncSession = Depends(get_db), user_id=Depends(verify)
+):
     """Placeholder for retrieving a resume by ID; not implemented yet."""
     
 
@@ -118,8 +121,6 @@ async def delete_resume(
     await db.commit()
 
     return {"message": "Resume deleted successfully"}
-
-
 
 
 # /////////////////////////////////////////////////////////////
