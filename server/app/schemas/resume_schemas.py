@@ -92,6 +92,12 @@ class LanguageInfo(BaseModel):
     degree: Optional[str] = Field(default=None, description="daraja", examples=["b2"])
 
 
+class SkillsInfo(BaseModel):
+    title: Optional[str] = Field(
+        default=None, description="skill group title", examples=["Front End Developer"]
+    )
+
+
 class SkillItemInfo(BaseModel):
     skill: Optional[str] = Field(
         default=None, description="skill item", examples=["JavaScript"]

@@ -17,6 +17,7 @@ from app.schemas.resume_schemas import (
     EducationInfo,
     LanguageInfo,
     SkillItemInfo,
+    SkillsInfo,
 )
 
 from app.models.user import User
@@ -479,6 +480,41 @@ async def create_skill_group(
     return {"skills_id": skills_group.id}
 
 
+@resume_router.patch("/skills/edit/{skills_id}")
+async def edit_skills(
+    skills_id: str,
+    skillsInfo: SkillsInfo,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    """
+    edit skills
+    """
+    user_uuid = UUID(user_id)
+    skills_uuid = UUID(skills_id)
+
+    result = await db.execute(
+        select(Skills)
+        .options(selectinload(Skills.resume))
+        .where(Skills.id == skills_uuid)
+    )
+
+    skills_group = result.scalar_one_or_none()
+
+    if skills_group is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Skills topilmadi"
+        )
+
+    resume = skills_group.resume
+
+    if user_uuid != resume.user_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Sizga ruhsat yo'q"
+        )
+
+    changes = skillsInfo.model_dump(exclude_unset=True)
+
 @resume_router.post("/skillItem/create/{skills_groups_id}")
 async def skills_group_add_skill(
     skills_groups_id: str,
@@ -487,7 +523,7 @@ async def skills_group_add_skill(
     user_id: str = Depends(verify),
 ):
     """
-    create
+    Create Skill Item
     """
     user_uuid = UUID(user_id)
     skills_groups_uuid = UUID(skills_groups_id)
