@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
 
 from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
@@ -31,7 +31,7 @@ from app.models.skill_item import SkillItem
 resume_router = APIRouter(prefix="/resume", tags=["resume"])
 
 
-@resume_router.post("/create")
+@resume_router.post("/personalInfo/create")
 async def create_resume(
     db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
@@ -57,7 +57,7 @@ async def create_resume(
     return {"resume_id": resume.id}
 
 
-@resume_router.patch("/edit/{resume_id}")
+@resume_router.patch("/personalInfo/edit/{resume_id}")
 async def resume_edit(
     resume_id: str,
     personalInfo: PersonalInfo,
@@ -90,7 +90,7 @@ async def resume_edit(
     await db.commit()
 
 
-@resume_router.delete("/delete/{resume_id}")
+@resume_router.delete("/personalInfo/delete/{resume_id}")
 async def delete_resume(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
@@ -233,6 +233,8 @@ async def delete_experience(
     await db.delete(experience)
     await db.commit()
 
+    return {"detail": "experience o'chirildi"}
+
 
 # /////////////////////////////////////////////////////////////
 # Educations
@@ -302,7 +304,7 @@ async def edit_education(
     await db.commit()
 
 
-@resume_router.delete("/education/edit/{education_id}")
+@resume_router.delete("/education/delete/{education_id}")
 async def delete_education(
     education_id: UUID,
     db: AsyncSession = Depends(get_db),
@@ -443,7 +445,9 @@ async def delete_language(
         )
 
     await db.delete(language)
-    await db.commit(language)
+    await db.commit()
+
+    return {"detail": "language o'chirildi"}
 
 
 # /////////////////////////////////////////////////////////////
@@ -513,9 +517,49 @@ async def edit_skills(
             status_code=status.HTTP_403_FORBIDDEN, detail="Sizga ruhsat yo'q"
         )
 
-    changes = skillsInfo.model_dump(exclude_unset=True)
+    skills_group.title = skillsInfo.title
 
-@resume_router.post("/skillItem/create/{skills_groups_id}")
+    await db.commit()
+
+
+@resume_router.delete("/skills/delete/{skills_id}")
+async def delete_skills(
+    skills_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+):
+    """
+    Delete skills
+    """
+    user_uuid = UUID(user_id)
+    skills_uuid = UUID(skills_id)
+
+    result = await db.execute(
+        select(Skills)
+        .options(selectinload(Skills.resume))
+        .where(Skills.id == skills_uuid)
+    )
+
+    skills_group = result.scalar_one_or_none()
+
+    if skills_group is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="skills group topilmadi"
+        )
+
+    resume = skills_group.resume
+
+    if resume.user_id != user_uuid:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="amaliyotni bajarishga ruhsatiz yo'q",
+        )
+
+    await db.delete(skills_group)
+    await db.commit()
+
+    return {"detail": "Skills Group o'chirildi"}
+
+
+@resume_router.post("/skill_item/create/{skills_groups_id}")
 async def skills_group_add_skill(
     skills_groups_id: str,
     skillItemInfo: SkillItemInfo,
@@ -556,3 +600,41 @@ async def skills_group_add_skill(
     await db.refresh(skillItem)
 
     return {"skill_item_id": skillItem.id}
+
+
+@resume_router.delete("/skill_item/delete/{skillItem_id}")
+async def delete_skill_item(
+    skillItem_id: str,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    """
+    delete skill item
+    """
+    user_uuid = UUID(user_id)
+    skillItem_uuid = UUID(skillItem_id)
+
+    result = await db.execute(
+        select(SkillItem)
+        .options(joinedload(SkillItem.skills).joinedload(Skills.resume))
+        .where(SkillItem.id == skillItem_uuid)
+    )
+
+    skill_item = result.scalar_one_or_none()
+
+    if skill_item is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Skill item topilmadi"
+        )
+
+    resume = skill_item.skills.resume
+
+    if resume.user_id != user_uuid:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="sizga ruxsat yo'q"
+        )
+
+    await db.delete(skill_item)
+    await db.commit()
+
+    return {"detail": "skill item o'chirildi"}
