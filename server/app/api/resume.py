@@ -108,7 +108,7 @@ async def get_resume(
                 "id": skills_group.id,
                 "title": skills_group.title or "",
                 "skills": [
-                    {"skill": item.skill, "id": item.id} for item in skills_group.skills
+                    {"id": item.id, "skill": item.skill or ""} for item in skills_group.skills
                 ],
             }
             for skills_group in resume.skills
