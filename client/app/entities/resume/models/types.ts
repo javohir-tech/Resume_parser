@@ -21,10 +21,15 @@ export interface Education {
   endDate?: string;
 }
 
+export interface Skill {
+  id : string , 
+  skill : string
+}
+
 export interface SkillGroup {
   id: string;
   title: string;
-  skills: string[];
+  skills: Skill[];
 }
 
 export interface Personal {

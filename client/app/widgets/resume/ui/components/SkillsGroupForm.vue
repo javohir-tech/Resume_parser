@@ -30,9 +30,9 @@ function createSkillCategory(skillCategory: string) {
                 placeholder="Front End , Backend ..." @create="createSkillCategory" />
         </UFormField>
         <div v-if="skillsGroup.skills.length" class="flex flex-wrap gap-1.5">
-            <UButton v-for="(skill, index) in skillsGroup.skills" :key="index" type="button"
-                @click="removeSkill(skillsGroup.id, index)" trailing-icon="i-lucide-x" color="neutral" variant="subtle"
-                size="xs" :aria-label="`Remove ${skill}`" class="rounded-md">{{ skill }}</UButton>
+            <UButton v-for="skill in skillsGroup.skills" :key="skill.id" type="button"
+                @click="removeSkill(skillsGroup.id, skill.id)" trailing-icon="i-lucide-x" color="neutral" variant="subtle"
+                size="xs" :aria-label="`Remove ${skill.skill}`" class="rounded-md">{{ skill.skill }}</UButton>
         </div>
         <UForm @submit="handleAddSkill">
             <UFormField label="Skill">

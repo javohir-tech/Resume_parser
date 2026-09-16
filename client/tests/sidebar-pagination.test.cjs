@@ -58,7 +58,7 @@ test('switches continuation titles when a new section starts', () => {
 test('places all resume fields into exactly one column', () => {
   const blocks = buildBlock({ fullname: 'Sample', summary: 'Summary',
     experience: [{ id: 'job' }], education: [{ id: 'degree' }],
-    skills: [{ id: 'skills', skills: ['SQL'] }], languages: [{ id: 'lang' }] });
+    skills: [{ id: 'skills', skills: [{ id: 'sql', skill: 'SQL' }] }], languages: [{ id: 'lang' }] });
   const side = blocks.filter(isSidebarBlock);
   const main = blocks.filter(block => !isSidebarBlock(block));
   assert.deepEqual(side.map(block => block.type), ['header', 'section-title', 'skills-group', 'section-title', 'languages-item']);

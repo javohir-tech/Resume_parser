@@ -56,17 +56,17 @@ export const useResumeSection = () => {
       (sk) => sk.id === id,
     );
     if (skillGroup) {
-      skillGroup.skills.push(skill);
+      skillGroup.skills.push({ id: crypto.randomUUID(), skill });
     }
   }
 
-  function removeSkill(id: string, index: number) {
+  function removeSkill(id: string, skillId: string) {
     const skillGroup = resumeStore.resume.skills?.find(
       (sk) => sk.id === id,
     );
 
-    if (skillGroup && index !== -1) {
-      skillGroup.skills.splice(index, 1);
+    if (skillGroup) {
+      skillGroup.skills = skillGroup.skills.filter((skill) => skill.id !== skillId);
     }
   }
 
