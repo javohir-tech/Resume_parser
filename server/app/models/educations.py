@@ -19,5 +19,5 @@ class Education(Base):
     fieldOfStudy : Mapped[Optional[str]] = mapped_column(String ,  nullable=True)
     institution :  Mapped[Optional[str]] = mapped_column(String , nullable=True)
     location : Mapped[Optional[str]] = mapped_column(String ,  nullable=True)
-    start_date : Mapped[Optional[str]] = mapped_column(String , nullable=True)
-    end_date : Mapped[Optional[str]] = mapped_column(String , nullable=True)
+    startDate : Mapped[Optional[str]] = mapped_column(String , nullable=True)
+    endDate : Mapped[Optional[str]] = mapped_column(String , nullable=True)

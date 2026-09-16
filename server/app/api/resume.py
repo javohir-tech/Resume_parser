@@ -38,18 +38,18 @@ resume_router = APIRouter(prefix="/resume", tags=["resume"])
 async def get_resume(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id=Depends(verify)
 ):
-    """Placeholder for retrieving a resume by ID; not implemented yet."""
+    """Return resume data using the frontend field names."""
     user_uuid = UUID(user_id)
     resume_uuid = UUID(resume_id)
 
     result = await db.execute(
         select(Resume)
         .options(
-            selectinload(Resume.experiences),
+            selectinload(Resume.experience),
             selectinload(Resume.education),
             selectinload(Resume.languages),
             selectinload(Resume.skills),
-            selectinload(Resume.skills).selectinload(Skills.skill_item),
+            selectinload(Resume.skills).selectinload(Skills.skills),
         )
         .where(Resume.id == resume_uuid)
     )
@@ -62,55 +62,61 @@ async def get_resume(
         )
 
     return {
-        "fullName": resume.fullName,
-        "title": resume.title,
-        "email": resume.email,
-        "phone": resume.phone,
-        "location": resume.location,
-        "website": resume.website,
-        "github_link": resume.github_link,
-        "linkedin_link": resume.linkedin_link,
-        "summary": resume.summary,
-        "experiences": [
+        "fullname": resume.fullname or "",
+        "title": resume.title or "",
+        "email": resume.email or "",
+        "phone": resume.phone or "",
+        "location": resume.location or "",
+        "website": resume.website or "",
+        "github_link": resume.github_link or "",
+        "linkedin_link": resume.linkedin_link or "",
+        "summary": resume.summary or "",
+        "experience": [
             {
-                "postion": experience.postion,
-                "compony": experience.compony,
-                "location": experience.location,
-                "start_date": experience.start_date,
-                "end_date": experience.end_date,
-                "description": experience.description,
+                "id": experience.id,
+                "position": experience.position or "",
+                "company": experience.company or "",
+                "location": experience.location or "",
+                "startDate": experience.startDate or "",
+                "endDate": experience.endDate or "",
+                "description": experience.description or "",
             }
-            for experience in resume.experiences
+            for experience in resume.experience
         ],
-        "educations": [
+        "education": [
             {
-                "degree": education.degree,
-                "fieldOfStudy": education.fieldOfStudy,
-                "institution": education.institution,
-                "location": education.location,
-                "start_date": education.start_date,
-                "end_date": education.end_date,
+                "id": education.id,
+                "degree": education.degree or "",
+                "fieldOfStudy": education.fieldOfStudy or "",
+                "institution": education.institution or "",
+                "location": education.location or "",
+                "startDate": education.startDate or "",
+                "endDate": education.endDate or "",
             }
             for education in resume.education
         ],
         "languages": [
             {
-                "language": language.language,
-                "degree": language.degree,
+                "id": language.id,
+                "language": language.language or "",
+                "degree": language.degree or "",
             }
             for language in resume.languages
         ],
-        "skills_groups": [
+        "skills": [
             {
-                "title": skills_group.title,
-                "skills": [item.skill for item in skills_group.skill_item],
+                "id": skills_group.id,
+                "title": skills_group.title or "",
+                "skills": [
+                    {"skill": item.skill, "id": item.id} for item in skills_group.skills
+                ],
             }
             for skills_group in resume.skills
         ],
     }
 
 
-@resume_router.post("/personalInfo/create")
+@resume_router.post("/create")
 async def create_resume(
     db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
@@ -134,7 +140,7 @@ async def create_resume(
     return {"resume_id": resume.id}
 
 
-@resume_router.patch("/personalInfo/edit/{resume_id}")
+@resume_router.patch("/edit/{resume_id}")
 async def resume_edit(
     resume_id: str,
     personalInfo: PersonalInfo,
@@ -165,7 +171,7 @@ async def resume_edit(
     await db.commit()
 
 
-@resume_router.delete("/personalInfo/delete/{resume_id}")
+@resume_router.delete("/delete/{resume_id}")
 async def delete_resume(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
@@ -580,7 +586,10 @@ async def edit_skills(
             detail="You do not have permission to perform this action",
         )
 
-    skills_group.title = skillsInfo.title
+    changes = skillsInfo.model_dump(exclude_unset=True)
+
+    for filed, value in changes.items():
+        setattr(skills_group, filed, value)
 
     await db.commit()
 

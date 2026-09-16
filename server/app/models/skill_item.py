@@ -19,5 +19,5 @@ class SkillItem(Base):
     skills_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("skills.id"), index=True
     )
-    skills: Mapped["Skills"] = relationship(back_populates="skill_item", lazy="raise")
+    skills: Mapped["Skills"] = relationship(back_populates="skills", lazy="raise")
     skill: Mapped[Optional[str]] = mapped_column(String, nullable=True)

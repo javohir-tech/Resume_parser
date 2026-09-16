@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 class PersonalInfo(BaseModel):
     """Resume shaxsiy ma'lumotlarini qisman yangilash uchun schema."""
 
-    fullName: Optional[str] = Field(
+    fullname: Optional[str] = Field(
         default=None, description="To'liq ism", examples=["Suvonov Javohir"]
     )
     title: Optional[str] = Field(
@@ -56,28 +56,28 @@ class EducationInfo(BaseModel):
     location: Optional[str] = Field(
         default=None, description="Ta'lim muassasasi manzili", examples=["Toshkent"]
     )
-    start_date: Optional[str] = Field(
+    startDate: Optional[str] = Field(
         default=None, description="Boshlangan vaqti", examples=["sep-2022"]
     )
-    end_date: Optional[str] = Field(
+    endDate: Optional[str] = Field(
         default=None, description="Tugagan vaqti", examples=["june-2026"]
     )
 
 
 class ExperienceInfo(BaseModel):
-    postion: Optional[str] = Field(
+    position: Optional[str] = Field(
         default=None, description="ishda lavozim", examples=["Front end developer"]
     )
-    compony: Optional[str] = Field(
+    company: Optional[str] = Field(
         default=None, description="ish joyi", examples=["Limsa"]
     )
     location: Optional[str] = Field(
         default=None, description="ish manzili", examples=["Tashkent"]
     )
-    start_date: Optional[str] = Field(
+    startDate: Optional[str] = Field(
         default=None, description="boshlangan vaqti", examples=["july-2026"]
     )
-    end_date: Optional[str] = Field(
+    endDate: Optional[str] = Field(
         default=None, description="tugagan vaqt", examples=["sep-2026"]
     )
     description: Optional[str] = Field(

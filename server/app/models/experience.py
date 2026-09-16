@@ -19,10 +19,10 @@ class Experience(Base):
     resume_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("resume.id"), index=True
     )
-    resume: Mapped["Resume"] = relationship(back_populates="experiences", lazy="raise")
-    postion: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    compony: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    resume: Mapped["Resume"] = relationship(back_populates="experience", lazy="raise")
+    position: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    company: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     location: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    start_date: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    end_date: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    startDate: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    endDate: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)

@@ -24,7 +24,7 @@ class Resume(Base):
         UUID(as_uuid=True), ForeignKey("users.id"), index=True
     )
     user: Mapped["User"] = relationship(back_populates="resumes", lazy="raise")
-    fullName: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    fullname: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     title: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     email: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     phone: Mapped[Optional[str]] = mapped_column(String, nullable=True)
@@ -33,7 +33,7 @@ class Resume(Base):
     github_link: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     linkedin_link: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     summary: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    experiences: Mapped[list["Experience"]] = relationship(
+    experience: Mapped[list["Experience"]] = relationship(
         back_populates="resume", cascade="all, delete-orphan", lazy="raise"
     )
     education: Mapped[list["Education"]] = relationship(
