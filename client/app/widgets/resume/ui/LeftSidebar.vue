@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { useResumeStore } from '~/entities/resume';
-import { useResumeSection } from '~/features/resume/index.ts';
+import {
+    useResumeSection,
+    PersonalInfoForm,
+    ExperienceForm,
+    EducationForm,
+    LanguagesForm,
+    SkillsGroupForm
+} from '~/features/resume/index.ts';
 
-import ExperienceForm from './components/ExperienceForm.vue';
-import EducationForm from './components/EducationForm.vue';
-import SkillsGroupForm from './components/SkillsGroupForm.vue';
-import LanguagesForm from './components/LanguagesForm.vue';
-import PersonalInfo from './components/PersonalInfo.vue';
+
 
 const resumeStore = useResumeStore()
 const {
@@ -33,7 +36,7 @@ const {
                 <UIcon name="i-lucide-user-round" class="size-4 text-muted" />
                 <h2 class="text-sm font-semibold">Personal details</h2>
             </div>
-            <PersonalInfo />
+            <PersonalInfoForm />
         </section>
 
         <!-- ////////////////////////////////////////////////// -->
