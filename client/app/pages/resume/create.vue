@@ -13,5 +13,5 @@ definePageMeta({
 </script>
 
 <template>
-    <component :is="selectedTemplate.renderer || ResumeRenderer" :template="selectedTemplate" :resume="resumeStore.personalInfo" />
+    <component :is="selectedTemplate.renderer || ResumeRenderer" :template="selectedTemplate" :resume="resumeStore.resume" />
 </template>

@@ -4,13 +4,14 @@ import type {
   TemplateName,
   ResumeColor,
   DesignInfo,
+  Personal
 } from "./types";
 
 export const useResumeStore = defineStore("resume", () => {
 
   const template = ref<TemplateName>("classic");
 
-  const personalInfo = ref<Resume>({
+  const resume = ref<Resume>({
     fullname: "",
     title: "",
     email: "",
@@ -54,7 +55,7 @@ export const useResumeStore = defineStore("resume", () => {
 
   return {
     template,
-    personalInfo,
+    resume,
     designInfo,
     restartDesign,
     handleChangeFont,

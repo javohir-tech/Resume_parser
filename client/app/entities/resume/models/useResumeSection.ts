@@ -4,7 +4,7 @@ export const useResumeSection = () => {
   const resumeStore = useResumeStore();
 
   function addExperience() {
-    resumeStore.personalInfo.experience?.push({
+    resumeStore.resume.experience?.push({
       id: crypto.randomUUID(),
       position: "",
       company: "",
@@ -16,12 +16,12 @@ export const useResumeSection = () => {
   }
 
   function removeExperince(id: string) {
-    resumeStore.personalInfo.experience =
-      resumeStore.personalInfo.experience?.filter((exp) => exp.id !== id);
+    resumeStore.resume.experience =
+      resumeStore.resume.experience?.filter((exp) => exp.id !== id);
   }
 
   function addEducation() {
-    resumeStore.personalInfo.education?.push({
+    resumeStore.resume.education?.push({
       id: crypto.randomUUID(),
       fieldOfStudy: "",
       institution: "",
@@ -33,12 +33,12 @@ export const useResumeSection = () => {
   }
 
   function removeEducation(id: string) {
-    resumeStore.personalInfo.education =
-      resumeStore.personalInfo.education?.filter((edc) => edc.id !== id);
+    resumeStore.resume.education =
+      resumeStore.resume.education?.filter((edc) => edc.id !== id);
   }
 
   function addSkillsGroup() {
-    resumeStore.personalInfo.skills?.push({
+    resumeStore.resume.skills?.push({
       id: crypto.randomUUID(),
       title: "",
       skills: [],
@@ -46,13 +46,13 @@ export const useResumeSection = () => {
   }
 
   function removeSkillsGroup(id: string) {
-    resumeStore.personalInfo.skills = resumeStore.personalInfo.skills?.filter(
+    resumeStore.resume.skills = resumeStore.resume.skills?.filter(
       (sk) => sk.id !== id,
     );
   }
 
   function addSkill(id: string, skill: string) {
-    const skillGroup = resumeStore.personalInfo.skills?.find(
+    const skillGroup = resumeStore.resume.skills?.find(
       (sk) => sk.id === id,
     );
     if (skillGroup) {
@@ -61,7 +61,7 @@ export const useResumeSection = () => {
   }
 
   function removeSkill(id: string, index: number) {
-    const skillGroup = resumeStore.personalInfo.skills?.find(
+    const skillGroup = resumeStore.resume.skills?.find(
       (sk) => sk.id === id,
     );
 
@@ -71,7 +71,7 @@ export const useResumeSection = () => {
   }
 
   function addLanguage() {
-    resumeStore.personalInfo.languages?.push({
+    resumeStore.resume.languages?.push({
       id: crypto.randomUUID(),
       language: "",
       degree: "",
@@ -79,8 +79,8 @@ export const useResumeSection = () => {
   }
 
   function removeLanguage(id: string) {
-    resumeStore.personalInfo.languages =
-      resumeStore.personalInfo.languages?.filter((l) => l.id !== id);
+    resumeStore.resume.languages =
+      resumeStore.resume.languages?.filter((l) => l.id !== id);
   }
 
   return {
