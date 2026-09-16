@@ -1,25 +1,31 @@
 import { api } from "~/shared/api";
-import type { Personal , Experience , Education , Languages , SkillGroup } from "~/entities/resume";
-
+import type {
+  Personal,
+  Experience,
+  Education,
+  Languages,
+  SkillGroup,
+} from "~/entities/resume";
 
 ///////////////////////////////////////////////
 // Resume
 ///////////////////////////////////////////////
-export const createResume = () =>
-  api<{ resume_id: string }>("/api/resume/create", { method: "POST" });
+export const createResumeFetch = () =>
+  api<{ success: boolean; resume_id: string }>("/api/resume/create", {
+    method: "POST",
+  });
 
-
-export const editResume = (
+export const editResumeFetch = (
   resume_id: string,
-  personal_info: Partial<Omit<Personal , "id">>,
+  personal_info: Partial<Omit<Personal, "id">>,
 ) =>
   api<null>(`/api/resume/edit/${resume_id}`, {
     method: "PATCH",
     body: personal_info,
   });
 
-export const deleteResume = (resume_id: string) =>
-  api<{ message: string }>(`/api/resume/delete/${resume_id}`, {
+export const deleteResumeFetch = (resume_id: string) =>
+  api<{success : boolean, message: string }>(`/api/resume/delete/${resume_id}`, {
     method: "DELETE",
   });
 
@@ -118,10 +124,13 @@ export const createSkillItem = (
   skills_group_id: string,
   skill_info: { skill: string },
 ) =>
-  api<{ skill_item_id: string }>(`/api/resume/skill_item/create/${skills_group_id}`, {
-    method: "POST",
-    body: skill_info,
-  });
+  api<{ skill_item_id: string }>(
+    `/api/resume/skill_item/create/${skills_group_id}`,
+    {
+      method: "POST",
+      body: skill_info,
+    },
+  );
 
 export const deleteSkillItem = (skill_item_id: string) =>
   api<{ detail: string }>(`/api/resume/skill_item/delete/${skill_item_id}`, {

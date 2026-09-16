@@ -33,6 +33,7 @@ export interface SkillGroup {
 }
 
 export interface Personal {
+  id : string, 
   fullname: string;
   title?: string;
   email?: string;
