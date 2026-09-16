@@ -31,9 +31,6 @@ from app.models.skill_item import SkillItem
 resume_router = APIRouter(prefix="/resume", tags=["resume"])
 
 
-# /////////////////////////////////////////////////////////////
-# Personal Info
-# /////////////////////////////////////////////////////////////
 @resume_router.get("/{resume_id}")
 async def get_resume(
     resume_id: str, db: AsyncSession = Depends(get_db), user_id=Depends(verify)
@@ -108,12 +105,38 @@ async def get_resume(
                 "id": skills_group.id,
                 "title": skills_group.title or "",
                 "skills": [
-                    {"id": item.id, "skill": item.skill or ""} for item in skills_group.skills
+                    {"id": item.id, "skill": item.skill or ""}
+                    for item in skills_group.skills
                 ],
             }
             for skills_group in resume.skills
         ],
     }
+
+
+@resume_router.get("/my/resumes")
+async def get_my_resumes(
+    db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+):
+    user_uuid = UUID(user_id)
+
+    result = await db.execute(select(Resume).where(Resume.user_id == user_uuid))
+
+    resumes = result.scalars().all()
+
+    return [
+        {
+            "resume_id": resume.id,
+            "fullname": resume.fullname or "",
+            "title": resume.title or "",
+        }
+        for resume in resumes
+    ]
+
+
+# /////////////////////////////////////////////////////////////
+# Personal Info
+# /////////////////////////////////////////////////////////////
 
 
 @resume_router.post("/create")
@@ -137,7 +160,7 @@ async def create_resume(
     await db.commit()
     await db.refresh(resume)
 
-    return {"resume_id": resume.id}
+    return {"success": True, "resume_id": resume.id}
 
 
 @resume_router.patch("/edit/{resume_id}")
@@ -194,7 +217,7 @@ async def delete_resume(
     await db.delete(resume)
     await db.commit()
 
-    return {"message": "Resume deleted successfully"}
+    return {"succes" : True, "message": "Resume deleted successfully"}
 
 
 # /////////////////////////////////////////////////////////////
