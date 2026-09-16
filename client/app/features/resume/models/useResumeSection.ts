@@ -1,4 +1,4 @@
-import { useResumeStore } from "./store";
+import { useResumeStore } from "~/entities/resume";
 
 export const useResumeSection = () => {
   const resumeStore = useResumeStore();
@@ -16,8 +16,9 @@ export const useResumeSection = () => {
   }
 
   function removeExperince(id: string) {
-    resumeStore.resume.experience =
-      resumeStore.resume.experience?.filter((exp) => exp.id !== id);
+    resumeStore.resume.experience = resumeStore.resume.experience?.filter(
+      (exp) => exp.id !== id,
+    );
   }
 
   function addEducation() {
@@ -33,8 +34,9 @@ export const useResumeSection = () => {
   }
 
   function removeEducation(id: string) {
-    resumeStore.resume.education =
-      resumeStore.resume.education?.filter((edc) => edc.id !== id);
+    resumeStore.resume.education = resumeStore.resume.education?.filter(
+      (edc) => edc.id !== id,
+    );
   }
 
   function addSkillsGroup() {
@@ -52,21 +54,19 @@ export const useResumeSection = () => {
   }
 
   function addSkill(id: string, skill: string) {
-    const skillGroup = resumeStore.resume.skills?.find(
-      (sk) => sk.id === id,
-    );
+    const skillGroup = resumeStore.resume.skills?.find((sk) => sk.id === id);
     if (skillGroup) {
       skillGroup.skills.push({ id: crypto.randomUUID(), skill });
     }
   }
 
   function removeSkill(id: string, skillId: string) {
-    const skillGroup = resumeStore.resume.skills?.find(
-      (sk) => sk.id === id,
-    );
+    const skillGroup = resumeStore.resume.skills?.find((sk) => sk.id === id);
 
     if (skillGroup) {
-      skillGroup.skills = skillGroup.skills.filter((skill) => skill.id !== skillId);
+      skillGroup.skills = skillGroup.skills.filter(
+        (skill) => skill.id !== skillId,
+      );
     }
   }
 
@@ -79,8 +79,9 @@ export const useResumeSection = () => {
   }
 
   function removeLanguage(id: string) {
-    resumeStore.resume.languages =
-      resumeStore.resume.languages?.filter((l) => l.id !== id);
+    resumeStore.resume.languages = resumeStore.resume.languages?.filter(
+      (l) => l.id !== id,
+    );
   }
 
   return {
@@ -93,6 +94,6 @@ export const useResumeSection = () => {
     addSkill,
     removeSkill,
     addLanguage,
-    removeLanguage
+    removeLanguage,
   };
 };

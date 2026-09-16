@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SkillGroup } from '~/entities/resume';
-import { useResumeSection, skillCategories  } from '~/entities/resume';
-
+import {  skillCategories  } from '~/entities/resume';
+import { useResumeSection } from '~/features/resume';
 const { addSkill, removeSkill } = useResumeSection()
 const props = defineProps<{
     skillsGroup: SkillGroup

@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { useResumeStore, useResumeSection } from '~/entities/resume';
+import { useResumeStore } from '~/entities/resume';
+import { useResumeSection } from '~/features/resume/index.ts';
+
 import ExperienceForm from './components/ExperienceForm.vue';
 import EducationForm from './components/EducationForm.vue';
 import SkillsGroupForm from './components/SkillsGroupForm.vue';
@@ -31,7 +33,7 @@ const {
                 <UIcon name="i-lucide-user-round" class="size-4 text-muted" />
                 <h2 class="text-sm font-semibold">Personal details</h2>
             </div>
-            <PersonalInfo/>
+            <PersonalInfo />
         </section>
 
         <!-- ////////////////////////////////////////////////// -->
@@ -56,8 +58,8 @@ const {
                     </div>
                     <ExperienceForm :experience="experience" />
                 </div>
-                <p v-if="!resumeStore.resume.experience?.length"
-                    class="px-1 py-2 text-xs leading-relaxed text-muted">Add your first experience to get started.</p>
+                <p v-if="!resumeStore.resume.experience?.length" class="px-1 py-2 text-xs leading-relaxed text-muted">
+                    Add your first experience to get started.</p>
                 <UButton type="button" color="neutral" variant="outline" size="sm" icon="i-lucide-plus"
                     class="w-full justify-center rounded-lg border-dashed py-2" @click="addExperience">Add experience
                 </UButton>
@@ -86,8 +88,8 @@ const {
                     </div>
                     <EducationForm :education="education" />
                 </div>
-                <p v-if="!resumeStore.resume.education?.length"
-                    class="px-1 py-2 text-xs leading-relaxed text-muted">Add your first education to get started.</p>
+                <p v-if="!resumeStore.resume.education?.length" class="px-1 py-2 text-xs leading-relaxed text-muted">Add
+                    your first education to get started.</p>
                 <UButton type="button" color="neutral" variant="outline" size="sm" icon="i-lucide-plus"
                     class="w-full justify-center rounded-lg border-dashed py-2" @click="addEducation">Add education
                 </UButton>
@@ -147,8 +149,8 @@ const {
                     </div>
                     <LanguagesForm :language="language" />
                 </div>
-                <p v-if="!resumeStore.resume.languages?.length"
-                    class="px-1 py-2 text-xs leading-relaxed text-muted">Add your first language to get started.</p>
+                <p v-if="!resumeStore.resume.languages?.length" class="px-1 py-2 text-xs leading-relaxed text-muted">Add
+                    your first language to get started.</p>
                 <UButton type="button" color="neutral" variant="outline" size="sm" icon="i-lucide-plus"
                     class="w-full justify-center rounded-lg border-dashed py-2" @click="addLanguage">Add language
                 </UButton>

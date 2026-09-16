@@ -1,15 +1,6 @@
-import type {
-  Resume,
-  Personal,
-  Experience,
-  Education,
-  Languages,
-  SkillGroup,
-} from "../models/types";
 import { api } from "~/shared/api";
+import type { Personal , Experience , Education , Languages , SkillGroup } from "~/entities/resume";
 
-export const getResume = (resume_id: string) =>
-  api<Resume>(`/api/resume/${resume_id}`, { method: "GET" });
 
 ///////////////////////////////////////////////
 // Resume
