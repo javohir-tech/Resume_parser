@@ -1,4 +1,25 @@
 {
+  "resumeList": {
+    "title": "My resumes",
+    "create": "Create resume",
+    "upload": "Upload resume",
+    "chooseFile": "Choose file",
+    "noFile": "No file selected",
+    "loading": "Loading...",
+    "loadError": "Failed to load resumes",
+    "empty": "No resumes yet",
+    "untitled": "Untitled resume",
+    "noTitle": "No job title specified",
+    "delete": "Delete resume"
+  },
+  "account": {
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "resumes": "My resumes",
+    "logout": "Log out",
+    "login": "Sign in",
+    "language": "Choose language"
+  },
   "resumeDocument": {
     "language": "Resume language",
     "sections": {

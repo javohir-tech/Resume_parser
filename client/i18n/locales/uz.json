@@ -1,4 +1,25 @@
 {
+  "resumeList": {
+    "title": "Rezyumelarim",
+    "create": "Rezyume yaratish",
+    "upload": "Rezyume yuklash",
+    "chooseFile": "Fayl tanlash",
+    "noFile": "Fayl tanlanmagan",
+    "loading": "Yuklanmoqda...",
+    "loadError": "Rezyumelarni yuklashda xatolik yuz berdi",
+    "empty": "Hozircha rezyume yo‘q",
+    "untitled": "Nomsiz rezyume",
+    "noTitle": "Lavozim ko‘rsatilmagan",
+    "delete": "Rezyumeni o‘chirish"
+  },
+  "account": {
+    "dashboard": "Boshqaruv paneli",
+    "profile": "Profil",
+    "resumes": "Rezyumelarim",
+    "logout": "Chiqish",
+    "login": "Kirish",
+    "language": "Tilni tanlash"
+  },
   "resumeDocument": {
     "language": "Rezyume tili",
     "sections": {

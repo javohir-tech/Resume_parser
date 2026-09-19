@@ -3,6 +3,7 @@ import { useApiToast } from "~/shared/lib";
 import { useResumeStore } from "~/entities/resume";
 
 export function useResume() {
+  const localePath = useLocalePath();
   const loading = ref(false);
   const { showError, showSuccess } = useApiToast();
   const deleteingIds = ref(new Set<string>())
@@ -16,7 +17,7 @@ export function useResume() {
       const response = await createResumeFetch();
       if (response.success) {
         resumeStore.resume.id = response.resume_id
-        await navigateTo(`/resume/${response.resume_id}`);
+        await navigateTo(localePath(`/resume/${response.resume_id}`));
       }
       //   console.log(response);
     } catch (err) {

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t } = useI18n()
+
 defineProps<{
     fullname?: string,
     title?: string , 
@@ -18,14 +20,14 @@ const emit = defineEmits<{
 
             <div class="min-w-0 flex-1">
                 <p class="truncate font-semibold">
-                    {{ fullname || "resume" }}
+                    {{ fullname || t('resumeList.untitled') }}
                 </p>
                 <p class="truncate text-sm text-muted">
-                    {{ title || "resume_title" }}
+                    {{ title || t('resumeList.noTitle') }}
                 </p>
             </div>
 
-            <UButton icon="i-lucide-trash-2" color="error" variant="ghost" size="sm" aria-label="O'chirish"
+            <UButton icon="i-lucide-trash-2" color="error" variant="ghost" size="sm" :aria-label="t('resumeList.delete')"
                 @click.stop="emit('delete')" :loading="loading" :disabled="loading" />
 
             <UIcon name="i-lucide-chevron-right"

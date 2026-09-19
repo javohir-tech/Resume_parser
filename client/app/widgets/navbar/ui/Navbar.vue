@@ -4,21 +4,22 @@ import { UserAvatar } from '~/entities/user';
 import { useLogout } from '~/features/auth/logout';
 
 const { t, setLocale } = useI18n()
+const localePath = useLocalePath()
 const { loading, handle_logout } = useLogout()
 const access_token = useCookie("access_token")
 
 const items = computed<NavigationMenuItem[]>(() => [
     {
         label: t('navbar.home'),
-        to: "/",
+        to: localePath("/"),
     },
     {
         label: t('navbar.about'),
-        to: "/about",
+        to: localePath("/about"),
     },
     {
         label: t('navbar.contact'),
-        to: "/contact"
+        to: localePath("/contact")
     }
 ])
 </script>
@@ -28,7 +29,7 @@ const items = computed<NavigationMenuItem[]>(() => [
         <UNavigationMenu :items="items" variant="link" />
         <template #right>
             <UPopover>
-                <UButton icon="i-lucide-languages" color="neutral" variant="ghost" />
+                <UButton icon="i-lucide-languages" color="neutral" :aria-label="t('account.language')" variant="ghost" />
 
                 <template #content="{ close }">
                     <div class="flex flex-col gap-1 p-1 min-w-32">
@@ -46,21 +47,21 @@ const items = computed<NavigationMenuItem[]>(() => [
                 <UserAvatar />
                 <template #content="{close}">
                     <div class="flex flex-col gap-1 p-1 min-w-32">
-                        <UButton to="/settings" @click="close" color="neutral" variant="ghost">
-                            dashboard
+                        <UButton :to="localePath('/settings')" @click="close" color="neutral" variant="ghost">
+                            {{ t('account.dashboard') }}
                         </UButton>
-                        <UButton to="/profile" @click="close" color="neutral" variant="ghost">
-                            profile
+                        <UButton :to="localePath('/profile')" @click="close" color="neutral" variant="ghost">
+                            {{ t('account.profile') }}
                         </UButton>
-                        <UButton to="/resume" @click="close" color="neutral" variant="ghost">
-                            rezyumelar
+                        <UButton :to="localePath('/resume')" @click="close" color="neutral" variant="ghost">
+                            {{ t('account.resumes') }}
                         </UButton>
                         <UButton @click="handle_logout" trailing-icon="i-lucide-log-out" :disabled="loading"
-                            :loading="loading" color="error" variant="ghost">Logout</UButton>
+                            :loading="loading" color="error" variant="ghost">{{ t('account.logout') }}</UButton>
                     </div>
                 </template>
             </UPopover>
-            <UButton to="/login" v-else>Kirish</UButton>
+            <UButton :to="localePath('/login')" v-else>{{ t('account.login') }}</UButton>
         </template>
 
         <template #body>
