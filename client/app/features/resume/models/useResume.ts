@@ -1,15 +1,18 @@
 import { createResumeFetch, deleteResumeFetch } from "../api";
 import { useApiToast } from "~/shared/lib";
+import { useResumeStore } from "~/entities/resume";
 
 export function useResume() {
   const loading = ref(false);
   const { showError, showSuccess } = useApiToast();
+  const resumeStore = useResumeStore()
 
   async function createResume() {
     loading.value = true;
-    try {
+    try { 
       const response = await createResumeFetch();
       if (response.success) {
+        resumeStore.resume.id = response.resume_id
         await navigateTo(`/resume/${response.resume_id}`);
       }
       //   console.log(response);

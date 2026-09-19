@@ -12,6 +12,7 @@ export const useResumeStore = defineStore("resume", () => {
   const template = ref<TemplateName>("classic");
 
   const resume = ref<Resume>({
+    id : "",
     fullname: "",
     title: "",
     email: "",

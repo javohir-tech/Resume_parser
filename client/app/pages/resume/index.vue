@@ -29,5 +29,6 @@ const { data, pending, error, refresh } = useLazyAsyncData("my_resumes", () => g
             <p>{{ resume.title || "resume_title" }}</p>
             
         </div>
+        <p>{{ data?.length }}</p>
     </UContainer>
 </template>

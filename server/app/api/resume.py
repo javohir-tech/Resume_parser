@@ -59,6 +59,7 @@ async def get_resume(
         )
 
     return {
+        "id" : resume.fullname ,
         "fullname": resume.fullname or "",
         "title": resume.title or "",
         "email": resume.email or "",
