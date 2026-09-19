@@ -1,4 +1,5 @@
 export { default as ResumeRenderer } from "./ui/ResumeReRender.vue";
+export {default as ResumeCard}  from "./ui/resumeCard.vue"
 export { useResumeStore } from "./models/store.ts";
 export { ClassicTemplate } from "./ui/components/classic";
 export { ModernTemplate } from "./ui/components/modern";

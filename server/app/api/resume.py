@@ -127,7 +127,7 @@ async def get_my_resumes(
 
     return [
         {
-            "resume_id": resume.id,
+            "id": resume.id,
             "fullname": resume.fullname or "",
             "title": resume.title or "",
         }
@@ -218,7 +218,7 @@ async def delete_resume(
     await db.delete(resume)
     await db.commit()
 
-    return {"succes" : True, "message": "Resume deleted successfully"}
+    return {"success" : True, "message": "Resume deleted successfully"}
 
 
 # /////////////////////////////////////////////////////////////
