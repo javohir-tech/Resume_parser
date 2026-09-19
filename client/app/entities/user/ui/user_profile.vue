@@ -4,9 +4,10 @@ import { useUserStore } from '../models/store'
 import { UserAvatar } from '..';
 
 const { loading, user, error } = storeToRefs(useUserStore())
+const { t, locale } = useI18n()
 
 const formatDate = (date: string) => {
-    return new Intl.DateTimeFormat("uz-Uz", {
+    return new Intl.DateTimeFormat(locale.value, {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -52,19 +53,19 @@ const formatDate = (date: string) => {
                 <!-- Information -->
                 <div class="divide-y divide-default border-y border-default">
                     <div class="flex justify-between py-3">
-                        <span class="text-sm text-muted">Telegram ID</span>
+                        <span class="text-sm text-muted">{{ t('profile.telegramId') }}</span>
                         <span class="text-sm font-medium">{{ user.telegram_id }}</span>
                     </div>
 
                     <div class="flex justify-between py-3">
-                        <span class="text-sm text-muted">Username</span>
+                        <span class="text-sm text-muted">{{ t('profile.username') }}</span>
                         <span class="text-sm font-medium">
                             {{ user.username ? `@${user.username}` : '—' }}
                         </span>
                     </div>
 
                     <div class="flex justify-between py-3">
-                        <span class="text-sm text-muted">Registered</span>
+                        <span class="text-sm text-muted">{{ t('profile.registered') }}</span>
                         <ClientOnly>
                             <span class="text-sm font-medium">
                                 {{ formatDate(user.registered_at) }}
@@ -77,7 +78,7 @@ const formatDate = (date: string) => {
                 </div>
             </div>
 
-            <UAlert v-else-if="error" color="error" variant="soft" title="Failed to load profile" />
+            <UAlert v-else-if="error" color="error" variant="soft" :title="t('profile.loadError')" />
         </UCard>
     </section>
 </template>

@@ -1,4 +1,23 @@
 {
+  "profile": {
+    "telegramId": "Telegram ID",
+    "username": "Имя пользователя",
+    "registered": "Дата регистрации",
+    "loadError": "Не удалось загрузить профиль",
+    "sessions": {
+      "title": "Устройства",
+      "description": "Устройства, на которых выполнен вход в ваш аккаунт",
+      "loadError": "Не удалось загрузить устройства",
+      "currentDevice": "Текущее устройство",
+      "unknownOs": "Неизвестная ОС",
+      "unknownBrowser": "Неизвестный браузер",
+      "noIp": "IP недоступен",
+      "osVersion": "ОС {version}",
+      "revoke": "Завершить сеанс",
+      "revokeSuccess": "Сеанс на устройстве завершён",
+      "revokeError": "Не удалось завершить сеанс на устройстве"
+    }
+  },
   "resumeList": {
     "title": "Мои резюме",
     "create": "Создать резюме",

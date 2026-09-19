@@ -1,4 +1,23 @@
 {
+  "profile": {
+    "telegramId": "Telegram ID",
+    "username": "Foydalanuvchi nomi",
+    "registered": "Ro‘yxatdan o‘tgan sana",
+    "loadError": "Profilni yuklashda xatolik yuz berdi",
+    "sessions": {
+      "title": "Qurilmalar",
+      "description": "Hisobingizga kirilgan qurilmalar",
+      "loadError": "Qurilmalarni yuklashda xatolik yuz berdi",
+      "currentDevice": "Joriy qurilma",
+      "unknownOs": "Noma’lum operatsion tizim",
+      "unknownBrowser": "Noma’lum brauzer",
+      "noIp": "IP mavjud emas",
+      "osVersion": "Operatsion tizim {version}",
+      "revoke": "Chiqarib yuborish",
+      "revokeSuccess": "Qurilma hisobdan chiqarildi",
+      "revokeError": "Qurilmani hisobdan chiqarishda xatolik yuz berdi"
+    }
+  },
   "resumeList": {
     "title": "Rezyumelarim",
     "create": "Rezyume yaratish",

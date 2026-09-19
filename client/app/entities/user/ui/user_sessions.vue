@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { fetchGetSessions } from '../api'
 import User_session_card from './user_session_card.vue'
+const { t } = useI18n()
 
 const { data, pending, error, refresh } = useLazyAsyncData(
     'sessions',
@@ -25,10 +26,10 @@ const deleteSession = (device_id: string) => {
             <template #header>
                 <div>
                     <h2 class="text-lg font-semibold">
-                        Qurilmalar
+                        {{ t('profile.sessions.title') }}
                     </h2>
                     <p class="text-sm text-muted mt-1">
-                        Hisobingizga kirilgan qurilmalar
+                        {{ t('profile.sessions.description') }}
                     </p>
                 </div>
             </template>
@@ -39,7 +40,7 @@ const deleteSession = (device_id: string) => {
                 </div>
 
                 <UAlert v-else-if="error" color="error" variant="soft"
-                    title="Qurilmalarni yuklashda xatolik yuz berdi" />
+                    :title="t('profile.sessions.loadError')" />
 
                 <div v-else class="divide-y divide-default">
                     <div v-for="session in data?.sessions ?? []" :key="session.id" class="py-4 first:pt-0 last:pb-0">

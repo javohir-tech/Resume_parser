@@ -1,4 +1,23 @@
 {
+  "profile": {
+    "telegramId": "Telegram ID",
+    "username": "Username",
+    "registered": "Registered",
+    "loadError": "Failed to load profile",
+    "sessions": {
+      "title": "Devices",
+      "description": "Devices signed in to your account",
+      "loadError": "Failed to load devices",
+      "currentDevice": "Current device",
+      "unknownOs": "Unknown OS",
+      "unknownBrowser": "Unknown browser",
+      "noIp": "IP unavailable",
+      "osVersion": "OS {version}",
+      "revoke": "Sign out device",
+      "revokeSuccess": "Device signed out",
+      "revokeError": "Failed to sign out device"
+    }
+  },
   "resumeList": {
     "title": "My resumes",
     "create": "Create resume",

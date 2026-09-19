@@ -2,9 +2,10 @@
 import type { ISessions } from '../models/types';
 import { useSessionRevoke } from '~/features/user';
 const { loading, revokeSession } = useSessionRevoke()
+const { t, locale } = useI18n()
 
 const formatDate = (date: string) => {
-    return new Intl.DateTimeFormat('uz-UZ', {
+    return new Intl.DateTimeFormat(locale.value, {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -43,16 +44,16 @@ defineProps<{
             <div class="min-w-0">
                 <div class="flex items-center gap-2 flex-wrap">
                     <p class="font-medium">
-                        {{ session.os_name || 'Unknown OS' }}
+                        {{ session.os_name || t('profile.sessions.unknownOs') }}
                     </p>
 
                     <UBadge v-if="session.is_current" color="primary" variant="soft" size="sm">
-                        Joriy qurilma
+                        {{ t('profile.sessions.currentDevice') }}
                     </UBadge>
                 </div>
 
                 <p class="text-sm text-muted mt-1">
-                    {{ session.browser_name || 'Unknown browser' }}
+                    {{ session.browser_name || t('profile.sessions.unknownBrowser') }}
                     <span v-if="session.browser_version">
                         {{ session.browser_version }}
                     </span>
@@ -66,13 +67,13 @@ defineProps<{
                 {{ formatDate(session.last_seen_at) }}
             </p>
             <p class="text-xs text-muted">
-                {{ session.ip_address || 'IP mavjud emas' }}
+                {{ session.ip_address || t('profile.sessions.noIp') }}
             </p>
 
             <UButton :loading="loading" :disabled="loading" v-if="!session.is_current"
                 @click="deleteSession(session.device_id)" color="error" variant="soft" size="xs"
                 icon="i-lucide-log-out">
-                Chiqarib yuborish
+                {{ t('profile.sessions.revoke') }}
             </UButton>
         </div>
     </div>
@@ -81,7 +82,7 @@ defineProps<{
     <div class="mt-4 ml-13 flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted">
         <div v-if="session.os_version" class="flex items-center gap-1.5">
             <UIcon name="i-lucide-layers-2" class="size-3.5" />
-            <span>OS {{ session.os_version }}</span>
+            <span>{{ t('profile.sessions.osVersion', { version: session.os_version }) }}</span>
         </div>
 
         <div class="flex items-center gap-1.5">
