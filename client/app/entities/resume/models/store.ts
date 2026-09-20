@@ -47,6 +47,23 @@ export const useResumeStore = defineStore("resume", () => {
     designInfo.value.entry_title_color = color;
   }
 
+  function restartInfo(){
+    resume.value.id  = ""  , 
+    resume.value.fullname =  "",
+    resume.value.title =  "",
+    resume.value.email =  "",
+    resume.value.phone =  "",
+    resume.value.location =  "",
+    resume.value.website =  "",
+    resume.value.github_link =  "",
+    resume.value.linkedin_link =  "",
+    resume.value.summary =  "",
+    resume.value.skills =  [],
+    resume.value.education =  [],
+    resume.value.experience =  [],
+    resume.value.languages =  []
+  }
+
   function restartDesign() {
     designInfo.value.entry_title_color = null;
     designInfo.value.heading_title_color = null;
@@ -58,6 +75,7 @@ export const useResumeStore = defineStore("resume", () => {
     template,
     resume,
     designInfo,
+    restartInfo,
     restartDesign,
     handleChangeFont,
     handleChangeColor,

@@ -44,7 +44,7 @@ const removeResume = async (id: string) => {
         <div v-else-if="error">{{ t('resumeList.loadError') }}</div>
         <div v-else-if="!data?.length">{{ t('resumeList.empty') }}</div>
         <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <ResumeCard v-for="resume in data" :key="resume.id" :fullname="resume.fullname" :title="resume.title"
+            <ResumeCard v-for="resume in data" :key="resume.id" :id="resume.id" :fullname="resume.fullname" :title="resume.title"
                 :loading="isDeleting(resume.id)" @delete="removeResume(resume.id)" />
         </div>
 

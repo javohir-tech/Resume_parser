@@ -4,7 +4,7 @@ import type {
 } from "../models/types";
 import { api } from "~/shared/api";
 
-export const getResume = (resume_id: string) =>
+export const getResumeFetch = (resume_id: string) =>
   api<Resume>(`/api/resume/${resume_id}`, { method: "GET" });
 
 export const getMyResumes = () =>

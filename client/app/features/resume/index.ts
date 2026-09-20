@@ -1,5 +1,6 @@
 export { useResumeSection } from "./models/useResumeSection";
 export { useResume } from "./models/useResume.ts";
+export { useGetResume } from "./models/useGetResume.ts";
 
 export { default as PersonalInfoForm } from "./ui/PersonalInfo.vue";
 export { default as EducationForm } from "./ui/EducationForm.vue";
