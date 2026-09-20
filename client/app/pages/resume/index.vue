@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useResume } from '~/features/resume';
+import { useResume , useCreateResume } from '~/features/resume';
 import { getMyResumes } from '~/entities/resume/api';
 import { ResumeCard } from '~/entities/resume';
 
@@ -9,8 +9,8 @@ const onFileChange = (event: Event) => {
     selectedFileName.value = (event.target as HTMLInputElement).files?.[0]?.name ?? ''
 }
 
-const { loading, createResume, deleteResume, isDeleting } = useResume()
-
+const {  deleteResume, isDeleting } = useResume()
+const {loading , createResume} = useCreateResume()
 const { data, pending, error, refresh } = useLazyAsyncData("my_resumes", () => getMyResumes())
 
 const removeResume = async (id: string) => {

@@ -33,7 +33,7 @@ const localPath = useLocalePath()
                 </div>
 
                 <UButton icon="i-lucide-trash-2" color="error" variant="ghost" size="sm"
-                    :aria-label="t('resumeList.delete')" @click.stop="emit('delete')" :loading="loading"
+                    :aria-label="t('resumeList.delete')" @click.stop.prevent="emit('delete')" :loading="loading"
                     :disabled="loading" />
 
                 <UIcon name="i-lucide-chevron-right"
