@@ -19,6 +19,19 @@ type PersonalChanges = Partial<PersonalSnapshot>;
 
 type SaveStatus = "idle" | "unsaved" | "saving" | "saved" | "error";
 
-export function usePersonalAvtoSave(delay = 800){
-    
+export function usePersonalAvtoSave(delay = 800) {
+  const resumeStore = useResumeStore();
+  const { isSaving, updatePersonal } = useUpdatePersonal();
+
+  const active = ref(false)
+  const error = ref<string | null>(null)
+  const lastSaved = ref<Date | null>(null)
+
+  const savedSnapshot = ref<PersonalSnapshot | null>(null)
+
+  let resumeId = "";
+  let disposed = false ;
+  let timer : ReturnType<typeof setTimeout>  | undefined
+
+  let queue : Promise<boolean> = Promise.resolve(true)
 }

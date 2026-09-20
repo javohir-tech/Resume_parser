@@ -9,6 +9,10 @@ import {
     SkillsGroupForm
 } from '~/features/resume/edit-resume';
 
+import { useExperience } from '~/features/resume/edit-resume';
+
+const { isCreating, createExperience, isDeleting, deleteExperience } = useExperience()
+
 
 
 const resumeStore = useResumeStore()
@@ -57,14 +61,16 @@ const {
                             'Experience ' + (index + 1) }}</span>
                         <UButton type="button" color="neutral" variant="ghost" size="xs" icon="i-lucide-trash-2"
                             class="shrink-0 hover:bg-error/10 hover:text-error" aria-label="Remove experience"
-                            title="Remove experience" @click="removeExperince(experience.id)" />
+                            title="Remove experience" :loading="isDeleting(experience.id)"
+                            :disabled="isDeleting(experience.id)" @click="deleteExperience(experience.id)" />
                     </div>
                     <ExperienceForm :experience="experience" />
                 </div>
                 <p v-if="!resumeStore.resume.experience?.length" class="px-1 py-2 text-xs leading-relaxed text-muted">
                     Add your first experience to get started.</p>
                 <UButton type="button" color="neutral" variant="outline" size="sm" icon="i-lucide-plus"
-                    class="w-full justify-center rounded-lg border-dashed py-2" @click="addExperience">Add experience
+                    class="w-full justify-center rounded-lg border-dashed py-2" :loading="isCreating"
+                    :disabled="isCreating" @click="createExperience()">Add experience
                 </UButton>
             </div>
         </section>
