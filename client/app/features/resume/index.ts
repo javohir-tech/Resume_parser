@@ -1,5 +1,5 @@
 export { useResumeSection } from "./models/useResumeSection";
-export { useResume } from "./models/useResume.ts";
+export { useDeleteResume } from "./models/useDeleteResume.ts";
 
 export { useCreateResume } from "./models/useCreateResume.ts";
 export { useGetResume } from "./models/useGetResume.ts";
