@@ -1,7 +1,5 @@
 import { api } from "~/shared/api";
-import type {
-  SkillGroup,
-} from "~/entities/resume";
+import type { Skill, SkillGroup } from "~/entities/resume";
 
 ///////////////////////////////////////////////
 // Skill groups
