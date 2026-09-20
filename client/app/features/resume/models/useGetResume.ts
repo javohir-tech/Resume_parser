@@ -3,7 +3,6 @@ import { useApiToast } from "~/shared/lib";
 
 export function useGetResume() {
   const loading = ref(false);
-  const resume = ref<Resume | null>(null);
   const { showError } = useApiToast();
   const resumeStore = useResumeStore();
 
@@ -20,5 +19,5 @@ export function useGetResume() {
     }
   }
 
-  return { loading, resume, getResume };
+  return { loading, getResume };
 }
