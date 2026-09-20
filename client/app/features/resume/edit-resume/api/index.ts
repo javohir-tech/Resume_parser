@@ -10,11 +10,6 @@ import type {
 ///////////////////////////////////////////////
 // Resume
 ///////////////////////////////////////////////
-export const createResumeFetch = () =>
-  api<{ success: boolean; resume_id: string }>("/api/resume/create", {
-    method: "POST",
-  });
-
 export const editResumeFetch = (
   resume_id: string,
   personal_info: Partial<Omit<Personal, "id">>,

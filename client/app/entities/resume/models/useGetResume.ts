@@ -1,4 +1,5 @@
-import { getResumeFetch, useResumeStore, type Resume } from "~/entities/resume";
+import { useResumeStore } from "./store";
+import { getResumeFetch } from "../api";
 import { useApiToast } from "~/shared/lib";
 
 export function useGetResume() {

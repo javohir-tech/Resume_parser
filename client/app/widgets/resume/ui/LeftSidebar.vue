@@ -7,7 +7,7 @@ import {
     EducationForm,
     LanguagesForm,
     SkillsGroupForm
-} from '~/features/resume/index.ts';
+} from '~/features/resume/edit-resume';
 
 
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useDeleteResume, useCreateResume } from '~/features/resume';
-import { getMyResumes } from '~/entities/resume/api';
-import { ResumeCard } from '~/entities/resume';
+import { ResumeCard, getMyResumes } from '~/entities/resume';
+import { useDeleteResume } from '~/features/resume/delete-resume';
+import { useCreateResume } from '~/features/resume/create-resume';
 
 const { t } = useI18n()
 const selectedFileName = ref('')

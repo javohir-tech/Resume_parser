@@ -10,7 +10,7 @@ import {
     type Templates
 } from '~/entities/resume';
 
-import { useGetResume } from '~/features/resume';
+import { useGetResume } from '~/entities/resume';
 
 const {loading , getResume} = useGetResume()
 
