@@ -24,7 +24,7 @@ watch(startDate, (newDate) => {
         newDate?.toDate(getLocalTimeZone())
     )
     const newStartDate = `${month} ${newDate.year}`
-    console.log(newStartDate)
+    // console.log(newStartDate)
     props.experience.startDate = newStartDate
 })
 
