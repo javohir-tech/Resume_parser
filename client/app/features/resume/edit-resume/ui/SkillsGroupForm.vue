@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 import { skillCategories, type SkillGroup } from '~/entities/resume';
 
 import { useSkillItem } from '../models/useSkillItem';
@@ -13,6 +14,10 @@ const props = defineProps<{
 
 const skill = ref<string>()
 const skillCategoriesItems = ref<string[]>([...skillCategories])
+const localizedCategories = computed(() => skillCategoriesItems.value.map(value => ({
+    value,
+    label: skillCategories.includes(value) ? t(`resumeEditor.category${value.replace(/[^a-zA-Z]/g, '')}`) : value,
+})))
 const categoryOpen = ref(false)
 const categorySearch = ref('')
 
@@ -33,7 +38,7 @@ async function selectSkillCategory(value: string) {
     }
 
 
-    if (skillCategoriesItems.value.includes(title)) {
+    if (!skillCategoriesItems.value.includes(title)) {
         skillCategoriesItems.value.push(title)
     }
 
@@ -49,25 +54,25 @@ async function createSkillCategory(value: string) {
 
 <template>
     <div class="flex flex-col gap-3">
-        <UFormField label="Skill Category" description="Choose a category or type your own to add it.">
-            <USelectMenu :model-value="skillsGroup.title" v-model:open="categoryOpen" v-model:search-term="categorySearch" :items="skillCategoriesItems" create-item class="w-full"
-                placeholder="Select or create a category" @update:model-value="selectSkillCategory"
+        <UFormField :label="t('resumeEditor.skillCategory')" :description="t('resumeEditor.categoryHint')">
+            <USelectMenu :model-value="skillsGroup.title" v-model:open="categoryOpen" v-model:search-term="categorySearch" :items="localizedCategories" value-key="value" create-item class="w-full"
+                :placeholder="t('resumeEditor.categoryPlaceholder')" @update:model-value="selectSkillCategory"
                 @create="createSkillCategory" />
         </UFormField>
         <div v-if="skillsGroup.skills.length" class="flex flex-wrap gap-1.5">
             <UButton v-for="skill in skillsGroup.skills" :key="skill.id" type="button"
                 @click="deleteSkillItem(skillsGroup.id, skill.id)" :loading="isDeleting(skill.id)"
                 :disabled="isDeleting(skill.id)" trailing-icon="i-lucide-x" color="neutral" variant="subtle" size="xs"
-                :aria-label="`Remove ${skill.skill}`" class="rounded-md">{{ skill.skill }}
+                :aria-label="t('resumeEditor.removeSkill', { skill: skill.skill })" class="rounded-md">{{ skill.skill }}
             </UButton>
         </div>
         <UForm @submit="handleAddSkill">
-            <UFormField label="Skill">
+            <UFormField :label="t('resumeEditor.skill')">
                 <div class="flex gap-2">
-                    <UInput v-model="skill" class="min-w-0 flex-1" placeholder="JavaScript, Python..." />
+                    <UInput v-model="skill" class="min-w-0 flex-1" :placeholder="t('resumeEditor.skillPlaceholder')" />
                     <UButton type="submit" color="neutral" variant="outline" icon="i-lucide-plus"
-                        :disabled="!skill?.trim() || isCreating" :loading="isCreating" aria-label="Add skill"
-                        title="Add skill" />
+                        :disabled="!skill?.trim() || isCreating" :loading="isCreating" :aria-label="t('resumeEditor.addSkill')"
+                        :title="t('resumeEditor.addSkill')" />
                 </div>
             </UFormField>
         </UForm>

@@ -1,12 +1,10 @@
 <script setup lang="ts">
+const { t, locale } = useI18n()
 import type { Experience } from '~/entities/resume';
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 
-const df = new DateFormatter('en-US', {
-    month: "long",
-    year: "numeric"
-})
+const df = computed(() => new DateFormatter(locale.value, { month: 'long', year: 'numeric' }))
 
 const monthFormatter = new DateFormatter('en-US', {
     month: 'long'
@@ -41,42 +39,42 @@ watch(endDate , (newDate)=>{
 
 <template>
     <div class="space-y-3 mb-3">
-        <UFormField label="Position">
-            <UInput v-model="props.experience.position" class="w-full" placeholder="Frontend Developer"/>
+        <UFormField :label="t('resumeEditor.position')">
+            <UInput v-model="props.experience.position" class="w-full" :placeholder="t('resumeEditor.positionPlaceholder')"/>
         </UFormField>
-        <UFormField label="Company">
-            <UInput v-model="props.experience.company" class="w-full" placeholder="Google, Meta, Amazon..."/>
+        <UFormField :label="t('resumeEditor.company')">
+            <UInput v-model="props.experience.company" class="w-full" :placeholder="t('resumeEditor.companyPlaceholder')"/>
         </UFormField>
     </div>
-    <UFormField label="Location" class="mb-3">
-        <UInput class="w-full" placeholder="Tashkent..." v-model="props.experience.location" />
+    <UFormField :label="t('resumeEditor.location')" class="mb-3">
+        <UInput class="w-full" :placeholder="t('resumeEditor.locationPlaceholder')" v-model="props.experience.location" />
     </UFormField>
     <div class="grid gap-3 mb-3">
-        <UFormField label="Start Date" class="w-full">
+        <UFormField :label="t('resumeEditor.startDate')" class="w-full">
             <UPopover class="w-full">
                 <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
-                    {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : props.experience.startDate || 'Select a date' }}
+                    {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : props.experience.startDate || t('resumeEditor.selectDate') }}
                 </UButton>
 
                 <template #content>
-                    <UCalendar type="month" v-model="startDate" />
+                    <UCalendar :locale="locale" type="month" v-model="startDate" />
                 </template>
             </UPopover>
         </UFormField>
-        <UFormField label="End Date" class="w-full">
+        <UFormField :label="t('resumeEditor.endDate')" class="w-full">
             <UPopover class="w-full">
                 <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
-                    {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : props.experience.endDate || 'Select a date' }}
+                    {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : props.experience.endDate || t('resumeEditor.selectDate') }}
                 </UButton>
 
                 <template #content>
-                    <UCalendar type="month" v-model="endDate" />
+                    <UCalendar :locale="locale" type="month" v-model="endDate" />
                 </template>
             </UPopover>
         </UFormField>
     </div>
-    <UFormField label="Description">
-        <UTextarea :rows="5" class="w-full" v-model="props.experience.description" placeholder="Describe your role, responsibilities, and key achievements..."/>
+    <UFormField :label="t('resumeEditor.description')">
+        <UTextarea :rows="5" class="w-full" v-model="props.experience.description" :placeholder="t('resumeEditor.descriptionPlaceholder')"/>
     </UFormField>
 </template>
 

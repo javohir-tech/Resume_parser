@@ -1,13 +1,11 @@
 <script setup lang="ts">
+const { t, locale } = useI18n()
 import type { Education } from '~/entities/resume'
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
-const df = new DateFormatter("us-US", {
-    month: "long",
-    year: "numeric"
-})
+const df = computed(() => new DateFormatter(locale.value, { month: 'long', year: 'numeric' }))
 
-const monthFormatter = new DateFormatter("us-Us", {
+const monthFormatter = new DateFormatter('en-US', {
     month: "long"
 })
 
@@ -39,42 +37,42 @@ watch(endDate, (newDate) => {
 
 <template>
     <div class="flex flex-col gap-3">
-        <UFormField label="Degree">
-            <UInput v-model="props.education.degree" class="w-full" placeholder="Bachelor's degree..." />
+        <UFormField :label="t('resumeEditor.degree')">
+            <UInput v-model="props.education.degree" class="w-full" :placeholder="t('resumeEditor.degreePlaceholder')" />
         </UFormField>
-        <UFormField label="Institution">
+        <UFormField :label="t('resumeEditor.institution')">
             <UInput class="w-full" v-model="props.education.institution"
-                placeholder="Tashkent University of Information Technologies ..." />
+                :placeholder="t('resumeEditor.institutionPlaceholder')" />
         </UFormField>
-        <UFormField label="Field of study">
-            <UInput class="w-full" v-model="props.education.fieldOfStudy" placeholder=" Electrical power engineer..." />
+        <UFormField :label="t('resumeEditor.fieldOfStudy')">
+            <UInput class="w-full" v-model="props.education.fieldOfStudy" :placeholder="t('resumeEditor.fieldPlaceholder')" />
         </UFormField>
         <div class="grid gap-3">
-            <UFormField label="Start Date" class="w-full">
+            <UFormField :label="t('resumeEditor.startDate')" class="w-full">
                 <UPopover class="w-full">
                     <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
-                        {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : props.education.startDate || 'Select a date' }}
+                        {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : props.education.startDate || t('resumeEditor.selectDate') }}
                     </UButton>
 
                     <template #content>
-                        <UCalendar type="month" v-model="startDate" />
+                        <UCalendar :locale="locale" type="month" v-model="startDate" />
                     </template>
                 </UPopover>
             </UFormField>
-            <UFormField label="End Date" class="w-full">
+            <UFormField :label="t('resumeEditor.endDate')" class="w-full">
                 <UPopover class="w-full">
                     <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
-                        {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : props.education.endDate || 'Select a date' }}
+                        {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : props.education.endDate || t('resumeEditor.selectDate') }}
                     </UButton>
 
                     <template #content>
-                        <UCalendar type="month" v-model="endDate" />
+                        <UCalendar :locale="locale" type="month" v-model="endDate" />
                     </template>
                 </UPopover>
             </UFormField>
         </div>
-        <UFormField label="Location">
-            <UInput class="w-full" v-model="props.education.location" placeholder="Tashkent..."/>
+        <UFormField :label="t('resumeEditor.location')">
+            <UInput class="w-full" v-model="props.education.location" :placeholder="t('resumeEditor.locationPlaceholder')"/>
         </UFormField>
     </div>
 </template>
