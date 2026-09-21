@@ -2,6 +2,7 @@ export { useResumeSection } from "./models/useResumeSection";
 
 export { useEducation } from "./models/useEducation.ts";
 export { useExperience } from "./models/useExperience.ts";
+export { useLanguage } from "./models/useLanguage.ts";
 
 export { default as PersonalInfoForm } from "./ui/PersonalInfo.vue";
 export { default as EducationForm } from "./ui/EducationForm.vue";

@@ -9,10 +9,11 @@ import {
     SkillsGroupForm
 } from '~/features/resume/edit-resume';
 
-import { useExperience, useEducation } from '~/features/resume/edit-resume';
+import { useExperience, useEducation, useLanguage } from '~/features/resume/edit-resume';
 
 const { isCreating, createExperience, isDeleting, deleteExperience } = useExperience()
 const { isCreating: educationCreating, createEducation, isDeleting: educationIsDeleting, deleteEducation } = useEducation()
+const { isCreating: langaugeIsCreating, createLanguage, isDeleting: langaugeIsdeleting, deleteLanguage } = useLanguage()
 
 
 const resumeStore = useResumeStore()
@@ -156,14 +157,16 @@ const {
                             'Languages ' + (index + 1) }}</span>
                         <UButton type="button" color="neutral" variant="ghost" size="xs" icon="i-lucide-trash-2"
                             class="shrink-0 hover:bg-error/10 hover:text-error" aria-label="Remove language"
-                            title="Remove language" @click="removeLanguage(language.id)" />
+                            title="Remove language" :loading="langaugeIsdeleting(language.id)"
+                            :disabled="langaugeIsdeleting(language.id)" @click="deleteLanguage(language.id)" />
                     </div>
                     <LanguagesForm :language="language" />
                 </div>
                 <p v-if="!resumeStore.resume.languages?.length" class="px-1 py-2 text-xs leading-relaxed text-muted">Add
                     your first language to get started.</p>
                 <UButton type="button" color="neutral" variant="outline" size="sm" icon="i-lucide-plus"
-                    class="w-full justify-center rounded-lg border-dashed py-2" @click="addLanguage">Add language
+                    class="w-full justify-center rounded-lg border-dashed py-2" :loading="langaugeIsCreating"
+                    :disabled="langaugeIsCreating" @click="createLanguage()">Add language
                 </UButton>
             </div>
         </section>
