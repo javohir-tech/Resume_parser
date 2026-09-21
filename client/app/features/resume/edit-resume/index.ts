@@ -1,4 +1,3 @@
-export { useResumeSection } from "./models/useResumeSection";
 
 export { useEducation } from "./models/useEducation.ts";
 export { useExperience } from "./models/useExperience.ts";
