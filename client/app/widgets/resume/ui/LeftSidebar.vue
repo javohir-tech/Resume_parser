@@ -9,10 +9,10 @@ import {
     SkillsGroupForm
 } from '~/features/resume/edit-resume';
 
-import { useExperience } from '~/features/resume/edit-resume';
+import { useExperience, useEducation } from '~/features/resume/edit-resume';
 
 const { isCreating, createExperience, isDeleting, deleteExperience } = useExperience()
-
+const { isCreating: educationCreating, createEducation, isDeleting: educationIsDeleting, deleteEducation } = useEducation()
 
 
 const resumeStore = useResumeStore()
@@ -93,14 +93,16 @@ const {
                             'Education ' + (index + 1) }}</span>
                         <UButton type="button" color="neutral" variant="ghost" size="xs" icon="i-lucide-trash-2"
                             class="shrink-0 hover:bg-error/10 hover:text-error" aria-label="Remove education"
-                            title="Remove education" @click="removeEducation(education.id)" />
+                            title="Remove education" :loading="educationIsDeleting(education.id)"
+                            :disabled="educationIsDeleting(education.id)" @click="deleteEducation(education.id)" />
                     </div>
                     <EducationForm :education="education" />
                 </div>
                 <p v-if="!resumeStore.resume.education?.length" class="px-1 py-2 text-xs leading-relaxed text-muted">Add
                     your first education to get started.</p>
                 <UButton type="button" color="neutral" variant="outline" size="sm" icon="i-lucide-plus"
-                    class="w-full justify-center rounded-lg border-dashed py-2" @click="addEducation">Add education
+                    class="w-full justify-center rounded-lg border-dashed py-2" :loading="educationCreating"
+                    :disabled="educationCreating" @click="createEducation()">Add education
                 </UButton>
             </div>
         </section>
