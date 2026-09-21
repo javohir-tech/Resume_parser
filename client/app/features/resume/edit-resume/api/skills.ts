@@ -26,7 +26,7 @@ export const deleteSkillGroupFetch = (skills_id: string) =>
 ///////////////////////////////////////////////
 // Skill items
 ///////////////////////////////////////////////
-export const createSkillItem = (
+export const createSkillItemFetch = (
   skills_group_id: string,
   skill_info: { skill: string },
 ) =>
@@ -38,7 +38,7 @@ export const createSkillItem = (
     },
   );
 
-export const deleteSkillItem = (skill_item_id: string) =>
+export const deleteSkillItemFetch = (skill_item_id: string) =>
   api<{ detail: string }>(`/api/resume/skill_item/delete/${skill_item_id}`, {
     method: "DELETE",
   });

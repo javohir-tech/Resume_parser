@@ -2,6 +2,11 @@
 import type { SkillGroup } from '~/entities/resume';
 import {  skillCategories  } from '~/entities/resume';
 import { useResumeSection } from '../models/useResumeSection';
+
+import { useSkillItem } from '../models/useSkillItem';
+
+const {isCreating , createSkillItem} = useSkillItem()
+
 const { addSkill, removeSkill } = useResumeSection()
 const props = defineProps<{
     skillsGroup: SkillGroup
@@ -12,7 +17,7 @@ const skillCategoriesItems = ref<string[]>([...skillCategories])
 
 function handleAddSkill() {
     if (!skill.value?.trim()) return
-    addSkill(props.skillsGroup.id, skill.value.trim())
+    createSkillItem(props.skillsGroup.id , {skill : skill.value.trim()})
     skill.value = ""
 }
 
@@ -20,7 +25,6 @@ function createSkillCategory(skillCategory: string) {
     skillCategoriesItems.value.push(skillCategory)
     props.skillsGroup.title = skillCategory
 }
-
 </script>
 
 <template>
@@ -39,7 +43,7 @@ function createSkillCategory(skillCategory: string) {
                 <div class="flex gap-2">
                     <UInput v-model="skill" class="min-w-0 flex-1" placeholder="JavaScript, Python..." />
                     <UButton type="submit" color="neutral" variant="outline" icon="i-lucide-plus"
-                        :disabled="!skill?.trim()" aria-label="Add skill" title="Add skill" />
+                        :disabled="!skill?.trim() || isCreating" :loading="isCreating" aria-label="Add skill" title="Add skill" />
                 </div>
             </UFormField>
         </UForm>
