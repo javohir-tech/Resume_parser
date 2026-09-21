@@ -4,12 +4,12 @@ import type { Skill, SkillGroup } from "~/entities/resume";
 ///////////////////////////////////////////////
 // Skill groups
 ///////////////////////////////////////////////
-export const createSkillGroup = (resume_id: string) =>
+export const createSkillGroupFetch = (resume_id: string) =>
   api<{ skills_id: string }>(`/api/resume/skills/create/${resume_id}`, {
     method: "POST",
   });
 
-export const editSkillGroup = (
+export const editSkillGroupFetch = (
   skills_id: string,
   skills_info: Pick<SkillGroup, "title">,
 ) =>
@@ -18,7 +18,7 @@ export const editSkillGroup = (
     body: skills_info,
   });
 
-export const deleteSkillGroup = (skills_id: string) =>
+export const deleteSkillGroupFetch = (skills_id: string) =>
   api<{ detail: string }>(`/api/resume/skills/delete/${skills_id}`, {
     method: "DELETE",
   });
