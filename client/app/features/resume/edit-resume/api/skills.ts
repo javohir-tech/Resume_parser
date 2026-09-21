@@ -10,10 +10,10 @@ export const createSkillGroupFetch = (resume_id: string) =>
   });
 
 export const editSkillGroupFetch = (
-  skills_id: string,
+  skills_group_id: string,
   skills_info: Pick<SkillGroup, "title">,
 ) =>
-  api<null>(`/api/resume/skills/edit/${skills_id}`, {
+  api<null>(`/api/resume/skills/edit/${skills_group_id}`, {
     method: "PATCH",
     body: skills_info,
   });

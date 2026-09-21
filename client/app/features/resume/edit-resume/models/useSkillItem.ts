@@ -28,10 +28,34 @@ export function useSkillItem() {
       }
     //   console.log(response);
     } catch (error) {
+        showError(error)
     } finally {
       isCreating.value = false;
     }
   }
 
-  return { isCreating, createSkillItem };
+  const isDeleting = (item_id : string) => deletingIds.value.has(item_id)
+
+  async function deleteSkillItem(skills_group_id : string , skill_item_id : string){
+    if(isDeleting(skill_item_id)) return
+    deletingIds.value.add(skill_item_id)
+
+    try {
+        await deleteSkillItemFetch(skill_item_id)
+        const  skillsGroup = resumeStore.resume.skills?.find(sk => sk.id === skills_group_id)
+        if(skillsGroup){
+            skillsGroup.skills = skillsGroup.skills.filter(skill => skill.id !== skill_item_id)
+        }else{
+            throw new Error("SkillGroup not found")
+        }
+    } catch (error) {
+        showError(error)
+    }finally{
+        deletingIds.value.delete(skill_item_id)
+    }
+
+  }
+
+
+  return { isCreating, createSkillItem , isDeleting ,  deleteSkillItem };
 }
