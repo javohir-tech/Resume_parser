@@ -4,10 +4,10 @@ import { useUserStore } from '../models/store'
 import { UserAvatar } from '..';
 
 const { loading, user, error } = storeToRefs(useUserStore())
-const { t, locale } = useI18n()
+const { t } = useI18n()
 
 const formatDate = (date: string) => {
-    return new Intl.DateTimeFormat(locale.value, {
+    return new Intl.DateTimeFormat('en-US', {
         year: "numeric",
         month: "long",
         day: "numeric",

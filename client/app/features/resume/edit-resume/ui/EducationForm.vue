@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const { t, locale } = useI18n()
+const { t } = useI18n()
 import type { Education } from '~/entities/resume'
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
-const df = computed(() => new DateFormatter(locale.value, { month: 'long', year: 'numeric' }))
+const df = new DateFormatter('en-US', { month: 'long', year: 'numeric' })
 
 const monthFormatter = new DateFormatter('en-US', {
     month: "long"
@@ -51,22 +51,22 @@ watch(endDate, (newDate) => {
             <UFormField :label="t('resumeEditor.startDate')" class="w-full">
                 <UPopover class="w-full">
                     <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
-                        {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : props.education.startDate || t('resumeEditor.selectDate') }}
+                        {{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : props.education.startDate || 'Select a date' }}
                     </UButton>
 
                     <template #content>
-                        <UCalendar :locale="locale" type="month" v-model="startDate" />
+                        <UCalendar locale="en-US" type="month" v-model="startDate" />
                     </template>
                 </UPopover>
             </UFormField>
             <UFormField :label="t('resumeEditor.endDate')" class="w-full">
                 <UPopover class="w-full">
                     <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar" class="w-full justify-start font-normal">
-                        {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : props.education.endDate || t('resumeEditor.selectDate') }}
+                        {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : props.education.endDate || 'Select a date' }}
                     </UButton>
 
                     <template #content>
-                        <UCalendar :locale="locale" type="month" v-model="endDate" />
+                        <UCalendar locale="en-US" type="month" v-model="endDate" />
                     </template>
                 </UPopover>
             </UFormField>

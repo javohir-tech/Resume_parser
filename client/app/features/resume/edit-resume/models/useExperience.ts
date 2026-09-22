@@ -2,7 +2,6 @@ import { useResumeStore } from "~/entities/resume";
 import {
   createExperienceFetch,
   deleteExperienceFetch,
-  editExperience,
 } from "../api/experience";
 import { useApiToast } from "~/shared/lib";
 

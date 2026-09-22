@@ -1,21 +1,19 @@
 import { useResumeStore } from "~/entities/resume";
-import { editResumeFetch } from "../api/personal";
+import { editExperienceFetch } from "../api/experience";
+import type { Experience } from "~/entities/resume";
 
 const fields = [
-  "fullname",
-  "title",
-  "email",
-  "phone",
+  "position",
+  "company",
   "location",
-  "website",
-  "github_link",
-  "linkedin_link",
-  "summary",
+  "startDate",
+  "endDate",
+  "description",
 ] as const;
 
 type Snapshot = Record<(typeof fields)[number], string>;
 
-export function usePersonalAvtoSave(delay = 800) {
+export function useExperienceAvtoSave(delay = 800) {
   const store = useResumeStore();
   const isSaving = ref(false);
   const error = ref<string | null>(null);
@@ -26,27 +24,31 @@ export function usePersonalAvtoSave(delay = 800) {
   let timer: ReturnType<typeof setTimeout> | undefined;
   let running: Promise<boolean> | null = null;
 
-  function snapshot(): Snapshot {
+  function getExperience(): Experience | undefined {
+    if (!activeId.value) return undefined;
+
+    return store.resume.experience?.find((exp) => exp.id === activeId.value);
+  }
+
+  function snapshot(): Snapshot | null {
+    const experience = getExperience();
+
+    if (!experience) return null;
+
     return Object.fromEntries(
-      fields.map((field) => [field, store.resume[field] ?? ""]),
+      fields.map((field) => [field, experience[field] ?? ""]),
     ) as Snapshot;
   }
 
   const isDirty = computed(() => {
-    if (!saved.value || store.resume.id !== activeId.value) {
-      return false;
-    }
+    if (!saved.value) return false;
+
+    const experience = getExperience();
+    if (!experience) return false;
 
     return fields.some(
-      (field) => (store.resume[field] ?? "") !== saved.value![field],
+      (field) => (experience[field] ?? "") !== saved.value![field],
     );
-  });
-
-  const status = computed(() => {
-    if (isSaving.value) return "saving";
-    if (error.value) return "error";
-    if (isDirty.value) return "unsaved";
-    return saved.value ? "saved" : "idle";
   });
 
   function clearTimer() {
@@ -54,13 +56,17 @@ export function usePersonalAvtoSave(delay = 800) {
     timer = undefined;
   }
 
-  function start() {
-    if (disposed || running || !store.resume.id) return false;
+  function start(experience_id: string) {
+    if (disposed || running || !experience_id) return false;
 
     clearTimer();
-    activeId.value = store.resume.id;
-    saved.value = snapshot();
+    activeId.value = experience_id;
     error.value = null;
+
+    const current = snapshot();
+    if (!current) return false;
+
+    saved.value = current;
 
     return true;
   }
@@ -70,10 +76,10 @@ export function usePersonalAvtoSave(delay = 800) {
 
     isSaving.value = true;
     error.value = null;
-
     try {
       while (!disposed) {
-        if (store.resume.id !== id) {
+        const experience = getExperience();
+        if (!experience) {
           return false;
         }
 
@@ -84,22 +90,19 @@ export function usePersonalAvtoSave(delay = 800) {
         const changes: Partial<Snapshot> = {};
 
         for (const field of fields) {
-          if (sent[field] !== previous[field]) {
-            changes[field] = sent[field];
+          if (previous[field] !== sent![field]) {
+            changes[field] = experience[field];
           }
         }
 
         if (!Object.keys(changes).length) return true;
 
-        await editResumeFetch(id, changes);
+        await editExperienceFetch(id, changes);
 
-        if (disposed  || store.resume.id !== id) {
-          return false;
-        }
+        if (disposed || !experience) return false;
 
         saved.value = sent;
       }
-
       return false;
     } catch (err) {
       if (!disposed) {
@@ -125,8 +128,10 @@ export function usePersonalAvtoSave(delay = 800) {
       return flush();
     }
 
-    if (store.resume.id !== activeId.value) return false;
-    if (!isDirty.value) return true;
+    const experience = getExperience();
+
+    if (!experience) return false;
+    if (!isDirty) return true;
 
     running = drain();
 
@@ -140,9 +145,7 @@ export function usePersonalAvtoSave(delay = 800) {
   watch(
     snapshot,
     () => {
-      if (disposed || !saved.value || store.resume.id !== activeId.value) {
-        return;
-      }
+      if (disposed || !saved.value) return;
 
       clearTimer();
 
@@ -155,32 +158,31 @@ export function usePersonalAvtoSave(delay = 800) {
     { flush: "sync" },
   );
 
-  function beforeUnload(event: BeforeUnloadEvent) {
-    if (!isDirty.value && !isSaving.value) return;
+//   function beforeUnload(event: BeforeUnloadEvent) {
+//     if (!isDirty.value && !isSaving.value) return;
 
-    event.preventDefault();
-    event.returnValue = "";
-  }
+//     event.preventDefault();
+//     event.returnValue = "";
+//   }
 
-  onMounted(() => {
-    window.addEventListener("beforeunload", beforeUnload);
-  });
+//   onMounted(() => {
+//     window.addEventListener("beforeunload", beforeUnload);
+//   });
 
   onScopeDispose(() => {
     disposed = true;
     clearTimer();
 
-    if (typeof window !== "undefined") {
-      window.removeEventListener("beforeunload", beforeUnload);
-    }
+    // if (typeof window !== "undefined") {
+    //   window.removeEventListener("beforeunload", beforeUnload);
+    // }
   });
 
   return {
-    start,
-    flush,
-    isDirty,
     isSaving,
     error,
-    status,
+    isDirty , 
+    start,
+    flush,
   };
 }

@@ -4,7 +4,6 @@ import type { FetchError } from "ofetch";
 
 export default function useSendMessage() {
   const toast = useToast();
-  const { t } = useI18n();
   const loading = ref(false);
 
   async function sendMessageTelegram(data: Schema) {
@@ -20,8 +19,8 @@ export default function useSendMessage() {
       const response = await telegramSendMessage(text);
       if (response.ok) {
         toast.add({
-          title: t("contact.sendMessage.successTitle"),
-          description: t("contact.sendMessage.successDescription"),
+          title: "Xabaringiz yuborildi",
+          description: "Tez orada siz bilan aloqaga chiqamiz",
           color: "success",
           icon: "i-lucide-check-circle",
         });
@@ -33,8 +32,8 @@ export default function useSendMessage() {
       console.error("Telegram send error:", err.statusCode, err.data);
 
       toast.add({
-        title: t("contact.sendMessage.errorTitle"),
-        description: t("contact.sendMessage.errorDescription"),
+        title: "Xabar yuborilmadi",
+        description: "Xatolik yuz berdi, iltimos qaytadan urinib ko‘ring",
         color: "error",
         icon : "i-lucide-x-circle"
       });

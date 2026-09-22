@@ -18,7 +18,7 @@ const { error, start,  flush } = usePersonalAvtoSave(800)
 
 const ready = ref(false)
 
-const { loading, getResume } = useGetResume()
+const {  getResume } = useGetResume()
 
 
 const templates: Templates = {

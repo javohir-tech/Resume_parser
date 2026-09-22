@@ -2,10 +2,10 @@
 import type { ISessions } from '../models/types';
 import { useSessionRevoke } from '~/features/user';
 const { loading, revokeSession } = useSessionRevoke()
-const { t, locale } = useI18n()
+const { t } = useI18n()
 
 const formatDate = (date: string) => {
-    return new Intl.DateTimeFormat(locale.value, {
+    return new Intl.DateTimeFormat('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric',

@@ -6,7 +6,7 @@ export const createExperienceFetch = (resume_id: string) =>
     method: "POST",
   });
 
-export const editExperience = (
+export const editExperienceFetch = (
   experience_id: string,
   experience_info: Partial<Omit<Experience, "id">>,
 ) =>
