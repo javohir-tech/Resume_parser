@@ -6,13 +6,19 @@ import {
     ModernTemplate,
     MinimalTemplate,
     ProfessionalTemplate,
-    SidebarTemplate, 
+    SidebarTemplate,
     type Templates
 } from '~/entities/resume';
 
 import { useGetResume } from '~/entities/resume';
 
-const {loading , getResume} = useGetResume()
+import { usePersonalAvtoSave } from '~/features/resume/edit-resume';
+
+const { error, start,  flush } = usePersonalAvtoSave(800)
+
+const ready = ref(false)
+
+const { loading, getResume } = useGetResume()
 
 
 const templates: Templates = {
@@ -26,18 +32,38 @@ const templates: Templates = {
 const resumeStore = useResumeStore()
 const selectedTemplate = computed(() => templates[resumeStore.template])
 const route = useRoute()
-const resumeId = computed(()=>route.params.id)
+const resumeId = computed(() => route.params.id)
 
 
 definePageMeta({
-    layout: "resume-editor"
+    layout: "resume-editor" , 
+
+    key : (route) => String(route.params.id)
 })
 
-onMounted(()=>{
-    getResume(String(resumeId.value))
+onMounted(async () => {
+    const success = await getResume(String(resumeId.value))
+
+    if(success){
+        ready.value = start()
+    }
 })
 
-onUnmounted(()=>{
+async function saveBeforeNavigation(){
+    if(!ready.value) return true ;
+
+    return await flush()
+}
+
+onBeforeRouteLeave(saveBeforeNavigation)
+
+onBeforeRouteUpdate(async (to , from)=>{
+    if(to.params.id !== from.params.id){
+        return await saveBeforeNavigation()
+    }
+})
+
+onUnmounted(() => {
     resumeStore.restartInfo()
     resumeStore.restartDesign()
 })
