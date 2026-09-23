@@ -1,7 +1,6 @@
 import {
   createEducationFetch,
   deleteEducationFetch,
-  editEducationFetch,
 } from "../api/education";
 import { useResumeStore } from "~/entities/resume";
 import { useApiToast } from "~/shared/lib";

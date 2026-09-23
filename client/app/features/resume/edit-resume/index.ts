@@ -5,6 +5,7 @@ export { useSkillsGroup } from "./models/useSkillGroup.ts";
 export { useSkillItem } from "./models/useSkillItem.ts";
 export { usePersonalAvtoSave } from "./models/usePersonalAvtoSave.ts";
 export { useExperienceAvtoSave } from "./models/useExperienceAvtoSave.ts";
+export { useEducationSaveAvto } from "./models/useEducationAvtoSave.ts";
 
 export { default as PersonalInfoForm } from "./ui/PersonalInfo.vue";
 export { default as EducationForm } from "./ui/EducationForm.vue";
