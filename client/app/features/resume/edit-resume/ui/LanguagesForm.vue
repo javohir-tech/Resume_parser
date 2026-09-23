@@ -43,7 +43,7 @@ function createLanguage(language: string) {
         </UFormField>
         <UFormField :label="t('resumeEditor.proficiency')">
             <USelect v-model="language.degree" class="w-full" :placeholder="t('resumeEditor.proficiencyPlaceholder')"
-                :items="localizedDegrees" value-key="value" />
+                :items="localizedDegrees" value-key="value" @change="console.log(1)" />
         </UFormField>
     </div>
 </template>

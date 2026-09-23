@@ -1,4 +1,5 @@
 import { useResumeStore } from "~/entities/resume";
+import type { Languages } from "~/entities/resume";
 import {
   createLanguageFetch,
   editLanguageFetch,
@@ -8,6 +9,7 @@ import { useApiToast } from "~/shared/lib";
 
 export function useLanguage() {
   const isCreating = ref(false);
+  const isSaving = ref(false)
   const deletingIds = ref(new Set<string>());
   const { showError } = useApiToast();
   const resumeStore = useResumeStore();
@@ -25,6 +27,17 @@ export function useLanguage() {
       showError(error);
     } finally {
       isCreating.value = false;
+    }
+  }
+
+  async function editLanguage(language_id : string , language_info : Partial<Omit<Languages , "id">> ){
+    isSaving.value = true ; 
+    try { 
+      await editLanguageFetch(language_id , language_info)
+    } catch (error) {
+      showError(error)
+    }finally{
+      isSaving.value = false
     }
   }
 
