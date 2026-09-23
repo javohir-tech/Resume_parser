@@ -64,28 +64,28 @@ export function useLanguage() {
   }
 
   async function drainQueue(id: string, queue: Savequeue): Promise<boolean> {
-    try{
+    try {
       while (Object.keys(queue.pending).length > 0) {
         const changes = queue.pending;
         queue.pending = {};
-      try {
-        await editLanguage(id, changes);
-      } catch (error) {
-        queue.pending = { ...changes, ...queue.pending };
-        showError(error)
-        return false;
+        try {
+          await editLanguageFetch(id, changes);
+        } catch (error) {
+          queue.pending = { ...changes, ...queue.pending };
+          showError(error);
+          return false;
+        }
+      }
+      return true;
+    } finally {
+      queue.running = null;
+      savingIds.delete(id);
+
+      if (Object.keys(queue.pending).length === 0) {
+        queues.delete(id);
       }
     }
-    return true
-  }finally{
-    queue.running = null
-    savingIds.delete(id)
-
-    if(Object.keys(queue.pending).length === 0){
-      queues.delete(id)
-    }
   }
-}
 
   const isDeleting = (language_id: string) =>
     deletingIds.value.has(language_id);
@@ -105,5 +105,13 @@ export function useLanguage() {
     }
   }
 
-  return { isCreating,  isSaving , savingIds , createLanguage, isDeleting, deleteLanguage , editLanguage };
+  return {
+    isCreating,
+    isSaving,
+    savingIds,
+    createLanguage,
+    isDeleting,
+    deleteLanguage,
+    editLanguage,
+  };
 }
