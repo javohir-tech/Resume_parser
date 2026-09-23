@@ -131,7 +131,7 @@ export function useExperienceAvtoSave(delay = 800) {
     const experience = getExperience();
 
     if (!experience) return false;
-    if (!isDirty) return true;
+    if (!isDirty.value) return true;
 
     running = drain();
 

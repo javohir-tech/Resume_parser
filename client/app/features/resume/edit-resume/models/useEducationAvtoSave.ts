@@ -100,9 +100,9 @@ export function useEducationSaveAvto(delay = 800) {
       }
 
       return false;
-    } catch (error) {
+    } catch (err) {
       if (!disposed) {
-        error = "Saqlanmadi qayta urunip ko'ring";
+        error.value = "Saqlanmadi qayta urunip ko'ring";
       }
       return false;
     } finally {
@@ -125,14 +125,15 @@ export function useEducationSaveAvto(delay = 800) {
     }
 
     const education = getEducation();
-    if (!education || !isDirty) return false;
+    if (!education) return false;
+    if (!isDirty.value) return true;
 
     running = drain();
 
     try {
       return await running;
     } finally {
-      error.value = null;
+      running = null
     }
   }
 
@@ -142,7 +143,7 @@ export function useEducationSaveAvto(delay = 800) {
       if (disposed || !saved.value) return;
       clearTimer();
 
-      if (!isDirty) {
+      if (isDirty.value) {
         timer = setTimeout(() => {
           void flush();
         }, delay);
@@ -152,7 +153,7 @@ export function useEducationSaveAvto(delay = 800) {
   );
 
   function beforeUnload(event: BeforeUnloadEvent) {
-    if (!isDirty && !isSaving) return;
+    if (!isDirty.value && !isSaving.value) return;
 
     event.preventDefault();
     event.returnValue = "";
@@ -164,7 +165,7 @@ export function useEducationSaveAvto(delay = 800) {
 
   onScopeDispose(() => {
     disposed = true;
-    error.value = null;
+    clearTimer();
 
     if (typeof window !== "undefined") {
       window.removeEventListener("beforeunload", beforeUnload);
