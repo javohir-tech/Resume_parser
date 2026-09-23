@@ -45,18 +45,10 @@ export interface Personal {
   summary?: string;
 }
 
-export type LanguageDegree =
-  | "Elementary proficiency"
-  | "Limited working proficiency"
-  | "Professional working proficiency"
-  | "Full professional proficiency"
-  | "Native or bilingual proficiency"
-  | "";
-
 export interface Languages {
   id: string;
   language: string;
-  degree: LanguageDegree;
+  degree: string;
 }
 
 export interface Resume extends Personal {

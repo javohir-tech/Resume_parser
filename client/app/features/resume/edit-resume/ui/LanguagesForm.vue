@@ -1,13 +1,13 @@
 <script setup lang="ts">
 const { t } = useI18n()
-import type { Languages, LanguageDegree } from '~/entities/resume';
+import type { Languages } from '~/entities/resume';
 import { languages } from '~/entities/resume';
 
 const props = defineProps<{
     language: Languages
 }>()
 
-const degrees = ref<Exclude<LanguageDegree, ''>[]>([
+const degrees = ref<string[]>([
     'Elementary proficiency',
     'Full professional proficiency',
     'Limited working proficiency',
@@ -16,11 +16,7 @@ const degrees = ref<Exclude<LanguageDegree, ''>[]>([
 ])
 
 const languageItems = ref<string[]>([...languages])
-const localizedLanguages = computed(() => languageItems.value.map(value => ({
-    value,
-    label: languages.includes(value) ? t(`resumeEditor.language${value}`) : value,
-})))
-const proficiencyKeys: Record<Exclude<LanguageDegree, ''>, string> = {
+const proficiencyKeys: Record<string , string> = {
     'Elementary proficiency': 'elementary',
     'Full professional proficiency': 'full',
     'Limited working proficiency': 'limited',
@@ -42,7 +38,7 @@ function createLanguage(language: string) {
 <template>
     <div class="flex flex-col gap-3">
         <UFormField :label="t('resumeEditor.language')">
-            <USelectMenu create-item v-model="language.language" :items="localizedLanguages" value-key="value" class="w-full"
+            <USelectMenu create-item v-model="language.language" :items="languageItems" class="w-full"
                 :placeholder="t('resumeEditor.languagePlaceholder')" @create="createLanguage" />
         </UFormField>
         <UFormField :label="t('resumeEditor.proficiency')">

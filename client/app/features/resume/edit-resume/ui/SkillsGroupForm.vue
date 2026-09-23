@@ -14,10 +14,6 @@ const props = defineProps<{
 
 const skill = ref<string>()
 const skillCategoriesItems = ref<string[]>([...skillCategories])
-const localizedCategories = computed(() => skillCategoriesItems.value.map(value => ({
-    value,
-    label: skillCategories.includes(value) ? t(`resumeEditor.category${value.replace(/[^a-zA-Z]/g, '')}`) : value,
-})))
 const categoryOpen = ref(false)
 const categorySearch = ref('')
 
@@ -55,7 +51,7 @@ async function createSkillCategory(value: string) {
 <template>
     <div class="flex flex-col gap-3">
         <UFormField :label="t('resumeEditor.skillCategory')" :description="t('resumeEditor.categoryHint')">
-            <USelectMenu :model-value="skillsGroup.title" v-model:open="categoryOpen" v-model:search-term="categorySearch" :items="localizedCategories" value-key="value" create-item class="w-full"
+            <USelectMenu :model-value="skillsGroup.title" v-model:open="categoryOpen" v-model:search-term="categorySearch" :items="skillCategoriesItems" create-item class="w-full"
                 :placeholder="t('resumeEditor.categoryPlaceholder')" @update:model-value="selectSkillCategory"
                 @create="createSkillCategory" />
         </UFormField>
