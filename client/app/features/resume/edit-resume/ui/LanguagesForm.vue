@@ -10,8 +10,8 @@ const props = defineProps<{
 
 const { editLanguage } = useLanguage()
 
-const langaugeOpen = ref(false)
-const langaugeSearch = ref("")
+const languageOpen = ref(false)
+const languageSearch = ref("")
 
 const degrees = ref<string[]>([
     'Elementary proficiency',
@@ -21,7 +21,9 @@ const degrees = ref<string[]>([
     'Professional working proficiency',
 ])
 
-const languageItems = ref<string[]>([...languages])
+const languageItems = ref<string[]>([
+    ...new Set([...languages, props.language.language].filter(Boolean)),
+])
 const proficiencyKeys: Record<string, string> = {
     'Elementary proficiency': 'elementary',
     'Full professional proficiency': 'full',
@@ -34,23 +36,22 @@ const localizedDegrees = computed(() => degrees.value.map(value => ({
     label: t(`resumeDocument.proficiency.${proficiencyKeys[value]}`),
 })))
 
-function createLanguage(language: string) {
-    languageItems.value.push(language)
-    selectLanguage(language)
-}
-
 function selectLanguage(value: string) {
     const language = value.trim()
 
-    if (!value.trim()) return
+    if (!language) return
 
-    if (value !== props.language.language) {
-        void editLanguage(props.language.id, { language: language })
+    if (!languageItems.value.includes(language)) {
+        languageItems.value.push(language)
     }
 
-    props.language.language = language
-    langaugeOpen.value = false
-    langaugeSearch.value = ""
+    if (language !== props.language.language) {
+        props.language.language = language
+        void editLanguage(props.language.id, { language })
+    }
+
+    languageOpen.value = false
+    languageSearch.value = ""
 }
 
 function handleSelectDegree(value: string) {
@@ -61,10 +62,10 @@ function handleSelectDegree(value: string) {
 </script>
 <template>
     <div class="flex flex-col gap-3">
-        <UFormField :label="t('resumeEditor.language')">
-            <USelectMenu create-item :model-value="language.language" v-model:open="langaugeOpen"
-                v-model:search-term="langaugeSearch" :items="languageItems" class="w-full"
-                :placeholder="t('resumeEditor.languagePlaceholder')" @create="createLanguage" @update:model-value="selectLanguage" />
+        <UFormField :label="t('resumeEditor.language')" :description="t('resumeEditor.languageHint')">
+            <USelectMenu create-item :model-value="language.language" v-model:open="languageOpen"
+                v-model:search-term="languageSearch" :items="languageItems" class="w-full"
+                :placeholder="t('resumeEditor.languagePlaceholder')" @create="selectLanguage" @update:model-value="selectLanguage" />
         </UFormField>
         <UFormField :label="t('resumeEditor.proficiency')">
             <USelect v-model="language.degree" class="w-full" :placeholder="t('resumeEditor.proficiencyPlaceholder')"

@@ -305,6 +305,7 @@
     "degreePlaceholder": "Бакалавриат...",
     "institutionPlaceholder": "Ташкентский университет информационных технологий...",
     "fieldPlaceholder": "Электроэнергетика...",
+    "languageHint": "Выберите язык или введите его название, чтобы добавить его.",
     "languagePlaceholder": "Английский, китайский...",
     "proficiencyPlaceholder": "Выберите уровень владения...",
     "skillPlaceholder": "JavaScript, Python...",

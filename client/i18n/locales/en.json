@@ -305,6 +305,7 @@
     "degreePlaceholder": "Bachelor's degree...",
     "institutionPlaceholder": "Tashkent University of Information Technologies ...",
     "fieldPlaceholder": " Electrical power engineer...",
+    "languageHint": "Choose a language or type its name to add it.",
     "languagePlaceholder": "English, Chinese ...",
     "proficiencyPlaceholder": "Elementary proficiency...",
     "skillPlaceholder": "JavaScript, Python...",
