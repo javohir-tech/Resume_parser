@@ -13,12 +13,14 @@ from app.core.config import settings
 
 
 def document_error(status: int, code: str, message: str):
-    raise HTTPException(status_code=status, detail={"code": code, "message": message})
+    raise HTTPException(
+        status_code=status,
+        detail={"code": code, "message": message},
+    )
 
 
 def iter_docx_text(container):
-    """Paragraflar va ichma-ich jadvallarni tartib bilan o'qiydi"""
-
+    """Paragraflar va ichma-ich jadvallarni tartib bilan o'qiydi."""
     for block in container.iter_inner_content():
         if isinstance(block, Paragraph):
             yield block.text
@@ -27,23 +29,35 @@ def iter_docx_text(container):
 
             for row in block.rows:
                 for cell in row.cells:
+                    # Birlashtirilgan katak matnini takrorlamaymiz.
                     if cell._tc in seen_cells:
                         continue
+
                     seen_cells.add(cell._tc)
                     yield from iter_docx_text(cell)
 
 
 def read_pdf(data: bytes) -> str:
     if not data.startswith(b"%PDF-"):
-        document_error(415, "INVALID_PDF_TYPE", "Fayl haqiqiy PDF emas.")
+        document_error(
+            415, "INVALID_PDF_TYPE", "Fayl haqiqiy PDF emas."
+        )
 
     reader = PdfReader(BytesIO(data))
 
     if reader.is_encrypted:
-        document_error(422, "ENCRYPTED_PDF", "Parollangan PDF qo'llanmaydi.")
+        document_error(
+            422,
+            "ENCRYPTED_PDF",
+            "Parollangan PDF qo'llanmaydi.",
+        )
 
     if len(reader.pages) > settings.MAX_PDF_PAGES:
-        document_error(413, "TOO_MANY_PAGES", "PDF sahifalari limitdan oshdi.")
+        document_error(
+            413,
+            "TOO_MANY_PAGES",
+            "PDF sahifalari limitdan oshdi.",
+        )
 
     parts = []
     total = 0
@@ -53,7 +67,9 @@ def read_pdf(data: bytes) -> str:
         total += len(text) + 1
 
         if total > settings.MAX_TEXT_CHARS:
-            document_error(413, "TEXT_TOO_LONG", "Matn limitdan oshdi.")
+            document_error(
+                413, "TEXT_TOO_LONG", "Matn limitdan oshdi."
+            )
 
         parts.append(text)
 
@@ -64,7 +80,9 @@ def read_docx(data: bytes) -> str:
     stream = BytesIO(data)
 
     if not is_zipfile(stream):
-        document_error(415, "INVALID_DOCX_TYPE", "Fayl haqiqiy DOCX emas.")
+        document_error(
+            415, "INVALID_DOCX_TYPE", "Fayl haqiqiy DOCX emas."
+        )
 
     with ZipFile(BytesIO(data)) as archive:
         entries = archive.infolist()
@@ -107,7 +125,9 @@ def read_docx(data: bytes) -> str:
         total += len(text) + 1
 
         if total > settings.MAX_TEXT_CHARS:
-            document_error(413, "TEXT_TOO_LONG", "Matn limitdan oshdi.")
+            document_error(
+                413, "TEXT_TOO_LONG", "Matn limitdan oshdi."
+            )
 
         parts.append(text)
 
@@ -129,6 +149,7 @@ def parse_document(data: bytes, suffix: str) -> str:
             "Hujjatni o'qib bo'lmadi. Fayl buzilgan bo'lishi mumkin.",
         )
 
+    # Satrlarni saqlab, boshqaruv belgilarini tozalaymiz.
     text = text.replace("\r\n", "\n").replace("\r", "\n")
     text = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", "", text)
     text = "\n".join(line.strip() for line in text.splitlines())
@@ -142,7 +163,9 @@ def parse_document(data: bytes, suffix: str) -> str:
         )
 
     if len(text) > settings.MAX_TEXT_CHARS:
-        document_error(413, "TEXT_TOO_LONG", "Matn limitdan oshdi.")
+        document_error(
+            413, "TEXT_TOO_LONG", "Matn limitdan oshdi."
+        )
 
     return text
 
@@ -153,44 +176,50 @@ async def extract_text(file: UploadFile) -> str:
     allowed_mime = {
         ".pdf": {"application/pdf"},
         ".docx": {
-            "application/vnd.openxmlformats-officedocument." "wordprocessingml.document"
+            "application/vnd.openxmlformats-officedocument."
+            "wordprocessingml.document"
         },
     }
 
     try:
         if suffix not in allowed_mime:
             document_error(
-                415, "UNSUPPORTED_FORMAT", "Faqat PDF va DOCX yuklash mumkin."
+                415,
+                "UNSUPPORTED_FORMAT",
+                "Faqat PDF va DOCX yuklash mumkin.",
             )
 
         mime = (file.content_type or "").split(";")[0].lower()
 
-        if mime not in allowed_mime[suffix]:
-            document_error(415, "MIME_MISMATCH", "Fayl turi kengaytmasiga mos emas.")
+        # Ayrim mijozlar umumiy MIME yuboradi.
+        generic_mime = {"", "application/octet-stream"}
+
+        if mime not in allowed_mime[suffix] | generic_mime:
+            document_error(
+                415,
+                "MIME_MISMATCH",
+                "Fayl turi kengaytmasiga mos emas.",
+            )
 
         data = bytearray()
 
-        while True:
-
-            chunk = await file.read(64 * 1024)
-
-            if not chunk:
-                break
-
+        while chunk := await file.read(64 * 1024):
             if len(data) + len(chunk) > settings.MAX_UPLOAD_BYTES:
                 document_error(
                     413,
                     "FILE_TOO_LARGE",
                     "Fayl hajmi limitdan oshdi.",
                 )
+
             data.extend(chunk)
 
         if not data:
-            document_error(422, "EMPTY_FILE", "Fayl bo'sh.")
+            document_error(
+                422, "EMPTY_FILE", "Fayl bo'sh."
+            )
 
         return await run_in_threadpool(
-            parse_document , bytes(data) , suffix
+            parse_document, bytes(data), suffix
         )
-
     finally:
         await file.close()

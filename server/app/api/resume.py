@@ -44,7 +44,10 @@ async def parse_uploaded_resume(
     return await parse_resume(text)
 
 
-@resume_router.post("/import", status_code=status.HTTP_201_CREATED)
+@resume_router.post(
+    "/import",
+    status_code=status.HTTP_201_CREATED,
+)
 async def import_parsed_resume(
     payload: ResumeImportResume,
     db: AsyncSession = Depends(get_db),
@@ -54,8 +57,9 @@ async def import_parsed_resume(
 
     if not has_content(data.model_dump()):
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            status_code=422,
             detail={
+                "code": "EMPTY_RESUME",
                 "message": "Bo'sh resume saqlab bo'lmaydi.",
             },
         )
@@ -69,33 +73,46 @@ async def import_parsed_resume(
         }
     )
 
-    resume = Resume(user_id=UUID(user_id), **personal_data)
+    resume = Resume(
+        user_id=UUID(user_id),
+        **personal_data,
+    )
 
-    resume.experience = [Experience(**item.model_dump()) for item in data.experience]
+    resume.experience = [
+        Experience(**item.model_dump())
+        for item in data.experience
+    ]
 
-    resume.education = [Education(**item.model_dump()) for item in data.education]
+    resume.education = [
+        Education(**item.model_dump())
+        for item in data.education
+    ]
 
-    resume.languages = [Language(**item.model_dump()) for item in data.languages]
+    resume.languages = [
+        Language(**item.model_dump())
+        for item in data.languages
+    ]
 
     resume.skills = [
         Skills(
             title=group.title,
-            skills=[SkillItem(skill=item.skill) for item in group.skills],
+            skills=[
+                SkillItem(skill=item.skill)
+                for item in group.skills
+            ],
         )
         for group in data.skills
     ]
 
-
-    async with db.begin() :
+    async with db.begin():
         db.add(resume)
         await db.flush()
         resume_id = resume.id
 
     return {
-        "success" : True , 
-        "resume_id" : str(resume_id)
+        "success": True,
+        "resume_id": str(resume_id),
     }
-
 
 @resume_router.get("/{resume_id}")
 async def get_resume(

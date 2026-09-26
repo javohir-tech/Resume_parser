@@ -51,7 +51,6 @@ class ParseResume(StrictSchema):
 
 class ParsedResumeResult(StrictSchema):
     resume : ParseResume
-    warning : list[str]
 
 class ResumeImportResume(StrictSchema):
     resume : ParseResume

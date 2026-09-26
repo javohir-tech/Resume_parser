@@ -1,9 +1,11 @@
 import json
+
 from fastapi import HTTPException
 from pydantic import ValidationError
 
 from app.schemas.resume_parse_schema import ParsedResumeResult
 from app.services.ai_client import generate_json
+
 
 SYSTEM_PROMPT = """
 You extract structured information from resume text.
@@ -44,8 +46,7 @@ Example JSON for a document with no usable resume data:
     "education": [],
     "languages": [],
     "skills": []
-  },
-  "warnings": []
+  }
 }
 
 JSON schema:
@@ -66,7 +67,10 @@ def has_content(value) -> bool:
 
 
 async def parse_resume(text: str) -> ParsedResumeResult:
-    schema = json.dumps(ParsedResumeResult.model_json_schema(), ensure_ascii=False)
+    schema = json.dumps(
+        ParsedResumeResult.model_json_schema(),
+        ensure_ascii=False,
+    )
 
     raw_json = await generate_json(
         system_prompt=SYSTEM_PROMPT + schema,
@@ -74,7 +78,7 @@ async def parse_resume(text: str) -> ParsedResumeResult:
     )
 
     try:
-        result : ParsedResumeResult = ParsedResumeResult.model_json_schema(raw_json)
+        result = ParsedResumeResult.model_validate_json(raw_json)
     except ValidationError:
         raise HTTPException(
             status_code=502,
