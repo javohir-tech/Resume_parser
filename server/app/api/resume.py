@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, File, UploadFile
 from fastapi.exceptions import HTTPException
 
 from sqlalchemy import select
@@ -20,6 +20,8 @@ from app.schemas.resume_schemas import (
     SkillsInfo,
 )
 
+from app.schemas.resume_parse_schema import ParsedResumeResult, ResumeImportResume
+
 from app.models.user import User
 from app.models.resume import Resume
 from app.models.experience import Experience
@@ -28,7 +30,71 @@ from app.models.languages import Language
 from app.models.skills import Skills
 from app.models.skill_item import SkillItem
 
+from app.services.document_reader import extract_text
+from app.services.resume_parser import parse_resume, has_content
+
 resume_router = APIRouter(prefix="/resume", tags=["resume"])
+
+
+@resume_router.post("/parse", response_model=ParsedResumeResult)
+async def parse_uploaded_resume(
+    file: UploadFile = File(...), user_id: str = Depends(verify)
+):
+    text = await extract_text(file)
+    return await parse_resume(text)
+
+
+@resume_router.post("/import", status_code=status.HTTP_201_CREATED)
+async def import_parsed_resume(
+    payload: ResumeImportResume,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    data = payload.resume
+
+    if not has_content(data.model_dump()):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail={
+                "message": "Bo'sh resume saqlab bo'lmaydi.",
+            },
+        )
+
+    personal_data = data.model_dump(
+        exclude={
+            "experience",
+            "education",
+            "languages",
+            "skills",
+        }
+    )
+
+    resume = Resume(user_id=UUID(user_id), **personal_data)
+
+    resume.experience = [Experience(**item.model_dump()) for item in data.experience]
+
+    resume.education = [Education(**item.model_dump()) for item in data.education]
+
+    resume.languages = [Language(**item.model_dump()) for item in data.languages]
+
+    resume.skills = [
+        Skills(
+            title=group.title,
+            skills=[SkillItem(skill=item.skill) for item in group.skills],
+        )
+        for group in data.skills
+    ]
+
+
+    async with db.begin() :
+        db.add(resume)
+        await db.flush()
+        resume_id = resume.id
+
+    return {
+        "success" : True , 
+        "resume_id" : str(resume_id)
+    }
 
 
 @resume_router.get("/{resume_id}")
@@ -59,7 +125,7 @@ async def get_resume(
         )
 
     return {
-        "id" : resume.id ,
+        "id": resume.id,
         "fullname": resume.fullname or "",
         "title": resume.title or "",
         "email": resume.email or "",
@@ -218,7 +284,7 @@ async def delete_resume(
     await db.delete(resume)
     await db.commit()
 
-    return {"success" : True, "message": "Resume deleted successfully"}
+    return {"success": True, "message": "Resume deleted successfully"}
 
 
 # /////////////////////////////////////////////////////////////

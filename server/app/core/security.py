@@ -57,7 +57,7 @@ def verify(credentials: HTTPAuthorizationCredentials = Depends(security)) -> str
         )
         user_id = payload.get("sub")
         token_jti = payload.get("jti")
-        if not token_jti or not user_id:
+        if not token_jti or not user_id or payload.get("type") != "access":
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
             )
