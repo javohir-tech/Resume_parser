@@ -4,7 +4,7 @@ import type {
   ImportResumeResponse,
 } from "../models/types";
 
-export const resumeParseFetch = (file : File) => {
+export const resumeParseRequest = (file : File) => {
     const formData = new FormData()
     formData.append("file" , file)
 
@@ -13,7 +13,7 @@ export const resumeParseFetch = (file : File) => {
     })
 }
 
-export const resumeImportFetch = (resume_ai_response: ParseResumeResponse) =>
+export const resumeImportRequest = (resume_ai_response: ParseResumeResponse) =>
   api<ImportResumeResponse>("/api/resume/import", {
     method: "POST",
     body: { resume: resume_ai_response },
