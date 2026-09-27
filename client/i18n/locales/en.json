@@ -18,6 +18,28 @@
       "revokeError": "Failed to sign out device"
     }
   },
+  "resumeWorkspace": {
+    "eyebrow": "Your next chapter starts here",
+    "title": "A resume for your next opportunity",
+    "description": "Upload an existing resume or create a new one. Keep all your resumes together in one place.",
+    "newResume": "Add a resume",
+    "chooseMethod": "How would you like to start?",
+    "uploadTitle": "Upload a file",
+    "uploadDescription": "Start with a resume you already have.",
+    "manualTitle": "Create from scratch",
+    "manualDescription": "Add your details one step at a time.",
+    "editHint": "You can edit your resume details and design.",
+    "uploadStep": "Choose your resume file",
+    "manualStep": "Create a new resume",
+    "blankTitle": "Start with a clean page",
+    "blankDescription": "Add your experience, education and skills. Choose a design that feels like you.",
+    "startBlank": "Create resume",
+    "emptyHint": "Choose one of the options above to create your first resume.",
+    "dropFile": "Drop your file here or click to browse",
+    "fileTypes": "PDF or DOCX · Up to 10 MB",
+    "removeFile": "Remove file",
+    "uploadHint": "Use a PDF or DOCX file with clear, readable text."
+  },
   "resumeList": {
     "title": "My resumes",
     "create": "Create resume",

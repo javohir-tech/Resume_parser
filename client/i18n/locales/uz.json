@@ -18,6 +18,28 @@
       "revokeError": "Qurilmani hisobdan chiqarishda xatolik yuz berdi"
     }
   },
+  "resumeWorkspace": {
+    "eyebrow": "Keyingi qadamingiz shu yerdan",
+    "title": "Yangi imkoniyatlar uchun rezyume",
+    "description": "Tayyor rezyumeni yuklang yoki yangisini yarating. Barcha rezyumelaringizni bir joyda boshqaring.",
+    "newResume": "Rezyume qo‘shish",
+    "chooseMethod": "Qanday boshlaymiz?",
+    "uploadTitle": "Fayldan yuklash",
+    "uploadDescription": "Mavjud rezyume faylingiz bilan boshlang.",
+    "manualTitle": "Qo‘lda yaratish",
+    "manualDescription": "Ma’lumotlaringizni bosqichma-bosqich kiriting.",
+    "editHint": "Rezyume ma’lumotlari va ko‘rinishini tahrirlash mumkin.",
+    "uploadStep": "Rezyume faylini tanlang",
+    "manualStep": "Yangi rezyume yarating",
+    "blankTitle": "Toza sahifadan boshlang",
+    "blankDescription": "Tajriba, ta’lim va ko‘nikmalaringizni kiriting. O‘zingizga mos dizaynni tanlang.",
+    "startBlank": "Rezyume yaratish",
+    "emptyHint": "Birinchi rezyumeni yaratish uchun yuqoridagi usullardan birini tanlang.",
+    "dropFile": "Faylni shu yerga tashlang yoki tanlang",
+    "fileTypes": "PDF yoki DOCX · 10 MB gacha",
+    "removeFile": "Faylni olib tashlash",
+    "uploadHint": "Aniq o‘qiladigan matnli PDF yoki DOCX fayldan foydalaning."
+  },
   "resumeList": {
     "title": "Rezyumelarim",
     "create": "Rezyume yaratish",

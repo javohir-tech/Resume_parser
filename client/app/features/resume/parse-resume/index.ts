@@ -1,0 +1,1 @@
+export {default as ParseResumeForm} from "./ui/ResumeParseForm.vue"
