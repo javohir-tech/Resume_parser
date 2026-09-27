@@ -11,5 +11,10 @@ const { t } = useI18n()
       <UIcon name="i-lucide-info" class="mt-0.5 size-4 shrink-0" />
       {{ t('resumeWorkspace.uploadHint') }}
     </p>
+    <div class="flex justify-end">
+      <UButton type="submit" size="lg" icon="i-lucide-sparkles" class="w-full justify-center sm:w-auto">
+        {{ t('resumeWorkspace.parseAction') }}
+      </UButton>
+    </div>
   </div>
 </template>

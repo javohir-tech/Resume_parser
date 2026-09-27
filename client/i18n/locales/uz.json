@@ -38,7 +38,8 @@
     "dropFile": "Faylni shu yerga tashlang yoki tanlang",
     "fileTypes": "PDF yoki DOCX · 10 MB gacha",
     "removeFile": "Faylni olib tashlash",
-    "uploadHint": "Aniq o‘qiladigan matnli PDF yoki DOCX fayldan foydalaning."
+    "uploadHint": "Aniq o‘qiladigan matnli PDF yoki DOCX fayldan foydalaning.",
+    "parseAction": "Rezyumeni tahlil qilish"
   },
   "resumeList": {
     "title": "Rezyumelarim",

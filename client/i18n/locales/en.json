@@ -38,7 +38,8 @@
     "dropFile": "Drop your file here or click to browse",
     "fileTypes": "PDF or DOCX · Up to 10 MB",
     "removeFile": "Remove file",
-    "uploadHint": "Use a PDF or DOCX file with clear, readable text."
+    "uploadHint": "Use a PDF or DOCX file with clear, readable text.",
+    "parseAction": "Analyze resume"
   },
   "resumeList": {
     "title": "My resumes",
