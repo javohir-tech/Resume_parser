@@ -258,6 +258,9 @@
     "createdBy": "Muallif:"
   },
   "contact": {
+    "formTitle": "Xabar qoldiring",
+    "formDescription": "Savol va takliflaringizni shu yerga yozing.",
+    "namePlaceholder": "Ismingizni kiriting",
     "eyebrow": "Aloqa",
     "title": "Savolingiz bormi? Yozing.",
     "subtitle": "Taklif, xatolik yoki hamkorlik: hammasi bo'yicha yozishingiz mumkin. Har bir xabarni o'qiymiz.",

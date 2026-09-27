@@ -13,6 +13,11 @@ export default defineNuxtConfig({
     botToken: "",
     chatId: "",
   },
+  vite: {
+    optimizeDeps: {
+      include: ["valibot"],
+    },
+  },
   fonts: {
     families: [
       { name: "Inter", provider: "google"   , global : true},

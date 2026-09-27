@@ -258,6 +258,9 @@
     "createdBy": "created by"
   },
   "contact": {
+    "formTitle": "Leave a message",
+    "formDescription": "Share your question or idea with us.",
+    "namePlaceholder": "Enter your name",
     "eyebrow": "Contact",
     "title": "Have a question? Get in touch.",
     "subtitle": "Suggestions, bugs, or collaboration — feel free to write about anything. We read every message.",

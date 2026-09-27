@@ -26,26 +26,29 @@ async function submitForm(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-    <UForm :schema="schema" :state="state" @submit="submitForm">
-        <div class="flex flex-col md:flex-row md:justify-between gap-3">
-            <UFormField :label="t('contact.form.nameLabel')" class="flex-1 font-mono" name="name">
-                <UInput v-model="state.name" class="w-full" placeholder="Suvonov Javohir" size="xl" />
+    <UForm :schema="schema" :state="state" class="space-y-5" @submit="submitForm">
+        <div class="grid gap-5 sm:grid-cols-2">
+            <UFormField :label="t('contact.form.nameLabel')" name="name">
+                <UInput v-model="state.name" class="w-full" :placeholder="t('contact.namePlaceholder')"
+                    autocomplete="name" size="lg" :ui="{ base: 'rounded-xl bg-muted/30 py-3' }" />
             </UFormField>
-            <UFormField :label="t('contact.form.emailLabel')" class="flex-1 font-mono" name="email">
-                <UInput v-model="state.email" class="w-full" placeholder="example@gmail.com" size="xl" />
+            <UFormField :label="t('contact.form.emailLabel')" name="email">
+                <UInput v-model="state.email" class="w-full" placeholder="you@example.com"
+                    autocomplete="email" size="lg" :ui="{ base: 'rounded-xl bg-muted/30 py-3' }" />
             </UFormField>
         </div>
-        <UFormField :label="t('contact.form.subjectLabel')" class="font-mono mt-4" name="subject">
-            <UInput v-model="state.subject" class="w-full font-mono" :placeholder="t('contact.form.subjectPlaceholder')"
-                size="xl" />
+        <UFormField :label="t('contact.form.subjectLabel')" name="subject">
+            <UInput v-model="state.subject" class="w-full" :placeholder="t('contact.form.subjectPlaceholder')"
+                size="lg" :ui="{ base: 'rounded-xl bg-muted/30 py-3' }" />
         </UFormField>
-        <UFormField :label="t('contact.form.messageLabel')" class="font-mono mt-4" name="message">
-            <UTextarea v-model="state.message" :placeholder="t('contact.form.messagePlaceholder')" :rows="4"
-                class="w-full" />
+        <UFormField :label="t('contact.form.messageLabel')" name="message">
+            <UTextarea v-model="state.message" :placeholder="t('contact.form.messagePlaceholder')" :rows="5"
+                class="w-full" size="lg" :ui="{ base: 'resize-y rounded-xl bg-muted/30 p-3' }" />
         </UFormField>
-        <div class="text-end mt-5">
-            <UButton :loading="loading" :disabled="loading" icon="lucide:send" type="submit">
-                {{ t("contact.form.submitButton") }}
+        <div class="border-t border-default pt-5">
+            <UButton :loading="loading" :disabled="loading" trailing-icon="i-lucide-arrow-up-right" type="submit"
+                size="lg" class="w-full justify-center rounded-xl py-3 font-medium">
+                {{ t('contact.form.submitButton') }}
             </UButton>
         </div>
     </UForm>
