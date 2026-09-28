@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import { ContactLink } from '~/shared/ui'
 import { SendMessageForm } from '~/features/send-message'
-import { ContactLink, type IContactLink } from '~/shared/components/Contact-Link'
+
+export interface IContactLink {
+  title: string;
+  link: string;
+  icon: string;
+}
 
 const { t } = useI18n()
 
