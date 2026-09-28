@@ -4,12 +4,12 @@ import {
   deleteSkillGroupFetch,
 } from "../api/skills";
 import { useResumeStore } from "~/entities/resume";
-import { useApiToast } from "~/shared/lib";
+import { useApiToasts, apiError } from "~/shared/lib";
 import type { SkillGroup } from "~/entities/resume";
 
 export function useSkillsGroup() {
   const resumeStore = useResumeStore();
-  const { showError } = useApiToast();
+  const { showError } = useApiToasts();
 
   const isCreating = ref(false);
   const isUpdating = ref(false);
@@ -25,7 +25,8 @@ export function useSkillsGroup() {
         skills: [],
       });
     } catch (error) {
-      showError(error);
+      const err = apiError(error);
+      showError(err.message);
     } finally {
       isCreating.value = false;
     }
@@ -41,7 +42,8 @@ export function useSkillsGroup() {
     try {
       await editSkillGroupFetch(skills_group_id, skills_info);
     } catch (error) {
-      showError(error);
+      const err = apiError(error);
+      showError(err.message);
     } finally {
       isUpdating.value = false;
     }
@@ -59,7 +61,8 @@ export function useSkillsGroup() {
         (sg) => sg.id !== skills_id,
       );
     } catch (error) {
-      showError(error);
+      const err = apiError(error);
+      showError(err.message);
     } finally {
       deletingIds.value.delete(skills_id);
     }

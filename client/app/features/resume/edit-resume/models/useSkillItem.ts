@@ -1,11 +1,11 @@
 import { useResumeStore } from "~/entities/resume";
 import { createSkillItemFetch, deleteSkillItemFetch } from "../api/skills";
-import { useApiToast } from "~/shared/lib";
+import { useApiToasts, apiError } from "~/shared/lib";
 
 export function useSkillItem() {
   const isCreating = ref(false);
   const deletingIds = ref(new Set<string>());
-  const { showError } = useApiToast();
+  const { showError } = useApiToasts();
   const resumeStore = useResumeStore();
 
   async function createSkillItem(
@@ -28,7 +28,8 @@ export function useSkillItem() {
       }
     //   console.log(response);
     } catch (error) {
-        showError(error)
+        const err = apiError(error);
+        showError(err.message);
     } finally {
       isCreating.value = false;
     }
@@ -49,7 +50,8 @@ export function useSkillItem() {
             throw new Error("SkillGroup not found")
         }
     } catch (error) {
-        showError(error)
+        const err = apiError(error);
+        showError(err.message);
     }finally{
         deletingIds.value.delete(skill_item_id)
     }

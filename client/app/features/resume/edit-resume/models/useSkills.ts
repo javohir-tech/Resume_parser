@@ -3,11 +3,11 @@ import {
   deleteSkillItem,
 } from "../api/skills";
 import { useResumeStore } from "~/entities/resume";
-import { useApiToast } from "~/shared/lib";
+import { useApiToasts } from "~/shared/lib";
 
 export function useSkills() {
   const userResume = useResumeStore();
-  const { showError } = useApiToast();
+  const { showError } = useApiToasts();
   const creatingSkillGroup = ref(false);
   const creatingSkillItem = ref(false)
 

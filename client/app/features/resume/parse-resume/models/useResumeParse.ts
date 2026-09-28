@@ -1,9 +1,9 @@
 import { resumeParseRequest, resumeImportRequest } from "../api";
 import type { ImportResumeResponse, ParseResumeResponse } from "./types";
-import { useApiToast, apiError } from "~/shared/lib";
+import { useApiToasts, apiError } from "~/shared/lib";
 
 export function useResumeParse() {
-  const { showError } = useApiToast();
+  const { showError } = useApiToasts();
 
   async function resumeParse(file: File): Promise<ParseResumeResponse | null> {
     try {
@@ -11,7 +11,7 @@ export function useResumeParse() {
       return response;
     } catch (error) {
       const err = apiError(error);
-      showError(null, err.message);
+      showError(err.message);
       return null;
     }
   }
@@ -24,7 +24,7 @@ export function useResumeParse() {
       return response;
     } catch (error) {
       const err = apiError(error);
-      showError(null, err.message);
+      showError(err.message);
       return null;
     }
   }

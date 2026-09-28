@@ -5,7 +5,7 @@ import {
   editLanguageFetch,
   deleteLanguageFetch,
 } from "../api/language";
-import { useApiToast } from "~/shared/lib";
+import { useApiToasts, apiError } from "~/shared/lib";
 
 type LanguagePatch = Partial<Omit<Languages, "id">>;
 
@@ -17,7 +17,7 @@ type Savequeue = {
 export function useLanguage() {
   const isCreating = ref(false);
   const deletingIds = ref(new Set<string>());
-  const { showError } = useApiToast();
+  const { showError } = useApiToasts();
   const resumeStore = useResumeStore();
 
   const queues = new Map<string, Savequeue>();
@@ -36,7 +36,8 @@ export function useLanguage() {
         degree: "",
       });
     } catch (error) {
-      showError(error);
+      const err = apiError(error);
+      showError(err.message);
     } finally {
       isCreating.value = false;
     }
@@ -72,7 +73,8 @@ export function useLanguage() {
           await editLanguageFetch(id, changes);
         } catch (error) {
           queue.pending = { ...changes, ...queue.pending };
-          showError(error);
+          const err = apiError(error);
+          showError(err.message);
           return false;
         }
       }
@@ -99,7 +101,8 @@ export function useLanguage() {
         (l) => l.id !== language_id,
       );
     } catch (error) {
-      showError(error);
+      const err = apiError(error);
+      showError(err.message);
     } finally {
       deletingIds.value.delete(language_id);
     }

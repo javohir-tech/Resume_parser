@@ -3,13 +3,13 @@ import {
   deleteEducationFetch,
 } from "../api/education";
 import { useResumeStore } from "~/entities/resume";
-import { useApiToast } from "~/shared/lib";
+import { useApiToasts , apiError } from "~/shared/lib";
 
 export function useEducation() {
   const isCreating = ref(false);
   const deletingIds = ref(new Set<string>());
   const resumeStore = useResumeStore();
-  const { showError } = useApiToast();
+  const { showError } = useApiToasts();
 
   async function createEducation(resume_id: string = resumeStore.resume.id) {
     isCreating.value = true;
@@ -25,7 +25,8 @@ export function useEducation() {
         endDate: "",
       });
     } catch (error) {
-      showError(error);
+      const err = apiError(error)
+      showError(err.message);
     } finally {
       isCreating.value = false;
     }
@@ -43,7 +44,8 @@ export function useEducation() {
         (edc) => edc.id !== education_id,
       );
     } catch (error) {
-      showError(error);
+      const err = apiError(error)
+      showError(err.message);
     } finally {
       deletingIds.value.delete(education_id);
     }

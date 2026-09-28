@@ -3,12 +3,12 @@ import {
   createExperienceFetch,
   deleteExperienceFetch,
 } from "../api/experience";
-import { useApiToast } from "~/shared/lib";
+import { useApiToasts, apiError } from "~/shared/lib";
 
 export function useExperience() {
   const isCreating = ref(false);
   const resumeStore = useResumeStore();
-  const { showError } = useApiToast();
+  const { showError } = useApiToasts();
   const deletingIds = ref(new Set<string>());
 
   async function createExperience(resume_id: string = resumeStore.resume.id) {
@@ -25,7 +25,8 @@ export function useExperience() {
         location: "",
       });
     } catch (error) {
-      showError(error);
+      const err = apiError(error);
+      showError(err.message);
     } finally {
       isCreating.value = false;
     }
@@ -44,7 +45,8 @@ export function useExperience() {
         (exp) => exp.id !== experience_id,
       );
     } catch (error) {
-      showError(error);
+      const err = apiError(error);
+      showError(err.message);
     } finally {
       deletingIds.value.delete(experience_id);
     }
