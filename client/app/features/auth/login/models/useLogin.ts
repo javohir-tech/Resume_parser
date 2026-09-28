@@ -8,6 +8,7 @@ export default function useLogin() {
   const to_many_request = ref(false);
   const retry_after = ref<number>(0);
   const userStore = useUserStore();
+  const localePath = useLocalePath()
   const { showSuccess, showError } = useApiToasts();
 
   let countdownInterval: ReturnType<typeof setInterval> | null = null;
@@ -44,7 +45,7 @@ export default function useLogin() {
       userStore.setUser(response.data.user);
 
       if (response.success) {
-        await navigateTo("/");
+        await navigateTo(`${localePath('/')}`);
 
         showSuccess(response.message);
       }
