@@ -1,38 +1,38 @@
 import { useResumeStore } from "./store";
 import { getResumeFetch } from "../api";
-import { useApiToast } from "~/shared/lib";
+import { useApiToasts, apiError } from "~/shared/lib";
 
 export function useGetResume() {
   const loading = ref(false);
-  const { showError } = useApiToast();
+  const { showError } = useApiToasts();
   const resumeStore = useResumeStore();
-  
-  let disposed =  false;
 
-  onScopeDispose(()=>{
-    disposed = true 
-  })
+  let disposed = false;
 
-  async function getResume(resume_id: string):Promise<boolean> {
+  onScopeDispose(() => {
+    disposed = true;
+  });
 
-    if(disposed) return false
+  async function getResume(resume_id: string): Promise<boolean> {
+    if (disposed) return false;
 
     loading.value = true;
     try {
       const response = await getResumeFetch(resume_id);
 
-      if (disposed) return false 
-      resumeStore.resume = response
+      if (disposed) return false;
+      resumeStore.resume = response;
 
-      return true
-    //   console.log(response);
+      return true;
+      //   console.log(response);
     } catch (error) {
-      if(!disposed){
-        showError(error);
+      if (!disposed) {
+        const err = apiError(error);
+        showError(err.message);
       }
-      return false
+      return false;
     } finally {
-      if(!disposed){
+      if (!disposed) {
         loading.value = false;
       }
     }

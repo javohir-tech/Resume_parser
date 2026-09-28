@@ -1,15 +1,14 @@
 import { handleLogin } from "../api";
 import { FetchError } from "ofetch";
 import { useUserStore } from "~/entities/user";
-import type { ApiErrorBody, ToManyRequests } from "~/shared/types";
+import { useApiToasts, apiError } from "~/shared/lib";
 
 export default function useLogin() {
   const loading = ref<boolean>(false);
-  const err = ref<string | null>(null);
   const to_many_request = ref(false);
-  const toast = useToast();
   const retry_after = ref<number>(0);
   const userStore = useUserStore();
+  const { showSuccess, showError } = useApiToasts();
 
   let countdownInterval: ReturnType<typeof setInterval> | null = null;
 
@@ -47,33 +46,22 @@ export default function useLogin() {
       if (response.success) {
         await navigateTo("/");
 
-        toast.add({
-          title: response.message,
-          color: "success",
-          icon: "i-lucide-check-circle",
-        });
+        showSuccess(response.message);
       }
     } catch (error) {
       const fetchError = error as FetchError;
-      if (fetchError.status === 429) {
-        err.value = fetchError.data?.message;
-        const HeaderRetry = fetchError.response?.headers.get("Retry-After");
-        startCountdown(Number(HeaderRetry) || 60);
+      if (fetchError.response?.status === 429) {
+        showError(fetchError.data?.message);
+          const HeaderRetry = fetchError.response?.headers.get("Retry-After");
+          startCountdown(Number(HeaderRetry) || 60);
       } else {
-        err.value = fetchError.data?.detail ?? "Internal Server Error";
-      }
-      console.log(err.value, fetchError.status);
-      if (err.value) {
-        toast.add({
-          title: err.value,
-          color: "error",
-          icon: "i-lucide-x-circle",
-        });
+        const err = apiError(fetchError);
+        showError(err.message);
       }
     } finally {
       loading.value = false;
     }
   }
 
-  return { loading, err, countdownInterval, to_many_request, login };
+  return { loading, countdownInterval, to_many_request, login };
 }
