@@ -16,11 +16,14 @@ const { t } = useI18n()
                     </h2>
                     <ul class="flex flex-col mt-2 gap-2">
                         <li>
-                            <a class="text-sm text-gray-500 transition-colors hover:text-primary"
-                                href="">{{ t('footer.features') }}</a>
+                            <a class="text-sm text-gray-500 transition-colors hover:text-primary" href="">
+                                {{ t('footer.features') }}
+                            </a>
                         </li>
                         <li>
-                            <a class="text-sm text-gray-500 transition-colors hover:text-primary" href="">{{ t('footer.pricing') }}</a>
+                            <a class="text-sm text-gray-500 transition-colors hover:text-primary" href="">
+                                {{ t('footer.pricing') }}
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -30,7 +33,9 @@ const { t } = useI18n()
                     </h2>
                     <ul class="flex flex-col mt-2 gap-2">
                         <li>
-                            <a class="text-sm text-gray-500 transition-colors hover:text-primary" href="">{{ t('footer.contact') }}</a>
+                            <NuxtLink to="/contact" class="text-sm text-gray-500 transition-colors hover:text-primary">
+                                {{ t('footer.contact') }}
+                            </NuxtLink>
                         </li>
                     </ul>
                 </div>
@@ -39,8 +44,12 @@ const { t } = useI18n()
             <div class="border-t-1 border-gray-500 mt-5 py-5">
                 <div class="text-gray-500 flex md:justify-between flex-col md:flex-row gap-4 text-sm font-medium">
                     <p>{{ t('footer.copyright') }}</p>
-                    <p>{{ t('footer.createdBy') }} <a class="text-primary font-mono"
-                            href="https://www.linkedin.com/in/javohir-suvonov-a98925303/" target="_blank">Suvonov Javohir</a></p>
+                    <p>{{ t('footer.createdBy') }}
+                        <a class="text-primary font-mono" href="https://www.linkedin.com/in/javohir-suvonov-a98925303/"
+                            target="_blank">
+                            Suvonov Javohir
+                        </a>
+                    </p>
                 </div>
             </div>
         </UContainer>

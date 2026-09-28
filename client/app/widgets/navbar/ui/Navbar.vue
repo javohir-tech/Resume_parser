@@ -26,7 +26,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 
 <template>
     <UHeader title="Resume Parser" :ui="{ title: 'text-primary' }">
-        <UNavigationMenu :items="items" variant="link" />
+        <!-- <UNavigationMenu :items="items" variant="link" /> -->
         <template #right>
             <UPopover>
                 <UButton icon="i-lucide-languages" color="neutral" :aria-label="t('account.language')" variant="ghost" />
@@ -65,7 +65,7 @@ const items = computed<NavigationMenuItem[]>(() => [
         </template>
 
         <template #body>
-            <UNavigationMenu :items="items" orientation="vertical" />
+            <!-- <UNavigationMenu :items="items" orientation="vertical" /> -->
         </template>
     </UHeader>
 </template>
