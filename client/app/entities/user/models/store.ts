@@ -16,6 +16,7 @@ export const useUserStore = defineStore("user", () => {
     loading.value = true;
     try {
       const response = await fetchGetMe();
+      console.log(response)
       user.value = response;
     } catch (err) {
       const fetchError = err as FetchError<ApiErrorBody>;

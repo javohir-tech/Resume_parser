@@ -44,7 +44,7 @@ const items = computed<NavigationMenuItem[]>(() => [
             </UPopover>
             <UColorModeButton />
             <UPopover v-if="access_token">
-                <UserAvatar />
+                <UButton icon="i-lucide-menu" variant="ghost" color="neutral" />
                 <template #content="{close}">
                     <div class="flex flex-col gap-1 p-1 min-w-32">
                         <UButton :to="localePath('/settings')" @click="close" color="neutral" variant="ghost">
