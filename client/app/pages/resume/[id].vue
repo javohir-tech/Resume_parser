@@ -14,6 +14,10 @@ import { useGetResume } from '~/entities/resume';
 
 import { usePersonalAvtoSave } from '~/features/resume/edit-resume';
 
+definePageMeta({
+    middleware : "auth" 
+})
+
 const { error, start,  flush } = usePersonalAvtoSave(800)
 
 const ready = ref(false)

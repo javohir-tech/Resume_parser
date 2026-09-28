@@ -4,6 +4,10 @@ import { useDeleteResume } from '~/features/resume/delete-resume'
 import { useCreateResume } from '~/features/resume/create-resume'
 import { ParseResumeForm } from '~/features/resume/parse-resume'
 
+definePageMeta({
+    middleware : "auth"
+})
+
 const { t } = useI18n()
 const method = ref<'upload' | 'manual'>('upload')
 const { deleteResume, isDeleting } = useDeleteResume()
@@ -16,6 +20,8 @@ const removeResume = async (id: string) => {
         data.value = data.value?.filter(r => r.id !== id)
     }
 }
+
+
 </script>
 
 <template>
