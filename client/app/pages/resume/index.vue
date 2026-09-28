@@ -19,7 +19,7 @@ const removeResume = async (id: string) => {
 </script>
 
 <template>
-    <UContainer class="py-5 sm:py-10 lg:py-12">
+    <UContainer class="py-6 sm:py-10 lg:py-12">
 
         <header class="mb-8 max-w-2xl">
             <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{{

@@ -8,7 +8,7 @@ const fields = [
   "phone",
   "location",
   "website",
-  "github_link",
+  "github_link",  
   "linkedin_link",
   "summary",
 ] as const;
