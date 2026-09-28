@@ -11,8 +11,10 @@ const { loading, createResume } = useCreateResume()
 const { data, pending, error } = useLazyAsyncData('my_resumes', () => getMyResumes())
 
 const removeResume = async (id: string) => {
-    await deleteResume(id)
-    data.value = data.value?.filter(r => r.id !== id)
+    const success = await deleteResume(id)
+    if(success){
+        data.value = data.value?.filter(r => r.id !== id)
+    }
 }
 </script>
 

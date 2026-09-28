@@ -1,14 +1,14 @@
 import { deleteResumeFetch } from "../api";
-import { useApiToast } from "~/shared/lib";
+import { useApiToasts, apiError } from "~/shared/lib";
 
 export function useDeleteResume() {
-  const { showError, showSuccess } = useApiToast();
+  const { showError, showSuccess } = useApiToasts();
   const deleteingIds = ref(new Set<string>());
 
   const isDeleting = (id: string) => deleteingIds.value.has(id);
 
-  async function deleteResume(resume_id: string) {
-    if (isDeleting(resume_id)) return;
+  async function deleteResume(resume_id: string): Promise<boolean> {
+    if (isDeleting(resume_id)) return false;
 
     deleteingIds.value.add(resume_id);
 
@@ -16,10 +16,15 @@ export function useDeleteResume() {
       const response = await deleteResumeFetch(resume_id);
       if (response.success) {
         showSuccess(response.message);
+        return true;
       }
+
       // console.log(response)
+      return false;
     } catch (error) {
-      showError(error);
+      const err = apiError(error);
+      showError(err.message);
+      return false;
     } finally {
       deleteingIds.value.delete(resume_id);
     }
