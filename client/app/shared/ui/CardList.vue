@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import type { ICard } from '../models/types';
+
+interface ICard {
+    icon: string;
+    title: string;
+    subtitle: string;
+    delay: number;
+}
+
+
 import Card from './Card.vue';
 
 const props = defineProps<{
-    cards_info: ICard[] , 
-    col ?: number
+    cards_info: ICard[],
+    col?: number
 }>()
 </script>
 

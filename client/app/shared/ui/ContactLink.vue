@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import type { IContactLink } from '../models/types'
+export interface IContactLink {
+  title: string;
+  link: string;
+  icon: string;
+}
+
 
 defineProps<{ contact: IContactLink }>()
 </script>

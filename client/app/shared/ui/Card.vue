@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import type { ICard } from '../models/types';
+
+interface ICard {
+  icon: string;
+  title: string;
+  subtitle: string;
+  delay: number;
+}
+
 defineProps<ICard>()
 
 const el = ref<HTMLElement | null>(null)

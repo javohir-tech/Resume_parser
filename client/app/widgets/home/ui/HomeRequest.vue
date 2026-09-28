@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SectionHeader } from '~/shared/components';
+import { SectionHeader } from '~/shared/ui';
 import type { AccordionItem } from '@nuxt/ui/runtime/components/Accordion.vue.js';
 
 const { t, tm, rt } = useI18n()

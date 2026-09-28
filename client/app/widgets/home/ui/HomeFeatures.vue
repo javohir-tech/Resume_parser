@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { SectionHeader } from '~/shared/components';
-import CardList from '~/shared/components/Card/ui/CardList.vue';
-import type { ICard } from '~/shared/components';
+import { SectionHeader , CardList } from '~/shared/ui';
+
+interface ICard {
+    icon: string;
+    title: string;
+    subtitle: string;
+    delay: number;
+}
 
 const { t } = useI18n()
 

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 
 // components
-import { SectionHeader } from '~/shared/components';
-import { StepperStepContent } from '~/shared/components/StepperStepContent';
+import { SectionHeader , StepperStepContent } from '~/shared/ui';
 
 // nuxt ui 
 import type { StepperItem } from '@nuxt/ui';

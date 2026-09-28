@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SectionHeader } from '~/shared/components';
+import { SectionHeader } from '~/shared/ui';
 
 const { t } = useI18n()
 
