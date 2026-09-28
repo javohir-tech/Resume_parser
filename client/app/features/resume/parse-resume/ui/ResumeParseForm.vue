@@ -3,6 +3,7 @@ import { useResumeParse } from '../models/useResumeParse';
 
 const { t } = useI18n()
 const { resumeParse , resumeImport } = useResumeParse()
+const localePath = useLocalePath()
 
 const loading = ref(false)
 const selectedFile = ref<File | null>()
@@ -14,7 +15,9 @@ async function uploadFile() {
     const parse_resume = await resumeParse(selectedFile.value)
     if(parse_resume){
         const resume = await resumeImport(parse_resume)
-        console.log(resume)
+        if(resume?.success){
+          await navigateTo(`${localePath(`/resume/${resume?.resume_id}`)}`)
+        }
     }
   }finally{
     loading.value = false
