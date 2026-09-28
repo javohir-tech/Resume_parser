@@ -25,7 +25,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 </script>
 
 <template>
-    <UHeader title="Resume Parser" :ui="{ title: 'text-primary' }">
+    <UHeader title="Resume Parser" :toggle="false" :ui="{ title: 'text-primary' }">
         <!-- <UNavigationMenu :items="items" variant="link" /> -->
         <template #right>
             <UPopover>
@@ -43,20 +43,20 @@ const items = computed<NavigationMenuItem[]>(() => [
                 </template>
             </UPopover>
             <UColorModeButton />
-            <UPopover v-if="access_token">
+            <UPopover v-if="access_token" :content="{ side: 'bottom', align: 'end' , sideOffset : 8 }">
                 <UButton icon="i-lucide-menu" variant="ghost" color="neutral" />
                 <template #content="{close}">
                     <div class="flex flex-col gap-1 p-1 min-w-32">
-                        <UButton :to="localePath('/settings')" @click="close" color="neutral" variant="ghost">
+                        <UButton :to="localePath('/settings')" icon="i-lucide-layout-dashboard" @click="close" color="neutral" variant="ghost">
                             {{ t('account.dashboard') }}
                         </UButton>
-                        <UButton :to="localePath('/profile')" @click="close" color="neutral" variant="ghost">
+                        <UButton :to="localePath('/profile')" icon="i-lucide-user-round" @click="close" color="neutral" variant="ghost">
                             {{ t('account.profile') }}
                         </UButton>
-                        <UButton :to="localePath('/resume')" @click="close" color="neutral" variant="ghost">
+                        <UButton :to="localePath('/resume')" icon="i-lucide-files" @click="close" color="neutral" variant="ghost">
                             {{ t('account.resumes') }}
                         </UButton>
-                        <UButton @click="handle_logout" trailing-icon="i-lucide-log-out" :disabled="loading"
+                        <UButton @click="handle_logout" icon="i-lucide-log-out" :disabled="loading"
                             :loading="loading" color="error" variant="ghost">{{ t('account.logout') }}</UButton>
                     </div>
                 </template>
@@ -64,9 +64,9 @@ const items = computed<NavigationMenuItem[]>(() => [
             <UButton :to="localePath('/login')" v-else>{{ t('account.login') }}</UButton>
         </template>
 
-        <template #body>
+        <!-- <template #body> -->
             <!-- <UNavigationMenu :items="items" orientation="vertical" /> -->
-        </template>
+        <!-- </template> -->
     </UHeader>
 </template>
 
