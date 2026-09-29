@@ -16,7 +16,7 @@ const { t } = useI18n()
                         :subtitle="t('homeStart.subtitle')" />
 
                     <div class="flex lg:justify-end">
-                        <UButton size="xl" color="primary" trailing-icon="i-lucide-arrow-up-right"
+                        <UButton to="/resume" size="xl" color="primary" trailing-icon="i-lucide-arrow-up-right"
                             class="w-full justify-center gap-4 rounded-full px-7 py-4 font-medium whitespace-normal sm:w-auto"
                             :ui="{ trailingIcon: 'size-5 shrink-0' }">
                             {{ t('homeStart.button') }}

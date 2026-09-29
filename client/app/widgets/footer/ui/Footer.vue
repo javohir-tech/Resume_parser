@@ -16,14 +16,14 @@ const { t } = useI18n()
                     </h2>
                     <ul class="flex flex-col mt-2 gap-2">
                         <li>
-                            <a class="text-sm text-gray-500 transition-colors hover:text-primary" href="">
+                            <NuxtLink class="text-sm text-gray-500 transition-colors hover:text-primary" to="/#features">
                                 {{ t('footer.features') }}
-                            </a>
+                            </NuxtLink>
                         </li>
                         <li>
-                            <a class="text-sm text-gray-500 transition-colors hover:text-primary" href="">
+                            <NuxtLink class="text-sm text-gray-500 transition-colors hover:text-primary" to="/#pricing">
                                 {{ t('footer.pricing') }}
-                            </a>
+                            </NuxtLink>
                         </li>
                     </ul>
                 </div>

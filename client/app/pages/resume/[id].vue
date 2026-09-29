@@ -15,14 +15,17 @@ import { useGetResume } from '~/entities/resume';
 import { usePersonalAvtoSave } from '~/features/resume/edit-resume';
 
 definePageMeta({
-    middleware : "auth" 
+    middleware: "auth",
+    layout: "resume-editor",
+
+    key: (route) => String(route.params.id)
 })
 
-const { error, start,  flush } = usePersonalAvtoSave(800)
+const { error, start, flush } = usePersonalAvtoSave(800)
 
 const ready = ref(false)
 
-const {  getResume } = useGetResume()
+const { getResume } = useGetResume()
 
 
 const templates: Templates = {
@@ -38,31 +41,24 @@ const selectedTemplate = computed(() => templates[resumeStore.template])
 const route = useRoute()
 const resumeId = computed(() => route.params.id)
 
-
-definePageMeta({
-    layout: "resume-editor" , 
-
-    key : (route) => String(route.params.id)
-})
-
 onMounted(async () => {
     const success = await getResume(String(resumeId.value))
 
-    if(success){
+    if (success) {
         ready.value = start()
     }
 })
 
-async function saveBeforeNavigation(){
-    if(!ready.value) return true ;
+async function saveBeforeNavigation() {
+    if (!ready.value) return true;
 
     return await flush()
 }
 
 onBeforeRouteLeave(saveBeforeNavigation)
 
-onBeforeRouteUpdate(async (to , from)=>{
-    if(to.params.id !== from.params.id){
+onBeforeRouteUpdate(async (to, from) => {
+    if (to.params.id !== from.params.id) {
         return await saveBeforeNavigation()
     }
 })

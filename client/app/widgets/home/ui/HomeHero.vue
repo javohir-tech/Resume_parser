@@ -26,11 +26,11 @@ const { t } = useI18n()
                         {{ t('hero.description') }}
                     </p>
                     <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                        <UButton size="lg" color="primary" trailing-icon="i-lucide-arrow-up-right"
+                        <UButton to="/resume" size="lg" color="primary" trailing-icon="i-lucide-arrow-up-right"
                             class="justify-center rounded-xl px-5 py-3 font-semibold shadow-lg shadow-primary/10 transition-transform hover:-translate-y-0.5">
                             {{ t('hero.btn_start') }}
                         </UButton>
-                        <UButton size="lg" variant="outline" color="neutral" leading-icon="i-lucide-circle-play"
+                        <UButton to="/#how_it_works" size="lg" variant="outline" color="neutral" leading-icon="i-lucide-circle-play"
                             class="justify-center rounded-xl px-5 py-3">
                             {{ t('hero.btn_templates') }}
                         </UButton>
