@@ -54,7 +54,8 @@ function changeLanguage(value: string) {
             <h1 class="text-sm font-medium mb-3" >Resume</h1>
             <div class="flex justify-between item-center gap-x-3" >
                 <UButton block label="View" icon="i-lucide-eye" variant="outline" color="neutral" />
-                <UButton block label="download" icon="i-lucide-download" variant="outline" color="neutral" />
+                <UButton block label="Copy" icon="i-lucide-copy" variant="outline" color="neutral" />
+                <UButton block label="Download" icon="i-lucide-download" variant="outline" color="neutral" />
             </div>
         </div>
     </div>
