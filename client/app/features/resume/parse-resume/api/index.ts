@@ -16,5 +16,5 @@ export const resumeParseRequest = (file : File) => {
 export const resumeImportRequest = (resume_ai_response: ParseResumeResponse) =>
   api<ImportResumeResponse>("/api/resume/import", {
     method: "POST",
-    body: { resume: resume_ai_response },
+    body: resume_ai_response,
   });

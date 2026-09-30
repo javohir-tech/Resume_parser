@@ -6,14 +6,25 @@ import type {
   Skill,
 } from "~/entities/resume";
 
-export interface ParseResumeResponse extends Omit<Personal, "id"> {
-  experience: Omit<Experience, "id">;
-  education: Omit<Education, "id">;
-  languages: Omit<Languages, "id">;
-  skills: { title: string; skills: Omit<Skill, "id"> };
+type ParseFields<T> = {
+  [K in keyof T as Exclude<K, "id">]-?: T[K] | null;
+};
+
+export interface ParsedResume extends Omit<Personal, "id"> {
+  experience: ParseFields<Experience>[];
+  education: ParseFields<Experience>[];
+  languages: ParseFields<Languages>[];
+  skills: {
+    title: string | null;
+    skills: ParseFields<Skill>[];
+  }[];
+}
+
+export interface ParseResumeResponse {
+  resume: ParsedResume;
 }
 
 export interface ImportResumeResponse {
-    success : boolean ;
-    resume_id : string;
+  success: boolean;
+  resume_id: string;
 }
