@@ -28,7 +28,6 @@ Rules:
 - Use null as the title of ungrouped skills.
 - Do not return IDs, scores, ATS ratings or advice.
 - If this is not a resume, return null scalar values and empty lists.
-- warnings may contain short extraction caveats only.
 
 Example JSON for a document with no usable resume data:
 {
