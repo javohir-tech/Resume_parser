@@ -31,7 +31,6 @@ export const useResumeStore = defineStore("resume", () => {
     template : "classic",
     heading_title_color: null,
     entry_title_color: null,
-    text_color: null,
     font: "Inter",
   });
 
@@ -68,7 +67,6 @@ export const useResumeStore = defineStore("resume", () => {
     designInfo.value.template = "classic"
     designInfo.value.entry_title_color = null;
     designInfo.value.heading_title_color = null;
-    designInfo.value.text_color = null;
     designInfo.value.font = "Inter";
   }
 
