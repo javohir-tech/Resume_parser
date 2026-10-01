@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from app.models.educations import Education
     from app.models.languages import Language
     from app.models.skills import Skills
+    from app.models.design_info import Design
 
 
 class Resume(Base):
@@ -43,5 +44,8 @@ class Resume(Base):
         back_populates="resume", cascade="all, delete-orphan", lazy="raise"
     )
     skills: Mapped[list["Skills"]] = relationship(
+        back_populates="resume", cascade="all, delete-orphan", lazy="raise"
+    )
+    desing: Mapped["Design"] = relationship(
         back_populates="resume", cascade="all, delete-orphan", lazy="raise"
     )

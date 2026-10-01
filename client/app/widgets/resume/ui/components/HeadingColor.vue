@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useResumeStore , type ResumeColor , colorOptions } from '~/entities/resume';
+import { useResumeStore, type ResumeColor, colorOptions } from '~/entities/resume';
 import { useMediaQuery } from '@vueuse/core';
 
 const resumeStore = useResumeStore()
@@ -38,13 +38,13 @@ function selectColor(color: ResumeColor | null) {
                     <p class="mb-3 text-xs font-medium text-muted">
                         Selected: <span class="capitalize">{{ resumeStore.designInfo.heading_title_color?.name ||
                             'Default'
-                            }}</span>
+                        }}</span>
                     </p>
-                    <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-rotate-ccw"
-                        class="mb-3 w-full" :aria-pressed="resumeStore.designInfo.heading_title_color === null"
-                        @click="selectColor(null)">
+                    <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-rotate-ccw" class="mb-3 w-full"
+                        :aria-pressed="resumeStore.designInfo.heading_title_color === null" @click="selectColor(null)">
                         <span class="flex-1 text-left">Default</span>
-                        <UIcon v-if="resumeStore.designInfo.heading_title_color === null" name="i-lucide-check" class="size-4" />
+                        <UIcon v-if="resumeStore.designInfo.heading_title_color === null" name="i-lucide-check"
+                            class="size-4" />
                     </UButton>
                     <div class="grid grid-cols-4 gap-2" role="group" aria-label="Title colors">
                         <button v-for="color in colorOptions" :key="color.hex" type="button"

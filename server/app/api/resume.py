@@ -18,6 +18,7 @@ from app.schemas.resume_schemas import (
     LanguageInfo,
     SkillItemInfo,
     SkillsInfo,
+    DesingInfo,
 )
 
 from app.schemas.resume_parse_schema import ParsedResumeResult, ResumeImportResume
@@ -29,6 +30,7 @@ from app.models.educations import Education
 from app.models.languages import Language
 from app.models.skills import Skills
 from app.models.skill_item import SkillItem
+from app.models.design_info import Design
 
 from app.services.document_reader import extract_text
 from app.services.resume_parser import parse_resume, has_content
@@ -78,28 +80,16 @@ async def import_parsed_resume(
         **personal_data,
     )
 
-    resume.experience = [
-        Experience(**item.model_dump())
-        for item in data.experience
-    ]
+    resume.experience = [Experience(**item.model_dump()) for item in data.experience]
 
-    resume.education = [
-        Education(**item.model_dump())
-        for item in data.education
-    ]
+    resume.education = [Education(**item.model_dump()) for item in data.education]
 
-    resume.languages = [
-        Language(**item.model_dump())
-        for item in data.languages
-    ]
+    resume.languages = [Language(**item.model_dump()) for item in data.languages]
 
     resume.skills = [
         Skills(
             title=group.title,
-            skills=[
-                SkillItem(skill=item.skill)
-                for item in group.skills
-            ],
+            skills=[SkillItem(skill=item.skill) for item in group.skills],
         )
         for group in data.skills
     ]
@@ -113,6 +103,7 @@ async def import_parsed_resume(
         "success": True,
         "resume_id": str(resume_id),
     }
+
 
 @resume_router.get("/{resume_id}")
 async def get_resume(
@@ -238,11 +229,21 @@ async def create_resume(
             status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
         )
 
-    resume = Resume(user_id=user.id)
+    try:
+        resume = Resume(user_id=user.id)
+        db.add(resume)
 
-    db.add(resume)
-    await db.commit()
-    await db.refresh(resume)
+        await db.flush()
+
+        resume_id = resume.id
+
+        design = Design(resume_id=resume_id)
+        db.add(design)
+
+        await db.commit()
+    except:
+        await db.rollback()
+        raise
 
     return {"success": True, "resume_id": resume.id}
 
@@ -276,6 +277,47 @@ async def resume_edit(
         setattr(resume, field, value)
 
     await db.commit()
+
+
+@resume_router.patch("/edit/{resume_id}/desing")
+async def design_edit(
+    resume_id: str,
+    desing_info: DesingInfo,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    resume_uuid = UUID(resume_id)
+
+    result = await db.execute(
+        select(Resume)
+        .options(selectinload(Resume.desing))
+        .where(Resume.id == resume_uuid)
+    )
+
+    resume = result.scalar_one_or_none()
+
+    if not resume:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="resume topilmadi"
+        )
+
+    defaults = {
+        "template": "classic",
+        "font": "Inter",
+    }
+
+    desing = resume.desing
+
+    changes = desing_info.model_dump(exclude_unset=True)
+
+    for field , value in changes.items():
+        if value is None and field  in defaults :
+            value = defaults[field]
+
+        setattr(desing , field , value)
+
+    await db.commit()
+    
 
 
 @resume_router.delete("/delete/{resume_id}")

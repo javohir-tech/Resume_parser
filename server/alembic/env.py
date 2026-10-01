@@ -21,6 +21,7 @@ from app.models.experience import Experience
 from app.models.educations import Education
 from app.models.languages import Language
 from app.models.resume import Resume
+from app.models.design_info import Design
 # --- ---
 
 config = context.config

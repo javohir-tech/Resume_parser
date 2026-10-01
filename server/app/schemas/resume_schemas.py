@@ -3,6 +3,19 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
+class DesingInfo(BaseModel):
+    template: Optional[str] = Field(
+        default=None, description="resume template", examples=["classic"]
+    )
+    heading_title_color: Optional[str] = Field(
+        default=None, description="resume head color"
+    )
+    entry_title_color: Optional[str] = Field(
+        default=None, description="resume title color"
+    )
+    font: Optional[str] = Field(default=None, description="resume text font")
+
+
 class PersonalInfo(BaseModel):
     """Resume shaxsiy ma'lumotlarini qisman yangilash uchun schema."""
 
