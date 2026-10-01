@@ -19,6 +19,8 @@ const monthFormatter = new DateFormatter('en-US', {
 
 const startDate = ref<CalendarDate>()
 const endDate = ref<CalendarDate>()
+const isPresent = ref<boolean>(false)
+
 
 const props = defineProps<{
     education: Education
@@ -36,6 +38,13 @@ watch(endDate, (newDate) => {
     const month = monthFormatter.format(newDate.toDate(getLocalTimeZone()))
     const newEndDate = `${month} ${newDate.year}`
     props.education.endDate = newEndDate
+})
+
+watch(isPresent , (value)=>{
+    if(!value) return
+
+    props.education.endDate = ""
+    endDate.value = undefined
 })
 
 onMounted(() => {
@@ -61,19 +70,24 @@ onScopeDispose(() => {
 
 <template>
     <div class="flex flex-col gap-3">
+
         <UFormField :label="t('resumeEditor.degree')">
             <UInput v-model="props.education.degree" class="w-full"
                 :placeholder="t('resumeEditor.degreePlaceholder')" />
         </UFormField>
+
         <UFormField :label="t('resumeEditor.institution')">
             <UInput class="w-full" v-model="props.education.institution"
                 :placeholder="t('resumeEditor.institutionPlaceholder')" />
         </UFormField>
+
         <UFormField :label="t('resumeEditor.fieldOfStudy')">
             <UInput class="w-full" v-model="props.education.fieldOfStudy"
                 :placeholder="t('resumeEditor.fieldPlaceholder')" />
         </UFormField>
+
         <div class="grid gap-3">
+
             <UFormField :label="t('resumeEditor.startDate')" class="w-full">
                 <UPopover class="w-full">
                     <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar"
@@ -87,9 +101,12 @@ onScopeDispose(() => {
                     </template>
                 </UPopover>
             </UFormField>
+
+            <UCheckbox v-model="isPresent" label="Present"/>
+
             <UFormField :label="t('resumeEditor.endDate')" class="w-full">
                 <UPopover class="w-full">
-                    <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar"
+                    <UButton :disabled="isPresent" color="neutral" variant="outline" size="sm" icon="i-lucide-calendar"
                         class="w-full justify-start font-normal">
                         {{ endDate
                             ?
@@ -102,6 +119,7 @@ onScopeDispose(() => {
                     </template>
                 </UPopover>
             </UFormField>
+
         </div>
         <UFormField :label="t('resumeEditor.location')">
             <UInput class="w-full" v-model="props.education.location"

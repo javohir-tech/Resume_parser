@@ -19,10 +19,12 @@ const monthFormatter = new DateFormatter('en-US', {
 
 const startDate = ref<CalendarDate>()
 const endDate = ref<CalendarDate>()
+const isPresent = ref<boolean>(false)
 
 const props = defineProps<{
     experience: Experience
 }>()
+
 watch(startDate, (newDate) => {
     if (!newDate) return
     const month = monthFormatter.format(
@@ -40,6 +42,13 @@ watch(endDate, (newDate) => {
     )
     const newEndDate = `${month} ${newDate.year}`
     props.experience.endDate = newEndDate
+})
+
+watch(isPresent , (value)=>{
+    if(!value) return 
+
+    props.experience.endDate = ""
+    endDate.value = undefined
 })
 
 onMounted(() => {
@@ -63,6 +72,7 @@ onScopeDispose(()=>{
 </script>
 
 <template>
+
     <div class="space-y-3 mb-3">
         <UFormField :label="t('resumeEditor.position')">
             <UInput v-model="props.experience.position" class="w-full"
@@ -73,11 +83,14 @@ onScopeDispose(()=>{
                 :placeholder="t('resumeEditor.companyPlaceholder')" />
         </UFormField>
     </div>
+    
     <UFormField :label="t('resumeEditor.location')" class="mb-3">
         <UInput class="w-full" :placeholder="t('resumeEditor.locationPlaceholder')"
             v-model="props.experience.location" />
     </UFormField>
+
     <div class="grid gap-3 mb-3">
+
         <UFormField :label="t('resumeEditor.startDate')" class="w-full">
             <UPopover class="w-full">
                 <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar"
@@ -91,9 +104,12 @@ onScopeDispose(()=>{
                 </template>
             </UPopover>
         </UFormField>
+
+            <UCheckbox v-model="isPresent" label="Present"/>
+
         <UFormField :label="t('resumeEditor.endDate')" class="w-full">
             <UPopover class="w-full">
-                <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-calendar"
+                <UButton :disabled="isPresent" color="neutral" variant="outline" size="sm" icon="i-lucide-calendar"
                     class="w-full justify-start font-normal">
                     {{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : props.experience.endDate ||
                         'Select a date' }}
@@ -104,9 +120,12 @@ onScopeDispose(()=>{
                 </template>
             </UPopover>
         </UFormField>
+
     </div>
+
     <UFormField :label="t('resumeEditor.description')">
         <UTextarea :rows="5" class="w-full" v-model="props.experience.description"
             :placeholder="t('resumeEditor.descriptionPlaceholder')" />
     </UFormField>
+
 </template>
