@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { useResumeStore, templates } from '~/entities/resume/index.ts';
-
-import HeadingColor from './components/HeadingColor.vue';
-import EntryTitleColor from './components/EntryTitleColor.vue';
-import FontChoose from './components/FontChoose.vue';
-
+import { EntryTitleColor , HeadingColor , FontChoose } from '~/features/resume/design-edit';
 
 const resumeStore = useResumeStore()
 
