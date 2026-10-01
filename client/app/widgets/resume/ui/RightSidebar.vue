@@ -24,7 +24,7 @@ function changeLanguage(value: string) {
 <template>
     <div class="flex flex-col gap-4">
         <UFormField label="Templates">
-            <USelect v-model="resumeStore.template" :items="templates" icon="i-lucide-layout-template" class="w-full" />
+            <USelect v-model="resumeStore.designInfo.template" :items="templates" icon="i-lucide-layout-template" class="w-full" />
         </UFormField>
 
         <UFormField :label="t('resumeDocument.language')">
@@ -53,8 +53,7 @@ function changeLanguage(value: string) {
         <div>
             <h1 class="text-sm font-medium mb-3" >Resume</h1>
             <div class="flex justify-between item-center gap-x-3" >
-                <UButton block label="View" icon="i-lucide-eye" variant="outline" color="neutral" />
-                <UButton block label="Copy" icon="i-lucide-copy" variant="outline" color="neutral" />
+                <UButton :disabled="!resumeStore.resume.id" :to="resumeStore.resume.id ? `/resume/${resumeStore.resume.id}/view` : ''" block label="View" icon="i-lucide-eye" variant="outline" color="neutral" />
                 <UButton block label="Download" icon="i-lucide-download" variant="outline" color="neutral" />
             </div>
         </div>

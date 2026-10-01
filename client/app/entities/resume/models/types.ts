@@ -60,6 +60,7 @@ export interface Resume extends Personal {
 export type ResumeColor = { name: string; hex: string };
 
 export interface DesignInfo {
+  template : TemplateName
   heading_title_color: null | ResumeColor;
   entry_title_color: null | ResumeColor;
   text_color: null | ResumeBlock;

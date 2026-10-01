@@ -38,7 +38,7 @@ const templates: Templates = {
 }
 
 const resumeStore = useResumeStore()
-const selectedTemplate = computed(() => templates[resumeStore.template])
+const selectedTemplate = computed(() => templates[resumeStore.designInfo.template])
 const route = useRoute()
 const resumeId = computed(() => route.params.id)
 

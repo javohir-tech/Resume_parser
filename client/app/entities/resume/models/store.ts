@@ -9,7 +9,6 @@ import type {
 
 export const useResumeStore = defineStore("resume", () => {
 
-  const template = ref<TemplateName>("classic");
 
   const resume = ref<Resume>({
     id : "",
@@ -29,6 +28,7 @@ export const useResumeStore = defineStore("resume", () => {
   });
 
   const designInfo = ref<DesignInfo>({
+    template : "classic",
     heading_title_color: null,
     entry_title_color: null,
     text_color: null,
@@ -65,6 +65,7 @@ export const useResumeStore = defineStore("resume", () => {
   }
 
   function restartDesign() {
+    designInfo.value.template = "classic"
     designInfo.value.entry_title_color = null;
     designInfo.value.heading_title_color = null;
     designInfo.value.text_color = null;
@@ -72,7 +73,6 @@ export const useResumeStore = defineStore("resume", () => {
   }
 
   return {
-    template,
     resume,
     designInfo,
     restartInfo,
