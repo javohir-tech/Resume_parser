@@ -86,6 +86,7 @@ export function useEditDesign(delay = 800) {
         if (store.resume.id !== id || !saved.value) return false;
         const sent = snapshot();
         const changes = changedFields(saved.value, sent);
+        
         if (!Object.keys(changes).length) return true;
 
         await editDesignRequest(id, changes);
