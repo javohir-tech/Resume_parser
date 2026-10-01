@@ -14,7 +14,7 @@ import {
 import { useGetResume } from '~/entities/resume';
 
 import { usePersonalAvtoSave } from '~/features/resume/edit-resume';
-import { useEditDesign } from '~/features/resume/design-edit/models/useEditDesign';
+import { useEditDesign } from '~/features/resume/design-edit';
 
 definePageMeta({
     middleware: "auth",
@@ -23,8 +23,8 @@ definePageMeta({
     key: (route) => String(route.params.id)
 })
 
-const { error, start, flush } = usePersonalAvtoSave(800)
-// const { editDesign } = useEditDesign()
+const { start, flush } = usePersonalAvtoSave(800)
+const { start: startDesign, flush: flushDesign } = useEditDesign(800)
 
 const ready = ref(false)
 
@@ -40,7 +40,7 @@ const templates: Templates = {
 }
 
 const resumeStore = useResumeStore()
-const selectedTemplate = computed(() => templates[resumeStore.designInfo.template])
+const selectedTemplate = computed(() => templates[resumeStore.designInfo.template ?? 'classic'])
 const route = useRoute()
 const resumeId = computed(() => route.params.id)
 
@@ -48,14 +48,17 @@ onMounted(async () => {
     const success = await getResume(String(resumeId.value))
 
     if (success) {
-        ready.value = start()
+        const personalReady = start()
+        const designReady = startDesign()
+        ready.value = personalReady && designReady
     }
 })
 
 async function saveBeforeNavigation() {
     if (!ready.value) return true;
 
-    return await flush()
+    const results = await Promise.all([flush(), flushDesign()])
+    return results.every(Boolean)
 }
 
 onBeforeRouteLeave(saveBeforeNavigation)

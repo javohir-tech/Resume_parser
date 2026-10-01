@@ -60,10 +60,10 @@ export interface Resume extends Personal {
 export type ResumeColor = { name: string; hex: string };
 
 export interface DesignInfo {
-  template : TemplateName
+  template : TemplateName | null
   heading_title_color: null | ResumeColor;
   entry_title_color: null | ResumeColor;
-  font: FontOption;
+  font: FontOption | null;
 }
 
 export type ResumeSection = "experience" | "education" | "skills" | "languages";
