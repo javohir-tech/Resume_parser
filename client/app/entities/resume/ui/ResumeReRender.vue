@@ -89,6 +89,12 @@ const gapPx = computed(() => PAGE_GAP_PX * scale.value)
             <component :is="template.languages" v-for="item in page.languages.items" :key="item.id" :item="item" />
           </template>
 
+          <span class="absolute bottom-[24px] right-[15mm] inline-flex items-center gap-2 text-[10px] leading-none tabular-nums text-gray-400"> 
+            <span class="font-medium text-gray-600">{{ i + 1 }}</span>
+            <span aria-hidden="true" class="text-gray-300">/</span>
+            <span>{{ pageContents.length }}</span>
+          </span>
+
         </component>
       </div>
     </div>
