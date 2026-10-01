@@ -106,11 +106,8 @@ async def import_parsed_resume(
 
 
 @resume_router.get("/{resume_id}")
-async def get_resume(
-    resume_id: str, db: AsyncSession = Depends(get_db), user_id=Depends(verify)
-):
+async def get_resume(resume_id: str, db: AsyncSession = Depends(get_db)):
     """Return resume data using the frontend field names."""
-    user_uuid = UUID(user_id)
     resume_uuid = UUID(resume_id)
 
     result = await db.execute(
@@ -186,6 +183,33 @@ async def get_resume(
             }
             for skills_group in resume.skills
         ],
+    }
+
+
+@resume_router.get("/{resume_id}/design")
+async def get_resume_design(resume_id: str, db: AsyncSession = Depends(get_db)):
+    resume_uuid = UUID(resume_id)
+
+    result = await db.execute(
+        select(Resume)
+        .options(selectinload(Resume.desing))
+        .where(Resume.id == resume_uuid)
+    )
+
+    resume = result.scalar_one_or_none()
+
+    if not resume:
+        raise HTTPException(
+            status_code=404, detail="Design malumotlarini yuklashda hatolik yuz berdi"
+        )
+
+    design = resume.desing
+
+    return {
+        "template": design.template,
+        "heading_title_color": design.heading_title_color,
+        "entry_title_color": design.entry_title_color,
+        "font": design.font,
     }
 
 
@@ -279,7 +303,7 @@ async def resume_edit(
     await db.commit()
 
 
-@resume_router.patch("/edit/{resume_id}/desing")
+@resume_router.patch("/edit/{resume_id}/design")
 async def design_edit(
     resume_id: str,
     desing_info: DesingInfo,
@@ -310,14 +334,13 @@ async def design_edit(
 
     changes = desing_info.model_dump(exclude_unset=True)
 
-    for field , value in changes.items():
-        if value is None and field  in defaults :
+    for field, value in changes.items():
+        if value is None and field in defaults:
             value = defaults[field]
 
-        setattr(desing , field , value)
+        setattr(desing, field, value)
 
     await db.commit()
-    
 
 
 @resume_router.delete("/delete/{resume_id}")

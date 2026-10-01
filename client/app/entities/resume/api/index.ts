@@ -1,7 +1,4 @@
-import type {
-  Resume,
-  Personal
-} from "../models/types";
+import type { Resume, Personal , DesignInfo } from "../models/types";
 import { api } from "~/shared/api";
 
 export const getResumeFetch = (resume_id: string) =>
@@ -11,3 +8,6 @@ export const getMyResumes = () =>
   api<Pick<Personal, "id" | "fullname" | "title">[]>("/api/resume/my/resumes", {
     method: "GET",
   });
+
+export const getResumeDesignRequest = (resume_id: string) =>
+  api<DesignInfo>(`/api/resume/${resume_id}/design`);

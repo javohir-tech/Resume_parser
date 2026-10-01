@@ -14,6 +14,7 @@ import {
 import { useGetResume } from '~/entities/resume';
 
 import { usePersonalAvtoSave } from '~/features/resume/edit-resume';
+import { useEditDesign } from '~/features/resume/design-edit/models/useEditDesign';
 
 definePageMeta({
     middleware: "auth",
@@ -23,6 +24,7 @@ definePageMeta({
 })
 
 const { error, start, flush } = usePersonalAvtoSave(800)
+// const { editDesign } = useEditDesign()
 
 const ready = ref(false)
 
