@@ -57,6 +57,7 @@ export interface Resume extends Personal {
   experience?: Experience[];
   languages?: Languages[];
 }
+
 export type ResumeColor = { name: string; hex: string };
 
 export interface DesignInfo {

@@ -1,17 +1,8 @@
-import type {
-  Resume,
-  Templates,
-  TemplateName,
-  ResumeColor,
-  DesignInfo,
-  Personal
-} from "./types";
+import type { Resume, ResumeColor, DesignInfo } from "./types";
 
 export const useResumeStore = defineStore("resume", () => {
-
-
   const resume = ref<Resume>({
-    id : "",
+    id: "",
     fullname: "",
     title: "",
     email: "",
@@ -28,7 +19,7 @@ export const useResumeStore = defineStore("resume", () => {
   });
 
   const designInfo = ref<DesignInfo>({
-    template : "classic",
+    template: "classic",
     heading_title_color: null,
     entry_title_color: null,
     font: "Inter",
@@ -46,25 +37,25 @@ export const useResumeStore = defineStore("resume", () => {
     designInfo.value.entry_title_color = color;
   }
 
-  function restartInfo(){
-    resume.value.id  = ""  , 
-    resume.value.fullname =  "",
-    resume.value.title =  "",
-    resume.value.email =  "",
-    resume.value.phone =  "",
-    resume.value.location =  "",
-    resume.value.website =  "",
-    resume.value.github_link =  "",
-    resume.value.linkedin_link =  "",
-    resume.value.summary =  "",
-    resume.value.skills =  [],
-    resume.value.education =  [],
-    resume.value.experience =  [],
-    resume.value.languages =  []
+  function restartInfo() {
+    ((resume.value.id = ""),
+      (resume.value.fullname = ""),
+      (resume.value.title = ""),
+      (resume.value.email = ""),
+      (resume.value.phone = ""),
+      (resume.value.location = ""),
+      (resume.value.website = ""),
+      (resume.value.github_link = ""),
+      (resume.value.linkedin_link = ""),
+      (resume.value.summary = ""),
+      (resume.value.skills = []),
+      (resume.value.education = []),
+      (resume.value.experience = []),
+      (resume.value.languages = []));
   }
 
   function restartDesign() {
-    designInfo.value.template = "classic"
+    designInfo.value.template = "classic";
     designInfo.value.entry_title_color = null;
     designInfo.value.heading_title_color = null;
     designInfo.value.font = "Inter";
