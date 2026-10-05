@@ -6,17 +6,7 @@ const rigthOpen = ref(true)
 
 <template>
     <div class="flex flex-1">
-        <USidebar v-model:open="open" variant="sidebar" collapsible="offcanvas" :style="{ '--sidebar-width': '22rem' }"
-            :ui="{
-                container: 'h-full'
-            }">
-            <template #header>
-
-            </template>
-            <div class="flex flex-col gap-4">
-                <LeftSidebar />
-            </div>
-        </USidebar>
+        <LeftSidebar v-model:open="open" />
 
 
         <div class="flex flex-1 h-screen overflow-hidden">
@@ -25,11 +15,15 @@ const rigthOpen = ref(true)
 
                 <div
                     class="h-(--ui-header-height) shrink-0 flex items-center justify-between px-4 border-b border-default">
+
                     <UButton icon="i-lucide-panel-left" color="neutral" variant="ghost" aria-label="Toggle sidebar"
                         @click="open = !open" />
+
                     <UColorModeButton />
+
                     <UButton icon="i-lucide-panel-right" color="neutral" variant="ghost" aria-label="Toggle sidebar"
                         @click="rigthOpen = !rigthOpen" />
+
                 </div>
                 <div class="flex-1 overflow-y-auto">
                     <slot />
@@ -38,17 +32,7 @@ const rigthOpen = ref(true)
         </div>
 
 
-        <USidebar v-model:open="rigthOpen" variant="sidebar" side="right" collapsible="offcanvas"
-            :style="{ '--sidebar-width': '22rem' }" :ui="{
-                container: 'h-full'
-            }">
-            <template #header>
-
-            </template>
-            <div class="flex flex-col gap-4">
-                <RightSidebar />
-            </div>
-        </USidebar>
+        <RightSidebar v-model:open="rigthOpen" />
 
 
     </div>
