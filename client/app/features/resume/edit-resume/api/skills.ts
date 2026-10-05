@@ -1,15 +1,15 @@
 import { api } from "~/shared/api";
-import type { Skill, SkillGroup } from "~/entities/resume";
+import type {  SkillGroup } from "~/entities/resume";
 
 ///////////////////////////////////////////////
 // Skill groups
 ///////////////////////////////////////////////
-export const createSkillGroupFetch = (resume_id: string) =>
+export const createSkillGroupRequest = (resume_id: string) =>
   api<{ skills_id: string }>(`/api/resume/skills/create/${resume_id}`, {
     method: "POST",
   });
 
-export const editSkillGroupFetch = (
+export const editSkillGroupRequest = (
   skills_group_id: string,
   skills_info: Pick<SkillGroup, "title">,
 ) =>
@@ -18,7 +18,7 @@ export const editSkillGroupFetch = (
     body: skills_info,
   });
 
-export const deleteSkillGroupFetch = (skills_id: string) =>
+export const deleteSkillGroupRequest = (skills_id: string) =>
   api<{ detail: string }>(`/api/resume/skills/delete/${skills_id}`, {
     method: "DELETE",
   });
@@ -26,7 +26,7 @@ export const deleteSkillGroupFetch = (skills_id: string) =>
 ///////////////////////////////////////////////
 // Skill items
 ///////////////////////////////////////////////
-export const createSkillItemFetch = (
+export const createSkillItemRequest = (
   skills_group_id: string,
   skill_info: { skill: string },
 ) =>
@@ -38,7 +38,7 @@ export const createSkillItemFetch = (
     },
   );
 
-export const deleteSkillItemFetch = (skill_item_id: string) =>
+export const deleteSkillItemRequest = (skill_item_id: string) =>
   api<{ detail: string }>(`/api/resume/skill_item/delete/${skill_item_id}`, {
     method: "DELETE",
   });
