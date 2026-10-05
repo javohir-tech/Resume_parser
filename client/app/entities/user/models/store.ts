@@ -1,7 +1,5 @@
 import { fetchGetMe } from "../api";
 import type { IUser } from "./types";
-import { FetchError } from "ofetch";
-import type { ApiErrorBody } from "~/shared/types";
 import { apiError, useApiToasts } from "~/shared/lib";
 
 export const useUserStore = defineStore("user", () => {

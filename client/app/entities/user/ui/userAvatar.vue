@@ -28,9 +28,7 @@ const gradientClass = computed(() => {
 <template>
   <div
     class="relative isolate flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full bg-gradient-to-br font-semibold text-white shadow-sm ring-1 ring-inset ring-black/5"
-    :class="[gradientClass, size === 'lg' ? 'size-24 text-3xl' : 'size-7 text-[10px]']"
-    aria-hidden="true"
-  >
+    :class="[gradientClass, size === 'lg' ? 'size-24 text-3xl' : 'size-7 text-[10px]']" aria-hidden="true">
     <span class="pointer-events-none absolute -left-1/4 -top-1/2 size-full rounded-full bg-white/15" />
     <span class="relative tracking-wide">{{ initials }}</span>
   </div>

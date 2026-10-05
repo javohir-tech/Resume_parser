@@ -39,8 +39,7 @@ const deleteSession = (device_id: string) => {
                     <USkeleton v-for="i in 3" :key="i" class="h-20 w-full" />
                 </div>
 
-                <UAlert v-else-if="error" color="error" variant="soft"
-                    :title="t('profile.sessions.loadError')" />
+                <UAlert v-else-if="error" color="error" variant="soft" :title="t('profile.sessions.loadError')" />
 
                 <div v-else class="divide-y divide-default">
                     <div v-for="session in data?.sessions ?? []" :key="session.id" class="py-4 first:pt-0 last:pb-0">

@@ -49,7 +49,8 @@ const registeredDate = computed(() => {
             </div>
 
             <div class="px-5 pb-6 sm:px-9 sm:pb-9">
-                <div class="relative -mt-12 flex flex-col items-start gap-5 sm:flex-row sm:items-end sm:justify-between">
+                <div
+                    class="relative -mt-12 flex flex-col items-start gap-5 sm:flex-row sm:items-end sm:justify-between">
                     <div class="min-w-0 max-w-full">
                         <div class="inline-flex rounded-full bg-default p-1.5 shadow-sm">
                             <UserAvatar size="lg" />
@@ -71,14 +72,16 @@ const registeredDate = computed(() => {
                             <UIcon name="i-lucide-send" class="size-4 shrink-0 text-primary" />
                             {{ t('profile.telegramId') }}
                         </dt>
-                        <dd class="mt-3 break-all font-mono text-base font-medium text-highlighted">{{ user.telegram_id }}</dd>
+                        <dd class="mt-3 break-all font-mono text-base font-medium text-highlighted">{{ user.telegram_id
+                            }}</dd>
                     </div>
                     <div class="min-w-0 rounded-2xl border border-default bg-elevated/40 p-5">
                         <dt class="flex items-center gap-2 text-sm text-muted">
                             <UIcon name="i-lucide-at-sign" class="size-4 shrink-0 text-primary" />
                             {{ t('profile.username') }}
                         </dt>
-                        <dd class="mt-3 break-all text-base font-medium text-highlighted">{{ user.username ? `@${user.username}` : '—' }}</dd>
+                        <dd class="mt-3 break-all text-base font-medium text-highlighted">{{ user.username ?
+                            `@${user.username}` : '—' }}</dd>
                     </div>
                     <div class="min-w-0 rounded-2xl border border-default bg-elevated/40 p-5">
                         <dt class="flex items-center gap-2 text-sm text-muted">
@@ -88,7 +91,9 @@ const registeredDate = computed(() => {
                         <dd class="mt-3 text-base font-medium text-highlighted">
                             <ClientOnly>
                                 <time :datetime="user.registered_at">{{ registeredDate }}</time>
-                                <template #fallback><USkeleton class="h-6 w-32" /></template>
+                                <template #fallback>
+                                    <USkeleton class="h-6 w-32" />
+                                </template>
                             </ClientOnly>
                         </dd>
                     </div>
@@ -96,8 +101,7 @@ const registeredDate = computed(() => {
             </div>
         </div>
 
-        <UAlert v-else color="error" variant="soft" icon="i-lucide-circle-alert"
-            :title="t('profile.loadError')" />
+        <UAlert v-else color="error" variant="soft" icon="i-lucide-circle-alert" :title="t('profile.loadError')" />
     </section>
 </template>
 
