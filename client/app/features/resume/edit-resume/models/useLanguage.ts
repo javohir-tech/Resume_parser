@@ -1,9 +1,9 @@
 import { useResumeStore } from "~/entities/resume";
 import type { Languages } from "~/entities/resume";
 import {
-  createLanguageFetch,
-  editLanguageFetch,
-  deleteLanguageFetch,
+  createLanguageRequest,
+  editLanguageRequest,
+  deleteLanguageRequest,
 } from "../api/language";
 import { useApiToasts, apiError } from "~/shared/lib";
 
@@ -29,7 +29,7 @@ export function useLanguage() {
   async function createLanguage(resume_id: string = resumeStore.resume.id) {
     isCreating.value = true;
     try {
-      const response = await createLanguageFetch(resume_id);
+      const response = await createLanguageRequest(resume_id);
       resumeStore.resume.languages?.push({
         id: response.language_id,
         language: "",
@@ -70,7 +70,7 @@ export function useLanguage() {
         const changes = queue.pending;
         queue.pending = {};
         try {
-          await editLanguageFetch(id, changes);
+          await editLanguageRequest(id, changes);
         } catch (error) {
           queue.pending = { ...changes, ...queue.pending };
           const err = apiError(error);
@@ -96,10 +96,12 @@ export function useLanguage() {
     if (isDeleting(language_id)) return;
     deletingIds.value.add(language_id);
     try {
-      await deleteLanguageFetch(language_id);
-      resumeStore.resume.languages = resumeStore.resume.languages?.filter(
-        (l) => l.id !== language_id,
-      );
+      const response = await deleteLanguageRequest(language_id);
+      if (response.success) {
+        resumeStore.resume.languages = resumeStore.resume.languages?.filter(
+          (l) => l.id !== language_id,
+        );
+      }
     } catch (error) {
       const err = apiError(error);
       showError(err.message);

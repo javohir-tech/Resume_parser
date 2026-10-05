@@ -1,12 +1,12 @@
 import { api } from "~/shared/api";
 import type { Languages } from "~/entities/resume";
 
-export const createLanguageFetch = (resume_id: string) =>
+export const createLanguageRequest = (resume_id: string) =>
   api<{ language_id: string }>(`/api/resume/language/create/${resume_id}`, {
-    method: "POST",
+    method: "POST", 
   });
 
-export const editLanguageFetch = (
+export const editLanguageRequest = (
   language_id: string,
   language_info: Partial<Omit<Languages, "id">>,
 ) =>
@@ -15,7 +15,7 @@ export const editLanguageFetch = (
     body: language_info,
   });
 
-export const deleteLanguageFetch = (language_id: string) =>
-  api<{ detail: string }>(`/api/resume/language/delete/${language_id}`, {
+export const deleteLanguageRequest = (language_id: string) =>
+  api<{ success : boolean ,  detail: string }>(`/api/resume/language/delete/${language_id}`, {
     method: "DELETE",
   });
