@@ -32,11 +32,11 @@ const gapPx = computed(() => PAGE_GAP_PX * scale.value)
   <!-- Ko'rinmas o'lchov qatlami: har bir blok haqiqiy kontent kengligida render qilinadi -->
   <div class="fixed opacity-0 pointer-events-none -z-10 top-0 left-0" :style="{
     width: `${PAGE_CONTENT_WIDTH_PX}px`,
-    fontFamily: resumeStore.designInfo.font,
+    fontFamily: resumeStore.designInfo.font ?? undefined,
     fontSize: '12px',
     lineHeight: '1.7',
     overflowWrap: 'break-word',
-    wordBreak: 'break-word'
+    wordBreak: 'break-word',
   }">
     <template v-for="block in blocks" :key="block.id">
       <component :is="template.header" v-if="block.type === 'header'" :ref="setMeasureRef(block.id)" :resume="resume" />
@@ -89,7 +89,8 @@ const gapPx = computed(() => PAGE_GAP_PX * scale.value)
             <component :is="template.languages" v-for="item in page.languages.items" :key="item.id" :item="item" />
           </template>
 
-          <span class="absolute bottom-[24px] right-[15mm] inline-flex items-center gap-2 text-[10px] leading-none tabular-nums text-gray-400"> 
+          <span
+            class="absolute bottom-[24px] right-[15mm] inline-flex items-center gap-2 text-[10px] leading-none tabular-nums text-gray-400">
             <span class="font-medium text-gray-600">{{ i + 1 }}</span>
             <span aria-hidden="true" class="text-gray-300">/</span>
             <span>{{ pageContents.length }}</span>

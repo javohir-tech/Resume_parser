@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {
-    ResumeRenderer,
+    PaginatedResume,
     useResumeStore,
     ClassicTemplate,
     ModernTemplate,
@@ -77,6 +77,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <component :is="selectedTemplate.renderer || ResumeRenderer" :template="selectedTemplate"
+    <component :is="selectedTemplate.renderer || PaginatedResume" :template="selectedTemplate"
         :resume="resumeStore.resume" />
 </template>

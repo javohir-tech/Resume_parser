@@ -1,4 +1,4 @@
-export { default as ResumeRenderer } from "./ui/ResumeReRender.vue";
+export { default as PaginatedResume } from "./ui/PaginatedResume.vue.vue";
 export { default as ResumeCard } from "./ui/resumeCard.vue";
 
 export { useResumeStore } from "./models/store.ts";

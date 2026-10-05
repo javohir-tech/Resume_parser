@@ -4,7 +4,7 @@ definePageMeta({
 })
 
 import {
-    ResumeRenderer,
+    PaginatedResume,
     useResumeStore,
     ClassicTemplate,
     ModernTemplate,
@@ -28,7 +28,7 @@ const templates : Templates = {
 const resumeStore = useResumeStore()
 const route = useRoute()
 const resumeId = computed(() => route.params.id)
-const selectedTemplate = computed(()=>templates[resumeStore.designInfo.template])
+const selectedTemplate = computed(()=>templates[resumeStore.designInfo.template ?? "classic"])
 const {getResume} = useGetResume()
 
 onMounted(async()=>{
@@ -42,5 +42,5 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <component :is="selectedTemplate.renderer || ResumeRenderer" :template="selectedTemplate" :resume="resumeStore.resume"/>
+    <component :is="selectedTemplate.renderer || PaginatedResume" :template="selectedTemplate" :resume="resumeStore.resume"/>
 </template>

@@ -4,7 +4,6 @@ import type {
   SkillGroup,
   ResumeBlock,
   Languages,
-  Resume,
 } from "./types";
 
 const MM_TO_PX = 3.7795275591;
