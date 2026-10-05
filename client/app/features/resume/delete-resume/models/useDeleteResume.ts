@@ -1,4 +1,4 @@
-import { deleteResumeFetch } from "../api";
+import { deleteResumeRequest } from "../api";
 import { useApiToasts, apiError } from "~/shared/lib";
 
 export function useDeleteResume() {
@@ -13,7 +13,7 @@ export function useDeleteResume() {
     deleteingIds.value.add(resume_id);
 
     try {
-      const response = await deleteResumeFetch(resume_id);
+      const response = await deleteResumeRequest(resume_id);
       if (response.success) {
         showSuccess(response.message);
         return true;
