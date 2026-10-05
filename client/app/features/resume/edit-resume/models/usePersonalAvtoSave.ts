@@ -1,5 +1,5 @@
 import { useResumeStore } from "~/entities/resume";
-import { editResumeFetch } from "../api/personal";
+import { editResumeRequest } from "../api/personal";
 
 const fields = [
   "fullname",
@@ -91,7 +91,7 @@ export function usePersonalAvtoSave(delay = 800) {
 
         if (!Object.keys(changes).length) return true;
 
-        await editResumeFetch(id, changes);
+        await editResumeRequest(id, changes);
 
         if (disposed  || store.resume.id !== id) {
           return false;
