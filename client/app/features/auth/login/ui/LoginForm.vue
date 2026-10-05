@@ -8,7 +8,7 @@ const props = defineProps<{
 const code = ref<number[]>([])
 const pinKey = ref(0)
 
-const { loading, countdownInterval, to_many_request, login } = useLogin()
+const { loading , to_many_request, login } = useLogin()
 
 watch(code, async (newCode) => {
     if (newCode.length === 6) {
