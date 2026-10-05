@@ -8,7 +8,7 @@ const localePath = useLocalePath()
 const loading = ref(false)
 const selectedFile = ref<File | null>()
 
-async function uploadFile() {
+async function handleParseResume() {
   if (!selectedFile.value) return
   loading.value = true
   try{
@@ -37,7 +37,7 @@ async function uploadFile() {
       {{ t('resumeWorkspace.uploadHint') }}
     </p>
     <div class="flex justify-end">
-      <UButton @click="uploadFile" type="submit" :loading="loading" :disabled="loading" size="lg" icon="i-lucide-sparkles" class="w-full justify-center sm:w-auto">
+      <UButton @click="handleParseResume" type="submit" :loading="loading" :disabled="loading" size="lg" icon="i-lucide-sparkles" class="w-full justify-center sm:w-auto">
         {{ t('resumeWorkspace.parseAction') }}
       </UButton>
     </div>

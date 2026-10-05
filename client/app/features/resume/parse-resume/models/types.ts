@@ -12,7 +12,7 @@ type ParseFields<T> = {
 
 export interface ParsedResume extends Omit<Personal, "id"> {
   experience: ParseFields<Experience>[];
-  education: ParseFields<Experience>[];
+  education: ParseFields<Education>[];
   languages: ParseFields<Languages>[];
   skills: {
     title: string | null;
