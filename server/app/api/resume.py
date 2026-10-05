@@ -689,7 +689,7 @@ async def delete_language(
     await db.delete(language)
     await db.commit()
 
-    return {"detail": "Language deleted successfully"}
+    return {"success": True, "detail": "Language deleted successfully"}
 
 
 # /////////////////////////////////////////////////////////////
