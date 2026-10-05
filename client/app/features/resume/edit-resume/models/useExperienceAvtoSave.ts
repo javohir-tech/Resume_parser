@@ -1,5 +1,5 @@
 import { useResumeStore } from "~/entities/resume";
-import { editExperienceFetch } from "../api/experience";
+import { editExperienceRequest } from "../api/experience";
 import type { Experience } from "~/entities/resume";
 
 const fields = [
@@ -97,7 +97,7 @@ export function useExperienceAvtoSave(delay = 800) {
 
         if (!Object.keys(changes).length) return true;
 
-        await editExperienceFetch(id, changes);
+        await editExperienceRequest(id, changes);
 
         if (disposed || !experience) return false;
 

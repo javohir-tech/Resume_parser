@@ -1,7 +1,7 @@
 import { useResumeStore } from "~/entities/resume";
 import {
-  createExperienceFetch,
-  deleteExperienceFetch,
+  createExperienceRequest,
+  deleteExperienceRequest,
 } from "../api/experience";
 import { useApiToasts, apiError } from "~/shared/lib";
 
@@ -14,7 +14,7 @@ export function useExperience() {
   async function createExperience(resume_id: string = resumeStore.resume.id) {
     isCreating.value = true;
     try {
-      const response = await createExperienceFetch(resume_id);
+      const response = await createExperienceRequest(resume_id);
       resumeStore.resume.experience?.push({
         id: response.experience_id,
         position: "",
@@ -40,7 +40,7 @@ export function useExperience() {
 
     deletingIds.value.add(experience_id);
     try {
-      await deleteExperienceFetch(experience_id);
+      await deleteExperienceRequest(experience_id);
       resumeStore.resume.experience = resumeStore.resume.experience?.filter(
         (exp) => exp.id !== experience_id,
       );
