@@ -1,4 +1,4 @@
-import { createResumeFetch } from "../api";
+import { createResumeRequest } from "../api";
 import { useApiToasts, apiError } from "~/shared/lib";
 
 export function useCreateResume() {
@@ -9,7 +9,7 @@ export function useCreateResume() {
   async function createResume() {
     loading.value = true;
     try {
-      const response = await createResumeFetch();
+      const response = await createResumeRequest();
       if (response.success) {
         await navigateTo(localPath(`/resume/${response.resume_id}`));
       }
