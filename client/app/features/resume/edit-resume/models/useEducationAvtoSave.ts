@@ -1,5 +1,5 @@
 import { useResumeStore } from "~/entities/resume";
-import { editEducationFetch } from "../api/education";
+import { editEducationRequest } from "../api/education";
 
 const fields = [
   "degree",
@@ -46,7 +46,9 @@ export function useEducationSaveAvto(delay = 800) {
 
     if (!education) return false;
 
-    return fields.some((field) => (education[field] ?? "") !== saved.value![field]);
+    return fields.some(
+      (field) => (education[field] ?? "") !== saved.value![field],
+    );
   });
 
   function clearTimer() {
@@ -92,7 +94,7 @@ export function useEducationSaveAvto(delay = 800) {
 
         if (!Object.keys(changes).length) return true;
 
-        await editEducationFetch(id, changes);
+        await editEducationRequest(id, changes);
 
         if (disposed) return false;
 
@@ -133,7 +135,7 @@ export function useEducationSaveAvto(delay = 800) {
     try {
       return await running;
     } finally {
-      running = null
+      running = null;
     }
   }
 

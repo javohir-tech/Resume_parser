@@ -1,9 +1,9 @@
 import {
-  createEducationFetch,
-  deleteEducationFetch,
+  createEducationRequset,
+  deleteEducationRequest,
 } from "../api/education";
 import { useResumeStore } from "~/entities/resume";
-import { useApiToasts , apiError } from "~/shared/lib";
+import { useApiToasts, apiError } from "~/shared/lib";
 
 export function useEducation() {
   const isCreating = ref(false);
@@ -14,7 +14,7 @@ export function useEducation() {
   async function createEducation(resume_id: string = resumeStore.resume.id) {
     isCreating.value = true;
     try {
-      const response = await createEducationFetch(resume_id);
+      const response = await createEducationRequset(resume_id);
       resumeStore.resume.education?.push({
         id: response.education_id,
         fieldOfStudy: "",
@@ -25,7 +25,7 @@ export function useEducation() {
         endDate: "",
       });
     } catch (error) {
-      const err = apiError(error)
+      const err = apiError(error);
       showError(err.message);
     } finally {
       isCreating.value = false;
@@ -39,12 +39,12 @@ export function useEducation() {
     if (isDeleting(education_id)) return;
     deletingIds.value.add(education_id);
     try {
-      await deleteEducationFetch(education_id);
+      await deleteEducationRequest(education_id);
       resumeStore.resume.education = resumeStore.resume.education?.filter(
         (edc) => edc.id !== education_id,
       );
     } catch (error) {
-      const err = apiError(error)
+      const err = apiError(error);
       showError(err.message);
     } finally {
       deletingIds.value.delete(education_id);

@@ -38,7 +38,7 @@ function selectColor(color: ResumeColor | null) {
                     <p class="mb-3 text-xs font-medium text-muted">
                         Selected: <span class="capitalize">{{ resumeStore.designInfo.entry_title_color?.name ||
                             'Default'
-                        }}</span>
+                            }}</span>
                     </p>
                     <UButton color="neutral" variant="outline" size="sm" icon="i-lucide-rotate-ccw" class="mb-3 w-full"
                         :aria-pressed="resumeStore.designInfo.entry_title_color === null" @click="selectColor(null)">
