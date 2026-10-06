@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const { t } = useI18n()
-import { SkillsGroupForm } from '~/features/resume/edit-resume';
+import { SkillsGroupForm , useSkillsGroup } from '~/features/resume/edit-resume';
 import { useResumeStore } from '~/entities/resume';
-import { useSkillsGroup } from '~/features/resume/edit-resume';
+import ResumeEditorSection from '../components/ResumeEditorSection.vue';
 
 const resumeStore = useResumeStore()
 const { isCreating, createSkillsGroup, isDeleting, deleteSkillsGroup } = useSkillsGroup()
@@ -10,32 +10,27 @@ const { isCreating, createSkillsGroup, isDeleting, deleteSkillsGroup } = useSkil
 </script>
 
 <template>
-    <section class="overflow-hidden rounded-xl border border-default bg-default">
-        <div class="flex items-center gap-2.5 border-b border-default bg-elevated/50 px-4 py-3">
-            <UIcon name="i-lucide-list-checks" class="size-4 text-muted" />
-            <h2 class="flex-1 text-sm font-semibold">{{ t('resumeEditor.skills') }}</h2>
-            <span class="rounded-md bg-default px-2 py-0.5 text-xs font-medium tabular-nums text-muted">{{
-                resumeStore.resume.skills?.length || 0 }}</span>
-        </div>
-        <div class="space-y-3 p-3">
-            <div v-for="(skillsGroup, index) in resumeStore.resume.skills" :key="skillsGroup.id"
-                class="rounded-lg border border-default p-3">
-                <div class="mb-3 flex items-center gap-2 border-b border-default pb-2">
-                    <span class="min-w-0 flex-1 truncate text-xs font-semibold text-muted">{{ skillsGroup.title ||
-                        t('resumeEditor.skillsFallback', { number: index + 1 }) }}</span>
-                    <UButton type="button" color="neutral" variant="ghost" size="xs" icon="i-lucide-trash-2"
-                        class="shrink-0 hover:bg-error/10 hover:text-error" :aria-label="t('resumeEditor.skillsRemove')"
-                        :title="t('resumeEditor.skillsRemove')" :loading="isDeleting(skillsGroup.id)"
-                        :disabled="isDeleting(skillsGroup.id)" @click="deleteSkillsGroup(skillsGroup.id)" />
-                </div>
-                <SkillsGroupForm :skills-group="skillsGroup" />
-            </div>
-            <p v-if="!resumeStore.resume.skills?.length" class="px-1 py-2 text-xs leading-relaxed text-muted">
-                {{ t('resumeEditor.skillsEmpty') }}</p>
-            <UButton type="button" color="neutral" variant="outline" size="sm" icon="i-lucide-plus"
-                class="w-full justify-center rounded-lg border-dashed py-2" :loading="isCreating" :disabled="isCreating"
-                @click="createSkillsGroup()">{{ t('resumeEditor.skillsAdd') }}
-            </UButton>
-        </div>
-    </section>
+    <ResumeEditorSection
+        :items="resumeStore.resume.skills ?? []"
+        :items_count="resumeStore.resume.skills?.length ?? 0"
+        :item_header="t('resumeEditor.skills')"
+
+        :section_header="t('resumeEditor.skills')"
+        :section_icon="'i-lucide-list-checks'"
+        :section_empty="t('resumeEditor.skillsEmpty')"
+
+        @add="createSkillsGroup"
+        :add_button_title="t('resumeEditor.skillsAdd')"
+        :add_pending="isCreating"
+
+        @delete="deleteSkillsGroup"
+        :delete_button_title="t('resumeEditor.skillsRemove')"
+        :delete_pending="isDeleting"
+    >
+
+    <template #default="{item}">
+        <SkillsGroupForm :skills-group="item"/>
+    </template>
+        
+    </ResumeEditorSection>
 </template>

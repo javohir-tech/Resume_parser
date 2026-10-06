@@ -2,17 +2,17 @@
 const props = defineProps<{
     section_header: string,
     section_icon : string , 
+    section_empty: string,
+
     items_count: number,
     items: T[],
     item_header: string,
 
-    remove_button_aria_label: string,
-    remove_button_title: string,
+    delete_button_title : string,
     delete_pending ?: (id : string) => boolean , 
 
-    section_empty: string,
 
-    add_button_label: string
+    add_button_title: string
 }>()
 
 defineSlots<{
@@ -23,7 +23,7 @@ const add_pending = defineModel<boolean>("add_pending", { default: false })
 
 const emit = defineEmits<{
     add: [],
-    remove: [id: string]
+    delete: [id: string]
 }>()
 
 
@@ -48,9 +48,9 @@ const emit = defineEmits<{
                     </span>
 
                     <UButton type="button" color="neutral" variant="ghost" size="xs" icon="i-lucide-trash-2"
-                        class="shrink-0 hover:bg-error/10 hover:text-error" :aria-label="props.remove_button_aria_label"
-                        :title="props.remove_button_title" :loading="props.delete_pending?.(item.id) ?? false" :disabled="props.delete_pending?.(item.id) ?? false"
-                        @click="emit('remove', item.id)" />
+                        class="shrink-0 hover:bg-error/10 hover:text-error" :aria-label="props.delete_button_title"
+                        :title="props.delete_button_title" :loading="props.delete_pending?.(item.id) ?? false" :disabled="props.delete_pending?.(item.id) ?? false"
+                        @click="emit('delete', item.id)" />
 
                 </div>
 
@@ -64,7 +64,7 @@ const emit = defineEmits<{
             <UButton type="button" color="neutral" variant="outline" size="sm" icon="i-lucide-plus"
                 class="w-full justify-center rounded-lg border-dashed py-2" :loading="add_pending"
                 :disabled="add_pending" @click="emit('add')">
-                {{ props.add_button_label }}
+                {{ props.add_button_title }}
             </UButton>
         </div>
     </section>

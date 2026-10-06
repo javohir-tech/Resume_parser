@@ -13,18 +13,21 @@ const resumeStore = useResumeStore()
 <template>
     <ResumeEditorSection 
     :items="resumeStore.resume.education ?? []" 
-    :section_header="t('resumeEditor.education')"
-    :section_icon="'i-lucide-graduation-cap'"
     :items_count="resumeStore.resume.education?.length ?? 0" 
     :item_header="t('resumeEditor.education')"
-    :remove_button_aria_label="t('resumeEditor.educationRemove')"
-    :remove_button_title="t('resumeEditor.educationRemove')" 
+
+    :section_header="t('resumeEditor.education')"
+    :section_icon="'i-lucide-graduation-cap'"
     :section_empty="t('resumeEditor.educationEmpty')"
-    :add_button_label="t('resumeEditor.educationAdd')" 
-    :add_pending="isCreating" 
-    :delete_pending="isDeleting"
+
     @add="createEducation"
-    @remove="deleteEducation">
+    :add_button_title="t('resumeEditor.educationAdd')" 
+    :add_pending="isCreating" 
+
+    @delete="deleteEducation"
+    :delete_button_title="t('resumeEditor.educationRemove')" 
+    :delete_pending="isDeleting"
+    >
 
         <template #default="{ item }">
             <EducationForm :education="item" />
