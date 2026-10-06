@@ -32,8 +32,11 @@ export function useEducation() {
     }
   }
 
-  const isDeleting = (education_id: string) =>
-    deletingIds.value.has(education_id);
+  const isDeleting = (education_id: string):boolean =>{
+
+    return deletingIds.value.has(education_id);
+    
+  }
 
   async function deleteEducation(education_id: string) {
     if (isDeleting(education_id)) return;

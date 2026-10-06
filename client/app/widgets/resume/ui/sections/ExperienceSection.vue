@@ -9,6 +9,7 @@ const resumeStore = useResumeStore()
 </script>
 
 <template>
+    
     <section class="overflow-hidden rounded-xl border border-default bg-default">
         <div class="flex items-center gap-2.5 border-b border-default bg-elevated/50 px-4 py-3">
             <UIcon name="i-lucide-briefcase-business" class="size-4 text-muted" />

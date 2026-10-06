@@ -7,6 +7,7 @@ const props = defineProps<{
 
     remove_button_aria_label: string,
     remove_button_title: string,
+    delete_pending ?: (id : string) => boolean , 
 
     section_empty: string,
 
@@ -17,7 +18,6 @@ defineSlots<{
     default(props: { item: T; index: number }): any
 }>()
 
-const delete_pending = defineModel<boolean>('delete_pending', { default: false })
 const add_pending = defineModel<boolean>("add_pending", { default: false })
 
 const emit = defineEmits<{
@@ -41,14 +41,16 @@ const emit = defineEmits<{
 
             <div v-for="(item, index) in items" :key="item.id" class="rounded-lg border border-default p-3">
                 <div class="mb-3 flex items-center gap-2 border-b border-default pb-2">
+
                     <span class="min-w-0 flex-1 truncate text-xs font-semibold text-muted">
                         {{ props.item_header }}
                     </span>
 
                     <UButton type="button" color="neutral" variant="ghost" size="xs" icon="i-lucide-trash-2"
                         class="shrink-0 hover:bg-error/10 hover:text-error" :aria-label="props.remove_button_aria_label"
-                        :title="props.remove_button_title" :loading="delete_pending" :disabled="delete_pending"
+                        :title="props.remove_button_title" :loading="props.delete_pending?.(item.id) ?? false" :disabled="props.delete_pending?.(item.id) ?? false"
                         @click="emit('remove', item.id)" />
+
                 </div>
 
                 <slot :item="item" :index="index"/>

@@ -22,7 +22,8 @@ const resumeStore = useResumeStore()
     :section_empty="t('resumeEditor.educationEmpty')"
     :add_button_label="t('resumeEditor.educationAdd')" 
     :add_pending="isCreating" 
-    @add="createEducation()"
+    :delete_pending="isDeleting"
+    @add="createEducation"
     @remove="deleteEducation">
 
         <template #default="{ item }">
