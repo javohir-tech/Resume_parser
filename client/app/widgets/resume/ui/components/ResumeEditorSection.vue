@@ -1,6 +1,7 @@
 <script setup lang="ts" generic="T extends {id : string}">
 const props = defineProps<{
     section_header: string,
+    section_icon : string , 
     items_count: number,
     items: T[],
     item_header: string,
@@ -31,7 +32,7 @@ const emit = defineEmits<{
 <template>
     <section class="overflow-hidden rounded-xl border border-default bg-default">
         <div class="flex items-center gap-2.5 border-b border-default bg-elevated/50 px-4 py-3">
-            <UIcon name="i-lucide-graduation-cap" class="size-4 text-muted" />
+            <UIcon :name="props.section_icon" class="size-4 text-muted" />
             <h2 class="flex-1 text-sm font-semibold">{{ props.section_header }}</h2>
             <span class="rounded-md bg-default px-2 py-0.5 text-xs font-medium tabular-nums text-muted">
                 {{ props.items_count || 0 }}
@@ -43,7 +44,7 @@ const emit = defineEmits<{
                 <div class="mb-3 flex items-center gap-2 border-b border-default pb-2">
 
                     <span class="min-w-0 flex-1 truncate text-xs font-semibold text-muted">
-                        {{ props.item_header }}
+                        {{ props.item_header }} - {{ index+1 }}
                     </span>
 
                     <UButton type="button" color="neutral" variant="ghost" size="xs" icon="i-lucide-trash-2"

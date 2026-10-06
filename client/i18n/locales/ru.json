@@ -340,7 +340,6 @@
     "selectDate": "Выберите дату",
     "personal": "Личные данные",
     "experience": "Опыт работы",
-    "experienceFallback": "Опыт работы {number}",
     "experienceEmpty": "Добавьте опыт работы, чтобы начать.",
     "experienceAdd": "Добавить опыт работы",
     "experienceRemove": "Удалить опыт работы",

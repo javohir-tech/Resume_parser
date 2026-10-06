@@ -340,7 +340,6 @@
     "selectDate": "Sanani tanlang",
     "personal": "Shaxsiy ma’lumotlar",
     "experience": "Ish tajribasi",
-    "experienceFallback": "Ish tajribasi {number}",
     "experienceEmpty": "Boshlash uchun birinchi ish tajribangizni qo‘shing.",
     "experienceAdd": "Ish tajribasi qo‘shish",
     "experienceRemove": "Ish tajribasini o‘chirish",

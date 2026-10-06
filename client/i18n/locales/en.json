@@ -340,7 +340,6 @@
     "selectDate": "Select a date",
     "personal": "Personal details",
     "experience": "Experience",
-    "experienceFallback": "Experience {number}",
     "experienceEmpty": "Add your first experience to get started.",
     "experienceAdd": "Add experience",
     "experienceRemove": "Remove experience",

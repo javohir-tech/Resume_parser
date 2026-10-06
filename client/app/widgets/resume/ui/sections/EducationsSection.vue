@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n()
-import { EducationForm } from '~/features/resume/edit-resume';
-import { useEducation } from '~/features/resume/edit-resume';
+import { EducationForm , useEducation } from '~/features/resume/edit-resume';
 import { useResumeStore } from '~/entities/resume';
 import ResumeEditorSection from '../components/ResumeEditorSection.vue';
 
@@ -15,6 +14,7 @@ const resumeStore = useResumeStore()
     <ResumeEditorSection 
     :items="resumeStore.resume.education ?? []" 
     :section_header="t('resumeEditor.education')"
+    :section_icon="'i-lucide-graduation-cap'"
     :items_count="resumeStore.resume.education?.length ?? 0" 
     :item_header="t('resumeEditor.education')"
     :remove_button_aria_label="t('resumeEditor.educationRemove')"
