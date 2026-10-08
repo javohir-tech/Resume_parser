@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     MAX_TEXT_CHARS: int = 40_000
     MAX_DOCX_UNCOMPRESSED_BYTES: int = 50 * 1024 * 1024
 
+    PDF_PRINT_URL: str = "http://localhost:3000/resume/print"
+    PDF_TIMEOUT_SECONDS: float = 60
+
     class Config:
         env_file = ".env"
 
