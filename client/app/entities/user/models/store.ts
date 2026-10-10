@@ -19,8 +19,8 @@ export const useUserStore = defineStore("user", () => {
       user.value = response;
     } catch (error) {
       const err = apiError(error)
-      showError(err.message)
-      // console.log(error);
+      // showError(err.message)
+      // // console.log(error);
     } finally {
       loading.value = false;
     }
