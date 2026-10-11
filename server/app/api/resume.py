@@ -109,6 +109,9 @@ async def import_parsed_resume(
         await db.flush()
         resume_id = resume.id
 
+        design = Design(resume_id = resume_id)
+        db.add(design)
+
     return {
         "success": True,
         "resume_id": str(resume_id),
