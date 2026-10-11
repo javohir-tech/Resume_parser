@@ -3,8 +3,12 @@ import { useResumeStore, templates } from '~/entities/resume/index.ts';
 import { EntryTitleColor, HeadingColor, FontChoose } from '~/features/resume/design-edit';
 import { useDownloadResume } from '~/features/resume/download-resume';
 
+defineProps<{
+    open : boolean ;
+    side : "left" | "right"
+}>()
+
 const resumeStore = useResumeStore()
-const open = defineModel<boolean>("open", { default: false })
 
 const {loading , downloadResume} = useDownloadResume()
 
@@ -22,8 +26,8 @@ function changeLanguage(value: string) {
 </script>
 
 <template>
-    <USidebar v-model:open="open" variant="sidebar" side="right" collapsible="offcanvas"
-        :style="{ '--sidebar-width': '22rem' }" :ui="{
+    <USidebar  :open="open" variant="sidebar" :side="side" collapsible="offcanvas"
+        :style="{ '--sidebar-width': '18rem' }" :ui="{
             container: 'h-full'
         }">
         <template #header>
