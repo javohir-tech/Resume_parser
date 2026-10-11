@@ -1,13 +1,23 @@
+import asyncio
+import logging
+
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, status, File, UploadFile
 from fastapi.exceptions import HTTPException
+from fastapi.responses import Response
+from pydantic import BaseModel, Field
+
+from playwright.async_api import (
+    Error as PlaywrightError,
+    TimeoutError as PlaywrightTimeoutError,
+)
 
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload, selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
-
+from app.services.resume_pdf import create_resume_pdf
 from app.db.session import get_db
 from app.core.security import verify
 
@@ -211,6 +221,50 @@ async def get_resume_design(resume_id: str, db: AsyncSession = Depends(get_db)):
         "entry_title_color": design.entry_title_color,
         "font": design.font,
     }
+
+
+logger = logging.getLogger(__name__)
+
+
+class ResumePdfRequest(BaseModel):
+    html: str = Field(min_length=1, max_length=15_000_000)
+
+
+@resume_router.post("/{resume_id}/download")
+async def download_resume(
+    resume_id: UUID, payload: ResumePdfRequest,
+    db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+):
+    result = await db.execute(
+        select(Resume.id).where(Resume.id == resume_id, Resume.user_id == UUID(user_id))
+    )
+
+    if result.scalar_one_or_none() is None:
+        raise HTTPException(status_code=404, detail="Resume topilmadi")
+
+    try:
+        pdf_bytes = await create_resume_pdf(payload.html)
+    except (asyncio.TimeoutError, PlaywrightTimeoutError) as error:
+        logger.warning("PDF yaratish vaqti tugadi: %s", resume_id)
+        raise HTTPException(
+            status_code=503,
+            detail="PDF yaratib bo'lmadi. Keyinroq qayta urinib ko'ring.",
+        ) from error
+    except (PlaywrightError, ValueError) as error:
+        logger.exception("PDF yaratishda xatolik: %s", resume_id)
+        raise HTTPException(
+            status_code=503,
+            detail="PDF yaratib bo'lmadi. Keyinroq qayta urinib ko'ring.",
+        ) from error
+
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": (f'attachment; filename="resume-{resume_id}.pdf"'),
+            "Cache-Control": "no-store",
+        },
+    )
 
 
 @resume_router.get("/my/resumes")

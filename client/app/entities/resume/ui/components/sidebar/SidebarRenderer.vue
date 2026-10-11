@@ -51,6 +51,17 @@ onMounted(async () => {
   recalc()
 })
 onBeforeUnmount(() => observer?.disconnect())
+function preparePdf(event: Event) {
+  const jobs = (event as CustomEvent<Promise<void>[]>).detail
+  jobs.push((async () => {
+    await nextTick()
+    await document.fonts.ready
+    await recalc()
+    await nextTick()
+  })())
+}
+onMounted(() => window.addEventListener('resume:prepare-pdf', preparePdf))
+onBeforeUnmount(() => window.removeEventListener('resume:prepare-pdf', preparePdf))
 </script>
 
 <template>
@@ -73,7 +84,7 @@ onBeforeUnmount(() => observer?.disconnect())
   <div ref="containerRef" class="sidebar-preview p-10 flex flex-col items-center gap-8">
     <div v-for="pageNumber in pageCount" :key="pageNumber" class="relative mb-5"
       :style="{ width: `${PAGE_WIDTH_PX * scale}px`, height: `${PAGE_HEIGHT_PX * scale}px` }">
-      <div class="absolute top-0 left-0 shadow-xl" :style="{ width: `${PAGE_WIDTH_PX}px`, transform: `scale(${scale})`, transformOrigin: 'top left' }">
+      <div data-pdf-page class="absolute top-0 left-0 shadow-xl" :style="{ width: `${PAGE_WIDTH_PX}px`, transform: `scale(${scale})`, transformOrigin: 'top left' }">
         <component :is="template.page">
           <component :is="template.header" v-if="pageNumber === 1" :resume="resume" />
           <div class="grid items-start" :style="columnsStyle">

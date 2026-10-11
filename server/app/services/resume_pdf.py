@@ -1,86 +1,62 @@
+"""Print self-contained HTML in a worker thread (also supports Windows reload)."""
 import asyncio
-import json
+from threading import BoundedSemaphore
 
-from playwright.async_api import async_playwright
-
+from lxml import etree, html as html_parser
+from playwright.sync_api import sync_playwright
 from app.core.config import settings
 
-
-# Har bir server processida ko'pi bilan 2 ta PDF yaratiladi.
-_pdf_slots = asyncio.Semaphore(2)
+_pdf_slots = BoundedSemaphore(2)
 
 
-async def _render_pdf(payload: dict) -> bytes:
-    async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch(headless=True)
+def _restricted_html(html: str) -> str:
+    document = html_parser.document_fromstring(html)
+    for node in document.xpath('//script|//iframe|//frame|//object|//embed|//base|//link|//meta'):
+        node.drop_tree()
+    for node in document.iter():
+        for attribute in list(node.attrib):
+            if attribute.lower().startswith('on'):
+                del node.attrib[attribute]
+    head = document.find('head')
+    if head is None:
+        head = etree.Element('head')
+        document.insert(0, head)
+    policy = etree.Element('meta', attrib={
+        'http-equiv': 'Content-Security-Policy',
+        'content': "default-src 'none'; style-src 'unsafe-inline'; font-src data:; img-src data:; base-uri 'none'; form-action 'none'",
+    })
+    head.insert(0, policy)
+    return html_parser.tostring(document, encoding='unicode', doctype='<!DOCTYPE html>')
 
-        try:
-            context = await browser.new_context(
-                viewport={"width": 1280, "height": 900},
-                service_workers="block",
+
+def _render_pdf(html: str) -> bytes:
+    if not _pdf_slots.acquire(timeout=settings.PDF_TIMEOUT_SECONDS):
+        raise TimeoutError('PDF queue is busy')
+    try:
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(
+                headless=True, timeout=settings.PDF_TIMEOUT_SECONDS * 1000,
             )
-
             try:
-                page = await context.new_page()
-                page.set_default_timeout(30_000)
-
-                # Ma'lumotlar frontend JavaScript ishlashidan oldin uzatiladi.
-                payload_json = json.dumps(payload, ensure_ascii=True)
-
-                await page.add_init_script(
-                    script=(
-                        f"window.__RESUME_PDF__ = {payload_json};"
-                        "window.__PDF_READY__ = false;"
+                context = browser.new_context(java_script_enabled=False, service_workers='block')
+                try:
+                    context.route('**/*', lambda route: route.abort())
+                    page = context.new_page()
+                    page.set_default_timeout(settings.PDF_TIMEOUT_SECONDS * 1000)
+                    page.emulate_media(media='print')
+                    page.set_content(_restricted_html(html), wait_until='load')
+                    page.evaluate('() => document.fonts.ready.then(() => true)')
+                    return page.pdf(
+                        format='A4', print_background=True, prefer_css_page_size=True,
+                        margin={'top': '0', 'right': '0', 'bottom': '0', 'left': '0'},
                     )
-                )
-
-                # Sahifalash boshidan print stillari bilan hisoblansin.
-                await page.emulate_media(media="print")
-
-                response = await page.goto(
-                    settings.PDF_PRINT_URL,
-                    wait_until="domcontentloaded",
-                    timeout=30_000,
-                )
-
-                if response is None or not response.ok:
-                    raise RuntimeError("Print sahifasini ochib bo'lmadi")
-
-                # Frontend bu belgini barcha render ishlari tugagach qo'yadi.
-                await page.wait_for_function(
-                    "window.__PDF_READY__ === true",
-                    timeout=30_000,
-                )
-
-                await page.evaluate(
-                    "() => document.fonts.ready.then(() => true)"
-                )
-
-                return await page.pdf(
-                    format="A4",
-                    print_background=True,
-                    prefer_css_page_size=True,
-                    margin={
-                        "top": "0",
-                        "right": "0",
-                        "bottom": "0",
-                        "left": "0",
-                    },
-                )
+                finally:
+                    context.close()
             finally:
-                await context.close()
-        finally:
-            await browser.close()
+                browser.close()
+    finally:
+        _pdf_slots.release()
 
 
-async def _render_with_limit(payload: dict) -> bytes:
-    async with _pdf_slots:
-        return await _render_pdf(payload)
-
-
-async def create_resume_pdf(payload: dict) -> bytes:
-    # Navbatda kutish va PDF yaratishga umumiy vaqt chegarasi.
-    return await asyncio.wait_for(
-        _render_with_limit(payload),
-        timeout=settings.PDF_TIMEOUT_SECONDS,
-    )
+async def create_resume_pdf(html: str) -> bytes:
+    return await asyncio.to_thread(_render_pdf, html)

@@ -26,10 +26,21 @@ watch([() => resumeStore.designInfo.font, locale, () => props.template], async (
 const containerRef = ref<HTMLElement | null>(null)
 const { scale } = useResumePageScale(containerRef)
 const gapPx = computed(() => PAGE_GAP_PX * scale.value)
+
+function preparePdf(event: Event) {
+  const jobs = (event as CustomEvent<Promise<void>[]>).detail
+  jobs.push((async () => {
+    await nextTick()
+    await document.fonts.ready
+    await recalc()
+    await nextTick()
+  })())
+}
+onMounted(() => window.addEventListener('resume:prepare-pdf', preparePdf))
+onBeforeUnmount(() => window.removeEventListener('resume:prepare-pdf', preparePdf))
 </script>
 
 <template>
-  <!-- Ko'rinmas o'lchov qatlami: har bir blok haqiqiy kontent kengligida render qilinadi -->
   <div class="fixed opacity-0 pointer-events-none -z-10 top-0 left-0" :style="{
     width: `${PAGE_CONTENT_WIDTH_PX}px`,
     fontFamily: resumeStore.designInfo.font ?? undefined,
@@ -61,7 +72,8 @@ const gapPx = computed(() => PAGE_GAP_PX * scale.value)
     <div v-for="(page, i) in pageContents" :key="i" class="relative"
       :style="{ width: `${PAGE_WIDTH_PX * scale}px`, height: `${PAGE_HEIGHT_PX * scale}px` }"
       style="margin-bottom: 20px;">
-      <div class="absolute top-0 left-0 shadow-xl"
+
+      <div data-pdf-page class="absolute top-0 left-0 shadow-xl"
         :style="{ width: `${PAGE_WIDTH_PX}px`, transform: `scale(${scale})`, transformOrigin: 'top left' }">
 
         <component :is="template.page">

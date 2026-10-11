@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { useResumeStore, templates } from '~/entities/resume/index.ts';
 import { EntryTitleColor, HeadingColor, FontChoose } from '~/features/resume/design-edit';
+import { useDownloadResume } from '~/features/resume/download-resume';
 
 const resumeStore = useResumeStore()
 const open = defineModel<boolean>("open", { default: false })
+
+const {loading , downloadResume} = useDownloadResume()
 
 const { t, locale, setLocale } = useI18n()
 const languageOptions = [
@@ -58,10 +61,13 @@ function changeLanguage(value: string) {
             <div>
                 <h1 class="text-sm font-medium mb-3">Resume</h1>
                 <div class="flex justify-between item-center gap-x-3">
+
                     <UButton :disabled="!resumeStore.resume.id"
                         :to="resumeStore.resume.id ? `/resume/${resumeStore.resume.id}/view` : ''" block label="View"
-                        icon="i-lucide-eye" variant="outline" color="neutral" />
-                    <UButton block label="Download" icon="i-lucide-download" variant="outline" color="neutral" />
+                        icon="i-lucide-eye" variant="outline" color="neutral"  />
+
+                    <UButton :loading="loading" :disabled="loading || !resumeStore.resume.id" @click="downloadResume(resumeStore.resume.id)" block label="Download" icon="i-lucide-download" variant="outline" color="neutral" />
+
                 </div>
             </div>
         </div>

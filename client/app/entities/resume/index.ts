@@ -1,5 +1,5 @@
 // --> Compoenents
-export { default as PaginatedResume } from "./ui/PaginatedResume.vue.vue";
+export { default as PaginatedResume } from "./ui/PaginatedResume.vue";
 export { default as ResumeCard } from "./ui/resumeCard.vue";
 
 // --> Store
