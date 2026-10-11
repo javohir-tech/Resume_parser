@@ -39,10 +39,10 @@ const emit = defineEmits<{
             <div class="flex items-center gap-2.5 border-b border-default bg-elevated/50 px-4 py-3">
                 <UIcon :name="props.section_icon" class="size-4 text-muted" />
                 <h2 class="flex-1 text-sm font-semibold">{{ props.section_header }}</h2>    
-                <UIcon :name="open ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"/>
                 <span class="rounded-md bg-default px-2 py-0.5 text-xs font-medium tabular-nums text-muted">
                     {{ props.items_count || 0 }}
                 </span>
+                <UIcon :name="open ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"/>
             </div>
 
             <template #content>

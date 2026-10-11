@@ -12,9 +12,6 @@ import { PersonalInfoForm } from '~/features/resume/edit-resume';
                 <UIcon name="i-lucide-user-round" class="size-4 text-muted" />
                 <h2 class="text-sm flex-1 font-semibold">{{ t('resumeEditor.personal') }}</h2>
                 <UIcon :name="open ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" />
-                <span class="rounded-md px-2 py-0.5 text-xs invisible font-medium tabular-nums text-muted">
-                    0
-                </span>
             </div>
 
             <template #content>
