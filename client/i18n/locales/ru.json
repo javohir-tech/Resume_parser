@@ -1,4 +1,8 @@
 {
+  "resumeSidebar": {
+    "details": "Данные резюме",
+    "design": "Дизайн и настройки"
+  },
   "profile": {
     "telegramId": "Telegram ID",
     "username": "Имя пользователя",

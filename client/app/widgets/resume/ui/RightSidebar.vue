@@ -31,7 +31,7 @@ function changeLanguage(value: string) {
             container: 'h-full'
         }">
         <template #header>
-
+            <h2 class="text-base font-semibold">{{ t('resumeSidebar.design') }}</h2>
         </template>
         <div class="flex flex-col gap-4">
             <UFormField label="Templates">

@@ -1,4 +1,8 @@
 {
+  "resumeSidebar": {
+    "details": "Rezyume ma’lumotlari",
+    "design": "Dizayn va sozlamalar"
+  },
   "profile": {
     "telegramId": "Telegram ID",
     "username": "Foydalanuvchi nomi",

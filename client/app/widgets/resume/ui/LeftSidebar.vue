@@ -6,6 +6,8 @@ import LanguageSection from './sections/LanguageSection.vue';
 import SkillSection from './sections/SkillSection.vue';
 import type { SidebarProps } from '@nuxt/ui';
 
+const { t } = useI18n()
+
 defineProps<Pick<SidebarProps, "side"> & {
     open: boolean;
 }>()
@@ -17,7 +19,7 @@ defineProps<Pick<SidebarProps, "side"> & {
             container: 'h-full'
         }">
         <template #header>
-
+            <h2 class="text-base font-semibold">{{ t('resumeSidebar.details') }}</h2>
         </template>
         <div class="flex flex-col gap-6 pb-6">
             <PersonalSection />
