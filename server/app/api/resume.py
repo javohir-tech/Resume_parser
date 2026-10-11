@@ -239,12 +239,16 @@ async def download_resume(
     db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
 ):
     result = await db.execute(
-        select(Resume.id).where(Resume.id == resume_id, Resume.user_id == UUID(user_id))
+        select(Resume).where(Resume.id == resume_id, Resume.user_id == UUID(user_id))
     )
 
-    if result.scalar_one_or_none() is None:
+    resume = result.scalar_one_or_none()
+
+    if resume is None:
         raise HTTPException(status_code=404, detail="Resume topilmadi")
 
+    if resume.user_id != UUID(user_id) :
+        raise HTTPException(status_code=status.HTTP_405_METHOD_NOT_ALLOWED , detail="Ushbu resume sizga tegishli emas")
     try:
         pdf_bytes = await create_resume_pdf(payload.html)
     except (asyncio.TimeoutError, PlaywrightTimeoutError) as error:
