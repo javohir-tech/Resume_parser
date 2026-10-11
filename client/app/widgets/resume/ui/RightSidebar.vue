@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import type { SidebarProps } from '@nuxt/ui';
 import { useResumeStore, templates } from '~/entities/resume/index.ts';
 import { EntryTitleColor, HeadingColor, FontChoose } from '~/features/resume/design-edit';
 import { useDownloadResume } from '~/features/resume/download-resume';
 
-defineProps<{
+defineProps<Pick<SidebarProps , "side">&{
     open : boolean ;
-    side : "left" | "right"
 }>()
 
 const resumeStore = useResumeStore()
@@ -26,7 +26,7 @@ function changeLanguage(value: string) {
 </script>
 
 <template>
-    <USidebar  :open="open" variant="sidebar" :side="side" collapsible="offcanvas"
+    <USidebar  :open="open" variant="sidebar" rail :side="side" collapsible="offcanvas"
         :style="{ '--sidebar-width': '18rem' }" :ui="{
             container: 'h-full'
         }">

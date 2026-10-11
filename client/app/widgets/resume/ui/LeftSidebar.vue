@@ -4,15 +4,15 @@ import ExperienceSection from './sections/ExperienceSection.vue';
 import EducationsSection from './sections/EducationsSection.vue';
 import LanguageSection from './sections/LanguageSection.vue';
 import SkillSection from './sections/SkillSection.vue';
+import type { SidebarProps } from '@nuxt/ui';
 
-defineProps<{
+defineProps<Pick<SidebarProps, "side"> & {
     open: boolean;
-    side: "right" | "left"
 }>()
 </script>
 
 <template>
-    <USidebar :open="open" :side="side" variant="sidebar" collapsible="offcanvas"
+    <USidebar :open="open" :side="side" rail variant="sidebar" collapsible="offcanvas"
         :style="{ '--sidebar-width': '26rem' }" :ui="{
             container: 'h-full'
         }">
