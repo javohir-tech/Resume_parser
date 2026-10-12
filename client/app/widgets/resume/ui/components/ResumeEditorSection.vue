@@ -23,7 +23,9 @@ defineSlots<{
 }>()
 
 const add_pending = defineModel<boolean>("add_pending", { default: false })
+
 const openedForms = ref<Set<string>>(new Set<string>())
+const openedPopevers = ref<Set<string>>(new Set<string>())
 
 const emit = defineEmits<{
     add: [],
@@ -51,22 +53,51 @@ const emit = defineEmits<{
                 <div class="space-y-3 p-3">
 
                     <div v-for="(item, index) in items" :key="item.id" class="rounded-lg border border-default p-3">
-                        <UCollapsible @update:open="$event ?  openedForms?.add(item.id) : openedForms?.delete(item.id)">
+                        <UCollapsible @update:open="$event ? openedForms?.add(item.id) : openedForms?.delete(item.id)">
 
-                            <div class="flex items-center ">
+                            <div class="flex items-center cursor-pointer">
 
                                 <span class="min-w-0 flex-1 truncate text-xs font-semibold text-muted">
                                     {{ props.item_header }} - {{ index + 1 }}
                                 </span>
-                                <div class="felx items-center gap-2">
-                                    <UButton type="button" color="neutral" variant="ghost" size="xs"
-                                        icon="i-lucide-trash-2" class="shrink-0 hover:bg-error/10 hover:text-error"
-                                        :aria-label="props.delete_button_title" :title="props.delete_button_title"
-                                        :loading="props.delete_pending?.(item.id) ?? false"
-                                        :disabled="props.delete_pending?.(item.id) ?? false"
-                                        @click="emit('delete', item.id)" />
+
+                                <div class="flex items-center gap-2">
+
+                                    <UPopover :open="openedPopevers.has(item.id)"
+                                     @update:open="$event ? openedPopevers.add(item.id) : openedPopevers.delete(item.id)">
+
+                                        <UButton type="button" color="neutral" variant="ghost" size="xs"
+                                            icon="i-lucide-trash-2" class="shrink-0 hover:bg-error/10 hover:text-error"
+                                            :aria-label="props.delete_button_title" :title="props.delete_button_title"
+                                            @click.stop/>
+
+                                        <template #content>
+                                            <div class="min-h-24 min-w-46 m-4 flex flex-col py-2">
+                                                <p class="mb-3">
+                                                    O'chirishni hohlaysizmi
+                                                </p>
+                                                <div class="flex justify-between items-center gap-2">
+
+                                                    <UButton color="neutral" variant="outline" size="xs" icon="i-lucide-x" label="bekor qilish" @click="openedPopevers.delete(item.id)" />
+
+                                                    <UButton type="button" color="error" variant="outline" size="xs"
+                                                        icon="i-lucide-trash-2"
+                                                        :aria-label="props.delete_button_title"
+                                                        :title="props.delete_button_title"
+                                                        :loading="props.delete_pending?.(item.id) ?? false"
+                                                        :disabled="props.delete_pending?.(item.id) ?? false"
+                                                        label="o'chirish"
+                                                        @click="emit('delete' , item.id)"/>
+                                                </div>
+
+                                            </div>
+                                        </template>
+
+                                    </UPopover>
+
                                     <UIcon size="xs"
                                         :name="openedForms?.has(item.id) ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" />
+
                                 </div>
                             </div>
 
