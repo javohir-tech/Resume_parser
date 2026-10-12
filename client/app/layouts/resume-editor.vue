@@ -11,10 +11,10 @@ const leftSide = ref<sidebarSide>("left")
 const rightSide = ref<sidebarSide>("right")
 
 const swapSidebars = () => {
-    if(leftSide.value === "left" && rightSide.value === "right"){
+    if (leftSide.value === "left" && rightSide.value === "right") {
         leftSide.value = "right"
         rightSide.value = "left"
-    }else if(leftSide.value === "right" && rightSide.value ==="left"){
+    } else if (leftSide.value === "right" && rightSide.value === "left") {
         leftSide.value = "left"
         rightSide.value = "right"
     }
@@ -38,8 +38,11 @@ const swapSidebars = () => {
 
                     <div class="flex items-center gap-2">
                         <UColorModeButton />
-                        <UButton :to="localPath('/resume')" icon="i-lucide-house" variant="ghost" color="neutral"/>
-                        <UButton @click="swapSidebars" aria-label="Sidebarlar o‘rnini almashtirish" icon="i-lucide-arrow-left-right" variant="ghost" color="neutral" />
+                        <UButton :to="localPath('/resume')" icon="i-lucide-house" variant="ghost" color="neutral" />
+                        <UTooltip text="Sidebarlar o‘rnini almashtirish">
+                            <UButton @click="swapSidebars" 
+                                icon="i-lucide-arrow-left-right" variant="ghost" color="neutral" />
+                        </UTooltip>
                     </div>
 
                     <UButton icon="i-lucide-panel-right" color="neutral" variant="ghost" aria-label="Toggle sidebar"

@@ -23,6 +23,7 @@ defineSlots<{
 }>()
 
 const add_pending = defineModel<boolean>("add_pending", { default: false })
+const openedForms = ref<Set<string>>(new Set<string>())
 
 const emit = defineEmits<{
     add: [],
@@ -38,11 +39,11 @@ const emit = defineEmits<{
 
             <div class="flex items-center gap-2.5 border-b border-default bg-elevated/50 px-4 py-3">
                 <UIcon :name="props.section_icon" class="size-4 text-muted" />
-                <h2 class="flex-1 text-sm font-semibold">{{ props.section_header }}</h2>    
+                <h2 class="flex-1 text-sm font-semibold">{{ props.section_header }}</h2>
                 <span class="rounded-md bg-default px-2 py-0.5 text-xs font-medium tabular-nums text-muted">
                     {{ props.items_count || 0 }}
                 </span>
-                <UIcon :name="open ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"/>
+                <UIcon :name="open ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" />
             </div>
 
             <template #content>
@@ -50,22 +51,30 @@ const emit = defineEmits<{
                 <div class="space-y-3 p-3">
 
                     <div v-for="(item, index) in items" :key="item.id" class="rounded-lg border border-default p-3">
-                        <div class="mb-3 flex items-center gap-2 border-b border-default pb-2">
+                        <UCollapsible @update:open="$event ?  openedForms?.add(item.id) : openedForms?.delete(item.id)">
 
-                            <span class="min-w-0 flex-1 truncate text-xs font-semibold text-muted">
-                                {{ props.item_header }} - {{ index + 1 }}
-                            </span>
+                            <div class="flex items-center ">
 
-                            <UButton type="button" color="neutral" variant="ghost" size="xs" icon="i-lucide-trash-2"
-                                class="shrink-0 hover:bg-error/10 hover:text-error"
-                                :aria-label="props.delete_button_title" :title="props.delete_button_title"
-                                :loading="props.delete_pending?.(item.id) ?? false"
-                                :disabled="props.delete_pending?.(item.id) ?? false" @click="emit('delete', item.id)" />
+                                <span class="min-w-0 flex-1 truncate text-xs font-semibold text-muted">
+                                    {{ props.item_header }} - {{ index + 1 }}
+                                </span>
+                                <div class="felx items-center gap-2">
+                                    <UButton type="button" color="neutral" variant="ghost" size="xs"
+                                        icon="i-lucide-trash-2" class="shrink-0 hover:bg-error/10 hover:text-error"
+                                        :aria-label="props.delete_button_title" :title="props.delete_button_title"
+                                        :loading="props.delete_pending?.(item.id) ?? false"
+                                        :disabled="props.delete_pending?.(item.id) ?? false"
+                                        @click="emit('delete', item.id)" />
+                                    <UIcon size="xs"
+                                        :name="openedForms?.has(item.id) ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" />
+                                </div>
+                            </div>
 
-                        </div>
+                            <template #content>
+                                <slot :item="item" :index="index" />
+                            </template>
 
-                        <slot :item="item" :index="index" />
-
+                        </UCollapsible>
                     </div>
 
                     <p v-if="!items?.length" class="px-1 py-2 text-xs leading-relaxed text-muted">

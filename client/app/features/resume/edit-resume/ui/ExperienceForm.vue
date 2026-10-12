@@ -73,7 +73,7 @@ onScopeDispose(()=>{
 
 <template>
 
-    <div class="space-y-3 mb-3">
+    <div class="space-y-3 my-3">
         <UFormField :label="t('resumeEditor.position')">
             <UInput v-model="props.experience.position" class="w-full"
                 :placeholder="t('resumeEditor.positionPlaceholder')" />
@@ -124,7 +124,7 @@ onScopeDispose(()=>{
     </div>
 
     <UFormField :label="t('resumeEditor.description')">
-        <UTextarea :rows="5" class="w-full" v-model="props.experience.description"
+        <UTextarea :rows="8" class="w-full" v-model="props.experience.description"
             :placeholder="t('resumeEditor.descriptionPlaceholder')" />
     </UFormField>
 
