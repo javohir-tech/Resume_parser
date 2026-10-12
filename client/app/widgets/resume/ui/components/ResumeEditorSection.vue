@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T extends {id : string}">
 
+const { t } = useI18n()
 const open = ref(false)
 
 const props = defineProps<{
@@ -75,11 +76,11 @@ const emit = defineEmits<{
                                         <template #content>
                                             <div class="min-h-24 min-w-46 m-4 flex flex-col py-2">
                                                 <p class="mb-3">
-                                                    O'chirishni hohlaysizmi
+                                                    {{ t('resumeEditor.deleteConfirmation') }}
                                                 </p>
                                                 <div class="flex justify-between items-center gap-2">
 
-                                                    <UButton color="neutral" variant="outline" size="xs" icon="i-lucide-x" label="bekor qilish" @click="openedPopevers.delete(item.id)" />
+                                                    <UButton color="neutral" variant="outline" size="xs" icon="i-lucide-x" :label="t('resumeEditor.cancel')" @click="openedPopevers.delete(item.id)" />
 
                                                     <UButton type="button" color="error" variant="outline" size="xs"
                                                         icon="i-lucide-trash-2"
@@ -87,7 +88,7 @@ const emit = defineEmits<{
                                                         :title="props.delete_button_title"
                                                         :loading="props.delete_pending?.(item.id) ?? false"
                                                         :disabled="props.delete_pending?.(item.id) ?? false"
-                                                        label="o'chirish"
+                                                        :label="t('resumeEditor.delete')"
                                                         @click="emit('delete' , item.id)"/>
                                                 </div>
 

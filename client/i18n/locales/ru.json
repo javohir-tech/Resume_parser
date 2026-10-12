@@ -296,6 +296,9 @@
     }
   },
   "resumeEditor": {
+    "deleteConfirmation": "Вы уверены, что хотите удалить?",
+    "cancel": "Отмена",
+    "delete": "Удалить",
     "fullName": "Полное имя",
     "professionalTitle": "Должность",
     "email": "Электронная почта",

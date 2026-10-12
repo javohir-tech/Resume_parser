@@ -296,6 +296,9 @@
     }
   },
   "resumeEditor": {
+    "deleteConfirmation": "O‘chirishni xohlaysizmi?",
+    "cancel": "Bekor qilish",
+    "delete": "O‘chirish",
     "fullName": "To‘liq ism",
     "professionalTitle": "Kasb nomi",
     "email": "Elektron pochta",

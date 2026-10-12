@@ -296,6 +296,9 @@
     }
   },
   "resumeEditor": {
+    "deleteConfirmation": "Are you sure you want to delete?",
+    "cancel": "Cancel",
+    "delete": "Delete",
     "fullName": "Full name",
     "professionalTitle": "Professional title",
     "email": "Email",
