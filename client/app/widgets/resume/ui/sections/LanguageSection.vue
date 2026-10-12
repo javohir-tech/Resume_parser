@@ -15,6 +15,8 @@ const resumeStore = useResumeStore()
         :items_count="resumeStore.resume.languages?.length ?? 0"
         :item_header="t('resumeEditor.languages')"
 
+        :item_title="(item)=> item.language"
+
         :section_header="t('resumeEditor.languages')"
         :section_icon="'i-lucide-languages'"
         :section_empty="t('resumeEditor.languagesEmpty')"

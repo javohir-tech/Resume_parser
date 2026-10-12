@@ -15,6 +15,7 @@ const resumeStore = useResumeStore()
     :items="resumeStore.resume.education ?? []" 
     :items_count="resumeStore.resume.education?.length ?? 0" 
     :item_header="t('resumeEditor.education')"
+    :item_title="(item) => item.institution"
 
     :section_header="t('resumeEditor.education')"
     :section_icon="'i-lucide-graduation-cap'"

@@ -10,6 +10,7 @@ const props = defineProps<{
     items_count: number,
     items: T[],
     item_header: string,
+    item_title?: (item: T) => string | null | undefined,
 
     delete_button_title: string,
     delete_pending?: (id: string) => boolean,
@@ -58,7 +59,7 @@ const emit = defineEmits<{
                             <div class="flex items-center cursor-pointer">
 
                                 <span class="min-w-0 flex-1 truncate text-xs font-semibold text-muted">
-                                    {{ props.item_header }} - {{ index + 1 }}
+                                    {{ props.item_title?.(item)?.trim().slice(0, 48) || `${props.item_header} - ${index + 1}` }}
                                 </span>
 
                                 <div class="flex items-center gap-2">

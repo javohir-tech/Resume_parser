@@ -15,6 +15,8 @@ const { isCreating, createSkillsGroup, isDeleting, deleteSkillsGroup } = useSkil
         :items_count="resumeStore.resume.skills?.length ?? 0"
         :item_header="t('resumeEditor.skills')"
 
+        :item_title="(item) => item.title"
+
         :section_header="t('resumeEditor.skills')"
         :section_icon="'i-lucide-list-checks'"
         :section_empty="t('resumeEditor.skillsEmpty')"

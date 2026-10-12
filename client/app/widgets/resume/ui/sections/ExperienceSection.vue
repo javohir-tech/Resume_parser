@@ -11,8 +11,10 @@ const resumeStore = useResumeStore()
 <template>
     <ResumeEditorSection
         :items="resumeStore.resume.experience ?? []" 
-        :items_count="resumeStore.resume.experience?.length ?? 0" 
+        :items_count="resumeStore.resume.experience?.length ?? 0"
+
         :item_header="t('resumeEditor.experience')"
+        :item_title="(item) => item.position"
 
         :section_icon="'i-lucide-briefcase-business'"
         :section_header="t('resumeEditor.experience')" 
