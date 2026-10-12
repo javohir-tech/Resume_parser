@@ -35,7 +35,7 @@ const resumeStore = useResumeStore()
                         :placeholder="t('resumeEditor.githubPlaceholder')" />
                 </UFormField>
                 <UFormField :label="t('resumeEditor.summary')">
-                    <UTextarea v-model="resumeStore.resume.summary" :rows="4" class="w-full"
+                    <UTextarea v-model="resumeStore.resume.summary" :rows="8" class="w-full"
                         :placeholder="t('resumeEditor.summaryPlaceholder')" />
                 </UFormField>
             </div>
