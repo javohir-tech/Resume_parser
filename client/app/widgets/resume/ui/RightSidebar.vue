@@ -4,9 +4,10 @@ import { useResumeStore, templates } from '~/entities/resume/index.ts';
 import { EntryTitleColor, HeadingColor, FontChoose } from '~/features/resume/design-edit';
 import { useDownloadResume } from '~/features/resume/download-resume';
 
-defineProps<Pick<SidebarProps , "side">&{
-    open : boolean ;
-}>()
+defineProps<Pick<SidebarProps , "side">>()
+
+const open = defineModel<boolean>("open" , {required : true})
+
 
 const resumeStore = useResumeStore()
 
@@ -26,12 +27,12 @@ function changeLanguage(value: string) {
 </script>
 
 <template>
-    <USidebar  :open="open" variant="sidebar" rail :side="side" collapsible="offcanvas"
+    <USidebar  v-model:open="open" variant="sidebar" rail :side="side" collapsible="offcanvas"
         :style="{ '--sidebar-width': '18rem' }" :ui="{
             container: 'h-full'
         }">
-        <template #header>
-            <h2 class="text-base font-semibold">{{ t('resumeSidebar.design') }}</h2>
+        <template #title>
+            <span class="text-base font-semibold">{{ t('resumeSidebar.design') }}</span>
         </template>
         <div class="flex flex-col gap-4">
             <UFormField label="Templates">

@@ -13,9 +13,9 @@ const openedSections = ref<Set<SectionType>>(new Set<SectionType>())
 
 const { t } = useI18n()
 
-defineProps<Pick<SidebarProps, "side"> & {
-    open: boolean;
-}>()
+defineProps<Pick<SidebarProps, "side">>()
+
+const open = defineModel<boolean>("open" , {required : true})
 
 const handleOpenSection = (section: SectionType) => {
     openedSections.value.clear()
@@ -29,12 +29,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <USidebar :open="open" :side="side" rail variant="sidebar" collapsible="offcanvas"
+    <USidebar rail v-model:open="open" :side="side" variant="sidebar" collapsible="offcanvas"
         :style="{ '--sidebar-width': '26rem' }" :ui="{
             container: 'h-full'
         }">
-        <template #header>
-            <h2 class="text-base font-semibold">{{ t('resumeSidebar.details') }}</h2>
+        <template #title>
+            <span class="text-base font-semibold">{{ t('resumeSidebar.details') }}</span>
         </template>
         <div class="flex flex-col gap-6 pb-6">
 

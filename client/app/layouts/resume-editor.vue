@@ -24,7 +24,7 @@ const swapSidebars = () => {
 
 <template>
     <div class="flex flex-1">
-        <LeftSidebar :open="open" :side="leftSide" :class="leftSide === 'left' ? 'order-1' : 'order-3'" />
+        <LeftSidebar v-model:open="open" :side="leftSide" :class="leftSide === 'left' ? 'order-1' : 'order-3'" />
 
         <div class="order-2 flex min-w-0 flex-1 h-screen overflow-hidden">
             <div
@@ -40,8 +40,8 @@ const swapSidebars = () => {
                         <UColorModeButton />
                         <UButton :to="localPath('/resume')" icon="i-lucide-house" variant="ghost" color="neutral" />
                         <UTooltip text="Sidebarlar o‘rnini almashtirish">
-                            <UButton @click="swapSidebars" 
-                                icon="i-lucide-arrow-left-right" variant="ghost" color="neutral" />
+                            <UButton @click="swapSidebars" icon="i-lucide-arrow-left-right" variant="ghost"
+                                color="neutral" />
                         </UTooltip>
                     </div>
 
@@ -55,8 +55,8 @@ const swapSidebars = () => {
             </div>
         </div>
 
-
-        <RightSidebar :open="rightOpen" :side="rightSide" :class="rightSide === 'left' ? 'order-1' : 'order-3'" />
+        <RightSidebar v-model:open="rightOpen" :side="rightSide"
+            :class="rightSide === 'left' ? 'order-1' : 'order-3'" />
 
 
     </div>
