@@ -12,6 +12,8 @@ import type { SidebarProps } from '@nuxt/ui';
 const openedSections = ref<Set<SectionType>>(new Set<SectionType>())
 
 const { t } = useI18n()
+const isDesktop = useMediaQuery('(min-width: 1024px)')
+
 
 defineProps<Pick<SidebarProps, "side">>()
 
@@ -23,7 +25,9 @@ const handleOpenSection = (section: SectionType) => {
 }
 
 onMounted(() => {
-    handleOpenSection("personal")
+    if(isDesktop.value){
+        handleOpenSection("personal")
+    }
 })
 
 </script>
