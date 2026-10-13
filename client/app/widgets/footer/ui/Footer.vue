@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n()
+const localPath = useLocalePath()
 </script>
 
 <template>
@@ -16,12 +17,14 @@ const { t } = useI18n()
                     </h2>
                     <ul class="flex flex-col mt-2 gap-2">
                         <li>
-                            <NuxtLink class="text-sm text-gray-500 transition-colors hover:text-primary" to="/#features">
+                            <NuxtLink class="text-sm text-gray-500 transition-colors hover:text-primary"
+                                :to="localPath('/#features')">
                                 {{ t('footer.features') }}
                             </NuxtLink>
                         </li>
                         <li>
-                            <NuxtLink class="text-sm text-gray-500 transition-colors hover:text-primary" to="/#pricing">
+                            <NuxtLink class="text-sm text-gray-500 transition-colors hover:text-primary"
+                                :to="localPath('/#pricing')">
                                 {{ t('footer.pricing') }}
                             </NuxtLink>
                         </li>
@@ -33,7 +36,8 @@ const { t } = useI18n()
                     </h2>
                     <ul class="flex flex-col mt-2 gap-2">
                         <li>
-                            <NuxtLink to="/contact" class="text-sm text-gray-500 transition-colors hover:text-primary">
+                            <NuxtLink :to="localPath('/contact')"
+                                class="text-sm text-gray-500 transition-colors hover:text-primary">
                                 {{ t('footer.contact') }}
                             </NuxtLink>
                         </li>
