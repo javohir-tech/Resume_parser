@@ -167,7 +167,11 @@ const { t } = useI18n()
     pointer-events: none;
     border: 1px solid color-mix(in srgb, var(--ui-primary) 15%, transparent);
     border-radius: 50%;
-    inset: 4%;
+    top: 50%;
+    left: 50%;
+    width: 92%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
 }
 
 .hero-orbit-inner {
