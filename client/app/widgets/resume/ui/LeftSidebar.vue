@@ -4,13 +4,36 @@ import ExperienceSection from './sections/ExperienceSection.vue';
 import EducationsSection from './sections/EducationsSection.vue';
 import LanguageSection from './sections/LanguageSection.vue';
 import SkillSection from './sections/SkillSection.vue';
+
 import type { SidebarProps } from '@nuxt/ui';
+
+const sections = [
+    "personal",
+    "experience",
+    "education",
+    "skill",
+    "language"
+] as const
+
+type section_type = (typeof sections)[number]
+
+const openedSections = ref<Set<section_type>>(new Set<section_type>())
 
 const { t } = useI18n()
 
 defineProps<Pick<SidebarProps, "side"> & {
     open: boolean;
 }>()
+
+const handleOpenSection = (section: section_type) => {
+    openedSections.value.clear()
+    openedSections.value.add(section)
+}
+
+onMounted(() => {
+    handleOpenSection("personal")
+})
+
 </script>
 
 <template>
@@ -22,7 +45,10 @@ defineProps<Pick<SidebarProps, "side"> & {
             <h2 class="text-base font-semibold">{{ t('resumeSidebar.details') }}</h2>
         </template>
         <div class="flex flex-col gap-6 pb-6">
-            <PersonalSection />
+
+            <PersonalSection :open="openedSections.has('personal')" @open="handleOpenSection('personal')"
+                @close="openedSections.delete('personal')" />
+                
             <ExperienceSection />
             <EducationsSection />
             <SkillSection />
