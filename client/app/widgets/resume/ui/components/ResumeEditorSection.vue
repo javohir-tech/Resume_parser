@@ -18,6 +18,7 @@ const props = defineProps<{
 
 
     add_button_title: string
+    last_item_id: string | null
 }>()
 
 defineSlots<{
@@ -33,6 +34,21 @@ const emit = defineEmits<{
     add: [],
     delete: [id: string]
 }>()
+
+const handleOpenForm = (id: string) => {
+    openedForms.value.clear()
+    openedForms.value.add(id)
+}
+
+const handleAddForm = () => {
+    emit("add")
+}
+
+watch(()=> props.last_item_id , (id)=>{
+    if(!id) return
+
+    handleOpenForm(id)
+})
 
 
 </script>
@@ -55,23 +71,25 @@ const emit = defineEmits<{
                 <div class="space-y-3 p-3">
 
                     <div v-for="(item, index) in items" :key="item.id" class="rounded-lg border border-default p-3">
-                        <UCollapsible @update:open="$event ? openedForms?.add(item.id) : openedForms?.delete(item.id)">
+                        <UCollapsible :open="openedForms.has(item.id)"
+                            @update:open="$event ? handleOpenForm(item.id) : openedForms?.delete(item.id)">
 
                             <div class="flex items-center cursor-pointer">
 
                                 <span class="min-w-0 flex-1 truncate text-xs font-semibold text-muted">
-                                    {{ props.item_title?.(item)?.trim().slice(0, 48) || `${props.item_header} - ${index + 1}` }}
+                                    {{ props.item_title?.(item)?.trim().slice(0, 48) || `${props.item_header} - ${index
+                                        + 1}` }}
                                 </span>
 
                                 <div class="flex items-center gap-2">
 
                                     <UPopover :open="openedPopevers.has(item.id)"
-                                     @update:open="$event ? openedPopevers.add(item.id) : openedPopevers.delete(item.id)">
+                                        @update:open="$event ? openedPopevers.add(item.id) : openedPopevers.delete(item.id)">
 
                                         <UButton type="button" color="neutral" variant="ghost" size="xs"
                                             icon="i-lucide-trash-2" class="shrink-0 hover:bg-error/10 hover:text-error"
                                             :aria-label="props.delete_button_title" :title="props.delete_button_title"
-                                            @click.stop/>
+                                            @click.stop />
 
                                         <template #content>
                                             <div class="min-h-24 min-w-46 m-4 flex flex-col py-2">
@@ -80,16 +98,19 @@ const emit = defineEmits<{
                                                 </p>
                                                 <div class="flex justify-between items-center gap-2">
 
-                                                    <UButton color="neutral" variant="outline" size="xs" icon="i-lucide-x" :label="t('resumeEditor.cancel')" @click="openedPopevers.delete(item.id)" />
+                                                    <UButton class="flex-1 justify-center" color="neutral"
+                                                        variant="outline" size="xs" icon="i-lucide-x"
+                                                        :label="t('resumeEditor.cancel')"
+                                                        @click="openedPopevers.delete(item.id)" />
 
-                                                    <UButton type="button" color="error" variant="outline" size="xs"
-                                                        icon="i-lucide-trash-2"
+                                                    <UButton class="flex-1 justify-center" type="button" color="error"
+                                                        variant="outline" size="xs" icon="i-lucide-trash-2"
                                                         :aria-label="props.delete_button_title"
                                                         :title="props.delete_button_title"
                                                         :loading="props.delete_pending?.(item.id) ?? false"
                                                         :disabled="props.delete_pending?.(item.id) ?? false"
                                                         :label="t('resumeEditor.delete')"
-                                                        @click="emit('delete' , item.id)"/>
+                                                        @click="emit('delete', item.id)" />
                                                 </div>
 
                                             </div>
@@ -113,11 +134,13 @@ const emit = defineEmits<{
                     <p v-if="!items?.length" class="px-1 py-2 text-xs leading-relaxed text-muted">
                         {{ props.section_empty }}
                     </p>
+
                     <UButton type="button" color="neutral" variant="outline" size="sm" icon="i-lucide-plus"
                         class="w-full justify-center rounded-lg border-dashed py-2" :loading="add_pending"
-                        :disabled="add_pending" @click="emit('add')">
+                        :disabled="add_pending" @click="handleAddForm">
                         {{ props.add_button_title }}
                     </UButton>
+
                 </div>
 
             </template>

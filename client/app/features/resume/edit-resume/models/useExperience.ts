@@ -11,7 +11,7 @@ export function useExperience() {
   const { showError } = useApiToasts();
   const deletingIds = ref(new Set<string>());
 
-  async function createExperience(resume_id: string = resumeStore.resume.id) {
+  async function createExperience(resume_id: string = resumeStore.resume.id):Promise<string | null> {
     isCreating.value = true;
     try {
       const response = await createExperienceRequest(resume_id);
@@ -24,9 +24,11 @@ export function useExperience() {
         description: "",
         location: "",
       });
+      return response.experience_id
     } catch (error) {
       const err = apiError(error);
       showError(err.message);
+      return null
     } finally {
       isCreating.value = false;
     }
