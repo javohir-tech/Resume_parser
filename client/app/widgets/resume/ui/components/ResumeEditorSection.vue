@@ -19,6 +19,8 @@ const props = defineProps<{
 
     add_button_title: string
     last_item_id: string | null
+
+    open: boolean
 }>()
 
 defineSlots<{
@@ -32,6 +34,8 @@ const openedPopevers = ref<Set<string>>(new Set<string>())
 
 const emit = defineEmits<{
     add: [],
+    open: [],
+    close: [],
     delete: [id: string]
 }>()
 
@@ -40,8 +44,8 @@ const handleOpenForm = (id: string) => {
     openedForms.value.add(id)
 }
 
-watch(()=> props.last_item_id , (id)=>{
-    if(!id) return
+watch(() => props.last_item_id, (id) => {
+    if (!id) return
 
     handleOpenForm(id)
 })
@@ -51,9 +55,10 @@ watch(()=> props.last_item_id , (id)=>{
 
 <template>
     <section class="overflow-hidden rounded-xl border border-default bg-default">
-        <UCollapsible v-model:open="open" class="flex flex-col">
+        <UCollapsible :open="props.open" class="flex flex-col">
 
-            <div class="flex items-center gap-2.5 border-b border-default bg-elevated/50 px-4 py-3">
+            <div class="flex items-center gap-2.5 border-b border-default bg-elevated/50 px-4 py-3 cursor-pointer"
+                @click="props.open ? emit('close') : emit('open')">
                 <UIcon :name="props.section_icon" class="size-4 text-muted" />
                 <h2 class="flex-1 text-sm font-semibold">{{ props.section_header }}</h2>
                 <span class="rounded-md bg-default px-2 py-0.5 text-xs font-medium tabular-nums text-muted">

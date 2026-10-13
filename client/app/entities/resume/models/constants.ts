@@ -266,3 +266,12 @@ export const colorOptions: ResumeColor[] = [
 
 export const templates: TemplateName[] = ["classic", "modern", "minimal", "professional", "sidebar"];
 
+const sections = [
+    "personal",
+    "experience",
+    "education",
+    "skill",
+    "language"
+] as const
+
+export type SectionType = (typeof sections)[number]

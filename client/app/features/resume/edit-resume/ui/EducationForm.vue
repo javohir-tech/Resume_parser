@@ -66,7 +66,7 @@ onScopeDispose(() => {
 </script>
 
 <template>
-    <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 mt-3">
 
         <UFormField :label="t('resumeEditor.degree')">
             <UInput v-model="props.education.degree" class="w-full"

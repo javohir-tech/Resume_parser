@@ -4,6 +4,15 @@ import { ExperienceForm , useExperience } from '~/features/resume/edit-resume';
 import { useResumeStore } from '~/entities/resume';
 import ResumeEditorSection from '../components/ResumeEditorSection.vue';
 
+const props = defineProps<{
+    open : boolean
+}>()
+
+const emit = defineEmits<{
+    open : [] , 
+    close : []
+}>()
+
 const { isCreating, createExperience, isDeleting, deleteExperience } = useExperience()
 const resumeStore = useResumeStore()
 
@@ -39,6 +48,10 @@ const handleAddSection = async () =>{
         :delete_pending="isDeleting"
         
         :last_item_id="last_item_id"
+
+        @open="emit('open')"
+        @close="emit('close')"
+        :open="props.open"
     >
         <template #default="{item}">
             <ExperienceForm :experience="item" />

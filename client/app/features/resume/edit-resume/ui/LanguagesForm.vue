@@ -61,7 +61,7 @@ function handleSelectDegree(value: string) {
 
 </script>
 <template>
-    <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 mt-3">
         <UFormField :label="t('resumeEditor.language')" :description="t('resumeEditor.languageHint')">
             <USelectMenu create-item :model-value="language.language" v-model:open="languageOpen"
                 v-model:search-term="languageSearch" :items="languageItems" class="w-full"

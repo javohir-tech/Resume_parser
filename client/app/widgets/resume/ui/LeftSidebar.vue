@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { type SectionType } from '~/entities/resume/index.ts';
+
 import PersonalSection from './sections/PersonalSection.vue';
 import ExperienceSection from './sections/ExperienceSection.vue';
 import EducationsSection from './sections/EducationsSection.vue';
@@ -7,17 +9,7 @@ import SkillSection from './sections/SkillSection.vue';
 
 import type { SidebarProps } from '@nuxt/ui';
 
-const sections = [
-    "personal",
-    "experience",
-    "education",
-    "skill",
-    "language"
-] as const
-
-type section_type = (typeof sections)[number]
-
-const openedSections = ref<Set<section_type>>(new Set<section_type>())
+const openedSections = ref<Set<SectionType>>(new Set<SectionType>())
 
 const { t } = useI18n()
 
@@ -25,7 +17,7 @@ defineProps<Pick<SidebarProps, "side"> & {
     open: boolean;
 }>()
 
-const handleOpenSection = (section: section_type) => {
+const handleOpenSection = (section: SectionType) => {
     openedSections.value.clear()
     openedSections.value.add(section)
 }
@@ -48,11 +40,19 @@ onMounted(() => {
 
             <PersonalSection :open="openedSections.has('personal')" @open="handleOpenSection('personal')"
                 @close="openedSections.delete('personal')" />
+
+            <ExperienceSection :open="openedSections.has('experience')" @open="handleOpenSection('experience')"
+                @close="openedSections.delete('experience')" />
+
+            <EducationsSection :open="openedSections.has('education')" @open="handleOpenSection('education')"
+                @close="openedSections.delete('education')" />
+
+            <SkillSection :open="openedSections.has('skill')" @open="handleOpenSection('skill')"
+                @close="openedSections.delete('skill')" />
+
+            <LanguageSection :open="openedSections.has('language')" @open="handleOpenSection('language')"
+                @close="openedSections.delete('language')" />
                 
-            <ExperienceSection />
-            <EducationsSection />
-            <SkillSection />
-            <LanguageSection />
         </div>
     </USidebar>
 </template>

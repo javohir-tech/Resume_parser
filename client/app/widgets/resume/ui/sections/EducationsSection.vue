@@ -4,6 +4,15 @@ import { EducationForm , useEducation } from '~/features/resume/edit-resume';
 import { useResumeStore } from '~/entities/resume';
 import ResumeEditorSection from '../components/ResumeEditorSection.vue';
 
+const props = defineProps<{
+    open : boolean
+}>()
+
+const emit = defineEmits<{
+    open : [] , 
+    close : []
+}>()
+
 const { isCreating, createEducation, isDeleting, deleteEducation } = useEducation()
 const resumeStore = useResumeStore()
 
@@ -37,6 +46,9 @@ const handleAddSection = async () =>{
     :delete_pending="isDeleting"
 
     :last_item_id="last_item_id"
+    :open="props.open" 
+    @open="emit('open')"
+    @close="emit('close')"
     >
 
         <template #default="{ item }">

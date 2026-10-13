@@ -49,7 +49,7 @@ async function createSkillCategory(value: string) {
 </script>
 
 <template>
-    <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 mt-3">
         <UFormField :label="t('resumeEditor.skillCategory')" :description="t('resumeEditor.categoryHint')">
             <USelectMenu :model-value="skillsGroup.title" v-model:open="categoryOpen" v-model:search-term="categorySearch" :items="skillCategoriesItems" create-item class="w-full"
                 :placeholder="t('resumeEditor.categoryPlaceholder')" @update:model-value="selectSkillCategory"

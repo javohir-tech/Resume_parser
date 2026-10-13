@@ -4,6 +4,14 @@ import { SkillsGroupForm , useSkillsGroup } from '~/features/resume/edit-resume'
 import { useResumeStore } from '~/entities/resume';
 import ResumeEditorSection from '../components/ResumeEditorSection.vue';
 
+const props = defineProps<{
+    open : boolean
+}>()
+
+const emit = defineEmits<{
+    open : [] , 
+    close : []
+}>()
 const resumeStore = useResumeStore()
 const { isCreating, createSkillsGroup, isDeleting, deleteSkillsGroup } = useSkillsGroup()
 
@@ -39,6 +47,9 @@ const handleAddSection = async () =>{
         :delete_pending="isDeleting"
 
         :last_item_id="last_item_id"
+        :open="props.open"
+        @open="emit('open')"
+        @close="emit('close')"
     >
 
     <template #default="{item}">
