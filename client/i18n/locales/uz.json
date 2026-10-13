@@ -53,6 +53,7 @@
     "noFile": "Fayl tanlanmagan",
     "loading": "Yuklanmoqda...",
     "loadError": "Rezyumelarni yuklashda xatolik yuz berdi",
+    "retry": "Qayta urinish",
     "empty": "Hozircha rezyume yo‘q",
     "untitled": "Nomsiz rezyume",
     "noTitle": "Lavozim ko‘rsatilmagan",

@@ -53,6 +53,7 @@
     "noFile": "No file selected",
     "loading": "Loading...",
     "loadError": "Failed to load resumes",
+    "retry": "Try again",
     "empty": "No resumes yet",
     "untitled": "Untitled resume",
     "noTitle": "No job title specified",

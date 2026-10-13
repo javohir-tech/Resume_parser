@@ -8,6 +8,8 @@ export const getResumeFetch = (resume_id: string) =>
 export const getMyResumes = () =>
   api<Pick<Personal, "id" | "fullname" | "title">[]>("/api/resume/my/resumes", {
     method: "GET",
+    timeout: 15000,
+    retry: 0,
   });
 
 type DesignResponse = Omit<DesignInfo, "heading_title_color" | "entry_title_color"> & {

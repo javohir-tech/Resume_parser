@@ -12,7 +12,12 @@ const { t } = useI18n()
 const method = ref<'upload' | 'manual'>('upload')
 const { deleteResume, isDeleting } = useDeleteResume()
 const { loading, createResume } = useCreateResume()
-const { data, pending, error } = useLazyAsyncData('my_resumes', () => getMyResumes())
+// Keep the server and first client render identical, even when the API is offline.
+const { data, status, error, refresh } = useLazyAsyncData('my_resumes', () => getMyResumes(), {
+    server: false,
+    default: () => [],
+})
+const isLoading = computed(() => status.value === 'idle' || status.value === 'pending')
 
 const removeResume = async (id: string) => {
     const success = await deleteResume(id)
@@ -25,7 +30,7 @@ const removeResume = async (id: string) => {
 </script>
 
 <template>
-    <UContainer class="py-6 sm:py-10 lg:py-12">
+    <UContainer class="min-w-0 py-6 sm:py-10 lg:py-12">
 
         <header class="mb-8 max-w-2xl">
             <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{{
@@ -37,8 +42,8 @@ const removeResume = async (id: string) => {
 
         <section class="overflow-hidden rounded-3xl border border-default bg-default"
             :aria-label="t('resumeWorkspace.newResume')">
-            <div class="grid lg:grid-cols-[0.85fr_1.15fr]">
-                <div class="border-b border-default bg-muted/40 p-5 sm:p-8 lg:border-r lg:border-b-0">
+            <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+                <div class="min-w-0 border-b border-default bg-muted/40 p-5 sm:p-8 lg:border-r lg:border-b-0">
 
                     <div class="mb-6 flex items-center gap-3">
                         <span
@@ -78,7 +83,7 @@ const removeResume = async (id: string) => {
 
                 </div>
 
-                <div class="p-5 sm:p-8">
+                <div class="min-w-0 p-5 sm:p-8">
                     <div class="mb-6 flex items-center gap-3">
                         <span
                             class="flex size-9 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">02</span>
@@ -118,10 +123,10 @@ const removeResume = async (id: string) => {
             <div class="mb-5 flex items-center gap-3">
                 <h2 id="resume-list-title" class="text-xl font-semibold tracking-tight text-highlighted">{{
                     t('resumeList.title') }}</h2>
-                <UBadge v-if="!pending && !error" color="neutral" variant="subtle" class="rounded-full">{{ data?.length
+                <UBadge v-if="status === 'success'" color="neutral" variant="subtle" class="rounded-full">{{ data?.length
                     ?? 0 }}</UBadge>
             </div>
-            <div v-if="pending" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="status"
+            <div v-if="isLoading" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" role="status"
                 :aria-label="t('resumeList.loading')">
                 <div v-for="item in 3" :key="item" class="rounded-2xl border border-default p-6">
                     <USkeleton class="mb-4 size-10 rounded-xl" />
@@ -129,16 +134,21 @@ const removeResume = async (id: string) => {
                     <USkeleton class="h-4 w-1/2" />
                 </div>
             </div>
+            
             <div v-else-if="error" class="rounded-2xl border border-error/20 bg-error/5 p-8 text-center" role="alert">
+                <UIcon name="i-lucide-cloud-off" class="mb-3 size-8 text-error" />
                 <p class="text-sm text-error">{{ t('resumeList.loadError') }}</p>
+                <UButton class="mt-4" icon="i-lucide-refresh-cw" color="neutral" variant="outline"
+                    @click="refresh()">{{ t('resumeList.retry') }}</UButton>
             </div>
+
             <div v-else-if="!data?.length"
                 class="flex flex-col items-center rounded-2xl border border-dashed border-default px-6 py-10 text-center">
                 <UIcon name="i-lucide-files" class="mb-3 size-8 text-dimmed" />
                 <h3 class="font-medium text-highlighted">{{ t('resumeList.empty') }}</h3>
                 <p class="mt-2 max-w-md text-sm text-muted">{{ t('resumeWorkspace.emptyHint') }}</p>
             </div>
-            <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <ResumeCard v-for="resume in data" :key="resume.id" :id="resume.id" :fullname="resume.fullname"
                     :title="resume.title" :loading="isDeleting(resume.id)" @delete="removeResume(resume.id)" />
             </div>
