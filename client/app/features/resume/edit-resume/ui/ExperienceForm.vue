@@ -36,7 +36,7 @@ watch(startDate, (newDate) => {
 })
 
 watch(endDate, (newDate) => {
-    if (!newDate) return
+    if (!newDate)  return
     const month = monthFormatter.format(
         newDate?.toDate(getLocalTimeZone())
     )
