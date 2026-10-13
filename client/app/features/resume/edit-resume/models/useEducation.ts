@@ -11,7 +11,7 @@ export function useEducation() {
   const resumeStore = useResumeStore();
   const { showError } = useApiToasts();
 
-  async function createEducation(resume_id: string = resumeStore.resume.id) {
+  async function createEducation(resume_id: string = resumeStore.resume.id):Promise<string | null> {
     isCreating.value = true;
     try {
       const response = await createEducationRequset(resume_id);
@@ -24,9 +24,11 @@ export function useEducation() {
         startDate: "",
         endDate: "",
       });
+      return response.education_id
     } catch (error) {
       const err = apiError(error);
       showError(err.message);
+      return null
     } finally {
       isCreating.value = false;
     }

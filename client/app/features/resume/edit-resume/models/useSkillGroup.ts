@@ -15,7 +15,7 @@ export function useSkillsGroup() {
   const isUpdating = ref(false);
   const deletingIds = ref(new Set<string>());
 
-  async function createSkillsGroup(resume_id: string = resumeStore.resume.id) {
+  async function createSkillsGroup(resume_id: string = resumeStore.resume.id):Promise<string | null> {
     isCreating.value = true;
     try {
       const response = await createSkillGroupRequest(resume_id);
@@ -24,9 +24,11 @@ export function useSkillsGroup() {
         title: "",
         skills: [],
       });
+      return response.skills_id
     } catch (error) {
       const err = apiError(error);
       showError(err.message);
+      return null
     } finally {
       isCreating.value = false;
     }

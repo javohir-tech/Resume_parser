@@ -40,10 +40,6 @@ const handleOpenForm = (id: string) => {
     openedForms.value.add(id)
 }
 
-const handleAddForm = () => {
-    emit("add")
-}
-
 watch(()=> props.last_item_id , (id)=>{
     if(!id) return
 
@@ -137,7 +133,7 @@ watch(()=> props.last_item_id , (id)=>{
 
                     <UButton type="button" color="neutral" variant="outline" size="sm" icon="i-lucide-plus"
                         class="w-full justify-center rounded-lg border-dashed py-2" :loading="add_pending"
-                        :disabled="add_pending" @click="handleAddForm">
+                        :disabled="add_pending" @click="emit('add')">
                         {{ props.add_button_title }}
                     </UButton>
 

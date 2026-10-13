@@ -7,6 +7,15 @@ import ResumeEditorSection from '../components/ResumeEditorSection.vue';
 const { isCreating, createLanguage, isDeleting, deleteLanguage } = useLanguage()
 const resumeStore = useResumeStore()
 
+const last_item_id = ref<string | null>(null)
+
+const handleAddSection = async () =>{
+    const id = await createLanguage(resumeStore.resume.id)
+    if(id){
+        last_item_id.value = id
+    }
+}
+
 </script>
 
 <template>
@@ -21,13 +30,15 @@ const resumeStore = useResumeStore()
         :section_icon="'i-lucide-languages'"
         :section_empty="t('resumeEditor.languagesEmpty')"
 
-        @add="createLanguage"
+        @add="handleAddSection"
         :add_button_title="t('resumeEditor.languagesAdd')"
         :add_pending="isCreating"
 
         @delete="deleteLanguage"
         :delete_button_title="t('resumeEditor.languagesRemove')"
         :delete_pending="isDeleting"
+
+        :last_item_id="last_item_id"
     >
     <template #default="{item}">
         <LanguagesForm :language="item"/>

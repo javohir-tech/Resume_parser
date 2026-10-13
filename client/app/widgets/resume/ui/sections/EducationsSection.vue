@@ -5,9 +5,16 @@ import { useResumeStore } from '~/entities/resume';
 import ResumeEditorSection from '../components/ResumeEditorSection.vue';
 
 const { isCreating, createEducation, isDeleting, deleteEducation } = useEducation()
-
-
 const resumeStore = useResumeStore()
+
+const last_item_id = ref<string | null>(null)
+
+const handleAddSection = async () =>{
+    const id = await createEducation(resumeStore.resume.id)
+    if(id){
+        last_item_id.value = id
+    }
+}
 </script>
 
 <template>
@@ -21,13 +28,15 @@ const resumeStore = useResumeStore()
     :section_icon="'i-lucide-graduation-cap'"
     :section_empty="t('resumeEditor.educationEmpty')"
 
-    @add="createEducation"
+    @add="handleAddSection"
     :add_button_title="t('resumeEditor.educationAdd')" 
     :add_pending="isCreating" 
 
     @delete="deleteEducation"
     :delete_button_title="t('resumeEditor.educationRemove')" 
     :delete_pending="isDeleting"
+
+    :last_item_id="last_item_id"
     >
 
         <template #default="{ item }">

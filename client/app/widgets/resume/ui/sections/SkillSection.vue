@@ -7,6 +7,15 @@ import ResumeEditorSection from '../components/ResumeEditorSection.vue';
 const resumeStore = useResumeStore()
 const { isCreating, createSkillsGroup, isDeleting, deleteSkillsGroup } = useSkillsGroup()
 
+const last_item_id = ref<string | null>(null)
+
+const handleAddSection = async () =>{
+    const id = await createSkillsGroup(resumeStore.resume.id)
+    if(id){
+        last_item_id.value = id
+    }
+}
+
 </script>
 
 <template>
@@ -21,13 +30,15 @@ const { isCreating, createSkillsGroup, isDeleting, deleteSkillsGroup } = useSkil
         :section_icon="'i-lucide-list-checks'"
         :section_empty="t('resumeEditor.skillsEmpty')"
 
-        @add="createSkillsGroup"
+        @add="handleAddSection"
         :add_button_title="t('resumeEditor.skillsAdd')"
         :add_pending="isCreating"
 
         @delete="deleteSkillsGroup"
         :delete_button_title="t('resumeEditor.skillsRemove')"
         :delete_pending="isDeleting"
+
+        :last_item_id="last_item_id"
     >
 
     <template #default="{item}">

@@ -26,7 +26,7 @@ export function useLanguage() {
   const isSaving = computed(() => savingIds.size > 0);
   const isLangaugeSaving = (id: string) => savingIds.has(id);
 
-  async function createLanguage(resume_id: string = resumeStore.resume.id) {
+  async function createLanguage(resume_id: string = resumeStore.resume.id):Promise<string | null> {
     isCreating.value = true;
     try {
       const response = await createLanguageRequest(resume_id);
@@ -35,9 +35,11 @@ export function useLanguage() {
         language: "",
         degree: "",
       });
+      return response.language_id
     } catch (error) {
       const err = apiError(error);
       showError(err.message);
+      return null
     } finally {
       isCreating.value = false;
     }
