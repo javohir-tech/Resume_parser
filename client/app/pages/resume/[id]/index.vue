@@ -28,7 +28,7 @@ const { start: startDesign, flush: flushDesign } = useEditDesign(800)
 
 const ready = ref(false)
 
-const { getResume } = useGetResume()
+const { getResume , loading } = useGetResume()
 
 
 const templates: Templates = {
@@ -77,6 +77,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <component :is="selectedTemplate.renderer || PaginatedResume" :template="selectedTemplate"
+    <component :is="selectedTemplate.renderer || PaginatedResume" :loading="loading" :template="selectedTemplate"
         :resume="resumeStore.resume" />
 </template>

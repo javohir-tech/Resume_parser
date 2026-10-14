@@ -1,6 +1,8 @@
 <script setup lang="ts">
+
 import type { Resume } from '../models/types';
 import type { ResumeTemplateBlokcs } from '../models/template-contract';
+
 import { buildBlock } from '../models/build-blocks';
 import { useResumeStore } from '../models/store';
 import { useResumePagination } from '../lib/useResumePagination';
@@ -9,7 +11,8 @@ import { PAGE_WIDTH_PX, PAGE_HEIGHT_PX, PAGE_CONTENT_WIDTH_PX, PAGE_GAP_PX } fro
 
 const props = defineProps<{
   resume: Resume,
-  template: ResumeTemplateBlokcs
+  template: ResumeTemplateBlokcs , 
+  loading : boolean
 }>()
 
 const blocks = computed(() => buildBlock(props.resume))
@@ -66,8 +69,12 @@ onBeforeUnmount(() => window.removeEventListener('resume:prepare-pdf', preparePd
     </template>
   </div>
 
+  <div v-if="props.loading" class="p-10 flex flex-col gap-8">
+    <USkeleton :style="{ width: `${PAGE_WIDTH_PX * scale}px`, height: `${PAGE_HEIGHT_PX * scale}px` }"/>
+  </div>
+
   <!-- Ko'rinadigan, sahifalangan render -->
-  <div ref="containerRef" class="p-10 flex flex-col items-center gap-8">
+  <div v-show="!props.loading" ref="containerRef" class="p-10 flex flex-col items-center gap-8">
 
     <div v-for="(page, i) in pageContents" :key="i" class="relative"
       :style="{ width: `${PAGE_WIDTH_PX * scale}px`, height: `${PAGE_HEIGHT_PX * scale}px` }"
@@ -112,4 +119,5 @@ onBeforeUnmount(() => window.removeEventListener('resume:prepare-pdf', preparePd
       </div>
     </div>
   </div>
+
 </template>

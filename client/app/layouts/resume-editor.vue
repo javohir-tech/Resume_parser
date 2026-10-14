@@ -10,8 +10,6 @@ type sidebarSide = "right" | "left"
 const leftSide = ref<sidebarSide>("left")
 const rightSide = ref<sidebarSide>("right")
 
-const isDesktop = useMediaQuery('(min-width: 1024px)')
-
 const swapSidebars = () => {
     if (leftSide.value === "left" && rightSide.value === "right") {
         leftSide.value = "right"
@@ -53,8 +51,9 @@ function toggleSidebars():void {
                             <UButton @click="swapSidebars" icon="i-lucide-arrow-left-right" variant="ghost"
                                 color="neutral" />
                         </UTooltip>
-                        <UButton v-if="isDesktop" icon="i-lucide-minimize-2" color="neutral" variant="ghost"
-                            aria-label="Ikkala sidebarni yopish" @click="toggleSidebars" />
+                        <UButton class="hidden lg:inline-flex" icon="i-lucide-minimize-2" color="neutral" variant="ghost"
+                             aria-label="Sidebarlarni ochish yoki yopish"
+                             @click="toggleSidebars" />
                     </div>
 
                     <UButton icon="i-lucide-panel-right" color="neutral" variant="ghost" aria-label="Toggle sidebar"
