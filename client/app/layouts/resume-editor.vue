@@ -20,7 +20,7 @@ const swapSidebars = () => {
     }
 }
 
-function toggleSidebars():void {
+function toggleSidebars(): void {
     const shouldOpen = !(open.value || rightOpen.value)
 
     open.value = shouldOpen
@@ -51,9 +51,9 @@ function toggleSidebars():void {
                             <UButton @click="swapSidebars" icon="i-lucide-arrow-left-right" variant="ghost"
                                 color="neutral" />
                         </UTooltip>
-                        <UButton class="hidden lg:inline-flex" icon="i-lucide-minimize-2" color="neutral" variant="ghost"
-                             aria-label="Sidebarlarni ochish yoki yopish"
-                             @click="toggleSidebars" />
+                        <UButton class="hidden lg:inline-flex"
+                            :icon="open || rightOpen ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'" color="neutral"
+                            variant="ghost" aria-label="Sidebarlarni ochish yoki yopish" @click="toggleSidebars" />
                     </div>
 
                     <UButton icon="i-lucide-panel-right" color="neutral" variant="ghost" aria-label="Toggle sidebar"
