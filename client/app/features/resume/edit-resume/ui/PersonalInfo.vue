@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { t } = useI18n()
 import { useResumeStore } from '~/entities/resume';
+import { INPUT_LIMITS } from '~/shared/constants';
 
 const resumeStore = useResumeStore()
 </script>
@@ -8,10 +9,10 @@ const resumeStore = useResumeStore()
 <template>
     <div class="space-y-4 p-4">
                 <UFormField :label="t('resumeEditor.fullName')">
-                    <UInput v-model="resumeStore.resume.fullname" class="w-full" :placeholder="t('resumeEditor.namePlaceholder')" />
+                    <UInput :maxlength="INPUT_LIMITS.personal.fullName" v-model="resumeStore.resume.fullname" class="w-full" :placeholder="t('resumeEditor.namePlaceholder')" />
                 </UFormField>
                 <UFormField :label="t('resumeEditor.professionalTitle')">
-                    <UInput v-model="resumeStore.resume.title" class="w-full"
+                    <UInput :maxlength="INPUT_LIMITS.personal.professionalTitle" v-model="resumeStore.resume.title" class="w-full"
                         :placeholder="t('resumeEditor.titlePlaceholder')" />
                 </UFormField>
                 <UFormField :label="t('resumeEditor.email')">
