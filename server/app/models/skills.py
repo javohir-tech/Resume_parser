@@ -24,4 +24,4 @@ class Skills(Base):
     skills: Mapped[list["SkillItem"]] = relationship(
         back_populates="skills", cascade="all, delete-orphan", lazy="raise"
     )
-    title: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    title: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
