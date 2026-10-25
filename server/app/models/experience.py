@@ -20,9 +20,10 @@ class Experience(Base):
         UUID(as_uuid=True), ForeignKey("resume.id"), index=True
     )
     resume: Mapped["Resume"] = relationship(back_populates="experience", lazy="raise")
-    position: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    company: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    location: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    startDate: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    endDate: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
+    position: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
+    company: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
+    location: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
+    startDate: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    endDate: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
