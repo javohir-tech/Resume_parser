@@ -27,7 +27,7 @@ class Resume(Base):
     user: Mapped["User"] = relationship(back_populates="resumes", lazy="raise")
 
     fullname: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
-    title: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
+    title: Mapped[Optional[str]] = mapped_column(String(750), nullable=True)
     email: Mapped[Optional[str]] = mapped_column(String(254), nullable=True)
     phone: Mapped[Optional[str]] = mapped_column(String(32), nullable=True)
     location: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
