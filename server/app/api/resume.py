@@ -129,7 +129,6 @@ async def get_resume(resume_id: str, db: AsyncSession = Depends(get_db)):
             selectinload(Resume.experience),
             selectinload(Resume.education),
             selectinload(Resume.languages),
-            selectinload(Resume.skills),
             selectinload(Resume.skills).selectinload(Skills.skills),
         )
         .where(Resume.id == resume_uuid)
