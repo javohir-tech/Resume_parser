@@ -1,6 +1,6 @@
 import uuid
 from typing import Optional, TYPE_CHECKING
-from sqlalchemy import String, ForeignKey
+from sqlalchemy import String, ForeignKey , Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base
@@ -25,15 +25,17 @@ class Resume(Base):
         UUID(as_uuid=True), ForeignKey("users.id"), index=True
     )
     user: Mapped["User"] = relationship(back_populates="resumes", lazy="raise")
-    fullname: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    title: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    email: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    phone: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    location: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    website: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    github_link: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    linkedin_link: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    summary: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
+    fullname: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
+    title: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
+    email: Mapped[Optional[str]] = mapped_column(String(254), nullable=True)
+    phone: Mapped[Optional[str]] = mapped_column(String(32), nullable=True)
+    location: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
+    website: Mapped[Optional[str]] = mapped_column(String(2048), nullable=True)
+    github_link: Mapped[Optional[str]] = mapped_column(String((2048)), nullable=True)
+    linkedin_link: Mapped[Optional[str]] = mapped_column(String(2048), nullable=True)
+    summary: Mapped[Optional[str]] = mapped_column(Text, nullable=True) 
+
     experience: Mapped[list["Experience"]] = relationship(
         back_populates="resume", cascade="all, delete-orphan", lazy="raise"
     )
