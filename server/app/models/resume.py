@@ -37,16 +37,16 @@ class Resume(Base):
     summary: Mapped[Optional[str]] = mapped_column(Text, nullable=True) 
 
     experience: Mapped[list["Experience"]] = relationship(
-        back_populates="resume", cascade="all, delete-orphan", lazy="raise"
+        back_populates="resume", cascade="all, delete-orphan", lazy="raise" , order_by="Experience.created_at"
     )
     education: Mapped[list["Education"]] = relationship(
-        back_populates="resume", cascade="all, delete-orphan", lazy="raise"
+        back_populates="resume", cascade="all, delete-orphan", lazy="raise" , order_by="Education.created_at"
     )
     languages: Mapped[list["Language"]] = relationship(
-        back_populates="resume", cascade="all, delete-orphan", lazy="raise"
+        back_populates="resume", cascade="all, delete-orphan", lazy="raise" , order_by="Language.created_at"
     )
     skills: Mapped[list["Skills"]] = relationship(
-        back_populates="resume", cascade="all, delete-orphan", lazy="raise"
+        back_populates="resume", cascade="all, delete-orphan", lazy="raise" , order_by="Skills.created_at"
     )
     desing: Mapped["Design"] = relationship(
         back_populates="resume", cascade="all, delete-orphan", lazy="raise"

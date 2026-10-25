@@ -4,12 +4,13 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, mapped_column, Mapped
 from app.db.base import Base
 from typing import TYPE_CHECKING, Optional
+from app.models.timestampmixin import TimestampMixin
 
 if TYPE_CHECKING:
     from app.models.resume import Resume
 
 
-class Language(Base):
+class Language(TimestampMixin, Base):
 
     __tablename__ = "language"
 
@@ -20,5 +21,5 @@ class Language(Base):
         UUID(as_uuid=True), ForeignKey("resume.id"), index=True
     )
     resume: Mapped["Resume"] = relationship(back_populates="languages", lazy="raise")
-    language : Mapped[Optional[str]] = mapped_column(String(150) , nullable=True)
-    degree : Mapped[Optional[str]] = mapped_column(String(150) , nullable=True)
+    language: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
+    degree: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)

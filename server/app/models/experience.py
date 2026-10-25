@@ -4,12 +4,13 @@ from sqlalchemy.orm import relationship, mapped_column, Mapped
 from sqlalchemy.dialects.postgresql import UUID
 from typing import TYPE_CHECKING, Optional
 from app.db.base import Base
+from app.models.timestampmixin import TimestampMixin
 
 if TYPE_CHECKING:
     from app.models.resume import Resume
 
 
-class Experience(Base):
+class Experience(TimestampMixin, Base):
 
     __tablename__ = "experience"
 
