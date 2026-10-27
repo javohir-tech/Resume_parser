@@ -5,6 +5,8 @@ import { skillCategories, type SkillGroup } from '~/entities/resume';
 import { useSkillItem } from '../models/useSkillItem';
 import { useSkillsGroup } from '../models/useSkillGroup';
 
+import { INPUT_LIMITS } from '~/shared/constants';
+
 const { isUpdating, updateSkillGroup } = useSkillsGroup()
 const { isCreating, createSkillItem, isDeleting, deleteSkillItem, } = useSkillItem()
 
@@ -27,7 +29,7 @@ function handleAddSkill() {
 async function selectSkillCategory(value: string) {
     const title = value.trim()
 
-    if (!title || isUpdating.value) return
+    if (!title || isUpdating.value || title.length > INPUT_LIMITS.skills_group.title) return
 
     if (title !== props.skillsGroup.title) {
         await updateSkillGroup(props.skillsGroup.id, { title })
@@ -51,7 +53,8 @@ async function createSkillCategory(value: string) {
 <template>
     <div class="flex flex-col gap-3 mt-3">
         <UFormField :label="t('resumeEditor.skillCategory')" :description="t('resumeEditor.categoryHint')">
-            <USelectMenu :model-value="skillsGroup.title" v-model:open="categoryOpen" v-model:search-term="categorySearch" :items="skillCategoriesItems" create-item class="w-full"
+            <USelectMenu :model-value="skillsGroup.title" v-model:open="categoryOpen"
+                v-model:search-term="categorySearch" :items="skillCategoriesItems" create-item class="w-full"
                 :placeholder="t('resumeEditor.categoryPlaceholder')" @update:model-value="selectSkillCategory"
                 @create="createSkillCategory" />
         </UFormField>
@@ -65,10 +68,11 @@ async function createSkillCategory(value: string) {
         <UForm @submit="handleAddSkill">
             <UFormField :label="t('resumeEditor.skill')">
                 <div class="flex gap-2">
-                    <UInput v-model="skill" class="min-w-0 flex-1" :placeholder="t('resumeEditor.skillPlaceholder')" />
+                    <UInput :maxlength="INPUT_LIMITS.skill_item.skill" v-model="skill" class="min-w-0 flex-1"
+                        :placeholder="t('resumeEditor.skillPlaceholder')" />
                     <UButton type="submit" color="neutral" variant="outline" icon="i-lucide-plus"
-                        :disabled="!skill?.trim() || isCreating" :loading="isCreating" :aria-label="t('resumeEditor.addSkill')"
-                        :title="t('resumeEditor.addSkill')" />
+                        :disabled="!skill?.trim() || isCreating" :loading="isCreating"
+                        :aria-label="t('resumeEditor.addSkill')" :title="t('resumeEditor.addSkill')" />
                 </div>
             </UFormField>
         </UForm>

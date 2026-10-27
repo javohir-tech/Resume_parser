@@ -3,6 +3,7 @@ const { t } = useI18n()
 import type { Languages } from '~/entities/resume';
 import { languages } from '~/entities/resume';
 import { useLanguage } from '../models/useLanguage';
+import { INPUT_LIMITS } from '~/shared/constants';
 
 const props = defineProps<{
     language: Languages
@@ -39,7 +40,7 @@ const localizedDegrees = computed(() => degrees.value.map(value => ({
 function selectLanguage(value: string) {
     const language = value.trim()
 
-    if (!language) return
+    if (!language || language.length > INPUT_LIMITS.language.language) return
 
     if (!languageItems.value.includes(language)) {
         languageItems.value.push(language)

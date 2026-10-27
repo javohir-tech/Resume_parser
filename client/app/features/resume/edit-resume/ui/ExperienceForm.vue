@@ -3,6 +3,7 @@ const { t } = useI18n()
 import type { Experience } from '~/entities/resume';
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 import { useExperienceAvtoSave } from '../models/useExperienceAvtoSave';
+import { INPUT_LIMITS } from '~/shared/constants';
 
 const { start, flush } = useExperienceAvtoSave(800)
 
@@ -11,7 +12,7 @@ const df = new DateFormatter('en-US', { month: 'long', year: 'numeric' })
 const ready = ref(false)
 const router = useRouter()
 
-let removeGuard : (()=> void) | undefined
+let removeGuard: (() => void) | undefined
 
 const monthFormatter = new DateFormatter('en-US', {
     month: 'long'
@@ -36,7 +37,7 @@ watch(startDate, (newDate) => {
 })
 
 watch(endDate, (newDate) => {
-    if (!newDate)  return
+    if (!newDate) return
     const month = monthFormatter.format(
         newDate?.toDate(getLocalTimeZone())
     )
@@ -44,8 +45,8 @@ watch(endDate, (newDate) => {
     props.experience.endDate = newEndDate
 })
 
-watch(isPresent , (value)=>{
-    if(!value) return 
+watch(isPresent, (value) => {
+    if (!value) return
 
     props.experience.endDate = ""
     endDate.value = undefined
@@ -58,14 +59,14 @@ onMounted(() => {
         ready.value = start(experience_id)
     }
 
-    removeGuard = router.beforeEach(async ()=>{
-        if(!ready.value) return true
+    removeGuard = router.beforeEach(async () => {
+        if (!ready.value) return true
 
         return await flush()
     })
 })
 
-onScopeDispose(()=>{
+onScopeDispose(() => {
     removeGuard?.()
 })
 
@@ -75,18 +76,18 @@ onScopeDispose(()=>{
 
     <div class="space-y-3 my-3">
         <UFormField :label="t('resumeEditor.position')">
-            <UInput v-model="props.experience.position" class="w-full"
+            <UInput :maxlength="INPUT_LIMITS.experience.position" v-model="props.experience.position" class="w-full"
                 :placeholder="t('resumeEditor.positionPlaceholder')" />
         </UFormField>
         <UFormField :label="t('resumeEditor.company')">
-            <UInput v-model="props.experience.company" class="w-full"
+            <UInput :maxlength="INPUT_LIMITS.experience.company" v-model="props.experience.company" class="w-full"
                 :placeholder="t('resumeEditor.companyPlaceholder')" />
         </UFormField>
     </div>
-    
+
     <UFormField :label="t('resumeEditor.location')" class="mb-3">
-        <UInput class="w-full" :placeholder="t('resumeEditor.locationPlaceholder')"
-            v-model="props.experience.location" />
+        <UInput :maxlength="INPUT_LIMITS.experience.location" class="w-full"
+            :placeholder="t('resumeEditor.locationPlaceholder')" v-model="props.experience.location" />
     </UFormField>
 
     <div class="grid gap-3 mb-3">
@@ -105,7 +106,7 @@ onScopeDispose(()=>{
             </UPopover>
         </UFormField>
 
-            <UCheckbox v-model="isPresent" label="Present"/>
+        <UCheckbox v-model="isPresent" label="Present" />
 
         <UFormField :label="t('resumeEditor.endDate')" class="w-full">
             <UPopover class="w-full">
@@ -124,8 +125,8 @@ onScopeDispose(()=>{
     </div>
 
     <UFormField :label="t('resumeEditor.description')">
-        <UTextarea :rows="8" class="w-full" v-model="props.experience.description"
-            :placeholder="t('resumeEditor.descriptionPlaceholder')" />
+        <UTextarea :maxlength="INPUT_LIMITS.experience.description" :rows="8" class="w-full"
+            v-model="props.experience.description" :placeholder="t('resumeEditor.descriptionPlaceholder')" autoresize />
     </UFormField>
 
 </template>

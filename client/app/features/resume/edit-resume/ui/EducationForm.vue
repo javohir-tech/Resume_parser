@@ -3,6 +3,7 @@ const { t } = useI18n()
 import type { Education } from '~/entities/resume'
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 import { useEducationSaveAvto } from '../models/useEducationAvtoSave'
+import { INPUT_LIMITS } from '~/shared/constants';
 
 const { start, flush } = useEducationSaveAvto()
 
@@ -69,17 +70,17 @@ onScopeDispose(() => {
     <div class="flex flex-col gap-3 mt-3">
 
         <UFormField :label="t('resumeEditor.degree')">
-            <UInput v-model="props.education.degree" class="w-full"
+            <UInput :maxlength="INPUT_LIMITS.education.degree" v-model="props.education.degree" class="w-full"
                 :placeholder="t('resumeEditor.degreePlaceholder')" />
         </UFormField>
 
         <UFormField :label="t('resumeEditor.institution')">
-            <UInput class="w-full" v-model="props.education.institution"
+            <UInput :maxlength="INPUT_LIMITS.education.institution" class="w-full" v-model="props.education.institution"
                 :placeholder="t('resumeEditor.institutionPlaceholder')" />
         </UFormField>
 
         <UFormField :label="t('resumeEditor.fieldOfStudy')">
-            <UInput class="w-full" v-model="props.education.fieldOfStudy"
+            <UInput :maxlength="INPUT_LIMITS.education.fieldOfStudy" class="w-full" v-model="props.education.fieldOfStudy"
                 :placeholder="t('resumeEditor.fieldPlaceholder')" />
         </UFormField>
 
@@ -119,7 +120,7 @@ onScopeDispose(() => {
 
         </div>
         <UFormField :label="t('resumeEditor.location')">
-            <UInput class="w-full" v-model="props.education.location"
+            <UInput :maxlength="INPUT_LIMITS.education.location" class="w-full" v-model="props.education.location"
                 :placeholder="t('resumeEditor.locationPlaceholder')" />
         </UFormField>
     </div>
