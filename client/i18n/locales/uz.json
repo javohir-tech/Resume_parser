@@ -4,6 +4,22 @@
     "design": "Dizayn va sozlamalar"
   },
   "profile": {
+    "delete": {
+      "title": "Profilni o‘chirish",
+      "description": "Davom etishdan oldin quyidagi ma’lumot bilan tanishing.",
+      "action": "Profilni o‘chirish",
+      "close": "Yopish",
+      "warningTitle": "Bu amalni ortga qaytarib bo‘lmaydi",
+      "warning": "Profilingiz o‘chirilgach, uni qayta tiklay olmaysiz. Davom etishdan oldin kerakli ma’lumotlaringizni saqlab oling.",
+      "confirmLabel": "Tasdiqlash uchun delete deb yozing",
+      "confirmHelp": "Yuqoridagi maydonga delete so‘zini kichik harflarda kiriting."
+    },
+    "plan": {
+      "current": "Joriy tarif",
+      "freeActive": "Siz Free tarifidasiz",
+      "proActive": "Siz Pro tarifidasiz",
+      "upgrade": "Pro’ga o‘tish"
+    },
     "telegramId": "Telegram ID",
     "username": "Foydalanuvchi nomi",
     "registered": "Ro‘yxatdan o‘tgan sana",

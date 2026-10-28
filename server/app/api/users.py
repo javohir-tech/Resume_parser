@@ -30,6 +30,7 @@ async def get_me(db: AsyncSession = Depends(get_db), user_id: str = Depends(veri
     return {
         "username": user.username,
         "id": user_id,
+        "plan" : user.plan, 
         "full_name": user.full_name,
         "telegram_id": user.telegram_id,
         "registered_at": user.registered_at,

@@ -4,6 +4,22 @@
     "design": "Design & settings"
   },
   "profile": {
+    "delete": {
+      "title": "Delete profile",
+      "description": "Please review the information below before continuing.",
+      "action": "Delete profile",
+      "close": "Close",
+      "warningTitle": "This action cannot be undone",
+      "warning": "Once your profile is deleted, you won’t be able to restore it. Save any information you need before continuing.",
+      "confirmLabel": "Type delete to confirm",
+      "confirmHelp": "Enter the word delete in lowercase in the field above."
+    },
+    "plan": {
+      "current": "Current plan",
+      "freeActive": "You’re on the Free plan",
+      "proActive": "You’re on the Pro plan",
+      "upgrade": "Upgrade to Pro"
+    },
     "telegramId": "Telegram ID",
     "username": "Username",
     "registered": "Registered",

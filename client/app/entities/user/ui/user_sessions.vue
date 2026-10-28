@@ -22,15 +22,20 @@ const deleteSession = (device_id: string) => {
 
 <template>
     <section class="pb-10">
-        <UCard>
+        <UCard class="overflow-hidden rounded-2xl shadow-sm" :ui="{ header: 'px-5 py-5 sm:px-8', body: 'p-5 sm:p-8' }">
             <template #header>
-                <div>
+                <div class="flex items-start gap-3">
+                    <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary" aria-hidden="true">
+                        <UIcon name="i-lucide-shield-check" class="size-5" />
+                    </span>
+                    <div class="min-w-0">
                     <h2 class="text-lg font-semibold">
                         {{ t('profile.sessions.title') }}
                     </h2>
                     <p class="text-sm text-muted mt-1">
                         {{ t('profile.sessions.description') }}
                     </p>
+                    </div>
                 </div>
             </template>
 
