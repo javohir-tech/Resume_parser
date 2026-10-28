@@ -30,11 +30,31 @@ async def get_me(db: AsyncSession = Depends(get_db), user_id: str = Depends(veri
     return {
         "username": user.username,
         "id": user_id,
-        "plan" : user.plan, 
+        "plan": user.plan,
         "full_name": user.full_name,
         "telegram_id": user.telegram_id,
         "registered_at": user.registered_at,
     }
+
+
+@user_router.delete("/profile/delete")
+async def delete_profile(
+    db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+):
+    user_uuid = UUID(user_id)
+
+    result = await db.execute(select(User).where(User.id == user_uuid))
+
+    user = result.scalar_one_or_none()
+
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Profile not found"
+        )
+
+    await db.delete(user)
+    await db.commit()
+    return {"success": True, "message": "Profile successfully deleted"}
 
 
 @user_router.get("/me/sessions")
@@ -93,12 +113,9 @@ async def revoke_session(
     await db.execute(
         update(RefreshToken)
         .where(RefreshToken.device_id == device_id, RefreshToken.user_id == user_uuid)
-        .values(revoked = True)
+        .values(revoked=True)
     )
 
     await db.delete(session)
     await db.commit()
-    return {
-        "success" : True , 
-        "message" : "session bekor qilindi"
-    }
+    return {"success": True, "message": "session bekor qilindi"}

@@ -1,9 +1,13 @@
 import uuid
+from typing import TYPE_CHECKING
 from datetime import datetime
 from sqlalchemy import ForeignKey, String, DateTime, Boolean, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
 from app.db.base import Base
+
+if TYPE_CHECKING:
+    from app.models.user import User
 
 
 class RefreshToken(Base):
@@ -15,11 +19,13 @@ class RefreshToken(Base):
     )
     jti: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
     user_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id" , ondelete="CASCADE"), nullable=False
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
-    device_id: Mapped[str] = mapped_column(String , nullable=False , index=True)
+    device_id: Mapped[str] = mapped_column(String, nullable=False, index=True)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     revoked: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
+
+    user: Mapped["User"] = relationship(back_populates="refresh_tokens")

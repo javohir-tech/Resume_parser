@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from app.models.user_sessions import UserSessions
     from app.models.login_code import LoginCode
     from app.models.resume import Resume
+    from app.models.refresh_token import RefreshToken
 
 
 class UserPlan(str, enum.Enum):
@@ -28,6 +29,9 @@ class User(Base):
         back_populates="user", cascade="all, delete-orphan", lazy="raise"
     )
     sessions: Mapped[list["UserSessions"]] = relationship(
+        back_populates="user", cascade="all, delete-orphan", lazy="raise"
+    )
+    refresh_tokens: Mapped[list["RefreshToken"]] = relationship(
         back_populates="user", cascade="all, delete-orphan", lazy="raise"
     )
     telegram_id: Mapped[int] = mapped_column(BigInteger, unique=True, index=True)
