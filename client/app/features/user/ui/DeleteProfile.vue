@@ -1,5 +1,16 @@
 <script setup lang="ts">
+import { useDeleteProfile } from '../models/useDeleteProfile';
+
 const { t } = useI18n()
+const delete_check = ref<string>("")
+const { deleteProfile , loading } = useDeleteProfile()
+
+const handleDeleteProfile = async () => {
+    if (delete_check.value.trim() !== "delete") return
+
+    await deleteProfile()
+}
+
 </script>
 
 <template>
@@ -23,15 +34,15 @@ const { t } = useI18n()
                     </div>
 
                     <UFormField :label="t('profile.delete.confirmLabel')" :help="t('profile.delete.confirmHelp')">
-                        <UInput placeholder="delete" size="lg" class="w-full" :ui="{ base: 'rounded-xl' }"
-                            autocomplete="off" autocapitalize="none" :spellcheck="false" />
+                        <UInput v-model="delete_check" placeholder="delete" size="lg" class="w-full"
+                            :ui="{ base: 'rounded-xl' }" autocomplete="off" autocapitalize="none" :spellcheck="false" />
                     </UFormField>
                 </div>
             </template>
 
             <template #footer>
-                <UButton type="button" :label="t('profile.delete.action')" icon="i-lucide-trash-2" color="error"
-                    size="lg" block class="min-h-11 cursor-pointer rounded-xl" />
+                <UButton :loading="loading" :disabled="delete_check.trim() !== 'delete' || loading" @click="handleDeleteProfile" type="button" :label="t('profile.delete.action')"
+                    icon="i-lucide-trash-2" color="error" size="lg" block class="min-h-11 cursor-pointer rounded-xl" />
             </template>
         </UModal>
     </div>

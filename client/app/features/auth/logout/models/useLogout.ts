@@ -17,6 +17,7 @@ export default function useLogout() {
         });
       }
       const access_token = useCookie("access_token");
+      localStorage.clear()
       access_token.value = null;
       refresh_token.value = null;
       userStore.logout();

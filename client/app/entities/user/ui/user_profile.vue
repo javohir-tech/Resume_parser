@@ -57,20 +57,22 @@ const registeredDate = computed(() => {
                             <UserAvatar size="lg" />
                         </div>
                         <div class="mt-4 flex flex-wrap items-center gap-3">
-                        <h2 class="min-w-0 break-words text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
-                            {{ user.full_name }}
-                        </h2>
-                        <UBadge :color="user.plan === 'pro' ? 'primary' : 'neutral'" variant="soft"
-                            :icon="user.plan === 'pro' ? 'i-lucide-sparkles' : 'i-lucide-leaf'"
-                            class="shrink-0 rounded-full px-3 py-1">
-                            {{ user.plan === 'pro' ? 'Pro' : 'Free' }}
-                        </UBadge>
+                            <h2
+                                class="min-w-0 break-words text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
+                                {{ user.full_name }}
+                            </h2>
+                            <UBadge :color="user.plan === 'pro' ? 'primary' : 'neutral'" variant="soft"
+                                :icon="user.plan === 'pro' ? 'i-lucide-sparkles' : 'i-lucide-leaf'"
+                                class="shrink-0 rounded-full px-3 py-1">
+                                {{ user.plan === 'pro' ? 'Pro' : 'Free' }}
+                            </UBadge>
                         </div>
                         <p v-if="user.username" class="mt-1 break-all text-sm text-muted">@{{ user.username }}</p>
                     </div>
                     <div class="flex w-full flex-wrap items-center gap-3 sm:w-auto sm:justify-end">
                         <UButton :to="localePath('/resume')" trailing-icon="i-lucide-arrow-up-right" size="lg"
-                            color="primary" variant="solid" class="min-h-11 flex-1 justify-center rounded-xl px-5 sm:flex-none">
+                            color="primary" variant="solid"
+                            class="min-h-11 flex-1 justify-center rounded-xl px-5 sm:flex-none">
                             {{ t('account.resumes') }}
                         </UButton>
                     </div>
@@ -83,7 +85,7 @@ const registeredDate = computed(() => {
                             {{ t('profile.telegramId') }}
                         </dt>
                         <dd class="mt-3 break-all font-mono text-base font-medium text-highlighted">{{ user.telegram_id
-                            }}</dd>
+                        }}</dd>
                     </div>
                     <div class="min-w-0 rounded-2xl bg-elevated/50 p-4 sm:p-5">
                         <dt class="flex items-center gap-2 text-sm text-muted">
@@ -116,7 +118,8 @@ const registeredDate = computed(() => {
         <div v-if="!loading && user"
             class="mt-6 flex flex-col gap-5 rounded-2xl border border-primary/20 bg-primary/5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
             <div class="flex items-center gap-4">
-                <span class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary" aria-hidden="true">
+                <span class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary"
+                    aria-hidden="true">
                     <UIcon :name="user.plan === 'pro' ? 'i-lucide-badge-check' : 'i-lucide-sparkles'" class="size-6" />
                 </span>
                 <div class="min-w-0">
@@ -126,7 +129,8 @@ const registeredDate = computed(() => {
                     </h2>
                 </div>
             </div>
-            <UButton v-if="user.plan !== 'pro'" size="lg" color="primary" trailing-icon="i-lucide-arrow-up-right"
+            <UButton :to="localePath('/settings')" v-if="user.plan !== 'pro'" size="lg" color="primary"
+                trailing-icon="i-lucide-arrow-up-right"
                 class="min-h-11 cursor-pointer justify-center rounded-xl px-5 sm:shrink-0">
                 {{ t('profile.plan.upgrade') }}
             </UButton>
