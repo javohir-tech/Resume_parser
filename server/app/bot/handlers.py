@@ -21,7 +21,6 @@ from app.models.user import User
 from app.models.login_code import LoginCode
 from app.bot.bot_instance import bot
 
-
 router = Router()
 
 FRONTEND_URL = "https://sizning-sayt.uz/kodni-kiriting"
@@ -84,7 +83,6 @@ async def handle_contact(message: Message):
             full_name=f"{message.from_user.first_name} {message.from_user.last_name or ""}".strip(),
             phone_number=contact.phone_number,
         )
-
         session.add(new_user)
         await session.commit()
 
@@ -142,17 +140,18 @@ async def handle_login(messaage: Message):
         reply_markup=build_code_keyboard(code),
     )
 
-    asyncio.create_task(expire_code_message(sent.chat.id , sent.message_id))
+    asyncio.create_task(expire_code_message(sent.chat.id, sent.message_id))
 
-async def expire_code_message(chat_id : int , message_id : int):
+
+async def expire_code_message(chat_id: int, message_id: int):
     await asyncio.sleep(60)
     try:
         await bot.edit_message_text(
-            chat_id=chat_id , 
-            message_id=message_id , 
-            text="⌛ Kod muddati o'tdi. Yangi kod olish uchun /login ni qayta yuboring."
+            chat_id=chat_id,
+            message_id=message_id,
+            text="⌛ Kod muddati o'tdi. Yangi kod olish uchun /login ni qayta yuboring.",
         )
-    except TelegramBadRequest :
+    except TelegramBadRequest:
         pass
 
 

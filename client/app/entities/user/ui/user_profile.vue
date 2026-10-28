@@ -60,10 +60,13 @@ const registeredDate = computed(() => {
                         </h2>
                         <p v-if="user.username" class="mt-1 break-all text-sm text-muted">@{{ user.username }}</p>
                     </div>
-                    <UButton :to="localePath('/resume')" trailing-icon="i-lucide-arrow-up-right" size="lg"
-                        color="neutral" variant="outline" class="shrink-0 rounded-xl">
-                        {{ t('account.resumes') }}
-                    </UButton>
+                    <div class="flex gap-2">
+                        <UButton color="neutral" variant="outline" class="shrink-0 rounded-xl">free</UButton>
+                        <UButton :to="localePath('/resume')" trailing-icon="i-lucide-arrow-up-right" size="lg"
+                            color="neutral" variant="outline" class="shrink-0 rounded-xl">
+                            {{ t('account.resumes') }}
+                        </UButton>
+                    </div>
                 </div>
 
                 <dl class="mt-8 grid gap-3 sm:grid-cols-3">
@@ -73,7 +76,7 @@ const registeredDate = computed(() => {
                             {{ t('profile.telegramId') }}
                         </dt>
                         <dd class="mt-3 break-all font-mono text-base font-medium text-highlighted">{{ user.telegram_id
-                            }}</dd>
+                        }}</dd>
                     </div>
                     <div class="min-w-0 rounded-2xl border border-default bg-elevated/40 p-5">
                         <dt class="flex items-center gap-2 text-sm text-muted">

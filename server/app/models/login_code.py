@@ -19,7 +19,7 @@ class LoginCode(Base):
     )
     code: Mapped[str] = mapped_column(String(6), index=True)
     user_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id"), index=True
+        UUID(as_uuid=True), ForeignKey("users.id" , ondelete="CASCADE") , index=True
     )
     user: Mapped["User"] = relationship(back_populates="login_codes")
     created_at: Mapped[datetime] = mapped_column(

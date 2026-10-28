@@ -1,15 +1,21 @@
 import uuid
+import enum
 from typing import TYPE_CHECKING
 from app.db.base import Base
 from datetime import datetime, timezone
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, BigInteger, DateTime
+from sqlalchemy import String, BigInteger, DateTime, Enum
 
 if TYPE_CHECKING:
     from app.models.user_sessions import UserSessions
     from app.models.login_code import LoginCode
     from app.models.resume import Resume
+
+
+class UserPlan(str, enum.Enum):
+    FREE = "free"
+    PRO = "pro"
 
 
 class User(Base):
@@ -28,6 +34,17 @@ class User(Base):
     username: Mapped[str | None] = mapped_column(String(64), nullable=True)
     full_name: Mapped[str] = mapped_column(String(255))
     phone_number: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    plan: Mapped[UserPlan] = mapped_column(
+        Enum(
+            UserPlan,
+            name="user_plan",
+            values_callable=lambda items: [item.value for item in items],
+        ),
+        default=UserPlan.FREE,
+        server_default="free",
+        nullable=False,
+    )
+
     registered_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
