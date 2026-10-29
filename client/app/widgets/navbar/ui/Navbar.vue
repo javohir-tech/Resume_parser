@@ -29,35 +29,45 @@ const items = computed<NavigationMenuItem[]>(() => [
         <!-- <UNavigationMenu :items="items" variant="link" /> -->
         <template #right>
             <UPopover>
-                <UButton icon="i-lucide-languages" color="neutral" :aria-label="t('account.language')" variant="ghost" />
+                <UButton icon="i-lucide-languages" color="neutral" :aria-label="t('account.language')"
+                    variant="ghost" />
 
                 <template #content="{ close }">
                     <div class="flex flex-col gap-1 p-1 min-w-32">
-                        <UButton icon="circle-flags:uz" label="Uzbek" color="neutral" @click="setLocale('uz') , close()"
+                        <UButton icon="circle-flags:uz" label="Uzbek" color="neutral" @click="setLocale('uz'), close()"
                             variant="ghost" />
-                        <UButton icon="circle-flags:gb" label="English" color="neutral" @click="setLocale('en') , close()"
-                            variant="ghost" />
-                        <UButton icon="circle-flags:ru" label="Russian" color="neutral" @click="setLocale('ru') , close()"
-                            variant="ghost" />
+                        <UButton icon="circle-flags:gb" label="English" color="neutral"
+                            @click="setLocale('en'), close()" variant="ghost" />
+                        <UButton icon="circle-flags:ru" label="Russian" color="neutral"
+                            @click="setLocale('ru'), close()" variant="ghost" />
                     </div>
                 </template>
             </UPopover>
             <UColorModeButton />
-            <UPopover v-if="access_token" :content="{ side: 'bottom', align: 'end' , sideOffset : 8 }">
+            <UPopover v-if="access_token" :content="{ side: 'bottom', align: 'end', sideOffset: 8 }">
                 <UButton icon="i-lucide-menu" variant="ghost" color="neutral" />
-                <template #content="{close}">
+                <template #content="{ close }">
                     <div class="flex flex-col gap-1 p-1 min-w-32">
-                        <UButton :to="localePath('/settings')" icon="i-lucide-layout-dashboard" @click="close" color="neutral" variant="ghost">
+                        <UButton :to="localePath('/settings')" icon="i-lucide-layout-dashboard" @click="close"
+                            color="neutral" variant="ghost">
                             {{ t('account.dashboard') }}
                         </UButton>
-                        <UButton :to="localePath('/profile')" icon="i-lucide-user-round" @click="close" color="neutral" variant="ghost">
+                        <UButton :to="localePath('/profile')" icon="i-lucide-user-round" @click="close" color="neutral"
+                            variant="ghost">
                             {{ t('account.profile') }}
                         </UButton>
-                        <UButton :to="localePath('/resume')" icon="i-lucide-files" @click="close" color="neutral" variant="ghost">
+                        <UButton :to="localePath('/resume')" icon="i-lucide-files" @click="close" color="neutral"
+                            variant="ghost">
                             {{ t('account.resumes') }}
                         </UButton>
-                        <UButton @click="handle_logout" icon="i-lucide-log-out" :disabled="loading"
-                            :loading="loading" color="error" variant="ghost">{{ t('account.logout') }}</UButton>
+                        <UButton :to="localePath('/job-match')" icon="i-lucide-wand-sparkles" @click="close" color="neutral"
+                            variant="ghost">
+                            <!-- {{ t('account.resumes') }} -->
+                            moslashtirish
+                        </UButton>
+
+                        <UButton @click="handle_logout" icon="i-lucide-log-out" :disabled="loading" :loading="loading"
+                            color="error" variant="ghost">{{ t('account.logout') }}</UButton>
                     </div>
                 </template>
             </UPopover>
@@ -65,7 +75,7 @@ const items = computed<NavigationMenuItem[]>(() => [
         </template>
 
         <!-- <template #body> -->
-            <!-- <UNavigationMenu :items="items" orientation="vertical" /> -->
+        <!-- <UNavigationMenu :items="items" orientation="vertical" /> -->
         <!-- </template> -->
     </UHeader>
 </template>
