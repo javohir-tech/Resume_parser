@@ -4,6 +4,7 @@
 
 <template>
     <UContainer class="flex min-h-[calc(100vh-4rem)] min-w-0 flex-col py-6 sm:py-10 lg:py-12">
+        
         <header class="mb-8 max-w-2xl">
             <p class="font-semibold text-xs text-primary mb-3 uppercase tracking-[0.18em]">Yakuniy qadam shu yerda
             </p>
