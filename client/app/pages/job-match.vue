@@ -14,13 +14,13 @@
             </p>
         </header>
 
-        <div class="mb-3 grid flex-1 grid-cols-8 gap-4 ">
-            <div class="flex flex-col bg-muted/40 col-span-3 p-5 rounded-lg border-1 border-default">
+        <div class="mb-3 grid flex-1 grid-cols-1 lg:grid-cols-8 gap-4 ">
+            <div class="flex flex-col bg-muted/40 lg:col-span-3 p-5 rounded-lg border-1 border-default">
                 <h2 class="mb-3 font-semibold text-highlighted">
                     Resumelar
                 </h2>
             </div>
-            <div class="flex flex-col bg-muted/40 col-span-5 p-5 rounded-lg border-1 border-default">
+            <div class="flex flex-col bg-muted/40 lg:col-span-5 p-5 rounded-lg border-1 border-default">
                 <h1 class="mb-3 font-semibold text-highlighted">Vakansiya tekstini shu joyga joylashtiring</h1>
                 <UTextarea class="w-full flex-1"
                     :ui="{ root: 'flex flex-1 w-full', base: 'h-full w-full resize-none' }" />
