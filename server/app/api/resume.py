@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import json
 
 from uuid import UUID
 
@@ -29,6 +30,7 @@ from app.schemas.resume_schemas import (
     SkillItemInfo,
     SkillsInfo,
     DesingInfo,
+    ResumeJobMatch,
 )
 
 from app.schemas.resume_parse_schema import ParsedResumeResult, ResumeImportResume
@@ -109,13 +111,101 @@ async def import_parsed_resume(
         await db.flush()
         resume_id = resume.id
 
-        design = Design(resume_id = resume_id)
+        design = Design(resume_id=resume_id)
         db.add(design)
 
     return {
         "success": True,
         "resume_id": str(resume_id),
     }
+
+
+# //////////////////////////////////////////////////////
+# ///////////////////// JOB MATCH //////////////////////
+# //////////////////////////////////////////////////////
+@resume_router.post("/job-match")
+async def job_match(
+    payload: ResumeJobMatch,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    user_uuid = UUID(user_id)
+
+    resume_id: str = payload.resume_id
+    vacancy_text: str = payload.vacancy_text
+
+    result = await db.execute(
+        select(Resume)
+        .options(
+            selectinload(Resume.experience),
+            selectinload(Resume.education),
+            selectinload(Resume.languages),
+            selectinload(Resume.skills).selectinload(Skills.skills)
+        )
+        .where(Resume.id == UUID(resume_id), Resume.user_id == user_uuid)
+    )
+
+    resume = result.scalar_one_or_none()
+
+    if resume is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Resume not found"
+        )
+
+    raw_resume = {
+        "fullname": resume.fullname or "",
+        "title": resume.title or "",
+        "email": resume.email or "",
+        "phone": resume.phone or "",
+        "location": resume.location or "",
+        "website": resume.website or "",
+        "github_link": resume.github_link or "",
+        "linkedin_link": resume.linkedin_link or "",
+        "summary": resume.summary or "",
+        "experience": [
+            {
+                "position": experience.position or "",
+                "company": experience.company or "",
+                "location": experience.location or "",
+                "startDate": experience.startDate or "",
+                "endDate": experience.endDate or "",
+                "description": experience.description or "",
+            }
+            for experience in resume.experience
+        ],
+        "education": [
+            {
+                "degree": education.degree or "",
+                "fieldOfStudy": education.fieldOfStudy or "",
+                "institution": education.institution or "",
+                "location": education.location or "",
+                "startDate": education.startDate or "",
+                "endDate": education.endDate or "",
+            }
+            for education in resume.education
+        ],
+        "languages": [
+            {
+                "language": language.language or "",
+                "degree": language.degree or "",
+            }
+            for language in resume.languages
+        ],
+        "skills": [
+            {
+                "title": skills_group.title or "",
+                "skills": [{"skill": item.skill or ""} for item in skills_group.skills],
+            }
+            for skills_group in resume.skills
+        ],
+    }
+
+    resume_text = json.dumps(raw_resume, ensure_ascii=False)
+    print("=" * 50)
+    print(resume_text)
+    print("=" * 50)
+
+    return resume_text
 
 
 @resume_router.get("/{resume_id}")
@@ -234,8 +324,10 @@ class ResumePdfRequest(BaseModel):
 
 @resume_router.post("/{resume_id}/download")
 async def download_resume(
-    resume_id: UUID, payload: ResumePdfRequest,
-    db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+    resume_id: UUID,
+    payload: ResumePdfRequest,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
 ):
     result = await db.execute(
         select(Resume).where(Resume.id == resume_id, Resume.user_id == UUID(user_id))
@@ -246,8 +338,11 @@ async def download_resume(
     if resume is None:
         raise HTTPException(status_code=404, detail="Resume topilmadi")
 
-    if resume.user_id != UUID(user_id) :
-        raise HTTPException(status_code=status.HTTP_405_METHOD_NOT_ALLOWED , detail="Ushbu resume sizga tegishli emas")
+    if resume.user_id != UUID(user_id):
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+            detail="Ushbu resume sizga tegishli emas",
+        )
     try:
         pdf_bytes = await create_resume_pdf(payload.html)
     except (asyncio.TimeoutError, PlaywrightTimeoutError) as error:
