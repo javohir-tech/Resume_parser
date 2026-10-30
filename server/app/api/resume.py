@@ -46,6 +46,7 @@ from app.models.design_info import Design
 
 from app.services.document_reader import extract_text
 from app.services.resume_parser import parse_resume, has_content
+from app.services.resume_job_match import job_match_resume
 
 resume_router = APIRouter(prefix="/resume", tags=["resume"])
 
@@ -201,9 +202,10 @@ async def job_match(
     }
 
     resume_text = json.dumps(raw_resume, ensure_ascii=False)
-    print("=" * 50)
-    print(resume_text)
-    print("=" * 50)
+    # print("=" * 50)
+    # print(resume_text)
+    # print("=" * 50)
+    await job_match_resume(resume_text)
 
     return resume_text
 
