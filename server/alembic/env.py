@@ -7,6 +7,7 @@ from alembic import context
 # --- Bizning qo'shimchalarimiz ---
 import sys
 import os
+
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from app.core.config import settings
@@ -22,6 +23,7 @@ from app.models.educations import Education
 from app.models.languages import Language
 from app.models.resume import Resume
 from app.models.design_info import Design
+
 # --- ---
 
 config = context.config
@@ -46,8 +48,13 @@ def run_migrations_offline() -> None:
 
 
 def do_run_migrations(connection):
-    context.configure(connection=connection, target_metadata=target_metadata)
+    context.configure(
+        connection=connection,
+        target_metadata=target_metadata,
+        compare_type=True,
+    )
     with context.begin_transaction():
+
         context.run_migrations()
 
 

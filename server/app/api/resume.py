@@ -466,6 +466,9 @@ async def get_my_resumes(
             "id": resume.id,
             "fullname": resume.fullname or "",
             "title": resume.title or "",
+            "parent_resume_id": resume.parent_resume_id or "",
+            "job_company": resume.job_company or "",
+            "job_title": resume.job_title or "",
         }
         for resume in resumes
     ]
