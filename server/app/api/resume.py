@@ -19,6 +19,7 @@ from sqlalchemy.orm import joinedload, selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.services.resume_pdf import create_resume_pdf
+from app.services.resume_input_hash import build_input_hash
 from app.db.session import get_db
 from app.core.security import verify
 
@@ -203,6 +204,22 @@ async def job_match(
 
     resume_text = json.dumps(raw_resume, ensure_ascii=False)
 
+    input_hash = build_input_hash(resume, vacancy_text)
+
+    hash_resume = await db.execute(
+        select(Resume).where(
+            Resume.input_hash == input_hash, Resume.user_id == user_uuid
+        )
+    )
+
+    hash_resume_result = hash_resume.scalar_one_or_none()
+
+    if not hash_resume_result is None:
+        return {
+            "success": True,
+            "resume_id": hash_resume_result.id,
+        }
+
     ai_response = await job_match_resume(
         resume_text=resume_text, vacancy_text=vacancy_text
     )
@@ -230,7 +247,8 @@ async def job_match(
         parent_resume_id=UUID(resume_id),
         job_company=ai_response.job_company,
         job_title=ai_response.job_title,
-        **personal_data
+        input_hash=input_hash,
+        **personal_data,
     )
 
     result_resume.experience = [
@@ -247,12 +265,13 @@ async def job_match(
 
     result_resume.skills = [
         Skills(
-            title=group.title, skills=[SkillItem(skill=item.skill) for item in group.skills]
+            title=group.title,
+            skills=[SkillItem(skill=item.skill) for item in group.skills],
         )
         for group in ai_response.resume.skills
     ]
 
-    try :
+    try:
         db.add(result_resume)
         await db.flush()
         result_resume_id = result_resume
