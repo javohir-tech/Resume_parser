@@ -150,7 +150,7 @@ const removeResume = async (id: string) => {
             </div>
             <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <ResumeCard v-for="resume in data" :key="resume.id" :id="resume.id" :fullname="resume.fullname"
-                    :title="resume.title" :loading="isDeleting(resume.id)" @delete="removeResume(resume.id)" />
+                    :title="resume.title" :loading="isDeleting(resume.id)" :parent_resume_id="resume.parent_resume_id" @delete="removeResume(resume.id)" />
             </div>
         </section>
     </UContainer>

@@ -22,8 +22,8 @@ export interface Education {
 }
 
 export interface Skill {
-  id : string , 
-  skill : string
+  id: string;
+  skill: string;
 }
 
 export interface SkillGroup {
@@ -33,7 +33,7 @@ export interface SkillGroup {
 }
 
 export interface Personal {
-  id : string, 
+  id: string;
   fullname: string;
   title?: string;
   email?: string;
@@ -61,7 +61,7 @@ export interface Resume extends Personal {
 export type ResumeColor = { name: string; hex: string };
 
 export interface DesignInfo {
-  template : TemplateName | null
+  template: TemplateName | null;
   heading_title_color: null | ResumeColor;
   entry_title_color: null | ResumeColor;
   font: FontOption | null;
@@ -87,3 +87,10 @@ export interface Templates {
 }
 
 export type TemplateName = keyof Templates;
+
+export interface JobMatch {
+  parent_resume_id: string;
+  job_company: string;
+  job_title: string;
+  cover_letter: string;
+}

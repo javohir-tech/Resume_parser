@@ -5,6 +5,9 @@ defineProps<{
     id: string,
     fullname?: string,
     title?: string,
+    parent_resume_id ?: string ,
+    job_company?: string,
+    job_title?: string,
     loading: boolean
 }>()
 
@@ -22,7 +25,7 @@ const open = ref(false)
         <UCard
             class="group min-w-0 cursor-pointer transition duration-200 hover:-translate-y-1 hover:shadow-lg hover:ring-primary/40">
             <div class="flex min-w-0 items-center gap-2 sm:gap-4">
-
+                <p v-if="parent_resume_id">Ai Moslashgan</p>
                 <div class="min-w-0 flex-1">
                     <p class="truncate font-semibold">
                         {{ fullname || t('resumeList.untitled') }}
@@ -43,11 +46,11 @@ const open = ref(false)
                             <div class="flex justify-between items-center gap-2">
 
                                 <UButton class="flex-1 justify-center" color="neutral" variant="outline" size="xs"
-                                    icon="i-lucide-x" :label="t('resumeEditor.cancel')" @click="open=false" />
+                                    icon="i-lucide-x" :label="t('resumeEditor.cancel')" @click="open = false" />
 
                                 <UButton class="flex-1 justify-center" type="button" color="error" variant="outline"
-                                    size="xs" icon="i-lucide-trash-2" :label="t('resumeEditor.delete')" :loading="loading"
-                                    :disabled="loading" @click="emit('delete')" />
+                                    size="xs" icon="i-lucide-trash-2" :label="t('resumeEditor.delete')"
+                                    :loading="loading" :disabled="loading" @click="emit('delete')" />
                             </div>
                         </div>
                     </template>
