@@ -89,8 +89,8 @@ export interface Templates {
 export type TemplateName = keyof Templates;
 
 export interface JobMatch {
-  parent_resume_id: string;
-  job_company: string;
-  job_title: string;
-  cover_letter: string;
+  parent_resume_id: string | null;
+  job_company: string | null;
+  job_title: string | null;
+  cover_letter: string | null;
 }

@@ -68,10 +68,10 @@ function changeLanguage(value: string) {
                 <div class="flex justify-between item-center gap-x-3">
 
                     <UButton :disabled="!resumeStore.resume.id"
-                        :to="resumeStore.resume.id ? `/resume/${resumeStore.resume.id}/view` : ''" block label="View"
+                        :to="resumeStore.resume.id ? `/resume/${resumeStore.resume.id}/view` : ''" block :label="t('resumeList.view')"
                         icon="i-lucide-eye" variant="outline" color="neutral"  />
 
-                    <UButton :loading="loading" :disabled="loading || !resumeStore.resume.id" @click="downloadResume(resumeStore.resume.id)" block label="Download" icon="i-lucide-download" variant="outline" color="neutral" />
+                    <UButton :loading="loading" :disabled="loading || !resumeStore.resume.id" @click="downloadResume(resumeStore.resume.id)" block :label="t('resumeList.download')" icon="i-lucide-download" variant="outline" color="neutral" />
 
                 </div>
             </div>

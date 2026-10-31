@@ -11,6 +11,7 @@ definePageMeta({
 const { t } = useI18n()
 const method = ref<'upload' | 'manual'>('upload')
 const { deleteResume, isDeleting } = useDeleteResume()
+
 const { loading, createResume } = useCreateResume()
 
 const items = computed(() => [
@@ -45,6 +46,7 @@ const removeResume = async (id: string) => {
         data.value = data.value?.filter(r => r.id !== id)
     }
 }
+
 
 
 </script>
@@ -147,16 +149,19 @@ const removeResume = async (id: string) => {
                     data?.length
                     ?? 0 }}</UBadge>
             </div>
-            <div class="mb-6 grid gap-4 rounded-2xl border border-default bg-muted/30 p-4 sm:grid-cols-[minmax(0,1fr)_12rem] sm:p-5">
+            <div
+                class="mb-6 grid gap-4 rounded-2xl border border-default bg-muted/30 p-4 sm:grid-cols-[minmax(0,1fr)_12rem] sm:p-5">
                 <div class="min-w-0">
-                    <label for="resume-search" class="mb-2 block text-xs font-medium text-muted">{{ t('resumeList.searchLabel') }}</label>
+                    <label for="resume-search" class="mb-2 block text-xs font-medium text-muted">{{
+                        t('resumeList.searchLabel') }}</label>
                     <UInput id="resume-search" v-model="search" icon="i-lucide-search" size="lg"
                         :placeholder="t('resumeList.searchPlaceholder')" class="w-full" />
                 </div>
                 <div class="min-w-0">
-                    <label for="resume-type" class="mb-2 block text-xs font-medium text-muted">{{ t('resumeList.typeLabel') }}</label>
-                    <USelect id="resume-type" v-model="resume_type" :items="items" icon="i-lucide-list-filter"
-                        size="lg" class="w-full" />
+                    <label for="resume-type" class="mb-2 block text-xs font-medium text-muted">{{
+                        t('resumeList.typeLabel') }}</label>
+                    <USelect id="resume-type" v-model="resume_type" :items="items" icon="i-lucide-list-filter" size="lg"
+                        class="w-full" />
                 </div>
             </div>
             <div v-if="isLoading" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" role="status"
@@ -179,12 +184,13 @@ const removeResume = async (id: string) => {
                 class="flex flex-col items-center rounded-2xl border border-dashed border-default px-6 py-10 text-center">
                 <UIcon name="i-lucide-files" class="mb-3 size-8 text-dimmed" />
                 <h3 class="font-medium text-highlighted">{{ t('resumeList.empty') }}</h3>
-                <p class="mt-2 max-w-md text-sm text-muted">{{ t('resumeWorkspace.emptyHint') }}</p>
             </div>
+
             <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <ResumeCard v-for="resume in data" :key="resume.id" :id="resume.id" :fullname="resume.fullname"
                     :title="resume.title" :loading="isDeleting(resume.id)" :parent_resume_id="resume.parent_resume_id"
-                    :job_company="resume.job_company" :job_title="resume.job_title" @delete="removeResume(resume.id)" />
+                    :job_company="resume.job_company" :job_title="resume.job_title" :cover_letter="resume.cover_letter" @delete="removeResume(resume.id)"
+                    />
             </div>
         </section>
     </UContainer>

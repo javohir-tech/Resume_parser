@@ -6,14 +6,15 @@ const props = defineProps<{
     fullname?: string,
     title?: string,
     parent_resume_id?: string | null,
-    job_company?: string,
-    job_title?: string,
+    job_company?: string | null,
+    job_title?: string | null,
     cover_letter?: string | null,
     loading: boolean
 }>()
 
 const emit = defineEmits<{
-    delete: []
+    delete: [],
+    copy_cover_latter: [],
 }>()
 
 const localPath = useLocalePath()
@@ -24,19 +25,45 @@ const cardTitle = computed(() =>
     (props.parent_resume_id ? props.job_title || props.title : props.title) || t('resumeList.noTitle')
 )
 const toast = useToast()
-const { copy, copied } = useClipboard({ legacy: true, copiedDuring: 2000 })
+const {
+    copy: copyLink,
+    copied: linkCopied,
+} = useClipboard({ legacy: true, copiedDuring: 2000 })
+
+const {
+    copy: copyLetter,
+    copied: letterCopied,
+} = useClipboard({ legacy: true, copiedDuring: 2000 })
+
+
 const copying = ref(false)
+const copyingLink = ref(false)
 
 async function copyCoverLetter() {
     if (!props.cover_letter?.trim() || copying.value) return
 
     copying.value = true
     try {
-        await copy(props.cover_letter)
+        await copyLetter(props.cover_letter)
     } catch {
         toast.add({ title: t('resumeList.copyError'), color: 'error' })
     } finally {
         copying.value = false
+    }
+}
+
+async function copyResumeLink() {
+    if (!props.id || copyingLink.value) return
+
+    copyingLink.value = true
+    try {
+        const path = localPath(`/resume/${props.id}/view`)
+        const url = new URL(path, window.location.origin).href
+        await copyLink(url)
+    } catch (error) {
+        toast.add({ title: t('resumeList.copyError'), color: "error" })
+    } finally {
+        copyingLink.value = false
     }
 }
 
@@ -64,15 +91,21 @@ async function copyCoverLetter() {
                     <UButton class="ml-auto shrink-0" icon="i-lucide-ellipsis" color="neutral" variant="ghost"
                         :aria-label="t('resumeList.actions')" :disabled="loading" />
                     <template #content>
-                        <div v-if="!confirmingDelete" class="w-52 p-1.5">
-                            <UButton block class="justify-start" icon="i-lucide-eye" color="neutral" variant="ghost"
-                                label="View" />
-                            <UButton block class="justify-start" icon="i-lucide-copy" color="neutral" variant="ghost"
-                                label="Copy Link" />
-                            <UButton block class="justify-start" icon="i-lucide-download" color="neutral"
-                                variant="ghost" label="Download" />
-                            <UButton block class="justify-start" icon="i-lucide-copy" color="neutral" variant="ghost"
-                                label="Copy Cover Letter" />
+                        <div v-if="!confirmingDelete" class="w-72 max-w-[calc(100vw-2rem)] p-1.5">
+                            <UButton block class="justify-start" :to="localPath(`/resume/${id}`)" color="neutral"
+                                variant="ghost" icon="i-lucide-arrow-up-right" :label="t('resumeList.open')" />
+                            <UButton block :to="localPath(`/resume/${props.id}/view`)" class="justify-start"
+                                icon="i-lucide-eye" color="neutral" variant="ghost" :label="t('resumeList.view')" />
+                            <UButton block class="justify-start" :icon="linkCopied ? 'i-lucide-check' : 'i-lucide-copy'"
+                                color="neutral" variant="ghost"
+                                :label="linkCopied ? t('resumeList.copied') : t('resumeList.copyLink')"
+                                :loading="copyingLink" :disabled="copyingLink" @click="copyResumeLink" />
+
+                            <UButton v-if="props.parent_resume_id" block class="justify-start"
+                                :icon="letterCopied ? 'i-lucide-check' : 'i-lucide-copy'" color="neutral" variant="ghost"
+                                :label="letterCopied ? t('resumeList.copied') : t('resumeList.copyCoverLetter')"
+                                :ui="{ label: 'whitespace-normal text-left' }" @click="copyCoverLetter" />
+
                             <UButton block class="justify-start" icon="i-lucide-trash-2" color="error" variant="ghost"
                                 :label="t('resumeList.delete')" @click="confirmingDelete = true" />
                         </div>
@@ -90,7 +123,7 @@ async function copyCoverLetter() {
                         </div>
                     </template>
                 </UPopover>
-                
+
             </div>
 
             <h3 class="text-lg font-semibold leading-6 tracking-tight text-highlighted">
@@ -116,12 +149,13 @@ async function copyCoverLetter() {
             <UButton :to="localPath(`/resume/${id}`)" color="primary" variant="ghost" size="sm"
                 trailing-icon="i-lucide-arrow-up-right" :label="t('resumeList.open')" />
             <UButton v-if="parent_resume_id" type="button" color="neutral" variant="ghost" size="sm"
-                :icon="copied ? 'i-lucide-check' : 'i-lucide-copy'"
-                :label="copied ? t('resumeList.copied') : t('resumeList.coverLetter')"
-                :aria-label="copied ? t('resumeList.copied') : t('resumeList.copyCoverLetter')"
+                :icon="letterCopied ? 'i-lucide-check' : 'i-lucide-copy'"
+                :label="letterCopied ? t('resumeList.copied') : t('resumeList.coverLetter')"
+                :aria-label="letterCopied ? t('resumeList.copied') : t('resumeList.copyCoverLetter')"
                 :title="cover_letter?.trim() ? t('resumeList.copyCoverLetter') : t('resumeList.noCoverLetter')"
                 :disabled="!cover_letter?.trim()" :loading="copying" @click="copyCoverLetter" />
         </div>
 
     </article>
 </template>
+    

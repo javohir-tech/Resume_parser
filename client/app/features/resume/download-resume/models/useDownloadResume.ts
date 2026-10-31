@@ -6,8 +6,8 @@ export const useDownloadResume = () => {
     const loading = ref(false)
     const {showError} = useApiToasts()
 
-    async function downloadResume(resume_id : string){
-        if (loading.value || !resume_id) return
+    async function downloadResume(resume_id : string) : Promise<boolean> {
+        if (loading.value || !resume_id) return false
         loading.value = true
         try{
             const html = await buildResumeHtml()
@@ -20,21 +20,23 @@ export const useDownloadResume = () => {
             link.click()
             link.remove()
             setTimeout(() => URL.revokeObjectURL(url), 60_000)
+            return true
         }catch(error){
             const fetchError = error as { data?: unknown; response?: unknown }
             if (fetchError.data instanceof Blob) {
                 try {
                     const data = JSON.parse(await fetchError.data.text())
                     showError(apiError({ response: fetchError.response, data }).message)
-                    return
+                    return false
                 } catch { /* Use default error below. */ }
             }
             if (error instanceof Error && !fetchError.response && error.name !== 'FetchError') {
                 showError(error.message)
-                return
+                return false
             }
             const err = apiError(error)
             showError(err.message)
+            return false
         }finally{
             loading.value = false
         }

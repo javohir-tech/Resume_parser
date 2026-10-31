@@ -62,6 +62,10 @@
     "parseAction": "Analyze resume"
   },
   "resumeList": {
+    "view": "View",
+    "download": "Download",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied",
     "actions": "Resume actions",
     "open": "Open",
     "coverLetter": "Cover letter",
@@ -83,7 +87,7 @@
     "loading": "Loading...",
     "loadError": "Failed to load resumes",
     "retry": "Try again",
-    "empty": "No resumes yet",
+    "empty": "No resumes to display",
     "untitled": "Untitled resume",
     "noTitle": "No job title specified",
     "delete": "Delete resume"

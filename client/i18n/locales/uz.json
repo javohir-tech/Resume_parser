@@ -62,6 +62,10 @@
     "parseAction": "Rezyumeni tahlil qilish"
   },
   "resumeList": {
+    "view": "Ko‘rish",
+    "download": "Yuklab olish",
+    "copyLink": "Havolani nusxalash",
+    "linkCopied": "Havola nusxalandi",
     "actions": "Rezyume amallari",
     "open": "Ochish",
     "coverLetter": "Motivatsion xat",
@@ -83,7 +87,7 @@
     "loading": "Yuklanmoqda...",
     "loadError": "Rezyumelarni yuklashda xatolik yuz berdi",
     "retry": "Qayta urinish",
-    "empty": "Hozircha rezyume yo‘q",
+    "empty": "Ko‘rsatish uchun rezyume topilmadi",
     "untitled": "Nomsiz rezyume",
     "noTitle": "Lavozim ko‘rsatilmagan",
     "delete": "Rezyumeni o‘chirish"
