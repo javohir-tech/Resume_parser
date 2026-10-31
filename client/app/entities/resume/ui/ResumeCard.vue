@@ -1,13 +1,14 @@
 <script setup lang="ts">
 const { t } = useI18n()
 
-defineProps<{
+const props = defineProps<{
     id: string,
     fullname?: string,
     title?: string,
-    parent_resume_id ?: string ,
+    parent_resume_id?: string | null,
     job_company?: string,
     job_title?: string,
+    cover_letter?: string | null,
     loading: boolean
 }>()
 
@@ -17,21 +18,48 @@ const emit = defineEmits<{
 
 const localPath = useLocalePath()
 const open = ref(false)
+const toast = useToast()
+const { copy, copied } = useClipboard({ legacy: true, copiedDuring: 2000 })
+const copying = ref(false)
+
+async function copyCoverLetter() {
+    if (!props.cover_letter?.trim() || copying.value) return
+
+    copying.value = true
+    try {
+        await copy(props.cover_letter)
+    } catch {
+        toast.add({ title: 'Nusxalab bo‘lmadi. Qayta urinib ko‘ring.', color: 'error' })
+    } finally {
+        copying.value = false
+    }
+}
 
 </script>
 
 <template>
-    <NuxtLink :to="localPath(`/resume/${id}`)" class="block min-w-0 max-w-full">
+    <NuxtLink :to="localPath(`/resume/${id}`)" class="block h-full min-w-0 max-w-full">
         <UCard
-            class="group min-w-0 cursor-pointer transition duration-200 hover:-translate-y-1 hover:shadow-lg hover:ring-primary/40">
+            class="group h-full min-w-0 cursor-pointer transition duration-200 hover:-translate-y-1 hover:shadow-lg hover:ring-primary/40">
+            <div class="mb-4">
+                <span
+                    class="inline-flex items-center gap-1.5 rounded border border-default px-2 py-0.5 text-xs text-muted">
+                    <UIcon :name="parent_resume_id ? 'i-lucide-sparkles' : 'i-lucide-file-text'"
+                        class="size-3.5 shrink-0" aria-hidden="true" />
+                    {{ parent_resume_id ? 'AI versiya' : 'Asl nusxa' }}
+                </span>
+            </div>
             <div class="flex min-w-0 items-center gap-2 sm:gap-4">
-                <p v-if="parent_resume_id">Ai Moslashgan</p>
                 <div class="min-w-0 flex-1">
-                    <p class="truncate font-semibold">
-                        {{ fullname || t('resumeList.untitled') }}
+                    <p class="truncate text-lg font-semibold text-highlighted"
+                        :title="parent_resume_id ? (job_title || title) : fullname">
+                        {{ parent_resume_id
+                            ? (job_title || title || t('resumeList.noTitle'))
+                            : (fullname || t('resumeList.untitled')) }}
                     </p>
-                    <p class="truncate text-sm text-muted">
-                        {{ title || t('resumeList.noTitle') }}
+                    <p class="min-h-5 truncate text-sm text-muted"
+                        :title="parent_resume_id ? job_company : title">
+                        {{ parent_resume_id ? job_company : (title || t('resumeList.noTitle')) }}
                     </p>
                 </div>
 
@@ -57,7 +85,21 @@ const open = ref(false)
                 </UPopover>
 
                 <UIcon name="i-lucide-chevron-right"
-                    class="size-5 shrink-0 text-muted transition group-hover:translate-x-1 group-hover:text-primary" />
+                    class="size-4 shrink-0 text-dimmed transition duration-200 group-hover:translate-x-1 group-hover:text-primary" />
+            </div>
+            <div :class="{ invisible: !parent_resume_id }"
+                :aria-hidden="!parent_resume_id"
+                class="mt-4 flex h-12 min-w-0 items-center gap-2 border-t border-default pt-3 text-sm text-muted">
+                <UIcon name="i-lucide-user-round" class="size-4 shrink-0"
+                    aria-hidden="true" />
+                <p class="min-w-0 flex-1 truncate" :title="fullname">{{ fullname || t('resumeList.untitled') }}</p>
+                <UButton v-if="parent_resume_id" type="button" color="neutral" variant="outline" size="xs"
+                    class="shrink-0" :icon="copied ? 'i-lucide-check' : 'i-lucide-copy'"
+                    :label="copied ? 'Nusxalandi' : 'Cover letter'"
+                    :aria-label="copied ? 'Cover letter nusxalandi' : 'Cover letterni nusxalash'"
+                    :title="cover_letter?.trim() ? 'Cover letterni nusxalash' : 'Cover letter mavjud emas'"
+                    :disabled="!cover_letter?.trim()" :loading="copying"
+                    @click.stop.prevent="copyCoverLetter" />
             </div>
         </UCard>
     </NuxtLink>

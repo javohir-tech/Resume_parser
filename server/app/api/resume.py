@@ -4,6 +4,8 @@ import json
 
 from uuid import UUID
 
+from typing import Literal
+
 from fastapi import APIRouter, Depends, status, File, UploadFile
 from fastapi.exceptions import HTTPException
 from fastapi.responses import Response
@@ -33,6 +35,9 @@ from app.schemas.resume_schemas import (
     DesingInfo,
     ResumeJobMatch,
 )
+
+from fastapi_filter import FilterDepends
+from fastapi_filter.contrib.sqlalchemy import Filter
 
 from app.schemas.resume_parse_schema import ParsedResumeResult, ResumeImportResume
 
@@ -451,14 +456,35 @@ async def download_resume(
     )
 
 
+# /////////////////////////////////////////////////////////
+# /////////////////  FILTER RESUME  ///////////////////////
+# /////////////////////////////////////////////////////////
+class ResumeFilter(Filter):
+    search: str | None = None
+
+    class Constants(Filter.Constants):
+        model = Resume
+        search_model_fields = ["fullname", "title", "job_company", "job_title"]
+
+
 @resume_router.get("/my/resumes")
 async def get_my_resumes(
-    db: AsyncSession = Depends(get_db), user_id: str = Depends(verify)
+    filters: ResumeFilter = FilterDepends(ResumeFilter),
+    db: AsyncSession = Depends(get_db),
+    resume_type: Literal["all", "orginal", "ai"] = "all",
+    user_id: str = Depends(verify),
 ):
-    user_uuid = UUID(user_id)
 
-    result = await db.execute(select(Resume).where(Resume.user_id == user_uuid))
+    query = select(Resume).where(Resume.user_id == UUID(user_id))
 
+    if resume_type == "orginal":
+        query = query.where(Resume.parent_resume_id.is_(None))
+    if resume_type == "ai":
+        query = query.where(Resume.parent_resume_id.is_not(None))
+
+    query = filters.filter(query)
+
+    result = await db.execute(query)
     resumes = result.scalars().all()
 
     return [

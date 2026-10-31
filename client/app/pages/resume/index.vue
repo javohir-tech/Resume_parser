@@ -5,23 +5,43 @@ import { useCreateResume } from '~/features/resume/create-resume'
 import { ParseResumeForm } from '~/features/resume/parse-resume'
 
 definePageMeta({
-    middleware : "auth"
+    middleware: "auth"
 })
 
 const { t } = useI18n()
 const method = ref<'upload' | 'manual'>('upload')
 const { deleteResume, isDeleting } = useDeleteResume()
 const { loading, createResume } = useCreateResume()
-// Keep the server and first client render identical, even when the API is offline.
-const { data, status, error, refresh } = useLazyAsyncData('my_resumes', () => getMyResumes(), {
-    server: false,
-    default: () => [],
-})
+
+const items = [
+    { label: "Hammasi", value: "all" },
+    { label: "Asl nusxa", value: "orginal" },
+    { label: "Ai  versiya ", value: "ai" }
+]
+
+const resume_type = ref<"all" | "orginal" | "ai">("all")
+
+const search = ref("")
+
+const debouncedSearch = refDebounced(search, 300)
+
+const { data, status, error, refresh } = useLazyAsyncData(
+    'my_resumes',
+    (_nuxtApp, { signal }) => getMyResumes(
+        { search: debouncedSearch.value.trim() || undefined, resume_type: resume_type.value }, signal
+    ),
+    {
+        server: false,
+        default: () => [],
+        watch: [debouncedSearch, resume_type],
+        dedupe: "cancel"
+    })
+
 const isLoading = computed(() => status.value === 'idle' || status.value === 'pending')
 
 const removeResume = async (id: string) => {
     const success = await deleteResume(id)
-    if(success){
+    if (success) {
         data.value = data.value?.filter(r => r.id !== id)
     }
 }
@@ -36,7 +56,7 @@ const removeResume = async (id: string) => {
             <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{{
                 t('resumeWorkspace.eyebrow') }}</p>
             <h1 class="text-3xl font-semibold tracking-tight text-highlighted sm:text-4xl">{{ t('resumeWorkspace.title')
-                }}</h1>
+            }}</h1>
             <p class="mt-3 text-base leading-relaxed text-muted">{{ t('resumeWorkspace.description') }}</p>
         </header>
 
@@ -123,8 +143,13 @@ const removeResume = async (id: string) => {
             <div class="mb-5 flex items-center gap-3">
                 <h2 id="resume-list-title" class="text-xl font-semibold tracking-tight text-highlighted">{{
                     t('resumeList.title') }}</h2>
-                <UBadge v-if="status === 'success'" color="neutral" variant="subtle" class="rounded-full">{{ data?.length
+                <UBadge v-if="status === 'success'" color="neutral" variant="subtle" class="rounded-full">{{
+                    data?.length
                     ?? 0 }}</UBadge>
+            </div>
+            <div class="mb-3 flex items-center gap-3">
+                <USelect v-model="resume_type" :items="items" />
+                <UInput v-model="search" icon="i-lucide-search" placeholder="Search..." />
             </div>
             <div v-if="isLoading" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" role="status"
                 :aria-label="t('resumeList.loading')">
@@ -134,12 +159,12 @@ const removeResume = async (id: string) => {
                     <USkeleton class="h-4 w-1/2" />
                 </div>
             </div>
-            
+
             <div v-else-if="error" class="rounded-2xl border border-error/20 bg-error/5 p-8 text-center" role="alert">
                 <UIcon name="i-lucide-cloud-off" class="mb-3 size-8 text-error" />
                 <p class="text-sm text-error">{{ t('resumeList.loadError') }}</p>
-                <UButton class="mt-4" icon="i-lucide-refresh-cw" color="neutral" variant="outline"
-                    @click="refresh()">{{ t('resumeList.retry') }}</UButton>
+                <UButton class="mt-4" icon="i-lucide-refresh-cw" color="neutral" variant="outline" @click="refresh()">{{
+                    t('resumeList.retry') }}</UButton>
             </div>
 
             <div v-else-if="!data?.length"
@@ -150,7 +175,8 @@ const removeResume = async (id: string) => {
             </div>
             <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <ResumeCard v-for="resume in data" :key="resume.id" :id="resume.id" :fullname="resume.fullname"
-                    :title="resume.title" :loading="isDeleting(resume.id)" :parent_resume_id="resume.parent_resume_id" @delete="removeResume(resume.id)" />
+                    :title="resume.title" :loading="isDeleting(resume.id)" :parent_resume_id="resume.parent_resume_id"
+                    :job_company="resume.job_company" :job_title="resume.job_title" @delete="removeResume(resume.id)" />
             </div>
         </section>
     </UContainer>

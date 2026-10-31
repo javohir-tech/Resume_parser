@@ -5,11 +5,16 @@ import { colorOptions } from "../models/constants";
 export const getResumeFetch = (resume_id: string) =>
   api<Resume>(`/api/resume/${resume_id}`, { method: "GET" });
 
-export const getMyResumes = () =>
+export const getMyResumes = (
+  params: { search?: string; resume_type?: "all" | "orginal" | "ai" } = {},
+  signal?: AbortSignal,
+) =>
   api<(Pick<Personal, "id" | "fullname" | "title"> & JobMatch)[]>(
     "/api/resume/my/resumes",
     {
       method: "GET",
+      query: params,
+      signal,
       timeout: 15000,
       retry: 0,
     },
