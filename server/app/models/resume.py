@@ -51,6 +51,7 @@ class Resume(Base):
     job_company: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     job_title: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     input_hash: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    cover_letter : Mapped[Optional[str]] = mapped_column(Text , nullable=True)
 
     experience: Mapped[list["Experience"]] = relationship(
         back_populates="resume",
