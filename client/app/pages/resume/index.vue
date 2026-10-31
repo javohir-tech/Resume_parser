@@ -13,11 +13,11 @@ const method = ref<'upload' | 'manual'>('upload')
 const { deleteResume, isDeleting } = useDeleteResume()
 const { loading, createResume } = useCreateResume()
 
-const items = [
-    { label: "Hammasi", value: "all" },
-    { label: "Asl nusxa", value: "orginal" },
-    { label: "Ai  versiya ", value: "ai" }
-]
+const items = computed(() => [
+    { label: t('resumeList.filterAll'), value: "all" },
+    { label: t('resumeList.filterOriginal'), value: "orginal" },
+    { label: t('resumeList.filterAi'), value: "ai" }
+])
 
 const resume_type = ref<"all" | "orginal" | "ai">("all")
 
@@ -147,9 +147,17 @@ const removeResume = async (id: string) => {
                     data?.length
                     ?? 0 }}</UBadge>
             </div>
-            <div class="mb-3 flex items-center gap-3">
-                <USelect v-model="resume_type" :items="items" />
-                <UInput v-model="search" icon="i-lucide-search" placeholder="Search..." />
+            <div class="mb-6 grid gap-4 rounded-2xl border border-default bg-muted/30 p-4 sm:grid-cols-[minmax(0,1fr)_12rem] sm:p-5">
+                <div class="min-w-0">
+                    <label for="resume-search" class="mb-2 block text-xs font-medium text-muted">{{ t('resumeList.searchLabel') }}</label>
+                    <UInput id="resume-search" v-model="search" icon="i-lucide-search" size="lg"
+                        :placeholder="t('resumeList.searchPlaceholder')" class="w-full" />
+                </div>
+                <div class="min-w-0">
+                    <label for="resume-type" class="mb-2 block text-xs font-medium text-muted">{{ t('resumeList.typeLabel') }}</label>
+                    <USelect id="resume-type" v-model="resume_type" :items="items" icon="i-lucide-list-filter"
+                        size="lg" class="w-full" />
+                </div>
             </div>
             <div v-if="isLoading" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" role="status"
                 :aria-label="t('resumeList.loading')">
