@@ -54,3 +54,9 @@ class ParsedResumeResult(StrictSchema):
 
 class ResumeImportResume(StrictSchema):
     resume : ParseResume
+
+class JobMatchResult(StrictSchema):
+    resume : ParseResume
+    cover_letter : str
+    job_company : str | None
+    job_title : str | None

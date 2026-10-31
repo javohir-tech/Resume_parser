@@ -141,7 +141,7 @@ async def job_match(
             selectinload(Resume.experience),
             selectinload(Resume.education),
             selectinload(Resume.languages),
-            selectinload(Resume.skills).selectinload(Skills.skills)
+            selectinload(Resume.skills).selectinload(Skills.skills),
         )
         .where(Resume.id == UUID(resume_id), Resume.user_id == user_uuid)
     )
@@ -202,12 +202,74 @@ async def job_match(
     }
 
     resume_text = json.dumps(raw_resume, ensure_ascii=False)
-    # print("=" * 50)
-    # print(resume_text)
-    # print("=" * 50)
-    await job_match_resume(resume_text)
 
-    return resume_text
+    ai_response = await job_match_resume(
+        resume_text=resume_text, vacancy_text=vacancy_text
+    )
+
+    if not has_content(ai_response.resume.model_dump()):
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "code": "EMPTY_RESUME",
+                "message": "Bo'sh resume saqlab bo'lmaydi.",
+            },
+        )
+
+    personal_data = ai_response.resume.model_dump(
+        exclude={
+            "experience",
+            "education",
+            "languages",
+            "skills",
+        }
+    )
+
+    result_resume = Resume(
+        user_id=user_uuid,
+        parent_resume_id=UUID(resume_id),
+        job_company=ai_response.job_company,
+        job_title=ai_response.job_title,
+        **personal_data
+    )
+
+    result_resume.experience = [
+        Experience(**item.model_dump()) for item in ai_response.resume.experience
+    ]
+
+    result_resume.education = [
+        Education(**item.model_dump()) for item in ai_response.resume.education
+    ]
+
+    result_resume.languages = [
+        Language(**item.model_dump()) for item in ai_response.resume.languages
+    ]
+
+    result_resume.skills = [
+        Skills(
+            title=group.title, skills=[SkillItem(skill=item.skill) for item in group.skills]
+        )
+        for group in ai_response.resume.skills
+    ]
+
+    try :
+        db.add(result_resume)
+        await db.flush()
+        result_resume_id = result_resume
+
+        design = Design(resume_id=result_resume_id)
+        db.add(design)
+
+        await db.commit()
+    except Exception:
+        db.rollback()
+        raise
+
+    return {
+        "success": True,
+        "resume_id": str(result_resume_id),
+        "cover_letter": ai_response.cover_letter,
+    }
 
 
 @resume_router.get("/{resume_id}")
