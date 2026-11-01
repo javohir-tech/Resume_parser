@@ -422,5 +422,20 @@
     "characterCount": "{count} / {max} characters",
     "submitHint": "Select a resume and enter the job description to continue.",
     "submit": "Tailor resume"
+  },
+  "jobMatchResult": {
+    "detailsTitle": "Resume details",
+    "originalTitle": "Original resume",
+    "originalDescription": "View or edit your resume details.",
+    "sendHint": "Send this cover letter together with your resume to the HR specialist.",
+    "back": "Back to resumes",
+    "title": "Your tailored resume",
+    "description": "Review the details, edit your resume, and copy the cover letter for your application.",
+    "unspecified": "Not specified",
+    "edit": "Edit resume",
+    "coverLetter": "Cover letter",
+    "copy": "Copy",
+    "noLetter": "No cover letter is available for this resume.",
+    "notFoundHint": "This resume may have been deleted or may be unavailable to you."
   }
 }

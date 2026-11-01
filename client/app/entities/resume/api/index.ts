@@ -6,7 +6,11 @@ export const getResumeFetch = (resume_id: string) =>
   api<Resume>(`/api/resume/${resume_id}`, { method: "GET" });
 
 export const getMyResumes = (
-  params: { search?: string; resume_type?: "all" | "orginal" | "ai" } = {},
+  params: {
+    search?: string;
+    resume_type?: "all" | "orginal" | "ai";
+    resume_id?: string;
+  } = {},
   signal?: AbortSignal,
 ) =>
   api<(Pick<Personal, "id" | "fullname" | "title"> & JobMatch)[]>(

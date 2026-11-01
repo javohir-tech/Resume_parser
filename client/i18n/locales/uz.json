@@ -422,5 +422,20 @@
     "characterCount": "{count} / {max} belgi",
     "submitHint": "Moslashtirish uchun rezyumeni tanlang va vakansiya matnini kiriting.",
     "submit": "Rezyumeni moslashtirish"
+  },
+  "jobMatchResult": {
+    "detailsTitle": "Rezyume ma’lumotlari",
+    "originalTitle": "Asl rezyume",
+    "originalDescription": "Rezyume ma’lumotlarini ko‘ring yoki tahrirlang.",
+    "sendHint": "Ushbu motivatsion xatni rezyumengiz bilan birga HR mutaxassisiga yuboring.",
+    "back": "Rezyumelarga qaytish",
+    "title": "Vakansiyaga moslangan rezyume",
+    "description": "Ma’lumotlarni tekshiring, rezyumeni tahrirlang va ariza yuborish uchun xatni nusxalang.",
+    "unspecified": "Ko‘rsatilmagan",
+    "edit": "Rezyumeni tahrirlash",
+    "coverLetter": "Motivatsion xat",
+    "copy": "Nusxalash",
+    "noLetter": "Ushbu rezyume uchun motivatsion xat mavjud emas.",
+    "notFoundHint": "Rezyume o‘chirilgan yoki sizga mavjud bo‘lmasligi mumkin."
   }
 }
