@@ -252,6 +252,7 @@ async def job_match(
         parent_resume_id=UUID(resume_id),
         job_company=ai_response.job_company,
         job_title=ai_response.job_title,
+        cover_letter  = ai_response.cover_letter,
         input_hash=input_hash,
         **personal_data,
     )
@@ -279,7 +280,7 @@ async def job_match(
     try:
         db.add(result_resume)
         await db.flush()
-        result_resume_id = result_resume
+        result_resume_id = result_resume.id
 
         design = Design(resume_id=result_resume_id)
         db.add(design)
