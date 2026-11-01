@@ -9,7 +9,7 @@ from typing import Literal
 from fastapi import APIRouter, Depends, status, File, UploadFile
 from fastapi.exceptions import HTTPException
 from fastapi.responses import Response
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, UUID4
 
 from playwright.async_api import (
     Error as PlaywrightError,
@@ -252,7 +252,7 @@ async def job_match(
         parent_resume_id=UUID(resume_id),
         job_company=ai_response.job_company,
         job_title=ai_response.job_title,
-        cover_letter  = ai_response.cover_letter,
+        cover_letter=ai_response.cover_letter,
         input_hash=input_hash,
         **personal_data,
     )
@@ -473,6 +473,7 @@ async def get_my_resumes(
     filters: ResumeFilter = FilterDepends(ResumeFilter),
     db: AsyncSession = Depends(get_db),
     resume_type: Literal["all", "orginal", "ai"] = "all",
+    resume_id: UUID4 | None = None,
     user_id: str = Depends(verify),
 ):
 
@@ -485,6 +486,9 @@ async def get_my_resumes(
 
     query = filters.filter(query)
 
+    if resume_id is not None:
+        query = query.where(Resume.id == resume_id)
+
     result = await db.execute(query)
     resumes = result.scalars().all()
 
@@ -494,9 +498,9 @@ async def get_my_resumes(
             "fullname": resume.fullname or "",
             "title": resume.title or "",
             "parent_resume_id": resume.parent_resume_id,
-            "job_company": resume.job_company ,
-            "job_title": resume.job_title ,
-            "cover_letter" : resume.cover_letter 
+            "job_company": resume.job_company,
+            "job_title": resume.job_title,
+            "cover_letter": resume.cover_letter,
         }
         for resume in resumes
     ]
