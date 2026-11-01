@@ -26,15 +26,16 @@ const search = ref("")
 
 const debouncedSearch = refDebounced(search, 300)
 
+const resumeKeys = computed(() => `my_resumes_${debouncedSearch.value.trim()}_${resume_type.value}`)
+
 const { data, status, error, refresh } = useLazyAsyncData(
-    'my_resumes',
+    resumeKeys,
     (_nuxtApp, { signal }) => getMyResumes(
         { search: debouncedSearch.value.trim() || undefined, resume_type: resume_type.value }, signal
     ),
     {
         server: false,
         default: () => [],
-        watch: [debouncedSearch, resume_type],
         dedupe: "cancel"
     })
 
@@ -58,7 +59,7 @@ const removeResume = async (id: string) => {
             <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{{
                 t('resumeWorkspace.eyebrow') }}</p>
             <h1 class="text-3xl font-semibold tracking-tight text-highlighted sm:text-4xl">{{ t('resumeWorkspace.title')
-            }}</h1>
+                }}</h1>
             <p class="mt-3 text-base leading-relaxed text-muted">{{ t('resumeWorkspace.description') }}</p>
         </header>
 
@@ -189,8 +190,8 @@ const removeResume = async (id: string) => {
             <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <ResumeCard v-for="resume in data" :key="resume.id" :id="resume.id" :fullname="resume.fullname"
                     :title="resume.title" :loading="isDeleting(resume.id)" :parent_resume_id="resume.parent_resume_id"
-                    :job_company="resume.job_company" :job_title="resume.job_title" :cover_letter="resume.cover_letter" @delete="removeResume(resume.id)"
-                    />
+                    :job_company="resume.job_company" :job_title="resume.job_title" :cover_letter="resume.cover_letter"
+                    @delete="removeResume(resume.id)" />
             </div>
         </section>
     </UContainer>

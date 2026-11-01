@@ -71,7 +71,7 @@ async function copyResumeLink() {
 
 <template>
     <article
-        class="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-default bg-default transition duration-200 hover:-translate-y-1 hover:shadow-lg hover:ring-1 hover:ring-primary/40 motion-reduce:transform-none motion-reduce:transition-none">
+        class="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-default border-2 bg-default transition duration-200 hover:-translate-y-1 hover:shadow-lg hover:ring-1 hover:ring-primary/40 motion-reduce:transform-none motion-reduce:transition-none">
         <div class="flex-1 p-4">
 
             <div class="mb-3 flex items-center gap-2.5">
