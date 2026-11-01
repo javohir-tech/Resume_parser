@@ -396,5 +396,31 @@
     "languagesEmpty": "Add your first language to get started.",
     "languagesAdd": "Add language",
     "languagesRemove": "Remove language"
+  },
+  "jobMatch": {
+    "eyebrow": "A resume tailored to the role",
+    "title": "One step closer to your next job",
+    "description": "Choose a resume and paste the job description. AI will help tailor your resume to the job requirements.",
+    "resumeHeading": "Choose a resume",
+    "resumeHint": "Select the resume you want to tailor.",
+    "searchLabel": "Search resumes",
+    "searchPlaceholder": "Search resumes…",
+    "loading": "Loading resumes…",
+    "loadError": "Could not load resumes",
+    "loadErrorHint": "Check your connection and try again.",
+    "retry": "Try again",
+    "untitled": "Untitled resume",
+    "noTitle": "No job title specified",
+    "noResults": "No resumes found",
+    "empty": "No resumes yet",
+    "noResultsHint": "Try a different search term or clear the search field.",
+    "emptyHint": "To get started, create or upload a resume in the Resumes section.",
+    "vacancyHeading": "Paste the job description",
+    "vacancyHint": "Copy the job title, responsibilities and requirements from the listing here.",
+    "vacancyPlaceholder": "Example: Frontend developer\n\nResponsibilities:\n— Build user interfaces for web applications\n— Turn designs into responsive pages\n\nRequirements:\n— Experience with Vue.js and TypeScript\n— Familiarity with REST APIs",
+    "minimumLength": "Enter at least {min} characters.",
+    "characterCount": "{count} / {max} characters",
+    "submitHint": "Select a resume and enter the job description to continue.",
+    "submit": "Tailor resume"
   }
 }

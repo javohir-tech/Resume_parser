@@ -155,7 +155,7 @@ const removeResume = async (id: string) => {
                 <div class="min-w-0">
                     <label for="resume-search" class="mb-2 block text-xs font-medium text-muted">{{
                         t('resumeList.searchLabel') }}</label>
-                    <UInput id="resume-search" v-model="search" icon="i-lucide-search" size="lg"
+                    <UInput :maxlength="255" id="resume-search" v-model="search" icon="i-lucide-search" size="lg"
                         :placeholder="t('resumeList.searchPlaceholder')" class="w-full" />
                 </div>
                 <div class="min-w-0">

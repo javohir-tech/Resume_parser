@@ -396,5 +396,31 @@
     "languagesEmpty": "Boshlash uchun birinchi tilingizni qo‘shing.",
     "languagesAdd": "Til qo‘shish",
     "languagesRemove": "Tilni o‘chirish"
+  },
+  "jobMatch": {
+    "eyebrow": "Vakansiyaga mos rezyume",
+    "title": "Keyingi ishga bir qadam yaqinroq",
+    "description": "Rezyumeni tanlang va vakansiya matnini kiriting. Sun’iy intellekt rezyumeni ish talablariga moslashtirishga yordam beradi.",
+    "resumeHeading": "Rezyumeni tanlang",
+    "resumeHint": "Moslashtirmoqchi bo‘lgan rezyumeni belgilang.",
+    "searchLabel": "Rezyumelar orasidan qidirish",
+    "searchPlaceholder": "Rezyumelar orasidan qidirish…",
+    "loading": "Rezyumelar yuklanmoqda…",
+    "loadError": "Rezyumelar yuklanmadi",
+    "loadErrorHint": "Ulanishni tekshiring va qayta urinib ko‘ring.",
+    "retry": "Qayta urinish",
+    "untitled": "Nomsiz rezyume",
+    "noTitle": "Lavozim ko‘rsatilmagan",
+    "noResults": "Rezyume topilmadi",
+    "empty": "Hali rezyume yo‘q",
+    "noResultsHint": "Boshqa so‘z bilan qidiring yoki qidiruv maydonini tozalang.",
+    "emptyHint": "Boshlash uchun «Rezyumelar» bo‘limida rezyume yarating yoki yuklang.",
+    "vacancyHeading": "Vakansiya matnini kiriting",
+    "vacancyHint": "E’londagi lavozim, vazifalar va talablarni shu yerga nusxalang.",
+    "vacancyPlaceholder": "Masalan: Frontend dasturchi\n\nVazifalar:\n— Veb-ilovalar interfeysini ishlab chiqish\n— Dizaynlarni moslashuvchan sahifalarga aylantirish\n\nTalablar:\n— Vue.js va TypeScript bilan ishlash tajribasi\n— REST API bilan ishlash ko‘nikmasi",
+    "minimumLength": "Kamida {min} ta belgi kiriting.",
+    "characterCount": "{count} / {max} belgi",
+    "submitHint": "Moslashtirish uchun rezyumeni tanlang va vakansiya matnini kiriting.",
+    "submit": "Rezyumeni moslashtirish"
   }
 }
