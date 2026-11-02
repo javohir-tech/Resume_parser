@@ -1,8 +1,9 @@
 import uuid
+from datetime import datetime
 from typing import Optional, TYPE_CHECKING
-from sqlalchemy import String, ForeignKey, Text, UniqueConstraint
+from sqlalchemy import String, ForeignKey, Text, UniqueConstraint , DateTime , func
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship 
 from app.db.base import Base
 
 if TYPE_CHECKING:
@@ -52,6 +53,7 @@ class Resume(Base):
     job_title: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     input_hash: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
     cover_letter : Mapped[Optional[str]] = mapped_column(Text , nullable=True)
+    created_at : Mapped[datetime] = mapped_column(DateTime(timezone=True)  , server_default=func.clock_timestamp() , nullable=False)
 
     experience: Mapped[list["Experience"]] = relationship(
         back_populates="resume",

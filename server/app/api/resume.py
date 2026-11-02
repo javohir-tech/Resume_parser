@@ -6,7 +6,7 @@ from uuid import UUID
 
 from typing import Literal
 
-from fastapi import APIRouter, Depends, status, File, UploadFile
+from fastapi import APIRouter, Depends, status, File, UploadFile, Query, Request
 from fastapi.exceptions import HTTPException
 from fastapi.responses import Response
 from pydantic import BaseModel, Field, UUID4
@@ -16,7 +16,7 @@ from playwright.async_api import (
     TimeoutError as PlaywrightTimeoutError,
 )
 
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.orm import joinedload, selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -224,8 +224,6 @@ async def job_match(
             "success": True,
             "resume_id": hash_resume_result.id,
         }
-
-    
 
     ai_response = await job_match_resume(
         resume_text=resume_text, vacancy_text=vacancy_text
@@ -472,12 +470,16 @@ class ResumeFilter(Filter):
 
 @resume_router.get("/my/resumes")
 async def get_my_resumes(
+    request: Request,
     filters: ResumeFilter = FilterDepends(ResumeFilter),
     db: AsyncSession = Depends(get_db),
     resume_type: Literal["all", "orginal", "ai"] = "all",
     resume_id: UUID4 | None = None,
+    page: int = Query(default=1, ge=1),
     user_id: str = Depends(verify),
 ):
+
+    page_size = 10
 
     query = select(Resume).where(Resume.user_id == UUID(user_id))
 
@@ -491,20 +493,40 @@ async def get_my_resumes(
     if resume_id is not None:
         query = query.where(Resume.id == resume_id)
 
+    count_query = select(func.count()).select_from(query.order_by(None).subquery())
+
+    total = await db.scalar(count_query) or 0
+
+    query = (
+        query.order_by(Resume.created_at.desc(), Resume.id.desc())
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+    )
+
     result = await db.execute(query)
     resumes = result.scalars().all()
 
+    def page_url(number: int) -> str:
+        return str(request.url.include_query_params(page=number))
+
     return [
         {
-            "id": resume.id,
-            "fullname": resume.fullname or "",
-            "title": resume.title or "",
-            "parent_resume_id": resume.parent_resume_id,
-            "job_company": resume.job_company,
-            "job_title": resume.job_title,
-            "cover_letter": resume.cover_letter,
+            "count": total,
+            "next": page_url(page + 1) if page * page_size < total else None,
+            "previous": page_url(page - 1) if page > 1 else None,
+            "results": [
+                {
+                    "id": resume.id,
+                    "fullname": resume.fullname or "",
+                    "title": resume.title or "",
+                    "parent_resume_id": resume.parent_resume_id,
+                    "job_company": resume.job_company,
+                    "job_title": resume.job_title,
+                    "cover_letter": resume.cover_letter,
+                }
+                for resume in resumes
+            ],
         }
-        for resume in resumes
     ]
 
 
