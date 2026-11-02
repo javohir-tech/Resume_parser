@@ -4,7 +4,7 @@ import { useJobMatch } from '~/features/resume/job-match';
 
 const search = ref("")
 const { t } = useI18n()
-const { jobMatchResume, loading } = useJobMatch()
+const { jobMatchResume, loading , error_message } = useJobMatch()
 
 const debouncedSearch = refDebounced(search, 300)
 
@@ -40,6 +40,8 @@ const handleJobMatch = async (selected_resume_id: string, vacancy_text: string) 
 
 }
 
+const ess = "Taqdim etilgan vakansiya matnida lavozim, talablar yoki xizmat vazifalari haqida hech qanday ma'lumot ko'rsatilmagan. Moslashtirilgan rezyume va muqova xati tayyorlash uchun iltimos, aniq ish o'rni va uning talablari mavjud bo'lgan vakansiya matnini kiriting."
+
 </script>
 
 <template>
@@ -57,6 +59,11 @@ const handleJobMatch = async (selected_resume_id: string, vacancy_text: string) 
                 {{ t('jobMatch.description') }}
             </p>
         </header>
+
+        <div class="mb-5">
+            <UAlert color="error" variant="soft" v-if="error_message" :description="error_message"
+                icon="i-lucide-terminal" />
+        </div>
 
         <div class="grid items-stretch gap-5 lg:grid-cols-5 lg:gap-6">
             <section class="match-panel min-w-0 lg:col-span-2" aria-labelledby="resume-heading">

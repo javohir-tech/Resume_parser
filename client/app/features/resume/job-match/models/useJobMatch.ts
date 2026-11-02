@@ -4,6 +4,7 @@ import { JobMatchRequest } from "../api";
 export const useJobMatch = () => {
   const loading = ref<boolean>(false);
   const { showError, showSuccess } = useApiToasts();
+  const error_message = ref<string | null>(null);
   const localPath = useLocalePath();
   async function jobMatchResume(resume_id: string, vacancy_text: string) {
     loading.value = true;
@@ -15,11 +16,14 @@ export const useJobMatch = () => {
       }
     } catch (error) {
       const err = apiError(error);
+      if (err.message) {
+        error_message.value = err.message;
+      }
       showError(err.message);
     } finally {
       loading.value = false;
     }
   }
 
-  return { loading, jobMatchResume };
+  return { loading, error_message, jobMatchResume };
 };

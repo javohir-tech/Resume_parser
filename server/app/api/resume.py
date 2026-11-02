@@ -225,6 +225,8 @@ async def job_match(
             "resume_id": hash_resume_result.id,
         }
 
+    
+
     ai_response = await job_match_resume(
         resume_text=resume_text, vacancy_text=vacancy_text
     )
