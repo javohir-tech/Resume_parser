@@ -53,7 +53,7 @@ const removeResume = async (id: string) => {
 </script>
 
 <template>
-    <UContainer class="flex min-h-[calc(100vh-4rem)] flex-col min-w-0 py-6 sm:py-10 lg:py-12">
+    <UContainer class="min-w-0 py-6 sm:py-10 lg:py-12">
 
         <header class="mb-6 max-w-2xl">
             <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{{
@@ -63,7 +63,7 @@ const removeResume = async (id: string) => {
             <p class="mt-3 text-base leading-relaxed text-muted">{{ t('resumeWorkspace.description') }}</p>
         </header>
 
-        <section class="flex-1 overflow-hidden rounded-3xl border border-default bg-default"
+        <section class="overflow-hidden rounded-3xl border border-default bg-default"
             :aria-label="t('resumeWorkspace.newResume')">
             <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
                 <div class="min-w-0 border-b border-default bg-muted/40 p-5 sm:p-8 lg:border-r lg:border-b-0">
