@@ -18,7 +18,7 @@ class SkillItem(TimestampMixin, Base):
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
     skills_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("skills.id"), index=True
+        UUID(as_uuid=True), ForeignKey("skills.id" , ondelete="CASCADE"), index=True
     )
     skills: Mapped["Skills"] = relationship(back_populates="skills", lazy="raise")
     skill: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)

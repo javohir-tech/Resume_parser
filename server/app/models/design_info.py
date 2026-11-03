@@ -17,7 +17,7 @@ class Design(Base):
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
     resume_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("resume.id"), index=True
+        UUID(as_uuid=True), ForeignKey("resume.id" , ondelete="CASCADE"), index=True
     )
     template: Mapped[Optional[str]] = mapped_column(String(100), nullable=True , default="classic")
     heading_title_color: Mapped[Optional[str]] = mapped_column(

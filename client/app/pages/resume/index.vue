@@ -36,6 +36,7 @@ const { data, status, error, refresh } = useLazyAsyncData(
     ),
     {
         server: false,
+        deep: true,
         default: () => ({
             count: 0,
             next: null,
@@ -50,7 +51,7 @@ const isLoading = computed(() => status.value === 'idle' || status.value === 'pe
 const removeResume = async (id: string) => {
     const success = await deleteResume(id)
     if (success) {
-        data.value.results = data.value.results?.filter(r => r.id !== id)
+        data.value.results = data.value.results.filter(r => r.id !== id)
     }
 }
 
@@ -65,7 +66,7 @@ const removeResume = async (id: string) => {
             <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{{
                 t('resumeWorkspace.eyebrow') }}</p>
             <h1 class="text-3xl font-semibold tracking-tight text-highlighted sm:text-4xl">{{ t('resumeWorkspace.title')
-            }}</h1>
+                }}</h1>
             <p class="mt-3 text-base leading-relaxed text-muted">{{ t('resumeWorkspace.description') }}</p>
         </header>
 
