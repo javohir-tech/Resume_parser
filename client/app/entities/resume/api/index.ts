@@ -1,4 +1,10 @@
-import type { Resume, Personal, DesignInfo, JobMatch } from "../models/types";
+import type {
+  Resume,
+  Personal,
+  DesignInfo,
+  JobMatch,
+  ResponseGetResumes,
+} from "../models/types";
 import { api } from "~/shared/api";
 import { colorOptions } from "../models/constants";
 
@@ -7,22 +13,20 @@ export const getResumeFetch = (resume_id: string) =>
 
 export const getMyResumes = (
   params: {
+    page ?: number ;
     search?: string;
     resume_type?: "all" | "orginal" | "ai";
     resume_id?: string;
   } = {},
   signal?: AbortSignal,
 ) =>
-  api<(Pick<Personal, "id" | "fullname" | "title"> & JobMatch)[]>(
-    "/api/resume/my/resumes",
-    {
-      method: "GET",
-      query: params,
-      signal,
-      timeout: 15000,
-      retry: 0,
-    },
-  );
+  api<ResponseGetResumes>("/api/resume/my/resumes", {
+    method: "GET",
+    query: params,
+    signal,
+    timeout: 15000,
+    retry: 0,
+  });
 
 type DesignResponse = Omit<
   DesignInfo,

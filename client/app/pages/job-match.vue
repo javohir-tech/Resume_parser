@@ -4,7 +4,7 @@ import { useJobMatch } from '~/features/resume/job-match';
 
 const search = ref("")
 const { t } = useI18n()
-const { jobMatchResume, loading , error_message } = useJobMatch()
+const { jobMatchResume, loading, error_message } = useJobMatch()
 
 const debouncedSearch = refDebounced(search, 300)
 
@@ -16,7 +16,12 @@ const vacancy_text = ref<string>("")
 const { data, status, error, refresh } = useLazyAsyncData(resumesKey, (_nuxtApp, { signal }) =>
     getMyResumes({ resume_type: "orginal", search: debouncedSearch.value.trim() || undefined }, signal), {
     server: false,
-    default: () => [],
+    default: () => ({
+        count: 0,
+        next: null,
+        previous: null,
+        results: []
+    }),
     dedupe: "cancel"
 }
 )
@@ -101,9 +106,9 @@ const ess = "Taqdim etilgan vakansiya matnida lavozim, talablar yoki xizmat vazi
                             @click="refresh()">{{ t('jobMatch.retry') }}</UButton>
                     </div>
 
-                    <div v-else-if="data.length > 0" class="resume-list space-y-3" role="group"
+                    <div v-else-if="data.results?.length > 0" class="resume-list space-y-3" role="group"
                         aria-labelledby="resume-heading">
-                        <button v-for="resume in data" :key="resume.id" type="button"
+                        <button v-for="resume in data.results" :key="resume.id" type="button"
                             class="resume-option group flex w-full items-center gap-3 rounded-xl border p-4 text-left"
                             :class="selectedResumeId === resume.id ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-default bg-default hover:border-primary/50 hover:bg-elevated/50'"
                             :aria-pressed="selectedResumeId === resume.id" @click="handleSelectResume(resume.id)">

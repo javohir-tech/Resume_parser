@@ -92,5 +92,12 @@ export interface JobMatch {
   parent_resume_id: string | null;
   job_company: string | null;
   job_title: string | null;
-  cover_letter: string | null;
+  cover_letter: string | null;  
+}
+
+export interface ResponseGetResumes {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: (Pick<Personal, "id" | "fullname" | "title"> & JobMatch)[];
 }

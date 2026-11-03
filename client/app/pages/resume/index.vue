@@ -23,19 +23,25 @@ const items = computed(() => [
 const resume_type = ref<"all" | "orginal" | "ai">("all")
 
 const search = ref("")
+const page = ref(1)
 
 const debouncedSearch = refDebounced(search, 300)
 
-const resumeKeys = computed(() => `my_resumes_${debouncedSearch.value.trim()}_${resume_type.value}`)
+const resumeKeys = computed(() => `my_resumes_${debouncedSearch.value.trim()}_${resume_type.value}_${page.value}`)
 
 const { data, status, error, refresh } = useLazyAsyncData(
     resumeKeys,
     (_nuxtApp, { signal }) => getMyResumes(
-        { search: debouncedSearch.value.trim() || undefined, resume_type: resume_type.value }, signal
+        { search: debouncedSearch.value.trim() || undefined, resume_type: resume_type.value, page: page.value }, signal
     ),
     {
         server: false,
-        default: () => [],
+        default: () => ({
+            count: 0,
+            next: null,
+            previous: null,
+            results: []
+        }),
         dedupe: "cancel"
     })
 
@@ -44,7 +50,7 @@ const isLoading = computed(() => status.value === 'idle' || status.value === 'pe
 const removeResume = async (id: string) => {
     const success = await deleteResume(id)
     if (success) {
-        data.value = data.value?.filter(r => r.id !== id)
+        data.value.results = data.value.results?.filter(r => r.id !== id)
     }
 }
 
@@ -59,7 +65,7 @@ const removeResume = async (id: string) => {
             <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{{
                 t('resumeWorkspace.eyebrow') }}</p>
             <h1 class="text-3xl font-semibold tracking-tight text-highlighted sm:text-4xl">{{ t('resumeWorkspace.title')
-                }}</h1>
+            }}</h1>
             <p class="mt-3 text-base leading-relaxed text-muted">{{ t('resumeWorkspace.description') }}</p>
         </header>
 
@@ -147,7 +153,7 @@ const removeResume = async (id: string) => {
                 <h2 id="resume-list-title" class="text-xl font-semibold tracking-tight text-highlighted">{{
                     t('resumeList.title') }}</h2>
                 <UBadge v-if="status === 'success'" color="neutral" variant="subtle" class="rounded-full">{{
-                    data?.length
+                    data.results?.length
                     ?? 0 }}</UBadge>
             </div>
             <div
@@ -181,18 +187,22 @@ const removeResume = async (id: string) => {
                     t('resumeList.retry') }}</UButton>
             </div>
 
-            <div v-else-if="!data?.length"
+            <div v-else-if="!data.results?.length"
                 class="flex flex-col items-center rounded-2xl border border-dashed border-default px-6 py-10 text-center">
                 <UIcon name="i-lucide-files" class="mb-3 size-8 text-dimmed" />
                 <h3 class="font-medium text-highlighted">{{ t('resumeList.empty') }}</h3>
             </div>
 
             <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <ResumeCard v-for="resume in data" :key="resume.id" :id="resume.id" :fullname="resume.fullname"
+                <ResumeCard v-for="resume in data.results" :key="resume.id" :id="resume.id" :fullname="resume.fullname"
                     :title="resume.title" :loading="isDeleting(resume.id)" :parent_resume_id="resume.parent_resume_id"
                     :job_company="resume.job_company" :job_title="resume.job_title" :cover_letter="resume.cover_letter"
                     @delete="removeResume(resume.id)" />
             </div>
         </section>
+
+        <div class="mt-5 flex justify-end">
+            <UPagination v-model:page="page" show-edges :sibling-count="1" :total="data.count" />
+        </div>
     </UContainer>
 </template>

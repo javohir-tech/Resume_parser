@@ -479,7 +479,7 @@ async def get_my_resumes(
     user_id: str = Depends(verify),
 ):
 
-    page_size = 10
+    page_size = 9
 
     query = select(Resume).where(Resume.user_id == UUID(user_id))
 
@@ -509,25 +509,23 @@ async def get_my_resumes(
     def page_url(number: int) -> str:
         return str(request.url.include_query_params(page=number))
 
-    return [
-        {
-            "count": total,
-            "next": page_url(page + 1) if page * page_size < total else None,
-            "previous": page_url(page - 1) if page > 1 else None,
-            "results": [
-                {
-                    "id": resume.id,
-                    "fullname": resume.fullname or "",
-                    "title": resume.title or "",
-                    "parent_resume_id": resume.parent_resume_id,
-                    "job_company": resume.job_company,
-                    "job_title": resume.job_title,
-                    "cover_letter": resume.cover_letter,
-                }
-                for resume in resumes
-            ],
-        }
-    ]
+    return {
+        "count": total,
+        "next": page_url(page + 1) if page * page_size < total else None,
+        "previous": page_url(page - 1) if page > 1 else None,
+        "results": [
+            {
+                "id": resume.id,
+                "fullname": resume.fullname or "",
+                "title": resume.title or "",
+                "parent_resume_id": resume.parent_resume_id,
+                "job_company": resume.job_company,
+                "job_title": resume.job_title,
+                "cover_letter": resume.cover_letter,
+            }
+            for resume in resumes
+        ],
+    }
 
 
 # /////////////////////////////////////////////////////////////
