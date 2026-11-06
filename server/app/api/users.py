@@ -32,6 +32,8 @@ async def get_me(db: AsyncSession = Depends(get_db), user_id: str = Depends(veri
         "id": user_id,
         "plan": user.plan,
         "full_name": user.full_name,
+        "bio": user.bio,
+        "location": user.location,
         "telegram_id": user.telegram_id,
         "registered_at": user.registered_at,
     }

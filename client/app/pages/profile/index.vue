@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UserProfile } from '~/entities/user';
+// import { UserProfile } from '~/entities/user';
 import { DeleteProfile } from '~/features/user';
 
 definePageMeta({
