@@ -1,0 +1,1 @@
+export {default as PrimaryColorPicker} from "./ui/PrimaryColorPicker.vue"
