@@ -55,12 +55,10 @@ const removeResume = async (id: string) => {
     }
 }
 
-
-
 </script>
 
 <template>
-    <UContainer class="min-w-0 py-6 sm:py-10 lg:py-12">
+    <UContainer class="min-w-0 py-6 sm:py-8 lg:py-10">
 
         <header class="mb-6 max-w-2xl">
             <p class="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{{
@@ -149,7 +147,7 @@ const removeResume = async (id: string) => {
             </div>
         </section>
 
-        <section class="mt-12" aria-labelledby="resume-list-title">
+        <section class="mt-10" aria-labelledby="resume-list-title">
             <div class="mb-5 flex items-center gap-3">
                 <h2 id="resume-list-title" class="text-xl font-semibold tracking-tight text-highlighted">{{
                     t('resumeList.title') }}</h2>

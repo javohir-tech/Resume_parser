@@ -48,11 +48,7 @@ const items = computed<NavigationMenuItem[]>(() => [
                 <UButton icon="i-lucide-menu" variant="ghost" color="neutral" />
                 <template #content="{ close }">
                     <div class="flex flex-col gap-1 p-1 min-w-32">
-                        <UButton :to="localePath('/settings')" icon="i-lucide-layout-dashboard" @click="close"
-                            color="neutral" variant="ghost">
-                            {{ t('account.dashboard') }}
-                        </UButton>
-                        <UButton :to="localePath('/profile')" icon="i-lucide-user-round" @click="close" color="neutral"
+                        <UButton :to="localePath('/settings')" icon="i-lucide-settings" @click="close" color="neutral"
                             variant="ghost">
                             {{ t('account.profile') }}
                         </UButton>

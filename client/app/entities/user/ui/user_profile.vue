@@ -18,7 +18,7 @@ const registeredDate = computed(() => {
 </script>
 
 <template>
-    <section class="pb-6 pt-8 sm:pb-8 sm:pt-12" :aria-label="t('account.profile')" :aria-busy="loading">
+    <section class="pb-6 sm:pb-8" :aria-label="t('account.profile')" :aria-busy="loading">
         <div class="mb-6 flex items-center gap-3">
             <span class="flex size-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                 <UIcon name="i-lucide-user-round" class="size-5" />
@@ -57,84 +57,18 @@ const registeredDate = computed(() => {
                             <UserAvatar size="lg" />
                         </div>
                         <div class="mt-4 flex flex-wrap items-center gap-3">
-                            <h2
+                            <!-- <h2
                                 class="min-w-0 break-words text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
                                 {{ user.full_name }}
-                            </h2>
-                            <UBadge :color="user.plan === 'pro' ? 'primary' : 'neutral'" variant="soft"
-                                :icon="user.plan === 'pro' ? 'i-lucide-sparkles' : 'i-lucide-leaf'"
-                                class="shrink-0 rounded-full px-3 py-1">
-                                {{ user.plan === 'pro' ? 'Pro' : 'Free' }}
-                            </UBadge>
+                            </h2> -->
                         </div>
-                        <p v-if="user.username" class="mt-1 break-all text-sm text-muted">@{{ user.username }}</p>
                     </div>
-                    <div class="flex w-full flex-wrap items-center gap-3 sm:w-auto sm:justify-end">
-                        <UButton :to="localePath('/resume')" trailing-icon="i-lucide-arrow-up-right" size="lg"
-                            color="primary" variant="solid"
-                            class="min-h-11 flex-1 justify-center rounded-xl px-5 sm:flex-none">
-                            {{ t('account.resumes') }}
-                        </UButton>
-                    </div>
-                </div>
 
-                <dl class="mt-7 grid gap-3 border-t border-default pt-6 sm:mt-8 sm:grid-cols-3">
-                    <div class="min-w-0 rounded-2xl bg-elevated/50 p-4 sm:p-5">
-                        <dt class="flex items-center gap-2 text-sm text-muted">
-                            <UIcon name="i-lucide-send" class="size-4 shrink-0 text-primary" />
-                            {{ t('profile.telegramId') }}
-                        </dt>
-                        <dd class="mt-3 break-all font-mono text-base font-medium text-highlighted">{{ user.telegram_id
-                        }}</dd>
-                    </div>
-                    <div class="min-w-0 rounded-2xl bg-elevated/50 p-4 sm:p-5">
-                        <dt class="flex items-center gap-2 text-sm text-muted">
-                            <UIcon name="i-lucide-at-sign" class="size-4 shrink-0 text-primary" />
-                            {{ t('profile.username') }}
-                        </dt>
-                        <dd class="mt-3 break-all text-base font-medium text-highlighted">{{ user.username ?
-                            `@${user.username}` : '—' }}</dd>
-                    </div>
-                    <div class="min-w-0 rounded-2xl bg-elevated/50 p-4 sm:p-5">
-                        <dt class="flex items-center gap-2 text-sm text-muted">
-                            <UIcon name="i-lucide-calendar-days" class="size-4 shrink-0 text-primary" />
-                            {{ t('profile.registered') }}
-                        </dt>
-                        <dd class="mt-3 text-base font-medium text-highlighted">
-                            <ClientOnly>
-                                <time :datetime="user.registered_at">{{ registeredDate }}</time>
-                                <template #fallback>
-                                    <USkeleton class="h-6 w-32" />
-                                </template>
-                            </ClientOnly>
-                        </dd>
-                    </div>
-                </dl>
+                </div>
             </div>
         </div>
 
         <UAlert v-else color="error" variant="soft" icon="i-lucide-circle-alert" :title="t('profile.loadError')" />
-
-        <div v-if="!loading && user"
-            class="mt-6 flex flex-col gap-5 rounded-2xl border border-primary/20 bg-primary/5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
-            <div class="flex items-center gap-4">
-                <span class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary"
-                    aria-hidden="true">
-                    <UIcon :name="user.plan === 'pro' ? 'i-lucide-badge-check' : 'i-lucide-sparkles'" class="size-6" />
-                </span>
-                <div class="min-w-0">
-                    <p class="text-sm text-muted">{{ t('profile.plan.current') }}</p>
-                    <h2 class="mt-1 text-lg font-semibold text-highlighted">
-                        {{ user.plan === 'pro' ? t('profile.plan.proActive') : t('profile.plan.freeActive') }}
-                    </h2>
-                </div>
-            </div>
-            <UButton :to="localePath('/settings')" v-if="user.plan !== 'pro'" size="lg" color="primary"
-                trailing-icon="i-lucide-arrow-up-right"
-                class="min-h-11 cursor-pointer justify-center rounded-xl px-5 sm:shrink-0">
-                {{ t('profile.plan.upgrade') }}
-            </UButton>
-        </div>
     </section>
 </template>
 

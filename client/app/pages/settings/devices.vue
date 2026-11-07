@@ -2,7 +2,7 @@
 import { UserSessions } from '~/entities/user';
 
 definePageMeta({
-    layout: "profile"
+    layout: "settings"
 })
 </script>
 
