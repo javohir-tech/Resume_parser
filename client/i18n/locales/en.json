@@ -94,7 +94,7 @@
   },
   "account": {
     "dashboard": "Dashboard",
-    "profile": "Profile",
+    "settings": "Settings",
     "resumes": "My resumes",
     "logout": "Log out",
     "login": "Sign in",

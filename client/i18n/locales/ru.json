@@ -94,7 +94,7 @@
   },
   "account": {
     "dashboard": "Панель управления",
-    "profile": "Профиль",
+    "settings": "Настройки",
     "resumes": "Мои резюме",
     "logout": "Выйти",
     "login": "Войти",

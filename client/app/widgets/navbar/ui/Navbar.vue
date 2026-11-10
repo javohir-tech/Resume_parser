@@ -50,7 +50,7 @@ const items = computed<NavigationMenuItem[]>(() => [
                     <div class="flex flex-col gap-1 p-1 min-w-32">
                         <UButton :to="localePath('/settings')" icon="i-lucide-settings" @click="close" color="neutral"
                             variant="ghost">
-                            {{ t('account.profile') }}
+                            {{ t('account.settings') }}
                         </UButton>
                         <UButton :to="localePath('/resume')" icon="i-lucide-files" @click="close" color="neutral"
                             variant="ghost">
