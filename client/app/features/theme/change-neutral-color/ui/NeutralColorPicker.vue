@@ -12,6 +12,10 @@ const swatchClasses: Record<string, string> = {
     zinc: 'bg-zinc-500',
     neutral: 'bg-neutral-500',
     stone: 'bg-stone-500',
+    taupe: "bg-taupe-500",
+    mauve: "bg-mauve-500",
+    mist: "bg-mist-500",
+    olive: "bg-olive-500"
 }
 
 function selectColor(color: typeof colors[number]) {
@@ -31,8 +35,8 @@ function selectColor(color: typeof colors[number]) {
             <UButton color="neutral" variant="ghost" size="sm"
                 :aria-label="`Neutral color: ${selectedColor}. Choose a color`"
                 class="shrink-0 justify-between gap-2 rounded-lg px-2 py-1.5">
-                <span class="size-3.5 shrink-0 rounded-full"
-                    :class="swatchClasses[selectedColor] || 'bg-neutral-500'" aria-hidden="true" />
+                <span class="size-3.5 shrink-0 rounded-full" :class="swatchClasses[selectedColor] || 'bg-neutral-500'"
+                    aria-hidden="true" />
                 <span class="text-left text-xs font-medium capitalize">{{ selectedColor }}</span>
                 <UIcon name="i-lucide-chevron-down" class="size-3.5 text-muted motion-safe:transition-transform"
                     :class="{ 'rotate-180': isOpen }" aria-hidden="true" />
@@ -46,10 +50,9 @@ function selectColor(color: typeof colors[number]) {
                             class="flex min-h-9 cursor-pointer items-center gap-3 rounded-md px-3 py-2 text-left motion-safe:transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
                             :class="selectedColor === color
                                 ? 'bg-elevated text-highlighted'
-                                : 'text-default hover:bg-elevated hover:text-highlighted'"
-                            @click="selectColor(color)">
-                            <span class="size-2.5 shrink-0 rounded-full"
-                                :class="swatchClasses[color]" aria-hidden="true" />
+                                : 'text-default hover:bg-elevated hover:text-highlighted'" @click="selectColor(color)">
+                            <span class="size-2.5 shrink-0 rounded-full" :class="swatchClasses[color]"
+                                aria-hidden="true" />
                             <span class="flex-1 text-sm font-medium capitalize">{{ color }}</span>
                             <UIcon v-if="selectedColor === color" name="i-lucide-check"
                                 class="size-4 shrink-0 text-highlighted" aria-hidden="true" />
