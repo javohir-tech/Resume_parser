@@ -22,12 +22,6 @@ function selectColor(color: typeof colors[number]) {
     setNeutralColor(color)
     isOpen.value = false
 }
-
-function handleClick(){
-    const appConfig = useAppConfig()
-    // appConfig.ui
-}
-
 </script>
 
 <template>
@@ -68,5 +62,4 @@ function handleClick(){
             </template>
         </UPopover>
     </div>
-    <UButton @click="">font</UButton>
 </template>
