@@ -18,3 +18,6 @@ export const colors = [
     "pink",
     "rose",
 ] as const
+
+
+export type color_types = typeof colors[number]
