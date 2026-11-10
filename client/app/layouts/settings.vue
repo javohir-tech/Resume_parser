@@ -13,7 +13,7 @@ const localPath = useLocalePath()
                             variant="ghost">
                             Account
                         </UButton>
-                        <UButton :to="localPath('/settings')" icon="i-lucide-palette" color="neutral" variant="ghost">
+                        <UButton :to="localPath('/settings/appearance')" icon="i-lucide-palette" color="neutral" variant="ghost">
                             Appearance
                         </UButton>
                         <UButton :to="localPath('/settings/billing')" icon="i-lucide-credit-card" color="neutral"

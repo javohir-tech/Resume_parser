@@ -20,19 +20,20 @@ export default defineNuxtConfig({
   },
   fonts: {
     families: [
-      { name: "Inter", provider: "google"   , global : true},
-      { name: "Roboto", provider: "google"   , global : true},
-      { name: "Merriweather", provider: "google"   , global : true},
-      { name: "Playfair Display", provider: "google"   , global : true},
-      { name: "Lato", provider: "google"  , global : true },
-      { name: "Poppins", provider: "google"   , global : true},
-      { name: "Nunito", provider: "google"   , global : true},
+      { name: "Inter", provider: "google", global: true },
+      { name: "Roboto", provider: "google", global: true },
+      { name: "Merriweather", provider: "google", global: true },
+      { name: "Playfair Display", provider: "google", global: true },
+      { name: "Lato", provider: "google", global: true },
+      { name: "Poppins", provider: "google", global: true },
+      { name: "Nunito", provider: "google", global: true },
     ],
   },
   routeRules: {
     "/": { prerender: true },
     "/en": { prerender: true },
     "/ru": { prerender: true },
+    "/settings": { redirect: "/settings/account" },
   },
   icon: {
     serverBundle: {
