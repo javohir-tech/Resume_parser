@@ -8,7 +8,7 @@ from app.db.session import get_db
 from app.models.user import User
 from app.models.refresh_token import RefreshToken
 from app.models.user_sessions import UserSessions
-from app.schemas.users_schema import UserSessionResponse
+from app.schemas.users_schema import UserSessionResponse, UserAccountEdit
 from app.services.device import DEVICE_COOKIE_NAME
 
 user_router = APIRouter(prefix="/users", tags=["users"])
@@ -36,6 +36,33 @@ async def get_me(db: AsyncSession = Depends(get_db), user_id: str = Depends(veri
         "location": user.location,
         "telegram_id": user.telegram_id,
         "registered_at": user.registered_at,
+    }
+
+
+@user_router.patch("/account/edit")
+async def edit_account(
+    UserAccountEdit: UserAccountEdit,
+    db: AsyncSession = Depends(get_db),
+    user_id: str = Depends(verify),
+):
+    result = await db.execute(select(User).where(User.id == (UUID(user_id))))
+
+    user = result.scalar_one_or_none()
+
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Account Not Fount"
+        )
+
+    changes = UserAccountEdit.model_dump(exclude_unset=True)
+
+    for field , value in changes.items():
+        setattr(user , field , value)
+
+    await db.commit()
+
+    return {
+        "success" : True
     }
 
 
