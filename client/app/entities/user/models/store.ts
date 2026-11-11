@@ -1,4 +1,4 @@
-import { fetchGetMe } from "../api";
+import { getMeRequest } from "../api";
 import type { IUser } from "./types";
 import { apiError, useApiToasts } from "~/shared/lib";
 
@@ -15,7 +15,7 @@ export const useUserStore = defineStore("user", () => {
   const getMe = async () => {
     loading.value = true;
     try {
-      const response = await fetchGetMe();
+      const response = await getMeRequest();
       user.value = response;
     } catch (error) {
       const err = apiError(error)
