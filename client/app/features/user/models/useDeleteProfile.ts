@@ -7,7 +7,7 @@ export const useDeleteProfile = () => {
   const { showError, showSuccess } = useApiToasts();
   const localPath = useLocalePath();
   const store = useUserStore();
-
+  
   const deleteProfile = async () => {
     loading.value = true;
     try {
