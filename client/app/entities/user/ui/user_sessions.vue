@@ -21,43 +21,38 @@ const deleteSession = (device_id: string) => {
 </script>
 
 <template>
-    <section class="pb-10">
-        <UCard class="overflow-hidden rounded-2xl shadow-sm" :ui="{ header: 'px-5 py-5 sm:px-8', body: 'p-5 sm:p-8' }">
-            <template #header>
-                <div class="flex items-start gap-3">
-                    <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary" aria-hidden="true">
-                        <UIcon name="i-lucide-shield-check" class="size-5" />
-                    </span>
-                    <div class="min-w-0">
-                    <h2 class="text-lg font-semibold">
-                        {{ t('profile.sessions.title') }}
-                    </h2>
-                    <p class="text-sm text-muted mt-1">
-                        {{ t('profile.sessions.description') }}
-                    </p>
+    <div class="flex flex-col gap-8">
+        <header>
+            <h1 class="m-0 text-3xl font-bold tracking-tight text-highlighted">
+                {{ t('profile.sessions.title') }}
+            </h1>
+        </header>
+
+        <section class="flex flex-col gap-3">
+            <h2 class="m-0 text-base font-semibold text-highlighted">
+                {{ t('profile.sessions.description') }}
+            </h2>
+            <div class="overflow-hidden rounded-2xl border border-default bg-default text-default">
+                <ClientOnly>
+                    <div v-if="pending" class="space-y-3 p-5">
+                        <USkeleton v-for="i in 3" :key="i" class="h-20 w-full rounded-xl" />
                     </div>
-                </div>
-            </template>
 
-            <ClientOnly>
-                <div v-if="pending" class="space-y-3">
-                    <USkeleton v-for="i in 3" :key="i" class="h-20 w-full" />
-                </div>
+                    <UAlert v-else-if="error" class="m-5" color="error" variant="soft" :title="t('profile.sessions.loadError')" />
 
-                <UAlert v-else-if="error" color="error" variant="soft" :title="t('profile.sessions.loadError')" />
-
-                <div v-else class="divide-y divide-default">
-                    <div v-for="session in data?.sessions ?? []" :key="session.id" class="py-4 first:pt-0 last:pb-0">
-                        <User_session_card :session="session" @delete="deleteSession" />
+                    <div v-else class="divide-y divide-default">
+                        <div v-for="session in data?.sessions ?? []" :key="session.id" class="px-5 py-4">
+                            <User_session_card :session="session" @delete="deleteSession" />
+                        </div>
                     </div>
-                </div>
 
-                <template #fallback>
-                    <div class="space-y-3">
-                        <USkeleton v-for="i in 3" :key="i" class="h-20 w-full" />
-                    </div>
-                </template>
-            </ClientOnly>
-        </UCard>
-    </section>
+                    <template #fallback>
+                        <div class="space-y-3 p-5">
+                            <USkeleton v-for="i in 3" :key="i" class="h-20 w-full rounded-xl" />
+                        </div>
+                    </template>
+                </ClientOnly>
+            </div>
+        </section>
+    </div>
 </template>

@@ -7,7 +7,7 @@ definePageMeta({
 </script>
 
 <template>
-    <div>
+    <div class="mx-auto flex w-full max-w-4xl flex-col">
         <UserSessions />
     </div>
 </template>

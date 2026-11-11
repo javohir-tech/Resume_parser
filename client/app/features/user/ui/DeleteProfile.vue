@@ -14,11 +14,17 @@ const handleDeleteProfile = async () => {
 </script>
 
 <template>
-    <div class="pt-3 pb-5">
+    <div>
         <UModal :title="t('profile.delete.title')" :description="t('profile.delete.description')"
+            :close="{ 'aria-label': t('profile.delete.close') }"
             :ui="{ content: 'max-w-md rounded-2xl', header: 'p-5 sm:p-6', body: 'p-5 sm:p-6', footer: 'p-5 sm:p-6' }">
-            <UButton :label="t('profile.delete.action')" icon="i-lucide-trash-2" block color="error" variant="subtle"
-                size="lg" class="min-h-11 cursor-pointer rounded-xl" />
+            <div class="flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start">
+                <div>
+                    <p class="m-0 text-base font-semibold text-highlighted">{{ t('settings.account.deleteTitle') }}</p>
+                    <p class="mt-1 text-sm leading-6 text-muted">{{ t('settings.account.deleteDescription') }}</p>
+                </div>
+                <UButton class="shrink-0 rounded-xl max-sm:self-end" :label="t('profile.delete.action')" color="error" variant="soft" size="sm" />
+            </div>
 
             <template #body>
                 <div class="space-y-6">

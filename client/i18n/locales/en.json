@@ -1,4 +1,46 @@
 {
+  "settings": {
+    "title": "Settings",
+    "navigation": "Settings navigation",
+    "general": "General",
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close",
+      "reset": "Reset"
+    },
+    "account": {
+      "title": "Account",
+      "fullName": "Full name",
+      "plan": "Plan",
+      "editUsername": "Edit username",
+      "usernameDescription": "Update the username displayed on your account.",
+      "usernamePlaceholder": "Enter your username",
+      "editFullName": "Edit full name",
+      "fullNameDescription": "Update the full name displayed on your account.",
+      "fullNamePlaceholder": "Enter your full name",
+      "characterLimit": "Up to {count} characters.",
+      "deleteTitle": "Delete account",
+      "deleteDescription": "Permanently remove your account and associated data."
+    },
+    "appearance": {
+      "title": "Appearance",
+      "primaryColor": "Primary color",
+      "neutralColor": "Neutral color",
+      "font": "Font",
+      "primaryColors": "Primary colors",
+      "neutralColors": "Neutral colors",
+      "fonts": "Fonts",
+      "choosePrimaryColor": "Primary color: {color}. Choose a color.",
+      "chooseNeutralColor": "Neutral color: {color}. Choose a color.",
+      "chooseFont": "Font: {font}. Choose a font.",
+      "resetTitle": "Reset appearance",
+      "resetDescription": "Restore the default appearance settings."
+    },
+    "billing": {
+      "title": "Billing"
+    }
+  },
   "resumeSidebar": {
     "details": "Resume details",
     "design": "Design & settings"

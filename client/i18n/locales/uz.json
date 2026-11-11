@@ -1,4 +1,46 @@
 {
+  "settings": {
+    "title": "Sozlamalar",
+    "navigation": "Sozlamalar bo‘limlari",
+    "general": "Umumiy",
+    "actions": {
+      "save": "Saqlash",
+      "cancel": "Bekor qilish",
+      "close": "Yopish",
+      "reset": "Tiklash"
+    },
+    "account": {
+      "title": "Hisob",
+      "fullName": "Ism va familiya",
+      "plan": "Tarif",
+      "editUsername": "Foydalanuvchi nomini o‘zgartirish",
+      "usernameDescription": "Hisobingizda ko‘rsatiladigan foydalanuvchi nomini o‘zgartiring.",
+      "usernamePlaceholder": "Foydalanuvchi nomini kiriting",
+      "editFullName": "Ism va familiyani o‘zgartirish",
+      "fullNameDescription": "Hisobingizda ko‘rsatiladigan ism va familiyangizni o‘zgartiring.",
+      "fullNamePlaceholder": "Ism va familiyangizni kiriting",
+      "characterLimit": "Ko‘pi bilan {count} ta belgi.",
+      "deleteTitle": "Hisobni o‘chirish",
+      "deleteDescription": "Hisobingiz va unga tegishli ma’lumotlarni butunlay o‘chirish."
+    },
+    "appearance": {
+      "title": "Ko‘rinish",
+      "primaryColor": "Asosiy rang",
+      "neutralColor": "Neytral rang",
+      "font": "Shrift",
+      "primaryColors": "Asosiy ranglar",
+      "neutralColors": "Neytral ranglar",
+      "fonts": "Shriftlar",
+      "choosePrimaryColor": "Asosiy rang: {color}. Rangni tanlang.",
+      "chooseNeutralColor": "Neytral rang: {color}. Rangni tanlang.",
+      "chooseFont": "Shrift: {font}. Shriftni tanlang.",
+      "resetTitle": "Ko‘rinish sozlamalarini tiklash",
+      "resetDescription": "Ko‘rinish sozlamalarini boshlang‘ich holatiga qaytarish."
+    },
+    "billing": {
+      "title": "To‘lovlar"
+    }
+  },
   "resumeSidebar": {
     "details": "Rezyume ma’lumotlari",
     "design": "Dizayn va sozlamalar"

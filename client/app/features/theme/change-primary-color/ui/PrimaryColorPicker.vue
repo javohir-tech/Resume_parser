@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import usePrimaryColor from '../models/usePrimaryColor';
 import { colors } from '../models/colors';
+const { t } = useI18n()
 
 const { primary, setPrimary } = usePrimaryColor()
 const isOpen = ref(false)
@@ -34,15 +35,15 @@ function selectColor(color: typeof colors[number]) {
 </script>
 
 <template>
-    <div class="flex items-center justify-between gap-3 py-1.5">
+    <div class="flex flex-wrap items-center justify-between gap-3 py-1.5">
 
-        <h2 class="text-sm font-medium text-highlighted">Primary color</h2>
+        <h2 class="text-sm font-medium text-highlighted">{{ t('settings.appearance.primaryColor') }}</h2>
 
         <UPopover v-model:open="isOpen" :content="{ align: 'end', sideOffset: 6, collisionPadding: 16 }"
-            :ui="{ content: 'w-44 max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg ring-0' }">
+            :ui="{ content: 'w-52 max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg bg-default text-default ring-1 ring-default' }">
 
             <UButton color="neutral" variant="ghost" size="sm"
-                :aria-label="`Primary color: ${selectedColor}. Choose a color`"
+                :aria-label="t('settings.appearance.choosePrimaryColor', { color: selectedColor })"
                 class="shrink-0 justify-between gap-2 rounded-lg px-2 py-1.5">
                 <span class="size-3.5 shrink-0 rounded-full"
                     :class="swatchClasses[selectedColor] || 'bg-primary'" aria-hidden="true" />
@@ -53,7 +54,7 @@ function selectColor(color: typeof colors[number]) {
 
             <template #content>
                 <div class="max-h-[min(30rem,var(--reka-popover-content-available-height))] overflow-y-auto p-1">
-                    <div class="flex flex-col gap-0.5" role="group" aria-label="Primary colors">
+                    <div class="flex flex-col gap-0.5" role="group" :aria-label="t('settings.appearance.primaryColors')">
                         <button v-for="color in colors" :key="color" type="button"
                             :aria-pressed="selectedColor === color"
                             class="flex min-h-9 cursor-pointer items-center gap-3 rounded-md px-3 py-2 text-left motion-safe:transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
@@ -63,7 +64,7 @@ function selectColor(color: typeof colors[number]) {
                             @click="selectColor(color)">
                             <span class="size-2.5 shrink-0 rounded-full"
                                 :class="swatchClasses[color]" aria-hidden="true" />
-                            <span class="flex-1 text-sm font-medium capitalize">{{ color }}</span>
+                            <span class="min-w-0 flex-1 break-words text-sm font-medium capitalize">{{ color }}</span>
                             <UIcon v-if="selectedColor === color" name="i-lucide-check"
                                 class="size-4 shrink-0 text-highlighted" aria-hidden="true" />
                         </button>

@@ -2,10 +2,10 @@
 import type { ISessions } from '../models/types';
 import { useSessionRevoke } from '~/features/user';
 const { loading, revokeSession } = useSessionRevoke()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const formatDate = (date: string) => {
-    return new Intl.DateTimeFormat('en-US', {
+    return new Intl.DateTimeFormat(locale.value, {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -30,10 +30,10 @@ defineProps<{
 </script>
 
 <template>
-    <div class="flex items-start justify-between gap-4">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <!-- Device -->
-        <div class="flex items-start gap-3 min-w-0">
-            <div class="size-10 shrink-0 rounded-lg bg-elevated flex items-center justify-center">
+        <div class="flex min-w-0 items-start gap-3">
+            <div class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted">
                 <!-- <UIcon :name="session.device_type === 'mobile'
                     ? 'i-lucide-smartphone'
                     : 'i-lucide-monitor'
@@ -43,7 +43,7 @@ defineProps<{
 
             <div class="min-w-0">
                 <div class="flex items-center gap-2 flex-wrap">
-                    <p class="font-medium">
+                    <p class="break-words text-sm font-semibold text-highlighted">
                         {{ session.os_name || t('profile.sessions.unknownOs') }}
                     </p>
 
@@ -52,7 +52,7 @@ defineProps<{
                     </UBadge>
                 </div>
 
-                <p class="text-sm text-muted mt-1">
+                <p class="mt-1 break-words text-sm text-muted">
                     {{ session.browser_name || t('profile.sessions.unknownBrowser') }}
                     <span v-if="session.browser_version">
                         {{ session.browser_version }}
@@ -62,24 +62,24 @@ defineProps<{
         </div>
 
         <!-- Date + Action -->
-        <div class="text-right shrink-0 flex flex-col items-end gap-2">
-            <p class="text-sm">
+        <div class="flex min-w-0 flex-col items-start gap-2 pl-12 text-left sm:shrink-0 sm:items-end sm:pl-0 sm:text-right">
+            <p class="text-sm text-muted">
                 {{ formatDate(session.last_seen_at) }}
             </p>
-            <p class="text-xs text-muted">
+            <p class="break-all text-xs text-muted">
                 {{ session.ip_address || t('profile.sessions.noIp') }}
             </p>
 
             <UButton :loading="loading" :disabled="loading" v-if="!session.is_current"
-                @click="deleteSession(session.device_id)" color="error" variant="soft" size="xs"
-                icon="i-lucide-log-out">
+                @click="deleteSession(session.device_id)" color="error" variant="soft" size="sm"
+                icon="i-lucide-log-out" class="shrink-0 rounded-xl">
                 {{ t('profile.sessions.revoke') }}
             </UButton>
         </div>
     </div>
 
     <!-- Details -->
-    <div class="mt-4 ml-13 flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted">
+    <div class="mt-3 flex flex-wrap gap-x-4 gap-y-2 pl-12 text-xs text-muted">
         <div v-if="session.os_version" class="flex items-center gap-1.5">
             <UIcon name="i-lucide-layers-2" class="size-3.5" />
             <span>{{ t('profile.sessions.osVersion', { version: session.os_version }) }}</span>

@@ -1,4 +1,46 @@
 {
+  "settings": {
+    "title": "Настройки",
+    "navigation": "Разделы настроек",
+    "general": "Общие",
+    "actions": {
+      "save": "Сохранить",
+      "cancel": "Отмена",
+      "close": "Закрыть",
+      "reset": "Сбросить"
+    },
+    "account": {
+      "title": "Аккаунт",
+      "fullName": "Имя и фамилия",
+      "plan": "Тариф",
+      "editUsername": "Изменить имя пользователя",
+      "usernameDescription": "Измените имя пользователя, указанное в вашем аккаунте.",
+      "usernamePlaceholder": "Введите имя пользователя",
+      "editFullName": "Изменить имя и фамилию",
+      "fullNameDescription": "Измените имя и фамилию, указанные в вашем аккаунте.",
+      "fullNamePlaceholder": "Введите имя и фамилию",
+      "characterLimit": "Не более {count} символов.",
+      "deleteTitle": "Удалить аккаунт",
+      "deleteDescription": "Безвозвратно удалить аккаунт и связанные с ним данные."
+    },
+    "appearance": {
+      "title": "Внешний вид",
+      "primaryColor": "Основной цвет",
+      "neutralColor": "Нейтральный цвет",
+      "font": "Шрифт",
+      "primaryColors": "Основные цвета",
+      "neutralColors": "Нейтральные цвета",
+      "fonts": "Шрифты",
+      "choosePrimaryColor": "Основной цвет: {color}. Выберите цвет.",
+      "chooseNeutralColor": "Нейтральный цвет: {color}. Выберите цвет.",
+      "chooseFont": "Шрифт: {font}. Выберите шрифт.",
+      "resetTitle": "Сброс настроек оформления",
+      "resetDescription": "Восстановить настройки оформления по умолчанию."
+    },
+    "billing": {
+      "title": "Оплата"
+    }
+  },
   "resumeSidebar": {
     "details": "Данные резюме",
     "design": "Дизайн и настройки"
