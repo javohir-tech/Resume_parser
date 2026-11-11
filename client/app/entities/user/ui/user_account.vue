@@ -2,7 +2,7 @@
 import { getMeRequest } from '../api';
 
 const { data, status, pending, error } = useLazyAsyncData("my_account", () => getMeRequest())
-console.log(data.value)
+
 </script>
 
 <template>
