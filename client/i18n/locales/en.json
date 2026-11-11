@@ -139,6 +139,8 @@
     "settings": "Settings",
     "resumes": "My resumes",
     "logout": "Log out",
+    "logoutConfirmTitle": "Log out?",
+    "logoutConfirmDescription": "You’ll be signed out on this device.",
     "login": "Sign in",
     "language": "Choose language"
   },

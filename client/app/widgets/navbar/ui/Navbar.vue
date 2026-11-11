@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui/runtime/components/NavigationMenu.vue.js'
-import { UserAvatar } from '~/entities/user';
 import { useLogout } from '~/features/auth/logout';
 
 const { t, setLocale } = useI18n()
@@ -8,20 +7,8 @@ const localePath = useLocalePath()
 const { loading, handle_logout } = useLogout()
 const access_token = useCookie("access_token")
 
-const items = computed<NavigationMenuItem[]>(() => [
-    {
-        label: t('navbar.home'),
-        to: localePath("/"),
-    },
-    {
-        label: t('navbar.about'),
-        to: localePath("/about"),
-    },
-    {
-        label: t('navbar.contact'),
-        to: localePath("/contact")
-    }
-])
+const open = ref<boolean>(false)
+
 </script>
 
 <template>
@@ -49,30 +36,37 @@ const items = computed<NavigationMenuItem[]>(() => [
                 <template #content="{ close }">
                     <div class="flex flex-col gap-1 p-1 min-w-32">
                         <UButton :to="localePath('/settings')" icon="i-lucide-settings" @click="close" color="neutral"
-                            variant="ghost">
+                            variant="ghost" active-color="primary">
                             {{ t('account.settings') }}
                         </UButton>
                         <UButton :to="localePath('/resume')" icon="i-lucide-files" @click="close" color="neutral"
-                            variant="ghost">
+                            variant="ghost" active-color="primary">
                             {{ t('account.resumes') }}
                         </UButton>
-                        <UButton :to="localePath('/job-match')" icon="i-lucide-wand-sparkles" @click="close" color="neutral"
-                            variant="ghost">
+                        <UButton :to="localePath('/job-match')" icon="i-lucide-wand-sparkles" @click="close"
+                            color="neutral" variant="ghost" active-color="primary">
                             <!-- {{ t('account.resumes') }} -->
                             moslashtirish
                         </UButton>
-
-                        <UButton @click="handle_logout" icon="i-lucide-log-out" :disabled="loading" :loading="loading"
-                            color="error" variant="ghost">{{ t('account.logout') }}</UButton>
+                        <UModal v-model:open="open" :title="t('account.logoutConfirmTitle')"
+                            :description="t('account.logoutConfirmDescription')"
+                            :ui="{ content: 'max-w-sm rounded-2xl', header: 'p-5 sm:p-6', title: 'text-lg font-semibold', description: 'mt-1 text-sm text-muted', footer: 'flex justify-end gap-2 border-t border-default bg-muted/30 p-5 sm:px-6' }">
+                            <UButton icon="i-lucide-log-out" color="error" variant="ghost">{{ t('account.logout') }}
+                            </UButton>
+                            <template #footer>
+                                <div class="flex w-full justify-end gap-2">
+                                    <UButton @click="open = false" color="neutral" variant="soft"
+                                        :label="t('settings.actions.cancel')" />
+                                    <UButton @click="handle_logout" :disabled="loading" :loading="loading"
+                                        color="error" icon="i-lucide-log-out" :label="t('account.logout')" />
+                                </div>
+                            </template>
+                        </UModal>
                     </div>
                 </template>
             </UPopover>
             <UButton :to="localePath('/login')" v-else>{{ t('account.login') }}</UButton>
         </template>
-
-        <!-- <template #body> -->
-        <!-- <UNavigationMenu :items="items" orientation="vertical" /> -->
-        <!-- </template> -->
     </UHeader>
 </template>
 

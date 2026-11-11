@@ -139,6 +139,8 @@
     "settings": "Настройки",
     "resumes": "Мои резюме",
     "logout": "Выйти",
+    "logoutConfirmTitle": "Выйти из аккаунта?",
+    "logoutConfirmDescription": "Вы выйдете из аккаунта на этом устройстве.",
     "login": "Войти",
     "language": "Выбрать язык"
   },

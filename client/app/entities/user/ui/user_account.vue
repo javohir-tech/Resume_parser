@@ -40,6 +40,19 @@ const handleSaveFullname = async () => {
     }
 }
 
+const formatted = computed(() => {
+    if (data.value?.registered_at) {
+        return new Date(data.value.registered_at).toLocaleString("uz-UZ", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+        });
+    }
+})
+
 </script>
 
 <template>
@@ -133,7 +146,7 @@ const handleSaveFullname = async () => {
             class="flex min-h-15 items-center justify-between gap-4 px-5 py-3 text-sm text-muted max-sm:flex-wrap max-sm:items-start">
             <p class="m-0 w-[38%] shrink-0 font-semibold text-highlighted max-sm:w-full">{{ t('profile.registered') }}
             </p>
-            <p>{{ data?.registered_at }}</p>
+            <p>{{ formatted }}</p>
         </div>
     </div>
 </template>

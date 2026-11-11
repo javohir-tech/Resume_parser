@@ -139,6 +139,8 @@
     "settings": "Sozlamalar",
     "resumes": "Rezyumelarim",
     "logout": "Chiqish",
+    "logoutConfirmTitle": "Hisobdan chiqasizmi?",
+    "logoutConfirmDescription": "Ushbu qurilmadagi hisobingizdan chiqasiz.",
     "login": "Kirish",
     "language": "Tilni tanlash"
   },
