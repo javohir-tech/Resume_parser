@@ -16,7 +16,6 @@ const handleDeleteProfile = async () => {
 <template>
     <div>
         <UModal :title="t('profile.delete.title')" :description="t('profile.delete.description')"
-            :close="{ 'aria-label': t('profile.delete.close') }"
             :ui="{ content: 'max-w-md rounded-2xl', header: 'p-5 sm:p-6', body: 'p-5 sm:p-6', footer: 'p-5 sm:p-6' }">
             <div class="flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start">
                 <div>
