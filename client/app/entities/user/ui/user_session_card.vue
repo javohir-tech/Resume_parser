@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import type { ISessions } from '../models/types';
-import { useSessionRevoke } from '~/features/user';
-const { loading, revokeSession } = useSessionRevoke()
 const { t, locale } = useI18n()
 
 const formatDate = (date: string) => {
@@ -19,14 +17,15 @@ const emit = defineEmits<{
     delete: [device_id: string]
 }>()
 
-const deleteSession = async (device_id: string) => {
-    await revokeSession(device_id)
+const deleteSession = (device_id: string) => {
     emit("delete", device_id)
 }
 
-defineProps<{
-    session: ISessions
+const props = defineProps<{
+    session: ISessions,
+    is_deleting: (device_id: string) => boolean
 }>()
+
 </script>
 
 <template>
@@ -62,7 +61,8 @@ defineProps<{
         </div>
 
         <!-- Date + Action -->
-        <div class="flex min-w-0 flex-col items-start gap-2 pl-12 text-left sm:shrink-0 sm:items-end sm:pl-0 sm:text-right">
+        <div
+            class="flex min-w-0 flex-col items-start gap-2 pl-12 text-left sm:shrink-0 sm:items-end sm:pl-0 sm:text-right">
             <p class="text-sm text-muted">
                 {{ formatDate(session.last_seen_at) }}
             </p>
@@ -70,9 +70,9 @@ defineProps<{
                 {{ session.ip_address || t('profile.sessions.noIp') }}
             </p>
 
-            <UButton :loading="loading" :disabled="loading" v-if="!session.is_current"
-                @click="deleteSession(session.device_id)" color="error" variant="soft" size="sm"
-                icon="i-lucide-log-out" class="shrink-0 rounded-xl">
+            <UButton :loading="props.is_deleting(session.device_id)" :disabled="props.is_deleting(session.device_id)"
+                v-if="!session.is_current" @click="deleteSession(session.device_id)" color="error" variant="soft"
+                size="sm" icon="i-lucide-log-out" class="shrink-0 rounded-xl">
                 {{ t('profile.sessions.revoke') }}
             </UButton>
         </div>
