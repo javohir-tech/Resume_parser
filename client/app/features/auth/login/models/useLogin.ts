@@ -1,13 +1,11 @@
 import { handleLogin } from "../api";
 import { FetchError } from "ofetch";
-import { useUserStore } from "~/entities/user";
 import { useApiToasts, apiError } from "~/shared/lib";
 
 export default function useLogin() {
   const loading = ref<boolean>(false);
   const to_many_request = ref(false);
   const retry_after = ref<number>(0);
-  const userStore = useUserStore();
   const localePath = useLocalePath()
   const { showSuccess, showError } = useApiToasts();
 
@@ -42,7 +40,6 @@ export default function useLogin() {
       access_token.value = response.data.tokens.access_token;
       refresh_token.value = response.data.tokens.refresh_token;
 
-      userStore.setUser(response.data.user);
 
       if (response.success) {
         await navigateTo(`${localePath('/')}`);

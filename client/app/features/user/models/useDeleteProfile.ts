@@ -1,13 +1,11 @@
 import { deleteProfileRequest } from "../api";
 import { apiError, useApiToasts, useClearCookie } from "~/shared/lib";
-import { useUserStore } from "~/entities/user";
 
 export const useDeleteProfile = () => {
   const loading = ref<boolean>(false);
   const { showError, showSuccess } = useApiToasts();
   const { clearCookie } = useClearCookie();
   const localPath = useLocalePath();
-  const store = useUserStore();
 
   const deleteProfile = async () => {
     loading.value = true;
@@ -21,7 +19,6 @@ export const useDeleteProfile = () => {
         i18n.value = null;
         clearCookie();
         localStorage.clear();
-        store.logout();
         await navigateTo(`${localPath("/login")}`);
       }
     } catch (error) {

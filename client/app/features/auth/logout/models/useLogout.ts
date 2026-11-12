@@ -1,10 +1,8 @@
-import { useUserStore } from "~/entities/user";
 import { fetch_logout } from "../api";
 import { apiError, useApiToasts, useClearCookie } from "~/shared/lib";
 
 export default function useLogout() {
   const loading = ref(false);
-  const userStore = useUserStore();
   const localePath = useLocalePath();
   const { showError, showSuccess } = useApiToasts();
   const { clearCookie } = useClearCookie();
@@ -20,7 +18,6 @@ export default function useLogout() {
 
       localStorage.clear();
       clearCookie();
-      userStore.logout();
       
       showSuccess("see are soon");
       await navigateTo(`${localePath("/")}`);
