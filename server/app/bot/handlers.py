@@ -183,7 +183,7 @@ async def handle_renew(callback: CallbackQuery):
                 )
                 return
 
-        session.execute(
+        await session.execute(
             update(LoginCode)
             .where(LoginCode.user_id == user.id, LoginCode.is_used == False)
             .values(is_used=True)

@@ -287,7 +287,7 @@ async def job_match(
 
         await db.commit()
     except Exception:
-        db.rollback()
+        await db.rollback()
         raise
 
     return {
@@ -610,7 +610,7 @@ async def design_edit(
     result = await db.execute(
         select(Resume)
         .options(selectinload(Resume.desing))
-        .where(Resume.id == resume_uuid)
+        .where(Resume.id == resume_uuid, Resume.user_id == UUID(user_id))
     )
 
     resume = result.scalar_one_or_none()
