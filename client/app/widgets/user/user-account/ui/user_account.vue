@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { getMeRequest } from '../api';
-const { t } = useI18n()
+import { getMeRequest } from '~/entities/user';
+import { useAccount } from '~/features/user';
 
-const props = defineProps<{
-    loading: boolean,
-    username_success: (value: string) => Promise<boolean>,
-    full_name_success: (value: string) => Promise<boolean>
-}>()
+const { loading, editAccount } = useAccount()
+
+const { t } = useI18n()
 
 const username_modal_open = ref(false)
 const full_name_modal_open = ref(false)
@@ -17,25 +15,28 @@ const username = ref(data.value?.username ?? "")
 const full_name = ref(data.value?.full_name ?? "")
 
 const handleSaveUsername = async () => {
-    if (!username.value.trim() || username.value.trim() === data.value?.username) return
+    const t_username = username.value.trim()
 
-    const success = await props.username_success(username.value.trim())
+    if (!t_username || t_username === data.value?.username) return
+
+    const success = await editAccount({ username: t_username })
     if (success) {
         username_modal_open.value = false
-        if (data.value?.username) {
-            data.value.username = username.value.trim()
+        if (data.value) {
+            data.value.username = t_username
         }
     }
 }
 
 const handleSaveFullname = async () => {
-    if (!full_name.value.trim() || full_name.value.trim() === data.value?.full_name) return
+    const t_full_name = full_name.value.trim()
+    if (!t_full_name || t_full_name === data.value?.full_name) return
 
-    const success = await props.full_name_success(full_name.value.trim())
+    const success = await editAccount({ full_name: t_full_name })
     if (success) {
         full_name_modal_open.value = false
-        if (data.value?.full_name) {
-            data.value.full_name = full_name.value.trim()
+        if (data.value) {
+            data.value.full_name = t_full_name
         }
     }
 }

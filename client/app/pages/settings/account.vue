@@ -1,32 +1,11 @@
 <script setup lang="ts">
-import { UserAccount } from '~/entities/user';
-import { DeleteProfile, useAccount } from '~/features/user';
+import { UserAccount } from '~/widgets/user/user-account';
+import { DeleteProfile } from '~/features/user';
 const { t } = useI18n()
 definePageMeta({
     layout: "settings"
 })
 
-const { loading, editAccount } = useAccount()
-
-const handleSaveUsername = async (value: string) :Promise<boolean> => {
-    if (!value) return false
-
-    const success = await editAccount({ username: value })
-
-    if(success) return true
-
-    return false
-}
-
-const handleSaveFullname = async (value: string): Promise<boolean> => {
-    if (!value) return false
-
-    const success = await editAccount({ full_name: value })
-
-    if (success) return true
-
-    return false
-}
 </script>
 
 <template>
@@ -38,8 +17,7 @@ const handleSaveFullname = async (value: string): Promise<boolean> => {
         <section class="flex flex-col gap-3">
             <h2 class="m-0 text-base font-semibold text-highlighted">{{ t('settings.general') }}</h2>
             <div class="overflow-hidden rounded-2xl border border-default bg-default text-default">
-                <UserAccount :username_success="handleSaveUsername" :loading="loading"
-                    :full_name_success="handleSaveFullname" />
+                <UserAccount />
             </div>
         </section>
 
