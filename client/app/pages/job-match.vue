@@ -64,11 +64,6 @@ const handleJobMatch = async (selected_resume_id: string, vacancy_text: string) 
             </p>
         </header>
 
-        <div class="mb-5">
-            <UAlert color="error" variant="soft" v-if="error_message" :description="error_message"
-                icon="i-lucide-terminal" />
-        </div>
-
         <div class="grid items-stretch gap-5 lg:grid-cols-5 lg:gap-6">
             <section class="match-panel min-w-0 lg:col-span-2" aria-labelledby="resume-heading">
                 <div class="flex items-start gap-3">
@@ -118,7 +113,8 @@ const handleJobMatch = async (selected_resume_id: string, vacancy_text: string) 
                             <span class="min-w-0 flex-1">
                                 <span class="block break-words text-sm font-semibold text-highlighted">{{
                                     resume.fullname || t('jobMatch.untitled') }}</span>
-                                <span class="resume-title mt-1 h-10 break-words text-sm leading-5 text-muted">{{ resume.title ||
+                                <span class="resume-title mt-1 h-10 break-words text-sm leading-5 text-muted">{{
+                                    resume.title ||
                                     t('jobMatch.noTitle') }}</span>
                             </span>
                             <span class="flex size-5 shrink-0 items-center justify-center rounded-full border"
@@ -173,6 +169,11 @@ const handleJobMatch = async (selected_resume_id: string, vacancy_text: string) 
                     </span>
                 </div>
             </section>
+        </div>
+
+        <div class="my-5">
+            <UAlert color="error" variant="soft" v-if="error_message" :description="error_message"
+                icon="i-lucide-terminal" />
         </div>
 
         <footer
