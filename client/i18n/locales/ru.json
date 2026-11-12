@@ -118,6 +118,7 @@
     "searchLabel": "Поиск резюме",
     "searchPlaceholder": "Имя, должность или компания...",
     "typeLabel": "Тип резюме",
+    "originalResumeDeleteWarning": "Если вы удалите исходное резюме, связанные с ним копии, созданные ИИ, также будут удалены. Продолжить?",
     "filterAll": "Все",
     "filterOriginal": "Оригинал",
     "filterAi": "Версия ИИ",

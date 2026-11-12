@@ -111,8 +111,11 @@ async function copyResumeLink() {
                                 :label="t('resumeList.delete')" @click="confirmingDelete = true" />
                         </div>
                         <div v-else class="w-64 max-w-[calc(100vw-2rem)] p-4">
-                            <p class="mb-4 text-sm font-medium text-highlighted">{{ t('resumeEditor.deleteConfirmation')
+                            <p v-if="props.parent_resume_id" class="mb-4 text-sm font-medium text-highlighted">{{
+                                t('resumeEditor.deleteConfirmation')
                                 }}</p>
+                            <p v-else class="mb-4 text-sm font-medium text-highlighted">{{
+                                t('resumeList.originalResumeDeleteWarning') }}</p>
                             <div class="flex gap-2">
                                 <UButton class="flex-1 justify-center" color="neutral" variant="outline" size="sm"
                                     :label="t('resumeEditor.cancel')" :disabled="loading"

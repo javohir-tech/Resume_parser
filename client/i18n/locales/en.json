@@ -118,6 +118,7 @@
     "searchLabel": "Search resumes",
     "searchPlaceholder": "Name, job title or company...",
     "typeLabel": "Resume type",
+    "originalResumeDeleteWarning": "if you delete the original resume, the AI copies linked to it will also be deleted. Do you want to continue?",
     "filterAll": "All",
     "filterOriginal": "Original",
     "filterAi": "AI version",
@@ -362,7 +363,7 @@
       "errorTitle": "Message could not be sent",
       "errorDescription": "Something went wrong, please try again"
     }
-  } , 
+  },
   "auth": {
     "login": {
       "title": "Sign in with Telegram",

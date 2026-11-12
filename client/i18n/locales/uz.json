@@ -116,6 +116,7 @@
     "copied": "Nusxalandi",
     "copyError": "Nusxalab bo‘lmadi. Qayta urinib ko‘ring.",
     "searchLabel": "Rezyume qidirish",
+    "originalResumeDeleteWarning": "Asl rezyumeni o‘chirsangiz, unga bog‘langan AI nusxalari ham o‘chiriladi. Davom etasizmi?",
     "searchPlaceholder": "Ism, lavozim yoki kompaniya...",
     "typeLabel": "Rezyume turi",
     "filterAll": "Hammasi",
