@@ -5,16 +5,16 @@ import { useJobMatch } from '~/features/resume/job-match';
 const search = ref("")
 const { t } = useI18n()
 const { jobMatchResume, loading, error_message } = useJobMatch()
-
+const page = ref(1)
 const debouncedSearch = refDebounced(search, 300)
 
-const resumesKey = computed(() => `my_resumes_orginal_${debouncedSearch.value.trim()}`)
+const resumesKey = computed(() => `my_resumes_orginal_${debouncedSearch.value.trim()}_${page.value}`)
 
 const selectedResumeId = ref<string>("")
 const vacancy_text = ref<string>("")
 
 const { data, status, error, refresh } = useLazyAsyncData(resumesKey, (_nuxtApp, { signal }) =>
-    getMyResumes({ resume_type: "orginal", search: debouncedSearch.value.trim() || undefined }, signal), {
+    getMyResumes({ page: page.value, resume_type: "orginal", search: debouncedSearch.value.trim() || undefined }, signal), {
     server: false,
     default: () => ({
         count: 0,
@@ -45,7 +45,6 @@ const handleJobMatch = async (selected_resume_id: string, vacancy_text: string) 
 
 }
 
-const ess = "Taqdim etilgan vakansiya matnida lavozim, talablar yoki xizmat vazifalari haqida hech qanday ma'lumot ko'rsatilmagan. Moslashtirilgan rezyume va muqova xati tayyorlash uchun iltimos, aniq ish o'rni va uning talablari mavjud bo'lgan vakansiya matnini kiriting."
 
 </script>
 
@@ -119,7 +118,7 @@ const ess = "Taqdim etilgan vakansiya matnida lavozim, talablar yoki xizmat vazi
                             <span class="min-w-0 flex-1">
                                 <span class="block break-words text-sm font-semibold text-highlighted">{{
                                     resume.fullname || t('jobMatch.untitled') }}</span>
-                                <span class="mt-1 block break-words text-sm text-muted">{{ resume.title ||
+                                <span class="resume-title mt-1 h-10 break-words text-sm leading-5 text-muted">{{ resume.title ||
                                     t('jobMatch.noTitle') }}</span>
                             </span>
                             <span class="flex size-5 shrink-0 items-center justify-center rounded-full border"
@@ -129,6 +128,7 @@ const ess = "Taqdim etilgan vakansiya matnida lavozim, talablar yoki xizmat vazi
                             </span>
                         </button>
                     </div>
+
 
                     <div v-else class="empty-state rounded-xl border border-dashed border-default">
                         <span class="mb-4 flex size-12 items-center justify-center rounded-full bg-elevated">
@@ -141,6 +141,10 @@ const ess = "Taqdim etilgan vakansiya matnida lavozim, talablar yoki xizmat vazi
                             {{ search.trim() ? t('jobMatch.noResultsHint') : t('jobMatch.emptyHint') }}
                         </p>
                     </div>
+                </div>
+
+                <div v-if="data.results?.length > 0" class="mt-3 flex justify-center">
+                    <UPagination v-model:page="page" :total="data.count" />
                 </div>
             </section>
 
@@ -187,10 +191,6 @@ const ess = "Taqdim etilgan vakansiya matnida lavozim, talablar yoki xizmat vazi
 </template>
 
 <style scoped>
-.job-match {
-    max-width: 1200px;
-}
-
 .match-panel {
     padding: 1.5rem;
     border: 1px solid var(--ui-border);
@@ -214,7 +214,7 @@ const ess = "Taqdim etilgan vakansiya matnida lavozim, talablar yoki xizmat vazi
 }
 
 .resume-list {
-    max-height: 26rem;
+    max-height: 20rem;
     overflow-y: auto;
     padding: 2px;
     scrollbar-width: thin;
@@ -223,6 +223,13 @@ const ess = "Taqdim etilgan vakansiya matnida lavozim, talablar yoki xizmat vazi
 .resume-option {
     cursor: pointer;
     transition: background-color 150ms, border-color 150ms, box-shadow 150ms;
+}
+
+.resume-title {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 .resume-option:focus-visible {
