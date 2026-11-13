@@ -1,6 +1,5 @@
 from typing import Optional
-
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field , field_validator
 
 
 class DesingInfo(BaseModel):
@@ -164,5 +163,13 @@ class SkillItemInfo(BaseModel):
 
 
 class ResumeJobMatch(BaseModel):
-    resume_id: str
-    vacancy_text: str
+    resume_id: str = Field(max_length=36)
+    vacancy_text: str = Field(max_length=1500, min_length=10)
+
+    @field_validator("vacancy_text")
+    @classmethod
+    def reject_blank_vacancy(cls , value : str)->str :
+        if not value.strip():
+            raise ValueError("vacancy_text bo‘sh bo‘lmasligi kerak")
+        return value
+    
