@@ -375,6 +375,7 @@
     }
   },
   "resumeEditor": {
+    "leaveWithoutSavingConfirm": "Could not save your changes. Do you want to leave without saving?",
     "deleteConfirmation": "Are you sure you want to delete?",
     "cancel": "Cancel",
     "delete": "Delete",

@@ -158,24 +158,24 @@ export function useExperienceAvtoSave(delay = 800) {
     { flush: "sync" },
   );
 
-//   function beforeUnload(event: BeforeUnloadEvent) {
-//     if (!isDirty.value && !isSaving.value) return;
+  function beforeUnload(event: BeforeUnloadEvent) {
+    if (!isDirty.value && !isSaving.value) return;
 
-//     event.preventDefault();
-//     event.returnValue = "";
-//   }
+    event.preventDefault();
+    event.returnValue = "";
+  }
 
-//   onMounted(() => {
-//     window.addEventListener("beforeunload", beforeUnload);
-//   });
+  onMounted(() => {
+    window.addEventListener("beforeunload", beforeUnload);
+  });
 
   onScopeDispose(() => {
     disposed = true;
     clearTimer();
 
-    // if (typeof window !== "undefined") {
-    //   window.removeEventListener("beforeunload", beforeUnload);
-    // }
+    if (typeof window !== "undefined") {
+      window.removeEventListener("beforeunload", beforeUnload);
+    }
   });
 
   return {

@@ -375,6 +375,7 @@
     }
   },
   "resumeEditor": {
+    "leaveWithoutSavingConfirm": "O‘zgarishlarni saqlab bo‘lmadi. Saqlamasdan chiqishni xohlaysizmi?",
     "deleteConfirmation": "O‘chirishni xohlaysizmi?",
     "cancel": "Bekor qilish",
     "delete": "O‘chirish",

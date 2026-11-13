@@ -16,6 +16,8 @@ import { useGetResume } from '~/entities/resume';
 import { usePersonalAvtoSave } from '~/features/resume/edit-resume';
 import { useEditDesign } from '~/features/resume/design-edit';
 
+const { t } = useI18n()
+
 definePageMeta({
     middleware: "auth",
     layout: "resume-editor",
@@ -58,7 +60,9 @@ async function saveBeforeNavigation() {
     if (!ready.value) return true;
 
     const results = await Promise.all([flush(), flushDesign()])
-    return results.every(Boolean)
+    if (results.every(Boolean)) return true
+
+    return import.meta.client && window.confirm(t('resumeEditor.leaveWithoutSavingConfirm'))
 }
 
 onBeforeRouteLeave(saveBeforeNavigation)

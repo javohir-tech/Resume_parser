@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const { t } = useI18n()
 import type { Experience } from '~/entities/resume';
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 import { useExperienceAvtoSave } from '../models/useExperienceAvtoSave';
@@ -7,6 +6,7 @@ import { INPUT_LIMITS } from '~/shared/constants';
 
 const { start, flush } = useExperienceAvtoSave(800)
 
+const { t } = useI18n()
 
 const df = new DateFormatter('en-US', { month: 'long', year: 'numeric' })
 const ready = ref(false)
@@ -62,7 +62,10 @@ onMounted(() => {
     removeGuard = router.beforeEach(async () => {
         if (!ready.value) return true
 
-        return await flush()
+        const result = await flush()
+        if (result) return true
+
+        return import.meta.client && window.confirm(t('resumeEditor.leaveWithoutSavingConfirm'))
     })
 })
 

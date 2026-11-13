@@ -41,8 +41,8 @@ watch(endDate, (newDate) => {
     props.education.endDate = newEndDate
 })
 
-watch(isPresent , (value)=>{
-    if(!value) return
+watch(isPresent, (value) => {
+    if (!value) return
 
     props.education.endDate = ""
     endDate.value = undefined
@@ -56,7 +56,10 @@ onMounted(() => {
     removeGuard = router.beforeEach(async () => {
         if (!ready.value) return true
 
-        return await flush()
+        const result = await flush()
+        if (result) return true
+
+        return import.meta.client && window.confirm(t('resumeEditor.leaveWithoutSavingConfirm'))
     })
 })
 
@@ -80,8 +83,8 @@ onScopeDispose(() => {
         </UFormField>
 
         <UFormField :label="t('resumeEditor.fieldOfStudy')">
-            <UInput :maxlength="INPUT_LIMITS.education.fieldOfStudy" class="w-full" v-model="props.education.fieldOfStudy"
-                :placeholder="t('resumeEditor.fieldPlaceholder')" />
+            <UInput :maxlength="INPUT_LIMITS.education.fieldOfStudy" class="w-full"
+                v-model="props.education.fieldOfStudy" :placeholder="t('resumeEditor.fieldPlaceholder')" />
         </UFormField>
 
         <div class="grid gap-3">
@@ -100,7 +103,7 @@ onScopeDispose(() => {
                 </UPopover>
             </UFormField>
 
-            <UCheckbox v-model="isPresent" label="Present"/>
+            <UCheckbox v-model="isPresent" label="Present" />
 
             <UFormField :label="t('resumeEditor.endDate')" class="w-full">
                 <UPopover class="w-full">

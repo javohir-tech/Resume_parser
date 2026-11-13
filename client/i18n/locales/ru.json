@@ -375,6 +375,7 @@
     }
   },
   "resumeEditor": {
+    "leaveWithoutSavingConfirm": "Не удалось сохранить изменения. Выйти без сохранения?",
     "deleteConfirmation": "Вы уверены, что хотите удалить?",
     "cancel": "Отмена",
     "delete": "Удалить",
