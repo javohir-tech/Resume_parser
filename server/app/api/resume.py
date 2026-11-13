@@ -479,7 +479,7 @@ async def get_my_resumes(
     user_id: str = Depends(verify),
 ):
 
-    page_size = 9
+    page_size = 10
 
     query = select(Resume).where(Resume.user_id == UUID(user_id))
 
