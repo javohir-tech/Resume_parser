@@ -23,6 +23,7 @@ from app.models.educations import Education
 from app.models.languages import Language
 from app.models.resume import Resume
 from app.models.design_info import Design
+from app.models.job_titles import JobTitles
 
 # --- ---
 
