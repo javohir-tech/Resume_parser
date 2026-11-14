@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Experience } from '~/entities/resume';
+import { getJobTitles } from '~/entities/job-title';
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 import { useExperienceAvtoSave } from '../models/useExperienceAvtoSave';
 import { INPUT_LIMITS } from '~/shared/constants';
@@ -18,13 +19,46 @@ const monthFormatter = new DateFormatter('en-US', {
     month: 'long'
 })
 
+import type { ListboxItem } from '@nuxt/ui'
+
 const startDate = ref<CalendarDate>()
 const endDate = ref<CalendarDate>()
 const isPresent = ref<boolean>(false)
+const listbox_open = ref<boolean>(false)
 
 const props = defineProps<{
     experience: Experience
 }>()
+
+const value = ref({
+    label: props.experience.position,
+    value: props.experience.position
+})
+
+const position = toRef(() => props.experience.position)
+const debouncedSearch = refDebounced(position, 300)
+
+const filterKeys = computed(() => `job_titles_${debouncedSearch.value.trim()}`)
+
+const { data, status, error } = useLazyAsyncData(filterKeys, (_nuxtApp, { signal }) => getJobTitles({ search: props.experience.position }, signal), {
+    deep: true,
+    default: () => [],
+    dedupe: "cancel"
+})
+
+const filtered_items = computed<ListboxItem[]>(() => {
+    if (!data.value) return []
+
+    return data.value.map(item => ({ label: item.title, value: item.title }))
+})
+
+const isLoading = computed(() => status.value === "idle" || status.value === "pending")
+
+const handleChangePosition = (value: string) => {
+    if (!value.trim()) return
+
+    props.experience.position = value
+}
 
 watch(startDate, (newDate) => {
     if (!newDate) return
@@ -78,10 +112,19 @@ onScopeDispose(() => {
 <template>
 
     <div class="space-y-3 my-3">
-        <UFormField :label="t('resumeEditor.position')">
-            <UInput :maxlength="INPUT_LIMITS.experience.position" v-model="props.experience.position" class="w-full"
-                :placeholder="t('resumeEditor.positionPlaceholder')" />
-        </UFormField>
+        <UForm>
+            <UFormField :label="t('resumeEditor.position')">
+
+                <UInput @focus="listbox_open = true" @blur="listbox_open = false"
+                    :maxlength="INPUT_LIMITS.experience.position" v-model="props.experience.position" class="w-full"
+                    :placeholder="t('resumeEditor.positionPlaceholder')" />
+                <div v-if="listbox_open && props.experience.position && filtered_items.length" @mousedown.prevent>
+                    <UListbox v-model="value" :items="filtered_items" :loading="isLoading"
+                        @update:model-value="handleChangePosition(value.value)" />
+                </div>
+
+            </UFormField>
+        </UForm>
         <UFormField :label="t('resumeEditor.company')">
             <UInput :maxlength="INPUT_LIMITS.experience.company" v-model="props.experience.company" class="w-full"
                 :placeholder="t('resumeEditor.companyPlaceholder')" />

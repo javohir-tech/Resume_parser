@@ -73,4 +73,4 @@ async def get_job_titles(
     result = await db.execute(query)
     job_titles = result.scalars().all()
 
-    return job_titles
+    return [{"title": job_title.title} for job_title in job_titles]
