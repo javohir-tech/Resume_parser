@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.auth import auth_router
 from app.api.users import user_router
 from app.api.job_titles import job_title_router
+from app.api.skills_category import skills_category_router
 from app.api.resume import resume_router
 from app.bot.bot_instance import dp
 from app.bot.handlers import router as bot_router
@@ -26,6 +27,7 @@ app.include_router(auth_router, prefix="/api")
 app.include_router(user_router, prefix="/api")
 app.include_router(resume_router, prefix="/api")
 app.include_router(job_title_router, prefix="/api")
+app.include_router(skills_category_router, prefix="/api")
 
 
 @app.get("/")

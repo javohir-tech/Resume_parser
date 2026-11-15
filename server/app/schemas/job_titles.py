@@ -5,7 +5,7 @@ class JobTitlesPayload(BaseModel):
     title: str = Field(
         min_length=2,
         max_length=255,
-        description="jon title",
+        description="job title",
         examples=["front end , backend developer"],
     )
 
