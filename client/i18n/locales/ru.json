@@ -413,6 +413,7 @@
     "githubPlaceholder": "https://github.com/...",
     "summaryPlaceholder": "Кратко опишите свой профессиональный опыт...",
     "positionPlaceholder": "Frontend разработчик",
+    "positionSearchLoading": "Поиск должностей…",
     "companyPlaceholder": "Google, Meta, Amazon...",
     "descriptionPlaceholder": "Опишите свою роль, обязанности и основные достижения...",
     "degreePlaceholder": "Бакалавриат...",

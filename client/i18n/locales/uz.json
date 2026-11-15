@@ -413,6 +413,7 @@
     "githubPlaceholder": "https://github.com/...",
     "summaryPlaceholder": "Kasbiy tajribangiz haqida qisqacha yozing...",
     "positionPlaceholder": "Frontend dasturchi",
+    "positionSearchLoading": "Lavozimlar qidirilmoqda…",
     "companyPlaceholder": "Google, Meta, Amazon...",
     "descriptionPlaceholder": "Lavozimingiz, vazifalaringiz va asosiy yutuqlaringizni tasvirlang...",
     "degreePlaceholder": "Bakalavr...",

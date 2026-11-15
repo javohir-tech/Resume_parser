@@ -19,46 +19,49 @@ const monthFormatter = new DateFormatter('en-US', {
     month: 'long'
 })
 
-import type { ListboxItem } from '@nuxt/ui'
-
 const startDate = ref<CalendarDate>()
 const endDate = ref<CalendarDate>()
 const isPresent = ref<boolean>(false)
-const listbox_open = ref<boolean>(false)
+const positionOpenRequested = ref(false)
 
 const props = defineProps<{
     experience: Experience
 }>()
 
-const value = ref({
-    label: props.experience.position,
-    value: props.experience.position
-})
+const positionSearch = computed(() => props.experience.position.trim())
+const debouncedSearch = refDebounced(positionSearch, 300)
+const filterKey = computed(() => `job_titles_${debouncedSearch.value}`)
 
-const position = toRef(() => props.experience.position)
-const debouncedSearch = refDebounced(position, 300)
+const { data, status, error } = useLazyAsyncData(filterKey, async (_nuxtApp, { signal }) => {
+    const search = debouncedSearch.value
 
-const filterKeys = computed(() => `job_titles_${debouncedSearch.value.trim()}`)
-
-const { data, status, error } = useLazyAsyncData(filterKeys, (_nuxtApp, { signal }) => getJobTitles({ search: props.experience.position }, signal), {
-    deep: true,
-    default: () => [],
+    return {
+        search,
+        items: search ? await getJobTitles({ search }, signal) : [],
+    }
+}, {
+    deep: false,
+    default: () => ({ search: '', items: [] }),
     dedupe: "cancel"
 })
 
-const filtered_items = computed<ListboxItem[]>(() => {
-    if (!data.value) return []
+const isLoading = computed(() => Boolean(positionSearch.value) && (
+    positionSearch.value !== debouncedSearch.value || status.value === 'pending'
+))
 
-    return data.value.map(item => ({ label: item.title, value: item.title }))
+const positionItems = computed(() => {
+    // Never offer results from an earlier query while the user continues typing.
+    if (!positionSearch.value || isLoading.value || data.value.search !== positionSearch.value || error.value) return []
+
+    return [...new Set(data.value.items
+        .map(item => item.title.trim())
+        .filter(title => title && title.length <= INPUT_LIMITS.experience.position))]
 })
 
-const isLoading = computed(() => status.value === "idle" || status.value === "pending")
-
-const handleChangePosition = (value: string) => {
-    if (!value.trim()) return
-
-    props.experience.position = value
-}
+const positionOpen = computed({
+    get: () => positionOpenRequested.value && (isLoading.value || positionItems.value.length > 0),
+    set: (open: boolean) => { positionOpenRequested.value = open },
+})
 
 watch(startDate, (newDate) => {
     if (!newDate) return
@@ -112,19 +115,20 @@ onScopeDispose(() => {
 <template>
 
     <div class="space-y-3 my-3">
-        <UForm>
-            <UFormField :label="t('resumeEditor.position')">
-
-                <UInput @focus="listbox_open = true" @blur="listbox_open = false"
-                    :maxlength="INPUT_LIMITS.experience.position" v-model="props.experience.position" class="w-full"
-                    :placeholder="t('resumeEditor.positionPlaceholder')" />
-                <div v-if="listbox_open && props.experience.position && filtered_items.length" @mousedown.prevent>
-                    <UListbox v-model="value" :items="filtered_items" :loading="isLoading"
-                        @update:model-value="handleChangePosition(value.value)" />
-                </div>
-
-            </UFormField>
-        </UForm>
+        <UFormField :label="t('resumeEditor.position')">
+            <UInputMenu v-model="props.experience.position" v-model:open="positionOpen" mode="autocomplete"
+                :items="positionItems" ignore-filter :trailing="false"
+                :maxlength="INPUT_LIMITS.experience.position" :reset-search-term-on-blur="false"
+                open-on-focus open-on-click class="w-full" :placeholder="t('resumeEditor.positionPlaceholder')"
+                @keydown.tab="positionOpen = false">
+                <template #empty>
+                    <div v-if="isLoading" class="flex items-center justify-center py-1" role="status" aria-live="polite">
+                        <UIcon name="i-lucide-loader-circle" class="size-5 animate-spin" aria-hidden="true" />
+                        <span class="sr-only">{{ t('resumeEditor.positionSearchLoading') }}</span>
+                    </div>
+                </template>
+            </UInputMenu>
+        </UFormField>
         <UFormField :label="t('resumeEditor.company')">
             <UInput :maxlength="INPUT_LIMITS.experience.company" v-model="props.experience.company" class="w-full"
                 :placeholder="t('resumeEditor.companyPlaceholder')" />

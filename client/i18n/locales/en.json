@@ -413,6 +413,7 @@
     "githubPlaceholder": "https://github.com/...",
     "summaryPlaceholder": "Write a brief professional summary...",
     "positionPlaceholder": "Frontend Developer",
+    "positionSearchLoading": "Searching positions…",
     "companyPlaceholder": "Google, Meta, Amazon...",
     "descriptionPlaceholder": "Describe your role, responsibilities, and key achievements...",
     "degreePlaceholder": "Bachelor's degree...",
