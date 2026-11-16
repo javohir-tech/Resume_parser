@@ -149,7 +149,7 @@ async def job_match(
             selectinload(Resume.languages),
             selectinload(Resume.skills).selectinload(Skills.skills),
         )
-        .where(Resume.id == UUID(resume_id), Resume.user_id == user_uuid)
+        .where(Resume.id == resume_id , Resume.user_id == user_uuid)
     )
 
     resume = result.scalar_one_or_none()
@@ -249,7 +249,7 @@ async def job_match(
 
     result_resume = Resume(
         user_id=user_uuid,
-        parent_resume_id=UUID(resume_id),
+        parent_resume_id=resume_id,
         job_company=ai_response.job_company,
         job_title=ai_response.job_title,
         cover_letter=ai_response.cover_letter,
