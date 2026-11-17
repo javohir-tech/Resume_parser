@@ -92,7 +92,7 @@ onScopeDispose(() => {
             <UInputMenu v-model="props.skillsGroup.title" v-model:open="categoryOpen" mode="autocomplete"
                 :items="categoriesItems" ignore-filter :trailing="false"
                 :maxlength="INPUT_LIMITS.experience.position" :reset-search-term-on-blur="false"
-                open-on-focus open-on-click class="w-full" :placeholder="t('resumeEditor.positionPlaceholder')"
+                open-on-focus open-on-click class="w-full" :placeholder="t('resumeEditor.skillCategory')"
                 @keydown.tab="categoryOpen = false">
                 <template #empty>
                     <div v-if="isLoading" class="flex items-center justify-center py-1" role="status" aria-live="polite">
