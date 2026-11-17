@@ -9,6 +9,8 @@ import { INPUT_LIMITS } from '~/shared/constants';
 
 import { useSkillsGroupAvtoSave } from '../models/useSkillsGroupAvtoSave';
 
+import { getSkillCategoriesRequest } from '~/entities/skills-category';
+
 const { isUpdating, updateSkillGroup } = useSkillsGroup()
 const { isCreating, createSkillItem, isDeleting, deleteSkillItem, } = useSkillItem()
 const { start, flush } = useSkillsGroupAvtoSave()
@@ -18,13 +20,28 @@ const props = defineProps<{
 }>()
 
 const skill = ref<string>()
-const skillCategoriesItems = ref<string[]>([...skillCategories])
-const categoryOpen = ref(false)
-const categorySearch = ref('')
 const ready = ref(false)
 const router = useRouter()
-
 let removeGuard: (() => void) | undefined
+
+const categorySearch = computed(() => props.skillsGroup.title.trim())
+const debouncedSearch = refDebounced(categorySearch, 800)
+const categoryOpenRequest = ref(false)
+
+const searchedKeys = computed(() => `skills_category_${debouncedSearch.value}`)
+
+const { data, status, error } = useLazyAsyncData(searchedKeys, async (_nuxtApp, { signal }) => {
+    const search = debouncedSearch.value
+
+    return {
+        search,
+        items: search ? await getSkillCategoriesRequest({ search }, signal) : []
+    }
+}, {
+    deep: false,
+    default: () => ({ search: "", items: [] }),
+    dedupe: "cancel"
+})
 
 function handleAddSkill() {
     if (!skill.value?.trim()) return
@@ -32,29 +49,21 @@ function handleAddSkill() {
     skill.value = ""
 }
 
+const isLoading = computed(() => Boolean(categorySearch.value) && (categorySearch.value !== debouncedSearch.value || status.value === "pending"))
 
-async function selectSkillCategory(value: string) {
-    const title = value.trim()
+const categoriesItems = computed(() => {
+    if (!categorySearch.value || isLoading.value || data.value.search !== categorySearch.value || error.value) return []
 
-    if (!title || isUpdating.value || title.length > INPUT_LIMITS.skills_group.title) return
+    return [...new Set(data.value.items
+        .map(item => item.title.trim())
+        .filter(title => title && title.length <= INPUT_LIMITS.skills_group.title))]
+})
 
-    if (title !== props.skillsGroup.title) {
-        await updateSkillGroup(props.skillsGroup.id, { title })
-    }
+const categoryOpen = computed({
+    get: () => categoryOpenRequest.value && (isLoading.value || categorySearch.value.length > 0),
+    set: (open: boolean) => { categoryOpenRequest.value = open }
+})
 
-
-    if (!skillCategoriesItems.value.includes(title)) {
-        skillCategoriesItems.value.push(title)
-    }
-
-    props.skillsGroup.title = title
-    categoryOpen.value = false;
-    categorySearch.value = ""
-}
-
-async function createSkillCategory(value: string) {
-    selectSkillCategory(value)
-}
 
 onMounted(() => {
     const skills_group_id = props.skillsGroup.id
@@ -82,7 +91,18 @@ onScopeDispose(() => {
 <template>
     <div class="flex flex-col gap-3 mt-3">
         <UFormField :label="t('resumeEditor.skillCategory')" :description="t('resumeEditor.categoryHint')">
-            <UInput v-model="props.skillsGroup.title" />
+            <UInputMenu v-model="props.skillsGroup.title" v-model:open="categoryOpen" mode="autocomplete"
+                :items="categoriesItems" ignore-filter :trailing="false"
+                :maxlength="INPUT_LIMITS.experience.position" :reset-search-term-on-blur="false"
+                open-on-focus open-on-click class="w-full" :placeholder="t('resumeEditor.positionPlaceholder')"
+                @keydown.tab="categoryOpen = false">
+                <template #empty>
+                    <div v-if="isLoading" class="flex items-center justify-center py-1" role="status" aria-live="polite">
+                        <UIcon name="i-lucide-loader-circle" class="size-5 animate-spin" aria-hidden="true" />
+                        <span class="sr-only">{{ t('resumeEditor.positionSearchLoading') }}</span>
+                    </div>
+                </template>
+            </UInputMenu>
         </UFormField>
         <div v-if="skillsGroup.skills.length" class="flex flex-wrap gap-1.5">
             <UButton v-for="skill in skillsGroup.skills" :key="skill.id" type="button"
