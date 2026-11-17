@@ -11,7 +11,7 @@ export const createSkillGroupRequest = (resume_id: string) =>
 
 export const editSkillGroupRequest = (
   skills_group_id: string,
-  skills_info: Pick<SkillGroup, "title">,
+  skills_info: Partial<Omit<SkillGroup , "id" | "skills">>,
 ) =>
   api<null>(`/api/resume/skills/edit/${skills_group_id}`, {
     method: "PATCH",

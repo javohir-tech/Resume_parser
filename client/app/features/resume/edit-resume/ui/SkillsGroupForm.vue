@@ -1,14 +1,17 @@
 <script setup lang="ts">
 const { t } = useI18n()
-import { skillCategories, type SkillGroup } from '~/entities/resume';
+import { skillCategories, skills, type SkillGroup } from '~/entities/resume';
 
 import { useSkillItem } from '../models/useSkillItem';
 import { useSkillsGroup } from '../models/useSkillGroup';
 
 import { INPUT_LIMITS } from '~/shared/constants';
 
+import { useSkillsGroupAvtoSave } from '../models/useSkillsGroupAvtoSave';
+
 const { isUpdating, updateSkillGroup } = useSkillsGroup()
 const { isCreating, createSkillItem, isDeleting, deleteSkillItem, } = useSkillItem()
+const { start, flush } = useSkillsGroupAvtoSave()
 
 const props = defineProps<{
     skillsGroup: SkillGroup
@@ -18,6 +21,10 @@ const skill = ref<string>()
 const skillCategoriesItems = ref<string[]>([...skillCategories])
 const categoryOpen = ref(false)
 const categorySearch = ref('')
+const ready = ref(false)
+const router = useRouter()
+
+let removeGuard: (() => void) | undefined
 
 function handleAddSkill() {
     if (!skill.value?.trim()) return
@@ -48,15 +55,34 @@ async function selectSkillCategory(value: string) {
 async function createSkillCategory(value: string) {
     selectSkillCategory(value)
 }
+
+onMounted(() => {
+    const skills_group_id = props.skillsGroup.id
+
+    if (skills_group_id) {
+        ready.value = start(skills_group_id)
+    }
+
+    removeGuard = router.beforeEach(async () => {
+        if (!ready.value) return true
+
+        const result = await flush()
+        if (result) return true
+
+        return import.meta.client && window.confirm("resumeEditor.leaveWithoutSavingConfirm")
+    })
+})
+
+onScopeDispose(() => {
+    removeGuard?.()
+})
+
 </script>
 
 <template>
     <div class="flex flex-col gap-3 mt-3">
         <UFormField :label="t('resumeEditor.skillCategory')" :description="t('resumeEditor.categoryHint')">
-            <USelectMenu :model-value="skillsGroup.title" v-model:open="categoryOpen"
-                v-model:search-term="categorySearch" :items="skillCategoriesItems" create-item class="w-full"
-                :placeholder="t('resumeEditor.categoryPlaceholder')" @update:model-value="selectSkillCategory"
-                @create="createSkillCategory" />
+            <UInput v-model="props.skillsGroup.title" />
         </UFormField>
         <div v-if="skillsGroup.skills.length" class="flex flex-wrap gap-1.5">
             <UButton v-for="skill in skillsGroup.skills" :key="skill.id" type="button"
