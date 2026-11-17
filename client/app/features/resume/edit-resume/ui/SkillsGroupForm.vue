@@ -58,7 +58,7 @@ const categoriesItems = computed(() => {
 })
 
 const categoryOpen = computed({
-    get: () => categoryOpenRequest.value && (isLoading.value || categorySearch.value.length > 0),
+    get: () => categoryOpenRequest.value && (isLoading.value || categoriesItems.value.length > 0),
     set: (open: boolean) => { categoryOpenRequest.value = open }
 })
 
