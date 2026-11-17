@@ -121,29 +121,6 @@ export const professions = [
   "Technical Consultant",
 ];
 
-export const skillCategories = [
-  "Frontend Development",
-  "Backend Development",
-  "Full Stack Development",
-  "Mobile Development",
-  "UI/UX Design",
-  "DevOps",
-  "Cloud Computing",
-  "Database Management",
-  "Data Analysis",
-  "Data Science",
-  "Artificial Intelligence",
-  "Machine Learning",
-  "Cybersecurity",
-  "Quality Assurance",
-  "Test Automation",
-  "Product Management",
-  "Project Management",
-  "Business Analysis",
-  "Digital Marketing",
-  "Graphic Design",
-];
-
 export const skills = [
   // Programming languages
   "JavaScript",

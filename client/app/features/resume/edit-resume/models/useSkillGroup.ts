@@ -1,18 +1,15 @@
 import {
   createSkillGroupRequest,
-  editSkillGroupRequest,
   deleteSkillGroupRequest,
 } from "../api/skills";
 import { useResumeStore } from "~/entities/resume";
 import { useApiToasts, apiError } from "~/shared/lib";
-import type { SkillGroup } from "~/entities/resume";
 
 export function useSkillsGroup() {
   const resumeStore = useResumeStore();
   const { showError } = useApiToasts();
 
   const isCreating = ref(false);
-  const isUpdating = ref(false);
   const deletingIds = ref(new Set<string>());
 
   async function createSkillsGroup(resume_id: string = resumeStore.resume.id):Promise<string | null> {
@@ -31,23 +28,6 @@ export function useSkillsGroup() {
       return null
     } finally {
       isCreating.value = false;
-    }
-  }
-
-  async function updateSkillGroup(
-    skills_group_id: string,
-    skills_info: Pick<SkillGroup, "title">,
-  ) {
-    if (isUpdating.value) return;
-
-    isUpdating.value = true;
-    try {
-      await editSkillGroupRequest(skills_group_id, skills_info);
-    } catch (error) {
-      const err = apiError(error);
-      showError(err.message);
-    } finally {
-      isUpdating.value = false;
     }
   }
 
@@ -72,8 +52,6 @@ export function useSkillsGroup() {
 
   return {
     isCreating,
-    isUpdating,
-    updateSkillGroup,
     createSkillsGroup,
     isDeleting,
     deleteSkillsGroup,

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 const { t } = useI18n()
-import { skillCategories, skills, type SkillGroup } from '~/entities/resume';
+import {  type SkillGroup } from '~/entities/resume';
 
 import { useSkillItem } from '../models/useSkillItem';
-import { useSkillsGroup } from '../models/useSkillGroup';
 
 import { INPUT_LIMITS } from '~/shared/constants';
 
@@ -11,7 +10,6 @@ import { useSkillsGroupAvtoSave } from '../models/useSkillsGroupAvtoSave';
 
 import { getSkillCategoriesRequest } from '~/entities/skills-category';
 
-const { isUpdating, updateSkillGroup } = useSkillsGroup()
 const { isCreating, createSkillItem, isDeleting, deleteSkillItem, } = useSkillItem()
 const { start, flush } = useSkillsGroupAvtoSave()
 
