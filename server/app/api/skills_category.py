@@ -65,4 +65,4 @@ async def get_filtered_catrgories(
     result = await db.execute(query)
     categories = result.scalars().all()
 
-    return categories
+    return [ {"title" : item.title } for item in categories]

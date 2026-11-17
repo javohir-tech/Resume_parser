@@ -25,7 +25,7 @@ from app.models.resume import Resume
 from app.models.design_info import Design
 from app.models.job_titles import JobTitles
 from app.models.skills_category import SkillsCategory
-
+from app.models.skills_title import SkillsTitle
 # --- ---
 
 config = context.config
