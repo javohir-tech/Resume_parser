@@ -12,7 +12,7 @@ from app.schemas.skills_title import SkillsTitleAddPayload
 from fastapi_filter import FilterDepends
 from fastapi_filter.contrib.sqlalchemy import Filter
 
-skills_router = APIRouter(prefix="/skills_title" , tags=["Skills Items"])
+skills_router = APIRouter(prefix="/skills_title" , tags=["Skills titles"])
 
 @skills_router.post("/add")
 async def add_skills_item(payload : SkillsTitleAddPayload , user_id :str =  Depends(verify) , db : AsyncSession = Depends(get_db)):
