@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n()
-import {  type SkillGroup } from '~/entities/resume';
+import { type SkillGroup } from '~/entities/resume';
 
 import { useSkillItem } from '../models/useSkillItem';
 
@@ -9,6 +9,7 @@ import { INPUT_LIMITS } from '~/shared/constants';
 import { useSkillsGroupAvtoSave } from '../models/useSkillsGroupAvtoSave';
 
 import { getSkillCategoriesRequest } from '~/entities/skills-category';
+import { getSkillsRequest } from '~/entities/skills-title';
 
 const { isCreating, createSkillItem, isDeleting, deleteSkillItem, } = useSkillItem()
 const { start, flush } = useSkillsGroupAvtoSave()
@@ -17,16 +18,20 @@ const props = defineProps<{
     skillsGroup: SkillGroup
 }>()
 
-const skill = ref<string>()
+const skill = ref<string>("")
 const ready = ref(false)
 const router = useRouter()
 let removeGuard: (() => void) | undefined
 
 const categorySearch = computed(() => props.skillsGroup.title.trim())
+const skillSearch = computed(() => skill.value.trim())
 const debouncedSearch = refDebounced(categorySearch, 800)
+const debouncedSkillSearch = refDebounced(skillSearch, 800)
 const categoryOpenRequest = ref(false)
+const skillOpenRequest = ref(false)
 
 const searchedKeys = computed(() => `skills_category_${debouncedSearch.value}`)
+const searchSkillKey = computed(() => `skills_items_${debouncedSkillSearch.value}`)
 
 const { data, status, error } = useLazyAsyncData(searchedKeys, async (_nuxtApp, { signal }) => {
     const search = debouncedSearch.value
@@ -41,13 +46,26 @@ const { data, status, error } = useLazyAsyncData(searchedKeys, async (_nuxtApp, 
     dedupe: "cancel"
 })
 
+const { data: skills, status: skills_status, error: skills_error } = useLazyAsyncData(searchSkillKey, async (_nuxtApp, { signal }) => {
+    const search = debouncedSkillSearch.value;
+
+    return {
+        search,
+        items: search ? await getSkillsRequest({ search }, signal) : []
+    }
+})
+
 function handleAddSkill() {
     if (!skill.value?.trim()) return
     createSkillItem(props.skillsGroup.id, { skill: skill.value.trim() })
     skill.value = ""
 }
 
-const isLoading = computed(() => Boolean(categorySearch.value) && (categorySearch.value !== debouncedSearch.value || status.value === "pending"))
+const isLoading = computed(() => Boolean(categorySearch.value)
+    && (categorySearch.value !== debouncedSearch.value || status.value === "pending"))
+
+const isLoadingSkills = computed(() => Boolean(skillSearch.value)
+    && (skillSearch.value !== debouncedSkillSearch.value || skills_status.value === "pending"))
 
 const categoriesItems = computed(() => {
     if (!categorySearch.value || isLoading.value || data.value.search !== categorySearch.value || error.value) return []
@@ -57,9 +75,23 @@ const categoriesItems = computed(() => {
         .filter(title => title && title.length <= INPUT_LIMITS.skills_group.title))]
 })
 
+const skillsItems = computed(() => {
+    if (!skills.value || isLoadingSkills.value || skills.value.search !== skillSearch.value || error.value) return []
+
+    return [...new Set(skills.value.items
+        .map(item => item.title.trim())
+        .filter(title => title && title.length <= INPUT_LIMITS.skill_item.skill
+        ))]
+})
+
 const categoryOpen = computed({
     get: () => categoryOpenRequest.value && (isLoading.value || categoriesItems.value.length > 0),
     set: (open: boolean) => { categoryOpenRequest.value = open }
+})
+
+const skillsOpen = computed({
+    get: () => skillOpenRequest.value && (isLoadingSkills.value || skillsItems.value.length > 0),
+    set: (open: boolean) => { skillOpenRequest.value = open }
 })
 
 
@@ -90,12 +122,12 @@ onScopeDispose(() => {
     <div class="flex flex-col gap-3 mt-3">
         <UFormField :label="t('resumeEditor.skillCategory')" :description="t('resumeEditor.categoryHint')">
             <UInputMenu v-model="props.skillsGroup.title" v-model:open="categoryOpen" mode="autocomplete"
-                :items="categoriesItems" ignore-filter :trailing="false"
-                :maxlength="INPUT_LIMITS.experience.position" :reset-search-term-on-blur="false"
-                open-on-focus open-on-click class="w-full" :placeholder="t('resumeEditor.skillCategory')"
-                @keydown.tab="categoryOpen = false">
+                :items="categoriesItems" ignore-filter :trailing="false" :maxlength="INPUT_LIMITS.experience.position"
+                :reset-search-term-on-blur="false" open-on-focus open-on-click class="w-full"
+                :placeholder="t('resumeEditor.skillCategory')" @keydown.tab="categoryOpen = false">
                 <template #empty>
-                    <div v-if="isLoading" class="flex items-center justify-center py-1" role="status" aria-live="polite">
+                    <div v-if="isLoading" class="flex items-center justify-center py-1" role="status"
+                        aria-live="polite">
                         <UIcon name="i-lucide-loader-circle" class="size-5 animate-spin" aria-hidden="true" />
                         <span class="sr-only">{{ t('resumeEditor.positionSearchLoading') }}</span>
                     </div>
@@ -112,8 +144,19 @@ onScopeDispose(() => {
         <UForm @submit="handleAddSkill">
             <UFormField :label="t('resumeEditor.skill')">
                 <div class="flex gap-2">
-                    <UInput :maxlength="INPUT_LIMITS.skill_item.skill" v-model="skill" class="min-w-0 flex-1"
-                        :placeholder="t('resumeEditor.skillPlaceholder')" />
+                    <!-- <UInput :maxlength="INPUT_LIMITS.skill_item.skill" v-model="skill" class="min-w-0 flex-1"
+                        :placeholder="t('resumeEditor.skillPlaceholder')" /> -->
+                    <UInputMenu v-model="skill" v-model:open="skillsOpen" mode="autocomplete" :items="skillsItems"
+                        ignore-filter :trailing="false" open-on-focus open-on-click class="min-w-0 flex-1"
+                        :placeholder="t('resumeEditor.skillPlaceholder')" @keydown.tab="skillsOpen = false">
+                        <template #empty>
+                            <div v-if="isLoadingSkills" class="flex items-center justify-center py-1" role="status"
+                                aria-live="polite">
+                                <UIcon name="i-lucide-loader-circle" class="size-5 animate-spin" aria-hidden="true" />
+                                <span class="sr-only">{{ t('resumeEditor.positionSearchLoading') }}</span>
+                            </div>
+                        </template>
+                    </UInputMenu>
                     <UButton type="submit" color="neutral" variant="outline" icon="i-lucide-plus"
                         :disabled="!skill?.trim() || isCreating" :loading="isCreating"
                         :aria-label="t('resumeEditor.addSkill')" :title="t('resumeEditor.addSkill')" />
