@@ -102,7 +102,7 @@ onBeforeUnmount(() => window.removeEventListener('resume:prepare-pdf', preparePd
             <component :is="template.sectionTitle" v-if="page.skills.showTitle" section="skills" />
             <component :is="template.skillsGroup" v-for="item in page.skills.items" :key="item.id" :item="item" />
           </template>
-
+ 
           <template v-if="page.languages.items.length">
             <component :is="template.sectionTitle" v-if="page.languages.showTitle" section="languages" />
             <component :is="template.languages" v-for="item in page.languages.items" :key="item.id" :item="item" />
