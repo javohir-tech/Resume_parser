@@ -9,8 +9,8 @@ from app.api.resume import resume_router
 from app.bot.bot_instance import dp
 from app.bot.handlers import router as bot_router
 
-from app.api.resumes.experience.experience import experience_router
-from app.api.resumes.education.education import education_router
+from app.api.resumes.experience import experience_router
+from app.api.resumes.education import education_router
 
 from app.core.exceptions import register_exception_handlers
 
