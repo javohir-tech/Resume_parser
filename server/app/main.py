@@ -11,6 +11,7 @@ from app.bot.handlers import router as bot_router
 
 from app.api.resumes.experience import experience_router
 from app.api.resumes.education import education_router
+from app.api.resumes.language import language_router
 
 from app.core.exceptions import register_exception_handlers
 
@@ -37,6 +38,7 @@ app.include_router(skills_router, prefix="/api")
 
 app.include_router(experience_router, prefix="/api/resume")
 app.include_router(education_router, prefix="/api/resume")
+app.include_router(language_router, prefix="/api/resume")
 
 
 @app.get("/")
