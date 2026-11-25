@@ -27,8 +27,6 @@ from app.core.security import verify
 
 from app.schemas.resume_schemas import (
     PersonalInfo,
-    ExperienceInfo,
-    EducationInfo,
     LanguageInfo,
     SkillItemInfo,
     SkillsInfo,
