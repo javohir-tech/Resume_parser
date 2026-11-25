@@ -5,7 +5,7 @@ import type {  SkillGroup } from "~/entities/resume";
 // Skill groups
 ///////////////////////////////////////////////
 export const createSkillGroupRequest = (resume_id: string) =>
-  api<{ skills_id: string }>(`/api/resume/skills/create/${resume_id}`, {
+  api<{ skills_id: string }>(`/api/resume/skills/${resume_id}`, {
     method: "POST",
   });
 
@@ -13,13 +13,13 @@ export const editSkillGroupRequest = (
   skills_group_id: string,
   skills_info: Partial<Omit<SkillGroup , "id" | "skills">>,
 ) =>
-  api<null>(`/api/resume/skills/edit/${skills_group_id}`, {
+  api<null>(`/api/resume/skills/${skills_group_id}`, {
     method: "PATCH",
     body: skills_info,
   });
 
 export const deleteSkillGroupRequest = (skills_id: string) =>
-  api<{ detail: string }>(`/api/resume/skills/delete/${skills_id}`, {
+  api<{ detail: string }>(`/api/resume/skills/${skills_id}`, {
     method: "DELETE",
   });
 
@@ -31,7 +31,7 @@ export const createSkillItemRequest = (
   skill_info: { skill: string },
 ) =>
   api<{ skill_item_id: string }>(
-    `/api/resume/skill_item/create/${skills_group_id}`,
+    `/api/resume/skills_item/${skills_group_id}`,
     {
       method: "POST",
       body: skill_info,
@@ -39,6 +39,6 @@ export const createSkillItemRequest = (
   );
 
 export const deleteSkillItemRequest = (skill_item_id: string) =>
-  api<{ detail: string }>(`/api/resume/skill_item/delete/${skill_item_id}`, {
+  api<{ detail: string }>(`/api/resume/skills_item/${skill_item_id}`, {
     method: "DELETE",
   });
