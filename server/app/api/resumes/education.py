@@ -4,7 +4,7 @@ from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
 
 from sqlalchemy import select
-from sqlalchemy.orm import selectinload, joinedload
+from sqlalchemy.orm import  joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import verify

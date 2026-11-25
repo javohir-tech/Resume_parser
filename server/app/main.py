@@ -14,6 +14,7 @@ from app.api.resumes.education import education_router
 from app.api.resumes.language import language_router
 from app.api.resumes.skills import skills_router
 from app.api.resumes.skills_item import skills_item_router
+from app.api.resumes.resume import current_router
 
 from app.core.exceptions import register_exception_handlers
 
@@ -38,6 +39,7 @@ app.include_router(job_title_router, prefix="/api")
 app.include_router(skills_category_router, prefix="/api")
 app.include_router(skills_title_router, prefix="/api")
 
+app.include_router(current_router, prefix="/api")
 app.include_router(experience_router, prefix="/api/resume")
 app.include_router(education_router, prefix="/api/resume")
 app.include_router(language_router, prefix="/api/resume")

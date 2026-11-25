@@ -20,7 +20,7 @@ export const getMyResumes = (
   } = {},
   signal?: AbortSignal,
 ) =>
-  api<ResponseGetResumes>("/api/resume/my/resumes", {
+  api<ResponseGetResumes>("/api/resume/", {
     method: "GET",
     query: params,
     signal,
