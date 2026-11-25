@@ -16,7 +16,7 @@ from app.models.experience import Experience
 
 from app.schemas.resume_schemas import ExperienceInfo
 
-experience_router = APIRouter(prefix="/experience", tags=["experience"])
+experience_router = APIRouter(prefix="/experience", tags=["Resume Experience" , "Resume"])
 
 
 @experience_router.post("/{resume_id}")

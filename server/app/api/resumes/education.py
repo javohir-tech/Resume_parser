@@ -1,10 +1,10 @@
 from uuid import UUID
 
-from fastapi import APIRouter , status , Depends 
+from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
 
-from sqlalchemy import select 
-from sqlalchemy.orm import selectinload , joinedload
+from sqlalchemy import select
+from sqlalchemy.orm import selectinload, joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import verify
@@ -12,15 +12,11 @@ from app.core.security import verify
 from app.db.session import get_db
 
 from app.models.resume import Resume
-from app.models.educations  import Education
+from app.models.educations import Education
 
 from app.schemas.resume_schemas import EducationInfo
 
-
-
-education_router = APIRouter(prefix="/education" , tags=["education"])
-
-
+education_router = APIRouter(prefix="/education", tags=["Resume Education", "Resume"])
 
 
 @education_router.post("/{resume_id}")

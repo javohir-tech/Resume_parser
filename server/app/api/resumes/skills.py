@@ -16,7 +16,7 @@ from app.models.skills import Skills
 
 from app.schemas.resume_schemas import SkillsInfo
 
-skills_router  = APIRouter(prefix="/skills" , tags=["Skills"])
+skills_router = APIRouter(prefix="/skills", tags=["Resume Skills", "Resume"])
 
 
 @skills_router.post("/{resume_id}")

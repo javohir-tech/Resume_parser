@@ -16,7 +16,7 @@ from app.models.languages import Language
 
 from app.schemas.resume_schemas import LanguageInfo
 
-language_router = APIRouter(prefix="/language", tags=["language"])
+language_router = APIRouter(prefix="/language", tags=["Resume Language", "Resume"])
 
 
 @language_router.post("/{resume_id}")

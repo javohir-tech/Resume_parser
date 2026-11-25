@@ -27,8 +27,6 @@ from app.core.security import verify
 
 from app.schemas.resume_schemas import (
     PersonalInfo,
-    SkillItemInfo,
-    SkillsInfo,
     DesingInfo,
     ResumeJobMatch,
 )
@@ -51,7 +49,7 @@ from app.services.document_reader import extract_text
 from app.services.resume_parser import parse_resume, has_content
 from app.services.resume_job_match import job_match_resume
 
-resume_router = APIRouter(prefix="/resume", tags=["resume"])
+resume_router = APIRouter(prefix="/resume", tags=["Resume"])
 
 
 @resume_router.post("/parse", response_model=ParsedResumeResult)
